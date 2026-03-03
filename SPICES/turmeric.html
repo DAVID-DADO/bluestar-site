@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0A0A0B; --text: #FAF7F0; --body: #D1CEC5;
+    --accent: #8B6340; --warm: #B8894A;
+    --card: rgba(20,20,22,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background-color: var(--bg); color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9;
+    overflow-x: hidden;
+    background-image: linear-gradient(rgba(184,137,74,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,137,74,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+body::before, body::after {
+    content:''; position:fixed; width:600px; height:600px; border-radius:50%;
+    filter:blur(120px); z-index:-2; opacity:0.15; pointer-events:none;
+}
+body::before { background:var(--warm); top:-100px; left:-100px; }
+body::after { background:#5A3E28; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap {
+    max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden;
+    box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05);
+    background:#0A0A0B; display:flex; align-items:center; justify-content:center;
+}
+.hero-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.hero-img-placeholder { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.hero-img-placeholder span { color:rgba(255,255,255,0.15); font-size:12px; letter-spacing:3px; font-family:'Space Mono',monospace; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch {
+    background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px);
+    padding:50px; border-radius:var(--radius); margin-bottom:40px;
+    border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden;
+}
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; }
+.ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#C4A878; font-style:italic; }
+strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(184,137,74,0.08); border-right:4px solid var(--warm); }
+.ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(90,62,40,0.2); border-right:4px solid var(--accent); }
+.ab-g .tg { color:#C4A878; }
+.ab-r { background:rgba(184,50,50,0.1); border-right:4px solid #B83030; }
+.ab-r .tg { color:#E06060; }
+.ab-r p { color:#DDB0B0; }
+.vc { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:22px; margin:18px 0; }
+.vc .vn { font-family:'Frank Ruhl Libre',serif; font-size:21px; font-weight:700; color:var(--text); }
+.vc .vt { font-size:12px; color:var(--warm); font-weight:600; margin-bottom:10px; }
+.vc p { font-size:16px; line-height:1.75; margin-bottom:0; }
+.vc .vs { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.vc .vsi { background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:5px; font-size:12px; color:#A09080; }
+.vc .vsi strong { color:var(--text); }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A09080; margin-top:2px; }
+.ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.cb { background:rgba(20,20,22,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px; margin:28px 0; }
+.cb .ct { font-family:'Frank Ruhl Libre',serif; font-size:17px; font-weight:700; margin-bottom:14px; text-align:center; color:var(--text); }
+.pb-chart { margin:16px 0 8px; display:flex; flex-direction:column; gap:10px; }
+.pb-row { display:flex; align-items:center; gap:10px; }
+.pb-meta { display:flex; align-items:center; gap:6px; min-width:120px; justify-content:flex-end; }
+.pb-flag { font-size:18px; }
+.pb-name { font-size:13px; color:#A09080; }
+.pb-track { flex:1; background:rgba(255,255,255,0.08); height:18px; border-radius:9px; overflow:hidden; }
+.pb-fill { height:100%; width:0; border-radius:9px; transition:width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.pb-pct { font-family:'Frank Ruhl Libre',serif; font-size:14px; font-weight:700; color:var(--text); width:36px; text-align:left; }
+.pb-note { font-size:11px; color:#6B6058; opacity:.7; margin-top:10px; text-align:center; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; border-top:1px solid rgba(255,255,255,0.05); }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(184,137,74,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.03); animation:scrollText 40s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#6B6058; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(184,137,74,0.4); }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(20,20,22,0.85); border:1px solid rgba(184,137,74,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+.home-btn:hover { background:rgba(184,137,74,0.15); }
+@media (max-width:900px) {
+    .side-nav { display:none; }
+    .hero h1 { font-size:55px; }
+    .hero-img-wrap { height:300px; margin-bottom:-100px; }
+    .con { margin-top:150px; }
+    .ng { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+<title>כורכום · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות ובקרת איכות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="פיזיולוגיה ובריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="טכנולוגיה עתידית"></div>
+</nav>
+
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">כורכום</h1>
+    <p class="deck" id="sync-desc">הריזומה הזהובה של נתיבי הבשמים. מטקסי הוודות ועד לאונקולוגיה המולקולרית, ביוכימיה של Curcumin, ותעשייה ששולטת בה הודו ב־80% מהייצור העולמי.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <div class="hero-img-placeholder">
+            <span>TURMERIC · Curcuma longa</span>
+            <span style="font-size:9px;opacity:0.5;">MEDIA SLOT · HERO</span>
+        </div>
+    </div>
+</section>
+
+<div class="marquee-container">
+    <div class="marquee-text">CURCUMA LONGA · GOLDEN SPICE · ERODE · CURCUMIN · NIZAMABAD · TURMERIC · CURCUMA LONGA · GOLDEN SPICE · ERODE · CURCUMIN · NIZAMABAD · TURMERIC · </div>
+</div>
+
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: הריזומה שעיצבה תרבויות</h2>
+    <p class="dc">הכורכום (<em>Curcuma longa</em> L.) אינו תבלין במובן הקלאסי. הוא קנה שורש (Rhizome), איבר אגירה תת־קרקעי ממשפחת הזנגביליים (<em>Zingiberaceae</em>), שמרכז בתוכו את כל האנרגיה הפוטוסינתטית של הצמח ומשחרר אותה בצורת פיגמנטים, שמנים אתריים ותרכובות פנוליות. ההיסטוריה של הכורכום משתרעת על פני <strong>4,000 שנה לפחות</strong>. בכתבי הוודות, הכורכום הופיע כאלמנט המקשר בין עולם החומר לעולם הרוח: צבעו הזהוב סימל את אנרגיית השמש, והוא שימש כמרכיב חובה בטקסי נישואין הינדיים, בצביעת גלימות נזירים בודהיסטיים, ובטיהור גופות לפני שריפה.</p>
+    <p>הטקסט האיורוודי <em>Sushruta Samhita</em> (כ־600 לפנה"ס) מתעד את הכורכום כ"חומר מטהר" (<strong>Purifying Agent</strong>) לפצעים, לעור ולדם. היכולת של הריזומה לעצור דימומים, לחטא פצעים פתוחים ולשמר מזון באקלים הטרופי הלוהט של דרום אסיה הפכה אותו לכוח טבע הכרחי. ברפואה הסינית המסורתית, הכורכום נקרא <em>Jianghuang</em> (姜黄) ומשמש לטיפול בכאבי מפרקים, בעיות מחזור דם, ובכאבי בטן. בתרבות המלאית, <em>Kunyit</em> שימש כמניעת רע, כתכשיר ליולדות, וכצבען טקסטיל.</p>
+    <p>מסחרית, הכורכום הגיע לאירופה דרך נתיבי המשי. הערבים כינו אותו <strong>"Za'faran al-Hind"</strong> (הזעפרן ההודי) בשל צבעו הדומה לזעפרן במחיר נמוך משמעותית. ב־1280, מרקו פולו כתב על צמח בסין ובהודו שנותן צבע כמו זעפרן. הפורטוגזים הביאו אותו לאפריקה המערבית, שם הפך למרכיב קבוע במטבחים מקומיים. כיום, הכורכום הוא התבלין הנחקר ביותר בעולם: מעל <strong>15,000 מאמרים מדעיים</strong> פורסמו על Curcumin במאגר PubMed, והמספר גדל ביותר מ־1,500 מאמרים חדשים בשנה.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>ב־1870, כימאים גרמנים בודדו לראשונה את הפיגמנט הצהוב מהריזומה וקראו לו <strong>Curcumin</strong>. ב־1910, Miłobędzka ו-Lampe פענחו את המבנה המולקולרי: <strong>Diferuloylmethane</strong>, פוליפנול סימטרי עם שתי טבעות ארומטיות. מרגע זה החל המעבר מתבלין עתיק למולקולה פרמקולוגית. בעשורים האחרונים, Curcumin הפך לאחד החומרים הטבעיים הנחקרים ביותר בעולמות הדלקת, האונקולוגיה והנוירולוגיה.</p>
+    </div>
+    <p>כיום, הכורכום הוא תעשייה עולמית של כ־<strong>1.1 מיליון טון בשנה</strong>. הודו מייצרת כ־80% מהנפח העולמי, צורכת 80% מתוצרתה עצמה, ומייצאת כ־<strong>160,000 טון בשנה</strong>. ארצות היעד העיקריות: בנגלדש, איחוד האמירויות, ארה"ב, מלזיה ומרוקו. הכורכום הוא חומר הגלם של שלוש תעשיות מקבילות: מטבח (תבלין), פרמצבטיקה (Curcumin extract), וקוסמטיקה (פיגמנט טבעי). ההבנה של הריזומה הזו דורשת גישה רב־תחומית: בוטניקה, כימיה אנליטית, לוגיסטיקה, ושוק.</p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: פיזיולוגיית הריזומה הטרופית</h2>
+    <p class="dc">הכורכום הוא צמח של מונסון. לא סובלנות לגשם, אלא <em>תלות מוחלטת</em> בגשם. הצמח דורש <strong>1,500 מ"מ משקעים שנתיים</strong> לפחות, מפוזרים על פני 7 עד 9 חודשי גידול. בניגוד לכמון שדורש יובש, הכורכום צומח בעומק האדמה הרטובה, מייצר שכבות של ריזומות מסועפות שמאגרות עמילן, שמנים אתריים ופיגמנטים. האויב הגדול ביותר של הריזומה הוא לא חוסר מים, אלא <strong>עודף מים נייחים</strong>: קרקע עם ניקוז לקוי מובילה תוך ימים להתפתחות של <em>Pythium aphanidermatum</em>, הגורם לריקבון מהיר (Rhizome Rot) שמשמיד עד <strong>50% מהיבול</strong> במקרים חמורים.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">20-30°C</div><div class="nu">טמפרטורה אופטימלית</div><div class="nl">יום ולילה</div></div>
+        <div class="ni"><div class="nv">1,500mm+</div><div class="nu">משקעים שנתיים</div><div class="nl">מינימום</div></div>
+        <div class="ni"><div class="nv">7-9</div><div class="nu">חודשי גידול</div><div class="nl">שתילה עד קציר</div></div>
+    </div>
+    <h3>מחזור הגידול ופנולוגיה</h3>
+    <p>שתילה: מאי-יוני (תחילת המונסון). חתיכות ריזומה (<strong>Seed Rhizomes</strong>) בנות 5-7 ס"מ עם 2-3 ניצנים נשתלות בעומק 5-7 ס"מ, בשורות עם מרווחים של <strong>30×25 ס"מ</strong>. נביטה תוך 15-30 יום. הצמח מגיע לגובה <strong>60-100 ס"מ</strong>, מייצר עלים רחבים בצורת חנית. הפריחה (סגולה-לבנה) מופיעה בחודשים 4-5 אך אינה מייצרת זרעים פוריים; כל הרבייה היא וגטטיבית. הריזומות מתחילות להתעבות מהחודש הרביעי, והפיגמנט מתרכז בעיקר בחודשים 7-8. קציר כשהעלים מצהיבים ומתייבשים: ינואר-מרץ. תפוקה ממוצעת: <strong>20-25 טון ריזומה טרייה/הקטר</strong>, שנותנים <strong>4-5 טון יבשה/הקטר</strong> (יחס ייבוש 5:1).</p>
+    <div class="ab ab-g">
+        <div class="tg">שיקול אגרונומי קריטי</div>
+        <p>מחסור באשלגן (<strong>Potassium</strong>) בחודש החמישי לצמיחה גורם לירידה דרמטית בריכוז הכורכומינואידים, גם אם הצמח נראה בריא כלפי חוץ. דישון אופטימלי: <strong>30:20:60 NPK kg/ha</strong> עם 10 טון זבל אורגני בשתילה. מגדלים מנוסים משתמשים בשיטת <strong>Raised Beds</strong> (ערוגות מוגבהות), המבטיחה שהריזומה לעולם לא "תעמוד" במים. pH אופטימלי: <strong>4.5-7.5</strong>. קרקע חולית-חרסיתית עם ניקוז מצוין.</p>
+    </div>
+    <h3>זנים מסחריים עיקריים</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>זן</th><th>מוצא</th><th>כורכומין %</th><th>תפוקה t/ha</th><th>מאפיין</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Erode Local</strong></td><td>טמיל נאדו</td><td>3.5-5.0%</td><td>18-22</td><td>סטנדרט תעשייתי, ארומה חזקה</td></tr>
+            <tr><td><strong>Salem</strong></td><td>טמיל נאדו</td><td>4.0-5.5%</td><td>20-25</td><td>ריזומה גדולה, צבע עמוק</td></tr>
+            <tr><td><strong>Alleppey Finger</strong></td><td>קרלה</td><td>4.5-6.5%</td><td>15-20</td><td>פרימיום, ייצוא לאירופה</td></tr>
+            <tr><td><strong>Lakadong</strong></td><td>מגלאיה</td><td>8.0-12.0%</td><td>10-15</td><td>אנומליה גנטית, Nutraceutical</td></tr>
+            <tr><td><strong>Rajapore</strong></td><td>מהרשטרה</td><td>5.0-7.0%</td><td>25-30</td><td>תפוקה גבוהה, תעשייתי</td></tr>
+            <tr><td><strong>Pratibha (IISR)</strong></td><td>ICAR-IISR</td><td>6.2%</td><td>35-40</td><td>זן משופר, עמיד למחלות</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>הלאקדונג: המוטציה המבורכת</h3>
+    <p>אחד הסיפורים המרתקים ביותר באגרונומיה של תבלינים הוא זן ה-<strong>Lakadong</strong>, הגדל בגבעות ג'אינטיה שבמדינת מגלאיה, צפון-מזרח הודו. בעוד שהכורכום הממוצע מכיל <strong>2-5% כורכומין</strong>, הלאקדונג מציג ריכוזים חריגים של <strong>8-12%</strong>. מדובר באנומליה שנובעת מבידוד גיאוגרפי, אדמת יער חומצית עשירה, וגובה רב (1,000-1,500 מ'). הקור והגובה מאלצים את הצמח לייצר ריכוז גבוה של מטבוליטים שניוניים כמנגנון הגנה. מגדלים מקומיים מסרבים לדשנים כימיים, בהבנה שהם פוגעים בפרופיל הארומטי. הלאקדונג הוא ההוכחה שהטרואר (terroir) משנה מבנה מולקולרי.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: המולקולות שמאחורי הזהב</h2>
+    <p class="dc">הערך המדעי של הכורכום נגזר משלוש מולקולות מפתח הידועות ככורכומינואידים: <strong>Curcumin</strong> (Curcumin I, Diferuloylmethane), <strong>Demethoxycurcumin</strong> (DMC, Curcumin II), ו-<strong>Bisdemethoxycurcumin</strong> (BDMC, Curcumin III). היחס הטיפוסי: Curcumin I מהווה <strong>75-80%</strong> מסך הכורכומינואידים, DMC <strong>15-20%</strong>, ו-BDMC <strong>3-5%</strong>. סך הכורכומינואידים בריזומה יבשה: <strong>2-8%</strong> (ממוצע סחיר: 3-5%), כשהלאקדונג חורג מהממוצע.</p>
+    <h3>המבנה המולקולרי</h3>
+    <p>הכורכומין הוא פוליפנול הידרופובי (שונא מים), בעל מבנה סימטרי: שתי טבעות ארומטיות מחוברות בשרשרת של 7 פחמנים עם שתי קבוצות קרבוניל. הנוסחה: <strong>C₂₁H₂₀O₆</strong>, משקל מולקולרי <strong>368.38 g/mol</strong>. ההידרופוביות היא גם הבעיה וגם הפתרון: הכורכומין חודר בקלות לממברנות תאים (שומניות), אבל נספג גרוע ממערכת העיכול לזרם הדם. זמינות ביולוגית (Bioavailability) ללא סיוע: <strong>פחות מ-1%</strong>.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">2-8%</div><div class="nu">כורכומינואידים</div><div class="nl">ממשקל יבש</div></div>
+        <div class="ni"><div class="nv">3.5-5.5%</div><div class="nu">שמנים אתריים</div><div class="nl">V.O. Content</div></div>
+        <div class="ni"><div class="nv">368.38</div><div class="nu">MW Curcumin</div><div class="nl">g/mol</div></div>
+        <div class="ni"><div class="nv">NF-κB</div><div class="nu">מטרה ראשית</div><div class="nl">מתג הדלקת</div></div>
+        <div class="ni"><div class="nv">&lt;1%</div><div class="nu">זמינות ביולוגית</div><div class="nl">ללא סיוע</div></div>
+        <div class="ni"><div class="nv">2,000%</div><div class="nu">שיפור עם Piperine</div><div class="nl">Bioenhancer</div></div>
+    </div>
+    <h3>פרופיל שמנים אתריים</h3>
+    <p>שמן אתרי של כורכום מהווה <strong>3.5-5.5% ממשקל יבש</strong>, והוא בעל חשיבות קריטית מעבר לארומה. הרכבו: <strong>ar-Turmerone</strong> (25-35%), מרכיב עיקרי בעל פעילות אנטי-דלקתית עצמאית; <strong>α-Turmerone</strong> (18-25%); <strong>β-Turmerone</strong> (12-18%); <strong>Zingiberene</strong> (5-10%), המעניק את הדמיון לג'ינג'ר; <strong>ar-Curcumene</strong> (3-8%). הטורמרונים אינם רק נשאי ארומה: הם פועלים בסינרגיה עם הכורכומין ומגבירים את הספיגה שלו פי 7-8 בהשוואה לכורכומין מבודד. זו הסיבה שריזומה שלמה (Whole Turmeric) פעילה ביולוגית הרבה יותר מתמצית כורכומין מזוקקת.</p>
+    <div class="ab ab-w">
+        <div class="tg">הממצא הביוכימי</div>
+        <p>הכורכומין פועל ברמה התאית דרך עיכוב של פקטור השעתוק <strong>NF-κB</strong>, הנחשב ל"מתג המרכזי" של דלקת בגוף האדם. NF-κB שולט בביטוי של מעל <strong>400 גנים</strong> הקשורים לדלקת, הישרדות תאית, ופרוליפרציה. עיכוב זה מסביר את טווח ההשפעות הרחב של הכורכומין: אנטי-דלקתי, אנטי-אוקסידנטי, אנטי-סרטני, ונוירו-פרוטקטיבי. מנגנון נוסף: הכורכומין מנטרל רדיקלים חופשיים (ROS) דרך קבוצות הפנול שלו, עם פעילות ORAC גבוהה מאוד.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: כורכומין, צבע ושפת הסוחרים</h2>
+    <p class="dc">במסחר בכורכום, המדדים העיקריים הם שלושה: <strong>ריכוז כורכומין</strong> (Curcumin Content), <strong>עוצמת צבע</strong> (Colour Value), ו-<strong>ניקיון</strong> (Total Ash). בניגוד לכמון שנמדד בעיקר לפי ניקיון, הכורכום נמדד בעיקר לפי עוצמת הפיגמנט. שיטת המדידה הסטנדרטית: <strong>ASTA Colour Value</strong> (American Spice Trade Association), המודדת ספיגת אור בגל 425nm. ככל שה-ASTA גבוה יותר, הצבע עמוק יותר והפיגמנט מרוכז יותר.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>פרימיום (Alleppey Finger)</th><th>סטנדרט (Erode)</th><th>FAQ</th><th>תעשייתי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>כורכומין %</strong></td><td>≥5.0%</td><td>3.0-5.0%</td><td>2.0-3.0%</td><td>≥1.5%</td></tr>
+            <tr><td><strong>ASTA Colour</strong></td><td>≥250</td><td>180-250</td><td>130-180</td><td>80-130</td></tr>
+            <tr><td><strong>לחות מקס'</strong></td><td>10.0%</td><td>10.0%</td><td>11.0%</td><td>12.0%</td></tr>
+            <tr><td><strong>Total Ash מקס'</strong></td><td>≤7.0%</td><td>≤7.5%</td><td>≤8.0%</td><td>≤9.0%</td></tr>
+            <tr><td><strong>Acid Insoluble Ash</strong></td><td>≤1.0%</td><td>≤1.5%</td><td>≤2.0%</td><td>≤2.5%</td></tr>
+            <tr><td><strong>Volatile Oil מינ'</strong></td><td>4.0%</td><td>3.5%</td><td>2.5%</td><td>1.5%</td></tr>
+            <tr><td><strong>מחיר סמך (2025)</strong></td><td>$2,200-2,800/t</td><td>$1,600-2,200/t</td><td>$1,200-1,600/t</td><td>$800-1,200/t</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>Alleppey vs. Erode vs. Madras: שלוש שפות מסחר</h3>
+    <p><strong>Alleppey Finger</strong>: המונח המסחרי לכורכום פרימיום מקרלה, בעל ריכוז כורכומין גבוה (5-6.5%) וצבע צהוב-כתום עמוק. השם מגיע מנמל Alleppey (Alappuzha) בקרלה, שהיה מרכז הייצוא ההיסטורי. "Finger" מתייחס לריזומות הצדדיות הדקות, להבדיל מ-"Bulb" (הריזומה המרכזית). <strong>Erode</strong>: מרכז המסחר הגדול ביותר בעולם לכורכום, בטמיל נאדו. Erode Quality הוא הסטנדרט התעשייתי, ASTA 180-250. מרבית הכורכום לשוק הביתי ההודי ולתערובות תבלינים מגיע מאזור Erode. <strong>Madras</strong>: שם מסחרי ישן לכורכום מדרום הודו בכלל, משמש בעיקר בשוק האירופי. Madras Turmeric = כורכום אבקה סטנדרטי לבישול.</p>
+    <div class="ab ab-g">
+        <div class="tg">שיקול מקצועי</div>
+        <p><strong>Acid Insoluble Ash (AIA)</strong> הוא המדד הקריטי ביותר לזיוף. AIA מודד את כמות החומרים האנאורגניים שאינם מתמוססים בחומצת מלח. חול, אדמה ומילוי מינרלי מופיעים כ-AIA גבוה. כורכום עם AIA מעל <strong>2.5%</strong> מצביע על עיבוד לקוי או זיוף מכוון. מעבדות מדווחות על דגימות עם AIA של <strong>5-8%</strong>, מה שאומר שכ-5% מהמשקל הוא חול או מילוי.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: Curing, ייבוש, והנדסת הפיגמנט</h2>
+    <p class="dc">כשהכורכום נשלף מהאדמה, הוא חסר את הגוון הזהוב המפורסם. הריזומה הטרייה בעלת צבע חום-בז' מבחוץ וכתום בהיר מבפנים. תהליך ה-<strong>Curing</strong> הוא הרגע שבו הכימיה משתנה: הרתחה מבוקרת שגורמת לג'לטיניזציה של העמילן בריזומה ולפיזור אחיד של הפיגמנט לכל עומק הרקמה. ללא Curing, הכורכום אינו תבלין.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">קציר וניקוי ראשוני</div>
+                <div class="proc-step-body">הריזומות נחפרות ידנית או במחפרון. ניקוי אדמה ראשוני, הפרדת "אצבעות" (fingers) מ"פקעות" (bulbs). הפקעות נשמרות לשתילה מחודשת. אצבעות לעיבוד. כ-<strong>20-25 טון ריזומה טרייה/הקטר</strong>.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">Curing (הרתחה)</div>
+                <div class="proc-step-body">הריזומות מורתחות בדודי ענק, <strong>45-60 דקות</strong>, במים רותחים או באדים. אינדיקציה לסיום: הקצף נעלם, ריח אופייני נפלט, הריזומה רכה ונקייה בחתך. החום גורם לג'לטיניזציה של העמילן ולהפצת הפיגמנט. <strong>Over-cooking</strong> (מעל 90 דקות) הורס שמנים אתריים ומכהה את הצבע.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">ייבוש</div>
+                <div class="proc-step-body">ייבוש שמש (מסורתי): <strong>10-15 ימים</strong> על משטחי במבוק או בטון. הריזומות נהפכות מספר פעמים ביום. ייבוש מהיר מדי תחת שמש ישירה מחמצן כורכומינואידים ומנדף שמנים. ייבוש תעשייתי: <strong>60-70°C למשך 12-18 שעות</strong> בתנורי אוויר חם. לחות סופית: <strong>8-10%</strong>. יחס ייבוש: <strong>5:1</strong> (5 ק"ג טרי = 1 ק"ג יבש).</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">ליטוש (Polishing)</div>
+                <div class="proc-step-body">הריזומות היבשות מלוטשות בתופי סיבוב (<strong>Polishing Drums</strong>) להסרת שכבת השורש החיצונית הקשה ולהענקת מראה חלק. חלק מהמגדלים מוסיפים אבקת כורכום דקה או סיד (Turmeric Powder Coating) לשיפור הצבע החיצוני. זו פרקטיקה לגיטימית כל עוד אינה מסווה פגמים.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">05</div>
+            <div>
+                <div class="proc-step-title">מיון וסיווג</div>
+                <div class="proc-step-body">מיון ידני או אופטי לפי: גודל (Finger vs. Bulb), צבע (פנימי וחיצוני), שלמות (שלמים vs. שבורים). Sortex לניקוי ריזומות פגומות, שחורות או מאוכלות. מיון אופטי מודרני: <strong>3-5 טון/שעה</strong> עם דיוק של <strong>99%</strong>.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">06</div>
+            <div>
+                <div class="proc-step-title">אריזה</div>
+                <div class="proc-step-body">שקי ג'וט עם בטנת PE (<strong>50 ק"ג</strong> סטנדרט הודי), או שקי PP <strong>25 ק"ג</strong> לייצוא. Big Bags <strong>500-1,000 ק"ג</strong> ללקוחות תעשייתיים. חובה: אריזות חוסמות אור. חשיפה ל-UV מפרקת כורכומין ומדהה צבע תוך שבועות.</div>
+            </div>
+        </div>
+    </div>
+    <div class="ab ab-r">
+        <div class="tg">אזהרת עיבוד</div>
+        <p>ייבוש מעל <strong>80°C</strong> או ייבוש מהיר מדי בשמש ישירה גורם לאובדן של <strong>30-50%</strong> מהשמנים האתריים (Volatile Oils) ולחמצון של הכורכומינואידים. התוצאה: תבלין עם צבע אבל בלי ארומה ובלי פעילות ביולוגית. רמת לחות מעל <strong>10%</strong> מובילה להתפתחות של <em>Aspergillus flavus</em> שמייצר אפלטוקסינים. הגבול בין מוצר יציב למוצר רעיל הוא <strong>2% לחות</strong>.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות: זיופים, עופרת ואפלטוקסינים</h2>
+    <p class="dc">הכורכום הוא אחד התבלינים המזויפים ביותר בעולם. בשל ערכו, צבעו האינטנסיבי ומכירתו כאבקה (שמקשה על זיהוי ויזואלי), הוא מטרה קבועה ל-<strong>Food Fraud</strong>. הזיופים נעים מקלים יחסית (הוספת קמח אורז, עמילן תירס, חול) ועד מסוכנים ביותר: הוספת צבעים תעשייתיים רעילים כמו <strong>Metanil Yellow</strong> (צבע אזו אסור במזון), <strong>Lead Chromate</strong> (כרומט עופרת, PbCrO₄) להענקת משקל וצבע בוהק, או <strong>Sudan Red</strong>.</p>
+    <h3>זיהוי זיופים: כלי המעבדה</h3>
+    <p><strong>HPLC</strong> (High-Performance Liquid Chromatography): הסטנדרט לכימות כורכומינואידים בנפרד ולזיהוי "טביעת אצבע" מולקולרית של אזור הגידול. עלות: <strong>80-150 דולר לדגימה</strong>. <strong>ICP-MS</strong> (Inductively Coupled Plasma Mass Spectrometry): חובה לבדיקת מתכות כבדות (עופרת, קדמיום, ארסן, כספית). עלות: <strong>150-300 דולר לפאנל מלא</strong>. <strong>UV-Vis Spectroscopy</strong>: בדיקה מהירה לזיהוי צבעים סינתטיים שאינם שייכים לספקטרום של כורכומין טבעי. <strong>Microscopy</strong>: זיהוי תאי עמילן זרים (אורז, תירס) בהגדלה.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>תקן EU</th><th>תקן FDA</th><th>Codex Alimentarius</th></tr></thead>
+        <tbody>
+            <tr><td><strong>עופרת (Pb)</strong></td><td>≤3.0 mg/kg</td><td>≤2.0 ppm</td><td>≤2.0 mg/kg</td></tr>
+            <tr><td><strong>קדמיום (Cd)</strong></td><td>≤0.3 mg/kg</td><td>אין מגבלה ספציפית</td><td>≤0.3 mg/kg</td></tr>
+            <tr><td><strong>ארסן (As)</strong></td><td>≤1.0 mg/kg</td><td>אין מגבלה ספציפית</td><td>≤1.0 mg/kg</td></tr>
+            <tr><td><strong>אפלטוקסין B1</strong></td><td>≤5.0 μg/kg</td><td>≤20 ppb סה"כ</td><td>≤5.0 μg/kg</td></tr>
+            <tr><td><strong>Salmonella</strong></td><td>Absent/25g</td><td>Absent/25g</td><td>Absent/25g</td></tr>
+            <tr><td><strong>TPC</strong></td><td>≤10⁶ CFU/g</td><td>≤10⁶ CFU/g</td><td>≤10⁶ CFU/g</td></tr>
+            <tr><td><strong>Metanil Yellow</strong></td><td>אסור (0%)</td><td>אסור (0%)</td><td>אסור (0%)</td></tr>
+            <tr><td><strong>Sudan Dyes</strong></td><td>אסור (0%)</td><td>אסור (0%)</td><td>אסור (0%)</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-r">
+        <div class="tg">אזהרת רעילות: עופרת בכורכום</div>
+        <p>ב-2019, מחקר של אוניברסיטת סטנפורד ואוניברסיטת דאקה חשף שבבנגלדש, <strong>Lead Chromate</strong> מתווסף לכורכום במכוון לשיפור הצבע והמשקל. ריכוזי עופרת של <strong>500-1,000 ppm</strong> נמצאו, פי 200 מעל המותר. עופרת היא מתכת כבדה המצטברת בגוף ופוגעת במערכת העצבים, בכליות ובמוח, במיוחד בילדים. בדיקת מתכות כבדות בשיטת ICP-MS היא חובה לכל מנת כורכום שנכנסת לשרשרת האספקה.</p>
+    </div>
+    <h3>סטריליזציה</h3>
+    <p>Steam Sterilization (HTST): <strong>120-135°C למשך 15-60 שניות</strong>. מורידה TPC, הורגת סלמונלה. פגיעה של <strong>5-12%</strong> בכורכומין ו-<strong>10-20%</strong> בשמנים אתריים. Ethylene Oxide (EtO): <strong>אסור ב-EU מ-2021</strong>. הודו עדיין משתמשת, אבל שוק הייצוא לאירופה דורש Steam בלבד. הקרנה (Irradiation): מותרת ב-EU (עד <strong>10 kGy</strong>), פגיעה מינימלית בכורכומינואידים, אך חלק מהקמעונאים האירופיים מסרבים למוצר מוקרן מסיבות שיווקיות.</p>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה: פצצת הפיגמנט בשרשרת האספקה</h2>
+    <p class="dc">הכורכום הוא לא רק תבלין; הוא "מזהם לוגיסטי". הפיגמנט שלו הוא <strong>ליפופילי</strong> (נצמד לשומן ולפלסטיק), מה שאומר שהוא מסוגל "לנדוד" דרך אריזות PP, קרטון, ואפילו דפנות של מכולות. בניהול מחסנים, הכורכום דורש <strong>בידוד מוחלט</strong>. אחסון שלו ליד מוצרים לבנים או אגוזים יקרים (קשיו, אלמונד, פקאן) הוא טעות שעלותה נמדדת בעשרות אלפי דולרים של סחורה מוכתמת.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">13-16t</div><div class="nu">מכולת 20'</div><div class="nl">כורכום יבש</div></div>
+        <div class="ni"><div class="nv">15-20°C</div><div class="nu">טמפרטורת שינוע</div><div class="nl">אידיאלית</div></div>
+        <div class="ni"><div class="nv">&lt;65%</div><div class="nu">RH במכולה</div><div class="nl">מקסימום</div></div>
+    </div>
+    <h3>משקל סגולי ואריזה</h3>
+    <p>הכורכום היבש בעל משקל סגולי גבוה יחסית לתבלינים: <strong>550-650 g/L</strong> (לעומת 400-450 בכמון). מכולת 20 רגל מכילה <strong>13-16 טון</strong>, תלוי באריזה. שקי ג'וט עם בטנת PE (50 ק"ג, סטנדרט הודי) או שקי PP (25 ק"ג, ייצוא). הודו מייצאת בעיקר בשקי ג'וט של 50 ק"ג, שעדיין נחשבים לסטנדרט ב-Erode ו-Nizamabad.</p>
+    <h3>אור, חמצן וזמן: שלישיית ההרס</h3>
+    <p>הכורכומין אינו יציב. חשיפה לאור UV מפרקת את המולקולה דרך <strong>Photodegradation</strong>: הקשר הכפול במרכז המולקולה נשבר, הצבע דוהה, הפעילות הביולוגית נעלמת. חצי חיים באור שמש ישיר: <strong>10-20 דקות</strong> (בתמיסה). באבקה יבשה, הפירוק איטי יותר אך מצטבר. pH קלקלי (מעל 7.5) מאיץ את הפירוק. חובה: אריזות <strong>Barrier Packaging</strong> אטומות לאור, עם שכבת אלומיניום או מטליזציה. חנקן (N₂ flushing) למניעת חמצון. אחסון בחשכה מלאה, <strong>15-20°C</strong>.</p>
+    <div class="ab ab-w">
+        <div class="tg">אזהרת הכתמה</div>
+        <p>הניחוח האדמתי והצבע הצהוב של כורכום מסוגלים לעבור באוויר ולהכתים משלוח שלם תוך לילה אחד. בשרשרת האספקה של Blue Star, כורכום לעולם לא יאוחסן באותו מחסן עם קשיו, אלמונד או כל מוצר בעל שטח פנים סופח. עלות שגיאת אחסון: <strong>$5,000-30,000</strong> למכולה מוכתמת.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות: המדע שמאחורי 4,000 שנות שימוש</h2>
+    <p class="dc">הכורכומין הוא אחד החומרים הטבעיים הנחקרים ביותר במדע הביו-רפואי. מעל <strong>15,000 מאמרים peer-reviewed</strong> ב-PubMed, מעל <strong>300 ניסויים קליניים</strong> רשומים ב-ClinicalTrials.gov. הטווח נע מדלקות מפרקים ועד אלצהיימר. הבעיה: רוב המחקרים הם in vitro (במבחנה) או בבעלי חיים. המחקרים הקליניים באדם מוגבלים יותר, אך הולכים ומתרבים.</p>
+    <h3>הברית עם הפיפרין: 2,000% שיפור</h3>
+    <p>הפרדוקס הגדול של הכורכום: הגוף מזהה את הכורכומין כחומר זר ומפעיל תהליך של <strong>Glucuronidation</strong> בכבד, שמפנה את המולקולה החוצה תוך דקות. כאן נכנס <strong>Piperine</strong>, האלקלואיד הפעיל בפלפל השחור. Piperine חוסם את האנזים <strong>UGT (UDP-glucuronosyltransferase)</strong> האחראי על פינוי הכורכומין. התוצאה: עלייה של <strong>2,000%</strong> בזמינות הביולוגית (Shoba et al., <em>Planta Medica</em>, 1998). הטבע יצר זיווג מושלם: כורכום + פלפל שחור מופיעים יחד במטבחים של הודו, דרום מזרח אסיה ומזרח אפריקה מזה אלפי שנים.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">15,000+</div><div class="nu">מאמרים מדעיים</div><div class="nl">PubMed</div></div>
+        <div class="ni"><div class="nv">2,000%</div><div class="nu">שיפור ספיגה</div><div class="nl">עם Piperine</div></div>
+        <div class="ni"><div class="nv">300+</div><div class="nu">ניסויים קליניים</div><div class="nl">ClinicalTrials.gov</div></div>
+    </div>
+    <h3>פעילות אנטי-דלקתית (Arthritis)</h3>
+    <p>מטא-אנליזה ב-<em>Journal of Medicinal Food</em> (2016) סקרה 8 ניסויים קליניים אקראיים (RCTs) בחולי <strong>Osteoarthritis</strong>. כורכומין במינון <strong>500-1,500 mg/day</strong> למשך 4-12 שבועות הראה ירידה משמעותית בכאב ובתפקוד מפרקי, דומה ל-<strong>Ibuprofen 1,200 mg/day</strong>, עם פחות תופעות לוואי גסטרו-אינטסטינליות. המנגנון: עיכוב <strong>COX-2</strong> ו-<strong>5-LOX</strong>, אנזימים פרו-דלקתיים.</p>
+    <h3>פעילות אנטי-סרטנית</h3>
+    <p>מחקרי in vitro הדגימו עיכוב של פרוליפרציה תאית ב-<strong>60+ סוגי תאים סרטניים</strong>. הכורכומין מעכב NF-κB, STAT3, ו-Wnt/β-catenin, שלושה מסלולי סיגנלינג מרכזיים בסרטן. בניסוי קליני פאזה II (<em>Clinical Cancer Research</em>, 2008), חולי סרטן לבלב מתקדם שנטלו <strong>8g/day</strong> כורכומין הראו ירידה של <strong>73%</strong> ברמות NF-κB בדם ותגובה ביולוגית חלקית. הכורכומין אינו תרופה לסרטן, אבל הוא מועמד חזק למחקר נוסף כתוסף (adjuvant) לכימותרפיה.</p>
+    <div class="pull">
+        <p>הכורכום הוא הגשר המרתק ביותר בין חוכמה עתיקה של 4,000 שנה לבין שיא המחקר הביו-רפואי של המאה ה-21. הדיוק הוא במולקולה; האמת היא בנתון.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: Erode, Nizamabad, ודינמיקת שוק 2026</h2>
+    <p class="dc">שני מרכזי כובד שולטים בשוק הכורכום העולמי. <strong>Erode</strong> בטמיל נאדו, מכונה "עיר הכורכום" (Turmeric City), מפעילה את הבורסה הגדולה ביותר למסחר פיזי בכורכום. <strong>Nizamabad</strong> בטלנגאנה, מרכז הגידול והמיון. שניהם מזינים את ה-NCDEX (National Commodity & Derivatives Exchange) שקובע מחירי פיוצ'רס, ומשם מחירי הייצוא לכל העולם.</p>
+    <div class="cb">
+        <div class="ct">חלוקת ייצור כורכום עולמי 2024 (% מסך הכמות)</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇳</span><span class="pb-name">הודו</span></div><div class="pb-track"><div class="pb-fill" data-w="80" style="background:#8B6340"></div></div><span class="pb-pct">80%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">סין</span></div><div class="pb-track"><div class="pb-fill" data-w="8" style="background:#6E4A28"></div></div><span class="pb-pct">8%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇲🇲</span><span class="pb-name">מיאנמר</span></div><div class="pb-track"><div class="pb-fill" data-w="4" style="background:#C4A060"></div></div><span class="pb-pct">4%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇳🇬</span><span class="pb-name">ניגריה</span></div><div class="pb-track"><div class="pb-fill" data-w="3" style="background:#9E7A50"></div></div><span class="pb-pct">3%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇧🇩</span><span class="pb-name">בנגלדש</span></div><div class="pb-track"><div class="pb-fill" data-w="3" style="background:#7D5A38"></div></div><span class="pb-pct">3%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="2" style="background:#DDD6CA"></div></div><span class="pb-pct">2%</span></div>
+        </div>
+        <div class="pb-note">נתוני Spice Board India · FAO · NCDEX 2024 · סה"כ ייצור עולמי: ~1,100,000 טון</div>
+    </div>
+    <h3>דינמיקת מחיר 2020-2026</h3>
+    <p>מחיר כורכום הודי (Erode Finger, NCDEX): ב-2020 עמד על כ-<strong>₹5,000-6,000/quintal</strong> ($600-750/t). ב-2021-2022 יציבות יחסית סביב <strong>₹7,000-8,000/quintal</strong>. ב-2023 עלייה חדה ל-<strong>₹12,000-15,000/quintal</strong> ($1,500-1,900/t) בעקבות ירידה של 10-15% ביבול וביקוש עולמי גובר. ב-2024 שיא של <strong>₹18,000-19,000/quintal</strong> ($2,200-2,400/t) עם מחסור חמור. תחזית 2025-2026: <strong>₹11,000-16,000/quintal</strong> ($1,300-2,000/t), תלוי במונסון ובשטחי הגידול. הוקם <strong>National Turmeric Board</strong> בנציאמאבאד ב-2025, עם יעד להגדלת הייצור ל-2 מיליון טון תוך 5 שנים ולהגדלת הייצוא ל-$1 מיליארד עד 2030.</p>
+    <div class="ab ab-w">
+        <div class="tg">דינמיקת ייצוא</div>
+        <p>הודו ייצאה <strong>162,000 טון</strong> כורכום ב-2023-24, בשווי <strong>$207 מיליון</strong> (ייצוא טרי, יבש ואבקה). ביעדים: בנגלדש (26,000t), איחוד האמירויות (22,000t), ארה"ב (6,700t), מלזיה (6,400t), מרוקו (6,300t). וייטנאם הפכה לשחקנית מפתיעה: ייצוא של <strong>5,949 טון</strong> בינואר-פברואר 2025 בלבד, עלייה של 31% בנפח ו-70% בערך לעומת התקופה המקבילה ב-2024. וייטנאם מציעה כורכום אבקה ב-<strong>$2.00-2.50/kg</strong>, גבוה מההודי אך באיכות עקבית יותר.</p>
+    </div>
+    <h3>מגמות 2025-2026</h3>
+    <p>שלוש מגמות: (1) <strong>Nutraceuticals</strong>: שוק תמציות הכורכומין (Curcumin Extracts) צומח ב-<strong>9.2% CAGR</strong>, מ-$1.5 מיליארד ב-2024 ל-$3.2 מיליארד צפויים ב-2033. הביקוש לכורכום עתיר כורכומין (Lakadong, Alleppey) עולה. (2) <strong>אורגני</strong>: מדינות צפון-מזרח הודו (מגלאיה, מיזורם, סיקים) מתמחות בכורכום אורגני עם פרמיה של <strong>30-50%</strong>. (3) <strong>Clean Label</strong>: קמעונאים אירופיים דורשים אפס צבעים סינתטיים, אפס EtO, טרייסביליטי מלא. ספקים שלא עומדים בדרישות מאבדים גישה לשוק.</p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית: ננו-טכנולוגיה, ליפוזומים ושוק 2030</h2>
+    <p class="dc">הכורכום של 2026 נמצא בנקודת מפנה טכנולוגית. הבעיה המרכזית, הזמינות הביולוגית הנמוכה של כורכומין, מטופלת כיום בארבע גישות הנדסיות שמשנות את כל שרשרת הערך מחומר גלם ועד מוצר מדף.</p>
+    <h3>ננו-כורכומין וליפוזומים</h3>
+    <p><strong>Liposomal Curcumin</strong>: מולקולות כורכומין עטופות בשכבת פוספוליפיד המדמה את ממברנת התא. הליפוזום עובר דרך מערכת העיכול מבלי להתפרק ומשחרר את הכורכומין ישירות בתאים. שיפור ספיגה: <strong>פי 20-30</strong> ביחס לכורכומין רגיל. <strong>Nano-Curcumin</strong>: חלקיקים בגודל <strong>10-200 nm</strong>, שמגדילים את שטח הפנים ואת המסיסות במים. פורמולציות SNEDDS (Self-Nanoemulsifying Drug Delivery Systems) מצליחות להפוך את הכורכומין ההידרופובי למסיס במים. שוק הננו-כורכומין צמח ב-<strong>40% בשנתיים האחרונות</strong>.</p>
+    <h3>Cryogenic Grinding</h3>
+    <p>טחינה קריוגנית: טחינה בטמפרטורה של <strong>מינוס 196°C</strong> באמצעות חנקן נוזלי. בטחינה מכנית רגילה, החיכוך מחמם את האבקה ל-<strong>70-90°C</strong>, מה שמנדף <strong>30-40%</strong> מהשמנים האתריים ומחמצן כורכומינואידים. בטחינה קריוגנית, האבקה נשארת קפואה לאורך כל התהליך, ושומרת על <strong>95%+</strong> מהשמנים האתריים והפיגמנטים. עלות: <strong>$50-100/טון</strong> מעל טחינה רגילה. ROI: פרמיה של 20-30% על המוצר.</p>
+    <div class="ab ab-w">
+        <div class="tg">NIR Spectroscopy בקו ייצור</div>
+        <p>ספקטרוסקופיית <strong>Near-Infrared (NIR)</strong> מאפשרת מדידה לא-הרסנית של לחות, כורכומין ושמנים אתריים <strong>תוך 3 שניות</strong>, ללא הכנת דגימה. מערכות כמו <strong>FOSS DS2500</strong> ו-<strong>Bruker Tango</strong> מותקנות ישירות בקו העיבוד ומודדות כל שק שעובר. סטייה מהסף מפעילה התראה ודחייה אוטומטית. עלות מערכת: <strong>$40,000-80,000</strong>. ROI: שנה בקו שמעבד 1,000 טון/חודש.</p>
+    </div>
+    <h3>Blockchain Traceability</h3>
+    <p>ה-EU Regulation הצפוי לחייב <strong>Farm-to-Fork traceability</strong> לתבלינים עד 2027 מציב אתגר מיוחד לכורכום, שבו שרשרת האספקה כוללת מיליוני חקלאים קטנים בהודו. חברות כמו <strong>Olam Spices</strong>, <strong>Synthite Industries</strong> ו-<strong>Nedspice</strong> משקיעות במערכות blockchain לתיעוד מוצא. האתגר: חקלאי עם 0.5 הקטר בטלנגאנה צריך לתעד כל שלב, מהשתילה ועד למכירה ב-Erode Mandi. הפתרון: אפליקציות מובייל פשוטות עם QR code לכל מנה, קישור לנתוני GPS של השדה, ואימות ב-blockchain.</p>
+    <p>הכורכום ממשיך להיות הריזומה הזהובה שמחברת בין חקלאי עם מעדר בטלנגאנה לבין מעבדת ננו-טכנולוגיה בציריך. מהשורשים האנתרופולוגיים של הוודות ועד להנדסת ליפוזומים. מ-Erode Mandi ל-Clean Label בסופרמרקט באמסטרדם. הדיוק נמצא באנליזה; האמת נמצאת בריזומה.</p>
+</section>
+
+<div class="ft">
+    ערך ידע מסחרי-מדעי · Blue Star International · 2026<br>
+    מבוסס על נתוני NCDEX, Spice Board India, FAO, Codex Alimentarius, ומקורות פתוחים<br>
+    <span style="font-size:11px;color:#AAA59A;">ביוכימיה: Shoba et al., Planta Medica 1998 · Aggarwal & Harikumar, Int J Biochem Cell Biol 2009 · שוק ונתוני ייצור: NCDEX 2024-25 · Spice Board India Annual Report · PJTSAU Market Intelligence 2025 · בטיחות: EU Reg 2023/915 · FDA CPG 525.750 · Stanford/Dhaka Lead Study 2019 · טכנולוגיה: Anand et al., Mol Pharmaceutics 2007</span>
+</div>
+</main>
+
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · TURMERIC</footer>
+
+<div class="marquee-container">
+    <div class="marquee-text">כורכום · CURCUMA LONGA · ERODE · CURCUMIN · NIZAMABAD · כורכום · CURCUMA LONGA · ERODE · CURCUMIN · NIZAMABAD · </div>
+</div>
+
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8894A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch');
+    const dots = document.querySelectorAll('.nav-dot');
+    let current = "";
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 300);
+});
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => {
+    dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+            obs.unobserve(e.target);
+        });
+    }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) {
+                        heroSlot.innerHTML = '';
+                        heroSlot.appendChild(makeMedia(heroSrc));
+                    }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

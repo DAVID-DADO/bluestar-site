@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0A0A0B; --text: #FAF7F0; --body: #D1CEC5;
+    --accent: #8B2515; --warm: #C44828;
+    --card: rgba(20,20,22,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background-color: var(--bg); color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9;
+    overflow-x: hidden;
+    background-image: linear-gradient(rgba(196,72,40,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(196,72,40,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+body::before, body::after {
+    content:''; position:fixed; width:600px; height:600px; border-radius:50%;
+    filter:blur(120px); z-index:-2; opacity:0.15; pointer-events:none;
+}
+body::before { background:var(--warm); top:-100px; left:-100px; }
+body::after { background:#5A1A0A; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap {
+    max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden;
+    box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05);
+    background:#0A0A0B; display:flex; align-items:center; justify-content:center;
+}
+.hero-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.hero-img-placeholder { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.hero-img-placeholder span { color:rgba(255,255,255,0.15); font-size:12px; letter-spacing:3px; font-family:'Space Mono',monospace; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch {
+    background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px);
+    padding:50px; border-radius:var(--radius); margin-bottom:40px;
+    border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden;
+}
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; }
+.ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#D4906A; font-style:italic; }
+strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(196,72,40,0.08); border-right:4px solid var(--warm); }
+.ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(90,26,10,0.2); border-right:4px solid var(--accent); }
+.ab-g .tg { color:#D4906A; }
+.ab-r { background:rgba(184,50,50,0.1); border-right:4px solid #B83030; }
+.ab-r .tg { color:#E06060; }
+.ab-r p { color:#DDB0B0; }
+.vc { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:22px; margin:18px 0; }
+.vc .vn { font-family:'Frank Ruhl Libre',serif; font-size:21px; font-weight:700; color:var(--text); }
+.vc .vt { font-size:12px; color:var(--warm); font-weight:600; margin-bottom:10px; }
+.vc p { font-size:16px; line-height:1.75; margin-bottom:0; }
+.vc .vs { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.vc .vsi { background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:5px; font-size:12px; color:#A09080; }
+.vc .vsi strong { color:var(--text); }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A09080; margin-top:2px; }
+.ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.cb { background:rgba(20,20,22,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px; margin:28px 0; }
+.cb .ct { font-family:'Frank Ruhl Libre',serif; font-size:17px; font-weight:700; margin-bottom:14px; text-align:center; color:var(--text); }
+.pb-chart { margin:16px 0 8px; display:flex; flex-direction:column; gap:10px; }
+.pb-row { display:flex; align-items:center; gap:10px; }
+.pb-meta { display:flex; align-items:center; gap:6px; min-width:120px; justify-content:flex-end; }
+.pb-flag { font-size:18px; }
+.pb-name { font-size:13px; color:#A09080; }
+.pb-track { flex:1; background:rgba(255,255,255,0.08); height:18px; border-radius:9px; overflow:hidden; }
+.pb-fill { height:100%; width:0; border-radius:9px; transition:width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.pb-pct { font-family:'Frank Ruhl Libre',serif; font-size:14px; font-weight:700; color:var(--text); width:36px; text-align:left; }
+.pb-note { font-size:11px; color:#6B6058; opacity:.7; margin-top:10px; text-align:center; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; border-top:1px solid rgba(255,255,255,0.05); }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(196,72,40,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.03); animation:scrollText 40s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#6B6058; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(196,72,40,0.4); }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(20,20,22,0.85); border:1px solid rgba(196,72,40,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+.home-btn:hover { background:rgba(196,72,40,0.15); }
+@media (max-width:900px) {
+    .side-nav { display:none; }
+    .hero h1 { font-size:55px; }
+    .hero-img-wrap { height:300px; margin-bottom:-100px; }
+    .con { margin-top:150px; }
+    .ng { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות ובקרת איכות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="פיזיולוגיה ובריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה ושוק"></div>
+    <div class="nav-dot" data-target="ch10" title="טכנולוגיה ועתיד"></div>
+</nav>
+
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">פפריקה</h1>
+    <p class="deck" id="sync-desc">האדום שכבש את אירופה. מהג'ונגלים של מקסיקו לשדות הונגריה וספרד, הנדסת הקפסנתין, מדד ASTA, וכלכלה של פיגמנט שמדינות שלמות בנו עליו זהות לאומית.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <div class="hero-img-placeholder">
+            <span>PAPRIKA · Capsicum annuum</span>
+            <span style="font-size:9px;opacity:0.5;">MEDIA SLOT · HERO</span>
+        </div>
+    </div>
+</section>
+
+<div class="marquee-container">
+    <div class="marquee-text">CAPSICUM ANNUUM · CAPSANTHIN · ASTA · KALOCSA · PIMENTÓN · PAPRIKA · CAPSICUM ANNUUM · CAPSANTHIN · ASTA · KALOCSA · PIMENTÓN · PAPRIKA · </div>
+</div>
+
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: המהגר שמחק את שורשיו</h2>
+    <p class="dc">הפפריקה היא ההוכחה החדה ביותר לכך שתבלין הוא לא רק ביולוגיה, הוא גם היסטוריה של כוח וזיכרון קולקטיבי. <em>Capsicum annuum</em> הגיע לאירופה כסקרנות בוטנית מהעולם החדש, נדחה בתחילה כצמח נוי רעיל, ואז שינה בצורה בלתי הפיכה את המטבח ההונגרי, הספרדי, הטורקי והמרוקאי. אין תבלין אחר בארכיון שמייצג טרנספורמציה תרבותית מהירה ורדיקלית כל כך: מהמאה ה-16 למאה ה-18, לא יותר מ-200 שנה, הפפריקה הפכה מצמח זר ושנוי במחלוקת למרכיב שהונגרים מגדירים כ"לאומי" ממש כמו הדגל.</p>
+    <p>מבחינה בוטנית, פפריקה היא הפרי המיובש והטחון של זני <em>Capsicum annuum</em> בעלי חריפות נמוכה. משפחת הסולניים (<em>Solanaceae</em>), אותה משפחה של עגבנייה, פטאטה וחציל. הפרי עצמו הוא ה-Berry, ומה שאנחנו קוראים "ירק" הוא מבחינה בוטנית פרי אמיתי עם גרעינים. עם בשלות מלאה, הפרי מאגר כמויות גדולות של <strong>קרוטנואידים</strong> בדופן (Pericarp), בעיקר Capsanthin ו-Capsorubin, שנותנים את הצבע האדום. האזור שסביב הגרעינים (Placenta) מכיל את ה-Capsaicin, רכיב החריפות. ישנם זנים שאצלם ה-Placenta כמעט נעדר, ולכן מייצרים פפריקה מתוקה לחלוטין.</p>
+    <p>ה-Capsicum הגיע לספרד עם קולומבוס ב-1493. מהספרדים עבר לפורטוגל, ומהפורטוגלים לטורקיה, ומהטורקים להונגריה. המסלול הזה רלוונטי מסחרית: הוא מסביר מדוע הזן ההונגרי (Édes) שונה כל כך מהזן הספרדי (Pimentón), למרות שמדובר באותו מין בוטני. כל עצירה במסלול ייצרה לחץ אבולוציוני ובחירה אנושית שונה, שהביאה לזנים עם פרופילי פיגמנט, חריפות וארומה שונים בתכלית.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>אלברט סנט-גיירגי, כימאי הונגרי, בודד ב-1932 את ויטמין C מפפריקה הונגרית טרייה. הוא גילה שהפפריקה מכילה פי 3 יותר ויטמין C מלימון ביחס לגרם. על גילוי זה קיבל פרס נובל בכימיה ב-1937. הפפריקה הפכה לחומר גלם המחקר שחשף לעולם המדעי את המבנה המולקולרי של חומצה אסקורבית. מדינה שלמה זוהתה עם תבלין אחד ברגע שאחד מבניה זכה בפרס נובל בזכותו.</p>
+    </div>
+    <p>כיום, שוק הפפריקה העולמי מוערך בכ-<strong>1.5-2 מיליארד דולר</strong> בשנה. הונגריה וספרד מייצרות את הדרגות האיכותיות ביותר, אבל סין, הודו, מקסיקו ופרו מספקות את הנפחים הגדולים לתעשייה. הטווח עצום: ממתיקה לפלה הונגרי ועד לגולאש, ומהתיבול בפאייה הספרדית עד לצבעי מאכל תעשייתיים. אין תבלין אחר שמשמש גם שוק Culinary פרימיום וגם תעשיית צבעי מאכל בכמויות תונות. זה מה שמסבך את הניתוח המסחרי: לא כל פפריקה היא אותו מוצר.</p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: פיזיולוגיית הפיגמנטציה האופטימלית</h2>
+    <p class="dc">הפפריקה היא גידול של שמש מלאה וניגודי טמפרטורה. יום חם, לילה קריר. השילוב הזה, שאפשר למצוא בהונגריה, באקסטרמדורה הספרדית, ובאזורים הגבוהים של תורכיה ופרו, הוא שיוצר את ריכוז הקרוטנואידים הגבוה ביותר. בלילות חמים מדי, הצמח מוציא את אנרגיית הסוכרים לנשימה ולא לסינתזת פיגמנט. הטמפרטורה האידיאלית: <strong>25-30°C</strong> ביום, <strong>12-16°C</strong> בלילה. ניגוד של לפחות 10 מעלות בין יום ולילה בשלב הבשלת הפרי הוא המרכיב האגרונומי שלא ניתן לשכפל בשום תנאי בית גידול.</p>
+    <p>הצמח עצמו גדל ל-60-120 ס"מ גובה, בעל עלים ירוקים מבריקים ופרחים לבנים קטנים. הפרי ניתן לקציר בשני שלבים: ירוק (לשוק הפרי הטרי) או אדום מלא (לייבוש וטחינה). בפפריקה לתיבול, הקציר האדום הוא הרלוונטי. עיכוב הקציר מגביר ריכוז Capsanthin, אבל חושף את הפרי לסיכוני עובש ורקבון, ובמיוחד ל-<em>Botrytis cinerea</em> שתוקפת בתנאי לחות גבוהה.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">25-30°C</div><div class="nu">טמפרטורת יום אידיאלית</div><div class="nl">לסינתזת קרוטנואידים</div></div>
+        <div class="ni"><div class="nv">120-150</div><div class="nu">ימי גידול</div><div class="nl">זריעה עד קציר אדום</div></div>
+        <div class="ni"><div class="nv">600-900</div><div class="nu">ק"ג/הקטר</div><div class="nl">פפריקה מיובשת</div></div>
+    </div>
+    <h3>קרקע, השקיה, ולחץ מימי</h3>
+    <p>פפריקה דורשת קרקע עמוקה, מאווררת, בעלת ניקוז מצוין. pH אופטימלי <strong>6.0-7.0</strong>. עודף חנקן מייצר צמח ירוק גדול עם פרי חיוור, כי האנרגיה מנותבת לצמיחה צמחונית ולא לסינתזת פיגמנט. פוטסיום (K) הוא האלמנט הקריטי לאיכות: מגביר עצמת צבע, שיפור מרקם דופן ועמידות מחלות. ירידה בהשקיה בשלב הבשלה האחרונה (Deficit Irrigation, ירידה ל-50-60% מהצרכים) מגבירה ריכוז סוכרים ופיגמנטים בפרי על חשבון גודלו. שיטה זו מיושמת במיוחד בגידולי Pimentón הספרדי לדרגות פרימיום.</p>
+    <h3>מחלות ואיומים אגרונומיים</h3>
+    <p>שלוש מחלות מרכזיות משפיעות על איכות הפיגמנט: (1) <strong>Phytophthora capsici</strong> (כלבת פפריקה) מהרסת שורשים ואינה ניתנת לריפוי לאחר הדבקה. מניעה: סיבוב גידולים של לפחות 3 שנים ללא סולניים. (2) <strong>Cucumber Mosaic Virus (CMV)</strong> מועבר על ידי כנימות, גורם לפרי מנומר בצבע לא אחיד, ירוד ב-ASTA. (3) <strong>Alternaria solani</strong>, כתמים שחורים על דופן הפרי, גורמת לירידה חדה ברמת ASTA בקטעים המושפעים ולסיכוני אפלטוקסין בייבוש.</p>
+    <div class="ab ab-g">
+        <div class="tg">גזרת מחקר אגרונומית</div>
+        <p>זן <strong>Kalocsai 622</strong>, שפותח על ידי המכון החקלאי של Kalocsa להונגריה, מציג יציבות ASTA של 140-160 בשנים שונות, לעומת ממוצע 100-120 בזנים מסחריים. הסוד: הבשלה מתואמת של הפרות על אותו הצמח מאפשרת קציר יחיד שכל הפרי בו בשלות מרבית. ייצור מסחרי של הזן מוגבל עקב עמידות נמוכה ל-CMV בשיטות גידול אינטנסיביות.</p>
+    </div>
+    <p>מעבר לספרד ולהונגריה, אזורי גידול מרכזיים כוללים את <strong>Karaköy</strong> בטורקיה (פפריקה בינונית-חריפה, נפח גדול), את <strong>Shin Joong</strong> בקוריאה (גוצ'וגארו, לשוק קוריאני ספציפי), ואת <strong>Tien Tsin</strong> בסין (פפריקה חריפה, ASTA 100-120, נפח תעשייתי). כל אזור מייצר פרופיל ביוכימי שונה שמשפיע על ייעוד המוצר הסופי.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: הנדסת הקרוטנואידים והמולקולה של ה-ASTA</h2>
+    <p class="dc">הפפריקה היא אחד ממקורות הקרוטנואידים הצפופים ביותר בעולם הצומח. יותר מ-50 קרוטנואידים שונים זוהו בפרי הבשל, אך שניים שולטים בכל מה שחשוב מסחרית: <strong>Capsanthin</strong> ו-<strong>Capsorubin</strong>. שניהם קסנתופילים (Xanthophylls), קרוטנואידים המכילים חמצן שנוצרים רק בפרות בשלים ולא בחומר ירוק. Capsanthin לבדו מהווה <strong>35-50%</strong> מסך הקרוטנואידים בפרי בשל, ועוצמתו הצבעונית היא שמגדירה את ציון ה-ASTA. זה המרכיב שכל ניתוח מעבדה מחפש ראשון.</p>
+    <p><strong>ASTA (American Spice Trade Association) Color Value</strong> הוא הפרמטר המסחרי הקריטי ביותר בספרד, בהונגריה ובכל שוק המייבא פפריקה לשימוש תעשייתי. הוא נמדד בשיטת ספקטרופוטומטריה בגל 460nm (אור כחול-סגול), כאשר הפיגמנט הכתום-אדום סופג אותו ומשקף אדום. ציון ASTA 100 = פפריקה סחירה. ציון ASTA 120-140 = פרימיום. ציון ASTA 160+ = Super Grade, נדיר ויקר. ציון ASTA מתחת ל-80 = נחות, בעל ביקוש מינימלי בשוק מזרח אירופה.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">140+</div><div class="nu">ASTA Super Grade</div><div class="nl">דרגה פרימיום</div></div>
+        <div class="ni"><div class="nv">50+</div><div class="nu">קרוטנואידים שונים</div><div class="nl">בפרי בשל</div></div>
+        <div class="ni"><div class="nv">460nm</div><div class="nu">גל מדידה ספקטרו</div><div class="nl">תקן ASTA</div></div>
+    </div>
+    <h3>Capsanthin: יציבות מולקולרית ואויבי הפיגמנט</h3>
+    <p>Capsanthin הוא מולקולה מסיסת-שמן (Lipophilic). זה מסביר מדוע פפריקה "נפתחת" בשמן חם: ריכוז הצבע מתפזר טוב יותר בסביבה שמנה. זה גם ההסבר לכך שפפריקה שנוספת למים קרים תשאר גושים אדומים שלא מתמוססים. שמן Paprika Oleoresin, שמפיקים ממיצוי ממסים, משמש בתעשייה כצבע מאכל תחת קוד <strong>E160c</strong>, ומכיל ASTA שווה ערך של 1,000-10,000.</p>
+    <p>שלושה אויבים מרכזיים של הפיגמנט: (1) <strong>חמצן</strong>: חמצון אוורירי מוריד ASTA בכ-<strong>15-20%</strong> תוך 6 חודשים בחשיפה פתוחה. (2) <strong>אור UV</strong>: גורם לפוטואיזומריזציה של Capsanthin ל-Trans-Capsanthin, שצבעו חיוור יותר. ירידה של <strong>50% ASTA</strong> תוך חודש בחשיפה לשמש ישירה בצנצנת זכוכית. (3) <strong>חום</strong>: עיבוד בחום גבוה מעל 80°C מאיץ חמצון ושבירה מולקולרית. פפריקה שיובשה בתנורי חום גבוהה תציג ASTA נמוך ב-20-40% מפפריקה שיובשה בשמש.</p>
+    <h3>Capsaicin וה-Scoville Scale: הפרדת הצבע מהחריפות</h3>
+    <p>המסחר בפפריקה מחייב הבנה בסיסית של מה שאינה מכילה. ה-Capsaicin, מולקולת החריפות, נוצר אצל <em>Capsicum annuum</em> בקטעי ה-Placenta (רקמת העורק המחזיקה את הגרעינים). בזני פפריקה מסחריים, בחירה גנטית של 500+ שנה הורידה את תכולת ה-Capsaicin ל-<strong>0-100 Scoville Heat Units (SHU)</strong>, לעומת <strong>30,000-50,000 SHU</strong> בפלפל חריף טיפוסי. הנוסחה הפשוטה: יותר Capsanthin בדופן, פחות Capsaicin ב-Placenta. אלה שני מסלולים ביוסינתטיים שמתחרים על אותו מאגר מולקולרי בפרי.</p>
+    <div class="ab ab-w">
+        <div class="tg">פרמטר מעבדה קריטי</div>
+        <p>מדידת <strong>Total Color (TC)</strong> בשיטת ASTA מחייבת הכנת דגימה מדויקת: <strong>0.1 גרם</strong> פפריקה טחונה, מומסת ב-<strong>100ml acetone</strong> (Analytical Grade), ניגוב ב-Whatman No.4 filter, קריאה ספקטרופוטומטרית ב-460nm, ובחישוב: ASTA = (A₄₆₀ × 16.4) / משקל דגימה. כל סטייה מהפרוטוקול מייצרת תוצאות לא ניתנות להשוואה בין מעבדות. ספקים שמדווחים ASTA ללא ציון השיטה הספציפית, מדווחים בחלל ריק.</p>
+    </div>
+    <p>מרכיבים ביוכימיים נוספים בעלי משקל מסחרי: <strong>Lutein</strong> ו-<strong>Zeaxanthin</strong> תורמים לצבע כתום-צהבהב ורלוונטיים לשוק תוספי תזונה. <strong>Tocopherols</strong> (ויטמין E) פועלים כנוגדי חמצון פנימיים ומאטים שפלות ASTA. <strong>Ascorbic Acid</strong> (ויטמין C), שבגלל ייבוש מאבד רוב מהתכולה הטרייה, מייצג כ-<strong>0.5-1% </strong> מהפרי יבש. ריכוז שמנים אתריים: <strong>0.5-1.5%</strong> בלבד, נמוך בהרבה מכמון. הארומה של פפריקה פחות מבוססת על שמנים אתריים וחזקה יותר בצבע ובטעם.</p>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: ספרד מול הונגריה מול שאר העולם</h2>
+    <p class="dc">שני מרכזים של ייצור פרימיום שולטים בשוק הגלובלי הוואדי, ולכל אחד לוגיקת איכות עצמאית ובלתי תלויה. ההונגרים בנו מערכת דירוג המבוססת על מתיקות וצבע. הספרדים בנו מערכת שמבוססת על עיבוד ומקור גאוגרפי. השוק הגלובלי מוסיף שכבה שלישית: ה-ASTA כמדד יחיד מספקי נפח גדול. הברוקר שמבין את שלושת הלוגיקות הללו בו-זמנית, ולא מתבלבל ביניהן, הוא זה שיכול לנהל עסקאות בין שווקים.</p>
+    <h3>המערכת ההונגרית: שמונה דרגות</h3>
+    <p>הונגריה מייצרת פפריקה בשמונה דרגות רשמיות לפי תקן MSZ (Magyar Szabvány). מדרגה 1 (Special/Különleges) עד דרגה 8 (Mercantile). ארבע הדרגות המסחריות המשמעותיות:</p>
+    <div class="vc">
+        <div class="vn">Különleges (Special)</div>
+        <div class="vt">ASTA 160+ · החריפות: 0 SHU</div>
+        <p>הדרגה הגבוהה ביותר. צבע אדום-דם עמוק, אבקה קטיפתית, ריח מתוק-פירותי. מיוצרת אך ורק מדופן הפרי ללא זרעים וגידים. תפוקה: פחות מ-10% מהיבול הכולל. מחיר: 15-25 דולר לק"ג.</p>
+        <div class="vs"><div class="vsi"><strong>גידול:</strong> Kalocsa, Szeged</div><div class="vsi"><strong>ייבוש:</strong> שמש טבעית</div><div class="vsi"><strong>ASTA:</strong> 160-200</div></div>
+    </div>
+    <div class="vc">
+        <div class="vn">Édesnemes (Noble Sweet)</div>
+        <div class="vt">ASTA 120-160 · החריפות: 0-100 SHU</div>
+        <p>הדרגה הנפוצה ביותר בשוק הבינלאומי. מאזן בין עוצמת צבע, ארומה מפותחת, ומחיר סחיר. רוב הייצוא ההונגרי נמצא בדרגה זו. מייצגת את הסטנדרט שמולו מושווים ספקים אחרים.</p>
+        <div class="vs"><div class="vsi"><strong>ASTA:</strong> 120-160</div><div class="vsi"><strong>לחות:</strong> max 10%</div><div class="vsi"><strong>EM:</strong> max 0.5%</div></div>
+    </div>
+    <div class="vc">
+        <div class="vn">Félédes (Semi-Sweet)</div>
+        <div class="vt">ASTA 90-120 · החריפות: 100-500 SHU</div>
+        <p>מעט חריפות מוחשית, עדיין ריח מתוק. מועדפת על ידי שפים שמחפשים עומק טעם לצד צבע. מוסיפה שכבת מורכבות שהדרגות המתוקות לחלוטין אינן מציעות.</p>
+        <div class="vs"><div class="vsi"><strong>מחיר יחסי:</strong> 85-90% מ-Édesnemes</div><div class="vsi"><strong>שוק ראשי:</strong> מטבח מקצועי</div></div>
+    </div>
+    <h3>המערכת הספרדית: DOP ועיבוד מסורתי</h3>
+    <p>ספרד מייצרת שני סוגים בסיסיים תחת הגנת DOP (Denominación de Origen Protegida): <strong>Pimentón de la Vera</strong> (אקסטרמדורה, מעושן) ו-<strong>Pimentón de Murcia</strong> (מורסיה, מיובש שמש). ה-Vera הוא הייחודי מבחינה עולמית. אין לו שום מקבילה בשום ייצור אחר בעולם.</p>
+    <div class="vc">
+        <div class="vn">Pimentón de la Vera Dulce</div>
+        <div class="vt">מעושן · מתוק · DOP מאנגלסיה</div>
+        <p>הפרי מיובש מעל עץ אלון (Quercol rotundifolia) למשך 10-15 ימים ברציפות. העשן חודר לתוך מבנה הפרי, נקשר לשמנים, ויוצר ארומה מעושנת שאינה ניתנת לחיקוי כימי. ASTA 80-120. הצבע כהה יותר מהמתחרה ההונגרי, אבל הנוכחות הארומטית חזקה לאין ערוך.</p>
+        <div class="vs"><div class="vsi"><strong>Phenols מעשן:</strong> 15-25 mg/kg</div><div class="vsi"><strong>ASTA:</strong> 80-120</div><div class="vsi"><strong>שמנים:</strong> 12-16%</div></div>
+    </div>
+    <div class="vc">
+        <div class="vn">Pimentón de la Vera Picante</div>
+        <div class="vt">מעושן · חריף · DOP</div>
+        <p>אותו תהליך ייבוש, מזני פלפל חריפים יותר (Jaranda, Jariza). 500-1,000 SHU. החריפות מאוזנת על ידי העשן הכבד, ויוצרת פרופיל מורכב שאין לו שווה. Chorizo ​​ספרדי מסורתי לא ניתן לייצר ללא Picante.</p>
+        <div class="vs"><div class="vsi"><strong>SHU:</strong> 500-1,000</div><div class="vsi"><strong>מחיר:</strong> 18-35 €/ק"ג</div></div>
+    </div>
+    <div class="ab ab-r">
+        <div class="tg">סיכון זיוף DOP</div>
+        <p>Pimentón de la Vera מזויף בשכיחות גבוהה בשוק הבינלאומי. פפריקה סינית מעושנת מלאכותית (Liquid Smoke) מוכרת תחת שמות דומים. הגישה הנכונה: לדרוש תעודת DOP עם קוד ייצוב, ולבדוק נוכחות Guaiacol וסימני העשן הטבעיים בכרומטוגרפיה (GC-MS). חברות כמו <strong>La Chinata</strong> ו-<strong>McCormick La Vera</strong> הן ספקי ייחוס בשוק הבינלאומי.</p>
+    </div>
+    <h3>ייצור תעשייתי: סין, הודו, פרו</h3>
+    <p>לצד הפרימיום האירופי, שוק תעשיית המזון ניזון ממאגרים גדולים של פפריקה סחירה ברמת ASTA 60-100. סין מספקת את הנפח הגדול ביותר. הודו, בעיקר אנדרה פרדש (זן Teja), מספקת פפריקה בעלת ASTA גבוה יחסית (90-110) במחיר תחרותי. פרו מתייצבת כיצרן עם ASTA 100-120 וטראצ'ביליות גבוהה, מספקת לשוק האמריקאי. ההבדל הקריטי בין "תעשייתי" ל"culinary": בתעשייתי, ה-ASTA הוא הכל. בשוק ה-Culinary, ה-ASTA חשוב אבל הטעם, הארומה והמקור מכניסים פרמיה שאין לה מדד מספרי.</p>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: הנדסת הטחינה מול שפלות הפיגמנט</h2>
+    <p class="dc">כל שלב בעיבוד הפפריקה הוא תחרות בין שני כוחות מנוגדים: הגדלת נפח הייצור מול שמירה על ASTA. המכונות רוצות לעבוד מהר ובחום גבוה. הכימיה של הקרוטנואידים דורשת איטיות וקור. הפשרה הכלכלית בין השניים היא מה שמגדיר את פרופיל הייצור של כל מפעל, ועל הברוקר להבין מה הפשרה שנבחרה לפני שהוא מסכם מחיר.</p>
+    <h3>שלב 1: ייבוש</h3>
+    <p>שלושה מסלולי ייבוש בשוק: (1) <strong>ייבוש שמש מסורתי</strong>: 15-20 ימים, ASTA מקסימלי, עלות אנרגיה כמעט אפסית, אבל תלות מוחלטת במזג האוויר וסיכון גבוה של זיהום עובש ב-Aflatoxin בתנאי לחות. (2) <strong>ייבוש בתנור (Belt Dryer)</strong>: 2-6 שעות, טמפרטורה 55-70°C, ASTA יורד ב-20-30% אבל תכולת לחות אחידה ומבוקרת. (3) <strong>ייבוש בעשן (Vera)</strong>: 10-15 ימים מעל עץ אלון, ASTA ממוצע (80-120), אבל פרופיל ארומה ייחודי בלתי חלופי. כל מסלול מייצר מוצר שונה שאינו מתחרה ישירות באחרים.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">ייבוש ראשוני</div>
+                <div class="proc-step-body">הורדת לחות מ-90% (פרי טרי) ל-10-12%. שלב קריטי: טמפרטורה לא תעלה על 65°C. מעל סף זה, Capsanthin עובר דה-אסטריפיקציה, מולקולות ה-Diester מתפרקות ל-Mono-ester, ועוצמת הצבע יורדת ב-15-25%.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">הסרת גבעולים וזרעים</div>
+                <div class="proc-step-body">Destemming ו-Deseeding מכניים. הזרעים מכילים Capsaicin ריכוזי (4,000-10,000 SHU) גם בזני פפריקה מתוקה. שיעור הגרעינים שנותר: פחות מ-0.5% לדרגת Édesnemes. הגרעינים שהוסרו נמכרים נפרד לתעשיית שמן.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">טחינה</div>
+                <div class="proc-step-body">אבני ריחיים גרניט (Millstone) מסורתיות מייצרות חום פחות ממטחנות פטיש (Hammer Mill). טחינת Hammer מהירה ויעילה אבל מייצרת חום שממיס שמנים ומאיץ חמצון. פרימיום: Millstone מקורר. תעשייתי: Hammer Mill עם קירור אוויר. גודל חלקיק: 80-120 mesh (150-180 מיקרון) לתיבול ביתי, 200 mesh לצבעי מאכל תעשייתיים.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">כוונון לחות גמרי</div>
+                <div class="proc-step-body">לאחר טחינה, לחות עולה מחיכוך. יש להוריד ל-9-10% לפני אריזה. כלי מדידה: NIR Moisture Analyzer בזמן אמת. חריגה מ-11% לחות מציתה התפתחות עובש בתוך 4-6 שבועות גם בצנצנות אטומות.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">05</div>
+            <div>
+                <div class="proc-step-title">הזדקנות מבוקרת (Curing)</div>
+                <div class="proc-step-body">14-30 ימים ב-15-18°C, לחות יחסית 65-70%. מאפשר לשמנים שהשתחררו בטחינה להתפזר אחידה, לייצב ASTA ולאחד פרופיל ארומה. פפריקה "טרייה" מדי שנשלחה ללא Curing תציג ASTA לא יציב בין סגרים שונים.</div>
+            </div>
+        </div>
+    </div>
+    <h3>Paprika Oleoresin: המוצר התעשייתי</h3>
+    <p>מיצוי בממסים (Hexane, Ethyl Acetate, CO₂ Supercritical) מדופן הפרי מייצר <strong>Paprika Oleoresin</strong>, נוזל צמיג אדום-כהה המכיל ASTA שווה-ערך 1,000-10,000. שימושים: צבע מאכל E160c בבשר מעובד, גבינות, חטיפים, ושוק קוסמטיקה. מחיר Oleoresin: <strong>40-120 דולר לק"ג</strong> (לפי ריכוז). מיצוי CO₂ Supercritical מייצר מוצר נקי יותר ללא שאריות ממס, מועדף בשוק פרמה ותוספי תזונה, אבל עלות הציוד גבוהה.</p>
+    <div class="ab ab-w">
+        <div class="tg">פרמטר אחסון קריטי</div>
+        <p>Oleoresin פפריקה מאחסנים ב-<strong>15-20°C</strong>, מוגן מאור, ב-Drums אלומיניום עם Nitrogen Blanketing. חמצן ואור מאיצים דגרדציה של Capsanthin ל-Capsorubin ואז ל-Antheraxanthin, כל שלב יורד ב-ASTA ומשנה גוון מאדום לכתום-צהבהב. מדף: 18-24 חודשים בתנאים אופטימליים, 6-9 חודשים בחשיפה חלקית.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות: Sudan Red, אפלטוקסין ו-RASFF</h2>
+    <p class="dc">פפריקה היא אחד מחמשת התבלינים בעלי שיעור ההתראות הגבוה ביותר ב-RASFF (Rapid Alert System for Food and Feed) של האיחוד האירופי. הסיבה: שוויה הגבוה נמדד בצבע. זה יוצר תמריץ מסחרי ישיר לזיוף ולתוספת צבעים מלאכותיים. הסיכון שלו אין מקבילה בכמון, בקינמון, או בפלפל שחור. מי שסוחר בפפריקה בלי לדעת בדיוק מה הוא בודק ואיך, מתחפר לסיכון שיחזור אליו בצורת דחיית מכולה בנמל רוטרדם.</p>
+    <h3>Sudan Dyes: הסיכון ה-1</h3>
+    <p>Sudan Red I, II, III ו-IV הם חומרים צבעיים אזו-ארומטיים, שנאסרו לשימוש במזון האנושי ב-EU ב-1995, ב-USA ב-1918 (Sudan I). הם נמצאו גנוטוקסיים וקרצינוגנים בניסויים בעכברים. ב-2005, שערוריית Sudan Red גדולה הובילה לאיסוף 419 מוצרים ב-UK שכללו פפריקה מזוהמת. ב-EU, MRL (Maximum Residue Limit) הוא <strong>Not Detected</strong>, כלומר אפס. שיטת בדיקה: HPLC עם דיודה אדיקטיבית (DAD) ב-512nm. עלות בדיקה: <strong>80-150 € לדגימה</strong>.</p>
+    <div class="ab ab-r">
+        <div class="tg">אזהרה: RASFF מגמות 2020-2024</div>
+        <p>בין 2020 ל-2024 נרשמו <strong>67 התראות RASFF</strong> על פפריקה. מהן: 31 (46%) על Sudan Dyes, 18 (27%) על חריגת Aflatoxin, 12 (18%) על שאריות חומרי הדברה, 6 (9%) על זיהום מיקרוביאלי. ספרד, הונגריה ופולין הם המדינות שמזהות ומדווחות ביותר. מדינות מוצא עם שיעור גבוה של ממצאים: פקיסטן, ניגריה, ממדינות מזרח אפריקה. אך גם ספקים הודים ותורכיים הופיעו ב-11 מקרים.</p>
+    </div>
+    <h3>Aflatoxin: הסיכון ה-2</h3>
+    <p>פפריקה שיובשה בשמש בתנאי לחות גבוהה חשופה ל-<em>Aspergillus flavus</em> ו-<em>A. parasiticus</em>, המייצרים <strong>Aflatoxin B1, B2, G1, G2</strong>. ה-EU קובע: Total Aflatoxins ≤ <strong>10 μg/kg</strong>, Aflatoxin B1 בלבד ≤ <strong>5 μg/kg</strong>. תקן EC 1881/2006 ותיקוניו. שיטת בדיקה מועדפת: <strong>ELISA</strong> לסקרינינג ראשוני, <strong>HPLC-FLD</strong> עם Post-Column Derivatization לאישור. עלות הניטור מגדילה מחיר ייצוא בכ-<strong>3-8 דולר/טון</strong>.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">10 μg/kg</div><div class="nu">סף Aflatoxin Total</div><div class="nl">תקן EU</div></div>
+        <div class="ni"><div class="nv">0 ppb</div><div class="nu">Sudan Dyes</div><div class="nl">Not Detected</div></div>
+        <div class="ni"><div class="nv">0.05 mg/kg</div><div class="nu">Chlorpyrifos MRL</div><div class="nl">EU תקן</div></div>
+    </div>
+    <h3>סטריליזציה: Steam Treatment</h3>
+    <p>ניטור מיקרוביאלי נדרש לכל ייצוא לאירופה, יפן ואוסטרליה. תקן: TPC (Total Plate Count) ≤ <strong>10⁵ CFU/g</strong>, Salmonella: Absent ב-25 גרם. שיטת סטריליזציה עיקרית: <strong>Steam Treatment (HTST)</strong>, 120-135°C למשך 15-60 שניות. מוריד TPC ל-10³-10⁴ CFU/g. פגיעה ב-ASTA: <strong>8-15%</strong> בממוצע. כל מפעל שמסטריל בחום גבוה מדי יאבד 20-25% ASTA, מה שמסביר מדוע פפריקה ASTA 140 לפני עיבוד עלולה להגיע ל-ASTA 110-115 בשלב הסופי. <strong>Ethylene Oxide (EtO)</strong>: אסור ב-EU מ-2011, עדיין חוקי בהודו ובארה"ב, אבל נסחר לעיתים לשוק מחוץ לאירופה.</p>
+    <h3>שאריות חומרי הדברה</h3>
+    <table class="gt">
+        <thead><tr><th>חומר הדברה</th><th>MRL (EU)</th><th>MRL (USA/Codex)</th><th>הערה</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Chlorpyrifos</strong></td><td>0.01 mg/kg (LOD)</td><td>1.0 mg/kg</td><td>EU de facto ban מ-2020</td></tr>
+            <tr><td><strong>Lambda-cyhalothrin</strong></td><td>0.5 mg/kg</td><td>1.0 mg/kg</td><td>אחרי Steam אפשרי</td></tr>
+            <tr><td><strong>Carbendazim</strong></td><td>0.1 mg/kg</td><td>0.1 mg/kg</td><td>שימוש נגד Botrytis</td></tr>
+            <tr><td><strong>Profenofos</strong></td><td>0.01 mg/kg (LOD)</td><td>0.5 mg/kg</td><td>שכיח בפקיסטן</td></tr>
+            <tr><td><strong>Spinosad</strong></td><td>0.2 mg/kg</td><td>75 mg/kg</td><td>אורגני-תואם</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה: שינוע פיגמנט רגיש בשרשרת אספקה עולמית</h2>
+    <p class="dc">הפפריקה היא מוצר בינוני ברגישות לוגיסטית, אבל רגישות אי-שווה: חלק ממנה מאוד רגיש לחום ולאור (Oleoresin, Super Grade), וחלק (פפריקה תעשייתית מייבשת) עמיד יחסית. הטעות הנפוצה ביותר בלוגיסטיקת פפריקה: החלת נהלי שינוע של פפריקה Bulk תעשייתית על פפריקה פרימיום, מה שמגיע ל-ASTA שנחתך ב-15-20% בדרך. זה לא נזק אקראי, זה נזק מובנה שמחיר המוצר הסופי לא מגלם.</p>
+    <h3>אריזה ומשקל סגולי</h3>
+    <p>פפריקה טחונה: משקל סגולי <strong>500-600 g/L</strong>. מכולת 20 רגל תכיל <strong>12-15 טון</strong>, מוגבלת במשקל. אריזות סטנדרטיות: שקי <strong>25 ק"ג</strong> Kraft Paper רב-שכבתי עם ציפוי פנימי PE, ארוז על פלטות. לשוק Premium: אריזות 25 ק"ג עם שכבת Barrier Foil לבלימת חמצן ואור. Oleoresin: <strong>Drums 180-200 ק"ג</strong> אלומיניום מצופי פנים, ניטרוגן Blanket, מתוייג בתאריך ייצור ו-ASTA בכל Drum.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">12-15t</div><div class="nu">מכולת 20'</div><div class="nl">ברגישות משקל</div></div>
+        <div class="ni"><div class="nv">15-20°C</div><div class="nu">שינוע אידיאלי</div><div class="nl">לדרגות ASTA גבוהות</div></div>
+        <div class="ni"><div class="nv">&lt;65%</div><div class="nu">RH מקסימלי</div><div class="nl">שמירת יציבות</div></div>
+    </div>
+    <h3>Container Heating: האויב השקט של ה-ASTA</h3>
+    <p>בנמלי ולנסיה, בוגה ולא-לבנה, המכולה עלולה להגיע ל-<strong>55-70°C</strong> בפנים בחיכוי שמש ישירה. פגיעה ב-ASTA בחשיפה של 48 שעות ל-60°C: <strong>12-18%</strong>. פגיעה ב-Sensory Quality (ריח מעופש, Rancidity): מתחילה מ-50°C ומתחת. פתרונות מבוססים: (1) <strong>Reefer Container</strong> ל-Super Grade ולפרימיום, טמפרטורה קבועה 15°C. עלות: 300-500 דולר תוספת לשינוע. (2) <strong>Thermal Blanket</strong> לכיסוי המכולה בנמל. (3) <strong>White Painted Containers</strong> מורידים טמפרטורה ב-8-12°C לעומת כחולות/אפורות. (4) תזמון לוגיסטי: מכולות לא יעמדו בנמל דרום-ספרד בחודשי יולי-ספטמבר מעל 72 שעות.</p>
+    <h3>ריח ומיגרציה ארומטית</h3>
+    <p>הפפריקה פחות נדיפה מכמון, אבל שמניה (14-16% מהיבש) יכולים להשאיר ריח עמוק בדפנות מכולות. שאריות ריח פפריקה עלולות לפגום בסחורה עדינה שמועמסת לאחר מכן (קהווה, תה, שוקולד). נמלים איכותיים מפרידים תבלינים לזרוע ייעודית. קוד CN בהסבר לנמל: 0904.22.00 (Paprika, dried, crushed/ground).</p>
+    <div class="ab ab-w">
+        <div class="tg">נהל אחסון לטווח ארוך</div>
+        <p>ספרד ירדה בייצור ב-2021-2022 (בצורת) וגרמה לקפיצת מחירים. קונים שאחסנו כמויות בתנאים נכונים הרוויחו מרווח של <strong>30-45%</strong> על הרכש. תנאי אחסון לשנה: <strong>12-15°C</strong>, לחות יחסית <strong>55-60%</strong>, אפלה מוחלטת, Nitrogen Flush בכל 3 חודשים. ASTA יורד לא יותר מ-5-8% בשנה בתנאים אלה. מעל 18°C ירידה של 15-25% לשנה.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות: הקרוטנואיד כמגן מולקולרי</h2>
+    <p class="dc">הקרוטנואידים של הפפריקה הם ממחקרים הנרחבים ביותר בעולם תוספי התזונה. הסיבה פשוטה: זמינות גבוהה, ריכוז גבוה, ועלות נמוכה. Capsanthin הוא נוגד חמצון עוצמתי ממסיס-שמן, ששיעור הספיגה שלו אצל בני אדם נמדד ועולה על Lycopene (עגבנייה) וה-α-Carotene (גזר) בתנאים זהים של צריכה עם שמן. זה לא מקרי. המבנה המולקולרי של Capsanthin, עם שתי קבוצות Hydroxyl ושתי קבוצות Keto, מקנה לו יציבות חמצונית גבוהה יותר ממרבית הקרוטנואידים.</p>
+    <h3>ויטמין C: המורשת של סנט-גיירגי</h3>
+    <p>פפריקה טרייה (Capsicum annuum לפני ייבוש) מכילה <strong>150-250 mg ויטמין C לכל 100 גרם</strong>, לעומת <strong>50-70 mg</strong> בלימון. בייבוש וטחינה, הויטמין C מתאדה בחלקו: פפריקה מיובשת מכילה <strong>10-25 mg/100g</strong>. נמוך יותר, אבל עדיין תרומה. המחקר של סנט-גיירגי ב-Szeged ב-1932 נעשה על פפריקה טרייה ולא מיובשת, מה שחשוב להבהיר בשוק תוספי תזונה שלפעמים מייחס תכולות ויטמין C לממוצעים לא מתאימים.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">35%</div><div class="nu">ויטמין A RDI</div><div class="nl">כף (7g) מיובשת</div></div>
+        <div class="ni"><div class="nv">14%</div><div class="nu">ויטמין E RDI</div><div class="nl">כף (7g) מיובשת</div></div>
+        <div class="ni"><div class="nv">6%</div><div class="nu">ברזל RDI</div><div class="nl">כף (7g) מיובשת</div></div>
+    </div>
+    <h3>Capsanthin ומניעת מחלות קרדיווסקולריות</h3>
+    <p>מחקר בגרמניה (<em>Journal of Agricultural and Food Chemistry</em>, 2011) בדק ספיגת Capsanthin בפלזמה על 28 נבדקים שצרכו 5 גרם פפריקה/יום למשך 3 שבועות. ריכוז Capsanthin בפלזמה עלה ב-<strong>3.5 פעמים</strong>. ה-Capsanthin בפלזמה נמצא קשור לירידה ב-LDL Oxidation ב-<strong>18%</strong>, גורם מרכזי בהתפתחות טרשת עורקים. מחקר יפני (<em>Food & Nutrition Research</em>, 2014) הראה שצריכה יומית של Paprika Oleoresin (4mg Capsanthin) למשך 12 שבועות הורידה סמני דלקת (IL-6, CRP) ב-<strong>12-15%</strong> בקבוצה עם BMI גבוה.</p>
+    <h3>קשר ראייה: Lutein וZeaxanthin</h3>
+    <p>מעבר ל-Capsanthin, הפפריקה מכילה ריכוזים משמעותיים של <strong>Lutein</strong> (1.5-4 mg/100g) ו-<strong>Zeaxanthin</strong> (0.8-2 mg/100g). שני הקרוטנואידים הללו נצברים ב-Macula של העין ומגנים מפני Macular Degeneration (AMD), הסיבה המרכזית לאובדן ראייה בגיל מבוגר. AREDS2 Study הראה שתוסף Lutein+Zeaxanthin מאיץ ירידה ב-AMD ב-26%. פפריקה אדומה גולמית היא אחת המקורות הטבעיים הצפופים ביותר של שני המרכיבים הללו.</p>
+    <div class="pull">
+        <p>הצבע הוא לא אסתטיקה. הצבע הוא ביוכימיה. כל מולקולת Capsanthin שנצרכת עם שמן חם מגיעה לתאי הכבד, נחנקת לשם דרך שרשרת ספיגה. הגוף לא מבדיל בין ויזואלי לרפואי.</p>
+    </div>
+    <h3>Capsaicin בפפריקה חריפה: Thermogenesis ומטבוליזם</h3>
+    <p>גם בדרגות ה-Félédes וה-Picante, ריכוז ה-Capsaicin נמוך מספיק (100-1,000 SHU) כדי ליצור אפקט Thermogenic מבלי לגרום לכאב אורולוגי. מחקר Meta-Analysis ב-<em>Appetite</em> (2014) כלל 20 מחקרים קליניים ומצא שצריכה יומית של 2mg Capsaicin מורידה קלוריות ליום ב-<strong>50-70 kcal</strong> דרך הגדלת BMR. בדרגות Picante, פפריקה של 5-7 גרם ביום מספקת את המינון הזה.</p>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה ושוק: ספרד, הונגריה, סין ומבנה המחיר</h2>
+    <p class="dc">שוק הפפריקה מפוצל לשלושה שכבות מחיר שאינן מתחרות ישירות. בשכבה הנמוכה: פפריקה תעשייתית סינית-הודית, ASTA 60-90, מחיר <strong>1.5-3 דולר/ק"ג</strong>, נפח גדול, מרווחים דקים. בשכבה האמצעית: פפריקה Culinary הונגרית-ספרדית, ASTA 100-140, מחיר <strong>4-12 דולר/ק"ג</strong>, ביקוש יציב ממותגי תיבול ומסעדנות. בשכבה העליונה: Vera DOP וKaloncsai Special, ASTA 140+, מחיר <strong>15-35 דולר/ק"ג</strong>, היצע מוגבל ביוטרים. הברוקר שמנסה לתחרות בשכבה הנמוכה עם מוצר ביניים מפסיד ב-MOQ. הברוקר שמוכר שכבה עליונה כשכבה אמצעית מוריד את עצמו.</p>
+    <div class="cb">
+        <div class="ct">חלוקת ייצור פפריקה עולמי 2024 (% מסך הנפח)</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">סין</span></div><div class="pb-track"><div class="pb-fill" data-w="38" style="background:#8B2515"></div></div><span class="pb-pct">38%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇳</span><span class="pb-name">הודו</span></div><div class="pb-track"><div class="pb-fill" data-w="18" style="background:#6E1A10"></div></div><span class="pb-pct">18%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇲🇽</span><span class="pb-name">מקסיקו</span></div><div class="pb-track"><div class="pb-fill" data-w="12" style="background:#C44828"></div></div><span class="pb-pct">12%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇪🇸</span><span class="pb-name">ספרד</span></div><div class="pb-track"><div class="pb-fill" data-w="10" style="background:#D46040"></div></div><span class="pb-pct">10%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇭🇺</span><span class="pb-name">הונגריה</span></div><div class="pb-track"><div class="pb-fill" data-w="7" style="background:#E07050"></div></div><span class="pb-pct">7%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇵🇪</span><span class="pb-name">פרו</span></div><div class="pb-track"><div class="pb-fill" data-w="5" style="background:#C05030"></div></div><span class="pb-pct">5%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="10" style="background:#DDD6CA"></div></div><span class="pb-pct">10%</span></div>
+        </div>
+        <div class="pb-note">נתוני FAO · ESA · ITC TradeMap 2024 · סה"כ ייצור עולמי: ~2.5-3.0 מיליון טון פרי טרי (כ-300,000 טון יבש)</div>
+    </div>
+    <h3>דינמיקת מחיר 2020-2026</h3>
+    <p>פפריקה הונגרית Édesnemes: ב-2020 עמד מחיר ה-FOB Budapest/Hamburg על <strong>4.50-5.50 דולר/ק"ג</strong>. ב-2021-2022 ירידה בגשמים ב-Kalocsa גרמה ל-<strong>6.50-8.00 דולר/ק"ג</strong>. ב-2023 עם יבול ספרדי חלש במקביל, מחיר ממוצע <strong>7.00-9.00 דולר/ק"ג</strong>. ב-2024 שיפור ביבול, ירידה ל-<strong>5.50-7.00 דולר/ק"ג</strong>. Pimentón de la Vera: תמחור נפרד לחלוטין, נשלט על ידי מספר קטן של ייצרנים DOP. תנודות פחות קיצוניות אבל נפח הרבה יותר קטן.</p>
+    <h3>ספרד: מחסור ב-Vera ואסטרטגיית תמחור DOP</h3>
+    <p>אחד הדינמיקות המעניינות בשוק: Pimentón de la Vera מוגן על ידי DOP כל כך הדוק שהספקים לא יכולים לגדל בכמות יותר גדולה בלי לאיים על המוניטין. תחת לחץ ביקוש בינלאומי, חלק מהמפיקים עברו ל-PGI (Protected Geographical Indication) שמגמיש את הכללים. השוק מבחין: Vera DOP טרויני ב-10-15% מ-Vera PGI. קונה שאינו בודק את הסיווג עלול לשלם DOP על PGI.</p>
+    <h3>מגמות 2025-2026</h3>
+    <p>ארבע מגמות שמשנות את הדינמיקה: (1) <strong>Paprika Oleoresin כמנוע צמיחה</strong>: השוק התעשייתי לצבעי מאכל טבעיים (E160c) גדל ב-<strong>12% CAGR</strong> מ-2020, מופעל על ידי רגולציה אירופית נגד Tartrazine ומרדף אחר "Natural Label". (2) <strong>פרו וצ'ילה</strong>: מייצרות פפריקה ASTA 100-120 עם היצע שנה-עגול (עקב היפוך עונות) במחיר 20-30% מתחת לאירופאי. שוק האמריקאי עובר אליהן. (3) <strong>Climate Stress על Vera</strong>: עונות חמות וגשמים לא סדירים באקסטרמדורה פוגעות באיכות. 2022 ו-2023 היו שנים חלשות. הגמישות הגאוגרפית של DOP מוגבלת. (4) <strong>Digital Traceability</strong>: EU Farm-to-Fork דורש Traceability מלא עד 2026. ספקים ללא מערכת דיגיטלית יאבדו גישה. QR Codes על כל אריזה שמוביל ל-Certificate of Origin מפורט הוא כבר דרישה של קמעונאים גדולים כמו Lidl, Rewe ו-Carrefour.</p>
+    <div class="pull">
+        <p>פפריקה היא המוצר היחיד בפורטפוליו תבלינים שבו ניתן להמיר באופן ישיר ASTA לדולר. כל נקודה של ASTA שווה כסף מדיד. זה מעניין מבחינה מסחרית ומסוכן כי זה מייצר תמריץ לזיוף שאין לו מקבילה בשום תבלין אחר.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה ועתיד: מיקרו-אנקפסולציה, מיצוי SFE ו-Traceability 2030</h2>
+    <p class="dc">שוק הפפריקה ב-2026 עומד בנקודת מפנה טכנולוגית שתשנה את מי שמנצח בו. שלושה מהפכים רצים במקביל: שימור פיגמנט באמצעות כימיה חדשה, הפקת ערך ממוצרי לוואי שהיו עד כה אפס, ורגולציה שמחייבת שקיפות שכל שרשרת אספקה מאחורית לא תוכל לשרוד בלעדיה. ספק שמכיר את שלושת המהפכים יוכל לתמחר גבוה יותר ולשרוד לחץ מחיר.</p>
+    <h3>Microencapsulation: שמירת ASTA מול מציאות</h3>
+    <p>הבעיה הבסיסית של פפריקה כצבע מאכל: Capsanthin רגיש לאור, חמצן וחום. בייצור מזון תעשייתי, שבו המוצר עובר פסטוריזציה, אפייה, או חשיפה לאור בסופרמרקט, ה-ASTA נשחק בצורה בלתי צפויה. <strong>Microencapsulation</strong> עוטפת כל מולקולת Capsanthin בקפסולה של Maltodextrin, Whey Protein, או שומנים מובנים. הקפסולה משחררת את הפיגמנט רק בתנאי pH ספציפיים (בפה, במעי) או בחום מסוים. תוצאה: <strong>יציבות ASTA עולה ב-60-80%</strong> תחת לחץ אור ישיר. עלות: <strong>3-6 דולר/ק"ג</strong> תוספת על מחיר הפפריקה הרגילה. שוק יעד: חטיפים, תחביובים, מוצרי נשנוש שנמכרים בשקיות שקופות.</p>
+    <h3>Supercritical CO₂ Extraction (SFE): מיצוי ללא ממסים</h3>
+    <p>מיצוי Oleoresin קונבנציונלי משתמש ב-Hexane כממס. שאריות ממס חייבות להיות מתחת ל-<strong>1 mg/kg</strong> לפי EU. מיצוי CO₂ Supercritical (לחץ 250-350 bar, טמפרטורה 35-50°C) מייצר Oleoresin ללא שאריות ממס בכלל. היתרון הנוסף: בבחירת פרמטרים, ניתן לבצע Fractional Extraction שמפריד Capsanthin מCapsorubin מLutein לזרמי מוצר נפרדים לשימושים שונים. ASTA שווה-ערך של מיצוי CO₂: <strong>2,000-5,000</strong> לעומת <strong>800-1,500</strong> בHexane. עלות ציוד: <strong>2-5 מיליון דולר</strong>. ROI: 4-7 שנים לקו שמעבד מעל 500 טון פפריקה גולמית לשנה.</p>
+    <h3>NIR Spectroscopy בקו ייצור</h3>
+    <p>כמו בכמון, NIR Spectroscopy מהפך את בקרת האיכות של פפריקה. אבל בפפריקה יש יתרון נוסף: <strong>Near-Infrared</strong> גל 700-900nm נותן קריאה ישירה של ריכוז Capsanthin ללא ניתוח כימי. דיוק: ±2-3 יחידות ASTA, מספיק ל-Batch Segregation בזמן אמת. מערכת FOSS DS2500 עם Calibration לפפריקה: <strong>80,000-120,000 דולר</strong>. ROI: שנה בקו שמייצר מעל 300 טון/חודש, דרך מניעת שיוך שגוי של אצוות לדרגות לא נכונות.</p>
+    <div class="ab ab-w">
+        <div class="tg">EU Regulation 2024/1451: Farm-to-Fork</div>
+        <p>תקנה אירופית חדשה (One Health Approach) מחייבת Traceability מלא עבור תבלינים עד 2027. בפפריקה, שבה שרשרת האספקה כוללת אלפי חקלאים קטנים בהונגריה, ספרד, הודו וסין, זה אתגר עצום. Blockchain-based Traceability כבר מיושם על ידי <strong>Kalsec</strong> ו-<strong>Fuchs Gewürze</strong>. ספק שלא ייכנס למערכת דיגיטלית עד 2026 יאבד גישה לקמעונאות אירופית גדולה. עלות מינימלית להטמעה: 20,000-50,000 דולר לשנה לתשתית דיגיטלית בסיסית.</p>
+    </div>
+    <h3>מוצרי לוואי: זרעים ועצמות</h3>
+    <p>בייצור פפריקה, הזרעים (שמוסרים ב-Destemming) מהווים <strong>20-25% ממשקל הפרי הגולמי</strong>. עד לאחרונה, זרעי פפריקה היו פסולת ש-ROI שלה אפס. כיום, שלושה מסלולי ערך: (1) <strong>Capsicum Seed Oil</strong>: שמן עשיר ב-Tocopherols ו-Phytosterols, שוק קוסמטיקה ופרמה, מחיר <strong>8-15 דולר/ק"ג</strong>. (2) <strong>Capsaicin Extraction</strong> מגידי הזרעים (Placenta): מספק שוק Topical Pain Relievers (קרמי חום), מחיר <strong>$200-300/ק"ג</strong> לCapsaicin מזוקק. (3) <strong>Dietary Fiber</strong>: קליפת הזרע אחרי מיצוי שמן, צבורת Cellulose ו-Pectin, שוק תוספי סיבים. לא גדול, אבל ממיר פסולת לתזרים.</p>
+    <p>מזרעים, מפרי כבוש עד אבקה, מפיגמנט שאסטרטגים הונגרים הפכו לזהות לאומית וספרדים הפכו למורשת גאוגרפית. הפפריקה היא המוצר בפורטפוליו שמלמד הכי הרבה על כלכלה של מותג: שניתן לקחת אותו מוצר ביולוגי ולמכור אותו ב-1.5 דולר/ק"ג או ב-35 דולר/ק"ג, בהתאם לאופן שבו בנית סביבו מערכת של אמון, בדיקות, ותעודות. הביולוגיה שווה אותו דבר בשני המקרים. ההבדל הוא מידע.</p>
+</section>
+
+<div class="ft">
+    ערך ידע מסחרי-מדעי · Blue Star International · 2026<br>
+    מבוסס על נתוני FAO, ESA, RASFF, ITC TradeMap, ASTA Standards, ומקורות פתוחים<br>
+    <span style="font-size:11px;color:#AAA59A;">ביוכימיה: Deli et al., J. Agric. Food Chem. 1996 · Maoka et al., Food Chemistry 2001 · שוק ונתוני ייצור: FAO 2024 · ESA Spice Statistics · בטיחות: EU Reg 1881/2006 · RASFF Notifications 2020-2024 · Sudan Red: EFSA Scientific Opinion 2005 · Vitamin C: Nobel Lecture, Albert Szent-Györgyi, 1937</span>
+</div>
+</main>
+
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · PAPRIKA</footer>
+
+<div class="marquee-container">
+    <div class="marquee-text">פפריקה · CAPSICUM ANNUUM · CAPSANTHIN · KALOCSA · PIMENTÓN DE LA VERA · ASTA · פפריקה · CAPSICUM ANNUUM · CAPSANTHIN · KALOCSA · PIMENTÓN DE LA VERA · ASTA · </div>
+</div>
+
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C44828" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch');
+    const dots = document.querySelectorAll('.nav-dot');
+    let current = "";
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 300);
+});
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => {
+    dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+            obs.unobserve(e.target);
+        });
+    }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) {
+                        heroSlot.innerHTML = '';
+                        heroSlot.appendChild(makeMedia(heroSrc));
+                    }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

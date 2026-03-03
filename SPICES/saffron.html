@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0A0A0B; --text: #FAF7F0; --body: #D1CEC5;
+    --accent: #7A3A2A; --warm: #C4702A;
+    --card: rgba(20,20,22,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background-color: var(--bg); color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9;
+    overflow-x: hidden;
+    background-image: linear-gradient(rgba(196,112,42,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(196,112,42,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+body::before, body::after {
+    content:''; position:fixed; width:600px; height:600px; border-radius:50%;
+    filter:blur(120px); z-index:-2; opacity:0.12; pointer-events:none;
+}
+body::before { background:#9B2335; top:-100px; left:-100px; }
+body::after { background:#6B2A18; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap {
+    max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden;
+    box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05);
+    background:#0A0A0B; display:flex; align-items:center; justify-content:center;
+}
+.hero-img-placeholder { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.hero-img-placeholder span { color:rgba(255,255,255,0.15); font-size:12px; letter-spacing:3px; font-family:'Space Mono',monospace; }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch {
+    background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px);
+    padding:50px; border-radius:var(--radius); margin-bottom:40px;
+    border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden;
+}
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; }
+.ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#E0A070; font-style:italic; }
+strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(196,112,42,0.08); border-right:4px solid var(--warm); }
+.ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(122,58,42,0.2); border-right:4px solid var(--accent); }
+.ab-g .tg { color:#E0A070; }
+.ab-r { background:rgba(155,35,53,0.12); border-right:4px solid #9B2335; }
+.ab-r .tg { color:#E06070; }
+.ab-r p { color:#DDB0B8; }
+.vc { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:22px; margin:18px 0; }
+.vc .vn { font-family:'Frank Ruhl Libre',serif; font-size:21px; font-weight:700; color:var(--text); }
+.vc .vt { font-size:12px; color:var(--warm); font-weight:600; margin-bottom:10px; }
+.vc p { font-size:16px; line-height:1.75; margin-bottom:0; }
+.vc .vs { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.vc .vsi { background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:5px; font-size:12px; color:#A09080; }
+.vc .vsi strong { color:var(--text); }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A09080; margin-top:2px; }
+.ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.cb { background:rgba(20,20,22,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px; margin:28px 0; }
+.cb .ct { font-family:'Frank Ruhl Libre',serif; font-size:17px; font-weight:700; margin-bottom:14px; text-align:center; color:var(--text); }
+.pb-chart { margin:16px 0 8px; display:flex; flex-direction:column; gap:10px; }
+.pb-row { display:flex; align-items:center; gap:10px; }
+.pb-meta { display:flex; align-items:center; gap:6px; min-width:120px; justify-content:flex-end; }
+.pb-flag { font-size:18px; }
+.pb-name { font-size:13px; color:#A09080; }
+.pb-track { flex:1; background:rgba(255,255,255,0.08); height:18px; border-radius:9px; overflow:hidden; }
+.pb-fill { height:100%; width:0; border-radius:9px; transition:width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.pb-pct { font-family:'Frank Ruhl Libre',serif; font-size:14px; font-weight:700; color:var(--text); width:36px; text-align:left; }
+.pb-note { font-size:11px; color:#6B6058; opacity:.7; margin-top:10px; text-align:center; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; border-top:1px solid rgba(255,255,255,0.05); }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(196,112,42,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.025); animation:scrollText 50s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#6B6058; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(196,112,42,0.4); }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(20,20,22,0.85); border:1px solid rgba(196,112,42,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+.home-btn:hover { background:rgba(196,112,42,0.15); }
+@media (max-width:900px) {
+    .side-nav { display:none; }
+    .hero h1 { font-size:55px; }
+    .hero-img-wrap { height:300px; margin-bottom:-100px; }
+    .con { margin-top:150px; }
+    .ng { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+<title>זעפרן · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות ובקרת איכות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="פיזיולוגיה ובריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="טכנולוגיה עתידית"></div>
+</nav>
+
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">זעפרן</h1>
+    <p class="deck" id="sync-desc">הצלקת המיובשת של <em>Crocus sativus</em>: 150,000 פרחים לקילוגרם, 3,500 שנות היסטוריה, ביוכימיה של קרוצין וספרנל, והתבלין היקר ביותר בתולדות האנושות.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <div class="hero-img-placeholder">
+            <span>SAFFRON · Crocus sativus</span>
+            <span style="font-size:9px;opacity:0.5;">MEDIA SLOT · HERO</span>
+        </div>
+    </div>
+</section>
+
+<div class="marquee-container">
+    <div class="marquee-text">זעפרן · CROCUS SATIVUS · CROCIN · SAFRANAL · SARGOL · NEGIN · COUPE · RED GOLD · זעפרן · CROCUS SATIVUS · CROCIN · SAFRANAL · SARGOL · NEGIN · COUPE · RED GOLD · </div>
+</div>
+
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: זהות, שם ועוצמה של שלושת אלפים שנה</h2>
+    <p class="dc">כל תבלין בארכיון זה נמדד ביחס לנקודת ייחוס אחת. הזעפרן הוא נקודת הייחוס עצמה. הוא היקר ביותר, העתיק ביותר מבחינת תיעוד מסחרי, ובמובנים מסוימים הצמח שנחקר ביותר בהיסטוריה בוטנית, ועדיין משאיר שאלות פתוחות. שמו העברי "זעפרן" מגיע מהערבית <strong>za'faran</strong>, שמקורו בפרסית <strong>zarparan</strong>, שמשמעותו המילולית היא "בעל החוטים הזהובים". הלטינית שמרה על הצורה saffron, שנדדה לכל שפות אירופה. אבל כבר בסנסקריט היה לו שם: <em>kumkuma</em>. הצמח היה ידוע בשתי ציביליזציות שלא שמעו זו על זו.</p>
+    <p>הממצאים הקדומים ביותר: ציורי סלע מ<strong>אזור יזד שבאיראן</strong>, בני יותר מ-3,500 שנה, מציגים בבירור את פרח הכרכום ואת חיתוך הצלקות. בתקופת מינוס בכרתים (1500-1700 לפנה"ס), ציורי קיר בארמון אקרוטירי שבסנטוריני מציגים נשים אוספות פרחי כרכום לצרכים רפואיים. הנשים בציורים לבושות בגדים כחולים, הצבע שיוצר מרכיב אחר, אבל הכרכום נמצא שם, בעל נוכחות ויזואלית מרשימה, כמעט כצמח אלוהי. <strong>פפירוס מצרי מ-1550 לפנה"ס</strong>, הנקרא Ebers Papyrus, רושם זעפרן כמרכיב ב-29 מתכוני תרופות שונים.</p>
+    <p>בסין הוא הגיע דרך "דרך המשי" לפני 2,000 שנה. הרפואה הסינית המסורתית אימצה אותו כמרפא לדם, ריאות ועצבים. באירופה של ימי הביניים, הוא היה יקר מזהב ממש: ב-1374, ה"שוד הזעפרן" (Saffron War) בבאזל שוויץ, נגרם כאשר כנופיה שדדה 363 ק"ג זעפרן בשינוע, ופרצה מלחמה בין עיירות שנמשכה שלושה חודשים. מחיר השלל: שווה ערך לכ-50,000 פרנק זהב. לא היה מדובר בתבלין, אלא בעתודת מלחמה.</p>
+    <div class="ab ab-w">
+        <div class="tg">עובדת עוגן כלכלית</div>
+        <p>פרנציסקוס הנוסע, שכתב ב-1357 על שוק הזעפרן של ויניציה, רשם: "כמות הזעפרן שהגיעה ממזרח בשנה אחת שווה ל-5 ספינות עמוסות זהב". לא ספינות של תבלין. ספינות של זהב. הכלכלנים של ויניציה לא הבחינו בין השניים.</p>
+    </div>
+    <p>האנומליה הביולוגית של הזעפרן: <em>Crocus sativus</em> הוא צמח <strong>עקר לחלוטין</strong>. הוא לא מייצר זרעים כשירים. הוא לא מתרבה בטבע. הוא קיים רק בגלל שבני אדם מחלקים ומשתלים את פקעותיו שנה אחרי שנה, ידנית, מאז האלף הראשון לפנה"ס לפחות. מבחינה ביולוגית, הוא <strong>פרנסיט של ציביליזציה</strong>. בלי חקלאות אנושית מתמשכת, הוא נכחד. בלעדיו, חלק מהציביליזציה נכחדת. הקשר ביניהם הוא האמת ביותר שיש.</p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: פיזיולוגיית הכרכום, אקלים ואדמה</h2>
+    <p class="dc"><em>Crocus sativus</em> שייך למשפחת Iridaceae, כמו האירוסים והגלדיולוסים. הוא גידול פקעות (<em>corm</em>), לא זרעים. כל פקעת אם מייצרת 2-5 פקעות בנות בעונה אחת, וחיות בממוצע 3-5 שנים. הפרח עצמו מופיע <strong>לפני העלים</strong>, סימן להתנהגות גיאופיטית ייחודית: הפקעה סומכת על עתודות שלה, לא על פוטוסינתזה, לפריחה.</p>
+    <h3>פנולוגיה: חלון הזמן הצר</h3>
+    <p>הפריחה מתרחשת פעם אחת בשנה, בין <strong>אוקטובר לנובמבר</strong>, במשך 2-3 שבועות בלבד. כל פרח בודד פתוח לפרק זמן של 24-72 שעות בלבד לפני שהוא נובל. הקטיף חייב להתבצע לפני זריחת השמש (חלוקת הטמפרטורה גורמת לאיבוד ניחוח מהיר יותר לאחר זריחה). פרח בודד מכיל בממוצע <strong>3 צלקות</strong>. לכל קילוגרם זעפרן יבש נדרשות 150,000-200,000 צלקות, כלומר 50,000-70,000 פרחים. מחיר עבודת הקטיף: 70-80% מעלות ייצור הזעפרן הכוללת.</p>
+    <h3>דרישות אקלים וקרקע</h3>
+    <p>הזעפרן מתמחה בסתירה אקלימית: הוא צריך <strong>קיץ יבש וחם</strong> (32-40°C) כדי שהפקעה תיכנס לדורמנסיה מלאה, <strong>סתיו עם גשם מוקדם</strong> שמעיר אותה, ו<strong>חורף קר</strong> (עד מינוס 18°C בחלק מאזורי ייצור איראן) שאינו מזיק לפקעה הקבורה. הפרח עצמו, שצץ בנובמבר, עמיד יחסית לקפאון קל. קרקע: ניקוז מצוין, pH של 6.0-8.0, סיליקטי-קלקרי, דל חנקן (חנקן גבוה יעודד עלים, לא פרחים). רמות גבוהה לא חובה אבל שכיחות: רוב ייצור האיראני הוא בגובה 1,000-2,000 מ' מעל פני הים (קאין, תרביאת-חיידריה, גונאבאד).</p>
+    <div class="ab ab-g">
+        <div class="tg">ממצא אגרונומי מפתיע</div>
+        <p>מחקר מ-2022 (University of Pisa) הראה שמתן <strong>גיברלין (GA3) חיצוני</strong> בריכוז של 50 ppm בזמן הדורמנסיה יכול לקדם את הפריחה ב-3-4 שבועות ולהגדיל אחוז פרחים ב-18%. ממצא זה מעניין חברות המחפשות להאריך את "חלון הקטיף" ולפזר עומסי עבודה. לא יושם עדיין בקנה מידה מסחרי.</p>
+    </div>
+    <h3>גידול מתחת לאדמה: מחזור הפקעות</h3>
+    <p>לאחר הפריחה, הצמח מפתח עלים ירוקים-צרים הדומים לדשא (פברואר-מאי), שלב שבו הפקעה טוענת עצמה לעונה הבאה. במאי-יוני העלים יבשים, הפקעה נכנסת לדורמנסיה. מטעים מסחריים מחליפים פקעות כל 3-4 שנים כאשר הצפיפות גורמת לתחרות תוך-מגדלית ולצמצום תפוקה. <strong>צפיפות שתילה אופטימלית: 80-100 פקעות למ"ר</strong>. שנה ראשונה: פריחה מועטה, שנה 2-3: שיא. שנה 4-5: ירידה.</p>
+    <p>בניגוד למרבית הגידולים המסחריים, לא קיימת מכנת קטיף לזעפרן. כל ניסיון מכני לאסוף את הצלקות גורם לנזק בלתי הפיך לפרחים, לזיהום בשאריות עלי-כותרת, ולצניחה חדה באיכות. אורח החיים של גנן הזעפרן: כפיפות עמוקה, שעות מוקדמות, ידיים שמרגישות כל פרח. לא ניתן לתרגם זאת לאוטומציה ברווחיות.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: הטריאדה המולקולרית של הזעפרן</h2>
+    <p class="dc">שלוש מולקולות שולטות בזהות הזעפרן. שלושתן נוצרות מאותו נתיב ביוסינתטי, שמתחיל בקרוטנואיד <em>zeaxanthin</em>, ושלושתן אחראיות על תכונה שונה לגמרי, צבע, טעם וניחוח. הבנת שלושתן היא הבסיס לכל שיחת מסחר רצינית בתחום.</p>
+    <h3>קרוצין: הזהב שצובע</h3>
+    <p><strong>קרוצין</strong> (Crocin, C₄₄H₆₄O₂₄) הוא גליקוזיד קרוטנואידי, גזרת של קרוצטין שמאופשרת לה להיות מסיסה במים בזכות שרשראות גלוקוז צמודות. זו תכונה נדירה מאוד בין קרוטנואידים: רוב הקרוטנואידים (בטא-קרוטן, ליקופן) שמנוניים ומסיסים בשמן בלבד. קרוצין מסיס במים לחלוטין, מה שמאפשר לו לצבוע מרקים, אורז, ריזוטו, ולאחר מכן להיספג ישירות דרך מערכת העיכול ללא צורך בשומן. <strong>ריכוז קרוצין בזעפרן Grade I: 28-32 mg/g</strong>. ריכוז גבוה יותר: עוצמת צבע גבוהה יותר, ערך מסחרי גבוה יותר. מדד ה-ISO 3632 מחשב את "כוח הצביעה" (Colour Strength) לפי ספיגה אופטית של תמיסת קרוצין ב-440 nm.</p>
+    <h3>פיקרוקרוצין: המרירות שמגדירה</h3>
+    <p><strong>פיקרוקרוצין</strong> (Picrocrocin, C₁₆H₂₆O₇) הוא מונוטרפן גליקוזיד, נגזרת הסוכר של HTCC (hydroxysafranal). הוא האחראי לטעם המריר המאופיין של זעפרן, זה ה"חריפות" הנעימה שמאזנת את המתיקות בריזוטו ומונעת ממנו להיות פשוט "צהוב מתוק". רמות גבוהות של פיקרוקרוצין מצביעות על זעפרן עשיר בטעם. תקן ISO דורש: <strong>Grade I: ≥70 ספיגה ב-257 nm</strong>. בזמן הייבוש, הפיקרוקרוצין מתפרק אנזימטית ל-HTCC, שהוא המבשר הישיר של ספרנל.</p>
+    <h3>ספרנל: הניחוח שלא נשכח</h3>
+    <p><strong>ספרנל</strong> (Safranal, C₁₀H₁₄O) הוא מונוטרפן אלדהיד שנוצר <em>רק</em> בתהליך הייבוש מפיקרוקרוצין. הוא אינו קיים בפרח הטרי. הריח "חציר-דבש-פרחי-מרפא" שמזוהה מיד כזעפרן הוא ספרנל בעיקרו. <strong>Grade I לפי ISO 3632: ≥20 ספיגה ב-330 nm</strong>. ספרנל תנוח במהירות יחסית בחשיפה לאור ולחמצן, לכן אחסון בחושך ובכלי אטום הוא קריטי לשמירה על הניחוח. זה גם ההסבר לכך שזעפרן טחון (שטח מגע גבוה יותר) מאבד ניחוח מהר יותר משמעותית מחוטים שלמים.</p>
+    <div class="ab ab-w">
+        <div class="tg">ממצא ביוכימי 2023</div>
+        <p>מחקר של Carmona et al. (Food Chemistry, 2023) זיהה בזעפרן איראני Negin Grade I שתי מולקולות חדשות בנתיב הקרוטנואידי: <strong>לאוטאין-גלוקוזיד</strong> ו-<strong>זאקסנתין-מונוגלוקוזיד</strong>, שמסבירים חלק מהפעילות הנוגדת-חמצון שלא נמחקה בנתיב הקרוצין. עדות נוספת לכך שהמודל הביוכימי של הזעפרן עדיין אינו שלם.</p>
+    </div>
+    <p>תרכובות נוספות שתורמות לפרופיל: <strong>קרוצטין</strong> (crocetins, צורה החופשית של קרוצין, 1-3 mg/g), <strong>גליקוזידים נוספים</strong> (dim-crocins, bis-crocins), <strong>פוליפנולים</strong> (kaempferol, quercetin, isorhamnetin) ו<strong>מינרלים</strong> (מנגן 28 mg/100g, ברזל 11 mg/100g, סלניום 5.6 μg/100g). הסלניום בזעפרן גבוה מהרוב המוחלט של תבלינים, ומחקרים מחברים אותו לחלק מהפעילות הנוירו-פרוטקטיבית המתועדת.</p>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: ISO 3632, מינוחי הסחר, הזיוף</h2>
+    <p class="dc">תקן <strong>ISO 3632</strong> הוא הבסיס האנליטי היחיד שמקובל בסחר הבינלאומי בזעפרן. הוא מגדיר שלוש דרגות (Grade I, II, III) לפי שלושה פרמטרים ספקטרופוטומטריים: עוצמת צבע (Crocin), טעם (Picrocrocin), ניחוח (Safranal). אבל מוכרים ורוכשים מקצוענים יודעים: ISO הוא רצפה, לא תקרה.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Grade I (פרימיום)</th><th>Grade II (קמעונאי)</th><th>Grade III (תעשייה)</th><th>שיטת בדיקה</th></tr></thead>
+        <tbody>
+            <tr><td><strong>עוצמת צביעה (440nm)</strong></td><td>≥190</td><td>≥150</td><td>≥110</td><td>UV-Vis ספקטרופוטומטר</td></tr>
+            <tr><td><strong>טעם פיקרוקרוצין (257nm)</strong></td><td>≥70</td><td>≥55</td><td>≥40</td><td>UV-Vis ספקטרופוטומטר</td></tr>
+            <tr><td><strong>ניחוח ספרנל (330nm)</strong></td><td>20-50</td><td>20-50</td><td>20-50</td><td>UV-Vis ספקטרופוטומטר</td></tr>
+            <tr><td><strong>לחות מקסימלית</strong></td><td>10%</td><td>11%</td><td>12%</td><td>Karl Fischer</td></tr>
+            <tr><td><strong>אפר כולל</strong></td><td>≤8%</td><td>≤8%</td><td>≤8%</td><td>שריפה (550°C)</td></tr>
+            <tr><td><strong>אפר בלתי מסיס בחומצה</strong></td><td>≤1%</td><td>≤1%</td><td>≤1%</td><td>HCl 10%</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>מינוחי הסחר: שמות שמסתירים מידע</h3>
+    <div class="vc">
+        <div class="vn">Negin (نگین)</div>
+        <div class="vt">הדרגה העליונה, גם מבחינה ויזואלית</div>
+        <p>חוטים שלמים, ישרים, עבים, אדומים לאורך כל הצלקת. "שלל" של החיתוך: ה-Negin מחייב סלקציה ידנית של החוטים הארוכים ביותר ולרוב מגיע ל-220-260+ ביוצמת צביעה. מיוצר בעיקר בגונאבאד וקאין שבאיראן. מחיר: 8,000-18,000 USD/kg.</p>
+        <div class="vs"><div class="vsi">ISO: <strong>Grade I מוקצן</strong></div><div class="vsi">ספיגה: <strong>220+</strong></div><div class="vsi">שוק: <strong>לאקשרי, מתנות</strong></div></div>
+    </div>
+    <div class="vc">
+        <div class="vn">Sargol (سرگل)</div>
+        <div class="vt">סטנדרט האיכות הגבוהה לייצוא</div>
+        <p>קצות הצלקת בלבד, ללא "Style" (החלק הצהוב). צבע אדום עמוק כמעט אחיד. עוצמת צביעה 190-220. הסוחר האיראני המסורתי רואה ב-Sargol את "הזעפרן האמיתי". נפח הייצוא הגדול ביותר בקטגוריית Grade I. מחיר: 3,500-7,000 USD/kg.</p>
+        <div class="vs"><div class="vsi">ISO: <strong>Grade I</strong></div><div class="vsi">ספיגה: <strong>190-220</strong></div><div class="vsi">שוק: <strong>מסעדות, יצוא</strong></div></div>
+    </div>
+    <div class="vc">
+        <div class="vn">Pushal / Bunch</div>
+        <div class="vt">חוטים שלמים כולל הסגנון הכתום</div>
+        <p>הצלקת שלמה עם חלק מה-Style הצהוב. איכות נמוכה יותר אבל ניתן לאימות קל יותר של מוצא (קשה יותר לזייף מאשר חוטים אדומים בלבד). מחיר: 1,800-3,500 USD/kg. נהוג בשוק הספרדי.</p>
+        <div class="vs"><div class="vsi">ISO: <strong>Grade II</strong></div><div class="vsi">שוק: <strong>קמעונאות, ספרד, יוון</strong></div></div>
+    </div>
+    <div class="vc">
+        <div class="vn">Spanish Coupe / La Mancha D.O.P.</div>
+        <div class="vt">הזעפרן האירופי, ריח שונה, זהות שונה</div>
+        <p>ייבוש מעל אש (toasting) בניגוד לייבוש שמש או מכני. יוצר פרופיל ספרנל שונה, עם גוון "קלוי" ומעושן. <em>La Mancha D.O.P.</em> מוגן גאוגרפית. מועדף על שפים אירופיים מסוימים בדיוק בגלל שונות הארומה. עוצמת צביעה לרוב נמוכה יותר מ-Sargol, אבל האוהדים מעריכים את מורכבות הניחוח.</p>
+        <div class="vs"><div class="vsi">ISO: <strong>Grade I-II</strong></div><div class="vsi">שוק: <strong>אירופה, גסטרונומיה</strong></div></div>
+    </div>
+    <h3>הזיוף: הבעיה השנייה בגודלה בתעשייה</h3>
+    <p>שאריות שביל (Style) מוגזמות, ניתוח בכורכום, שיבולת שועל צבועה, חוטי תירס. שיטות גילוי: <strong>GC-MS</strong> לניתוח ספרנל ותרכובות נדיפות, <strong>NMR ספקטרוסקופיה</strong> לזיהוי פרופיל כולל, <strong>DNA barcoding</strong> לאישור מין הצמח. בדיקה ביתית פשוטה שאינה חד-משמעית: חוט זעפרן אמיתי מצבע מים צהוב-זהוב לאט (20-30 דקות), לא מיד. כורכום מצבע מיד ובצהוב חזק. אבל הבדיקה הביתית שוללת זיוף גס בלבד, לא זיוף מתוחכם.</p>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהפרח לחוט היבש</h2>
+    <p class="dc">תהליך עיבוד הזעפרן הוא אחד ממעטי התהליכים החקלאיים בעולם שלא השתנה מהותית מאז ימי קדם. לא בגלל חוסר ידע, אלא בגלל שהגבלות פיזיולוגיות של הפרח והצלקת הופכות מכנת לבלתי כדאית. כל שלב בתהליך מוגדר על ידי השברירות של הצלקת עצמה.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">קטיף לפני הזריחה</div>
+                <div class="proc-step-body">הפרחים נאספים לפני 8:00 בבוקר, לפני שהחום מאיץ פירוק ספרנל. מהירות קריטית: מהפריחה ועד לחיתוך הצלקת, יש לעבור לשלב הבא תוך 4-6 שעות. פרח שנשאר בשדה עד הצהריים מאבד 10-15% מכוח הצביעה. קוטר הנגיעה המומלץ: רק הצלקת. מגע בעלי-הכותרת מוסיף לחות ומחיר משקל שאינו "זעפרן". קוטף מנוסה מגיע ל-80-120 גרם צלקות טריות ביום עבודה שלם (כ-6-8 שעות), שיניבו 10-15 גרם זעפרן יבש.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">חיתוך ידני: הפרדת הצלקת</div>
+                <div class="proc-step-body">הפרחים שנאספים מועברים לעיבוד ביתי או מרכזי. הצלקת מורכבת מ-3 חלקים: <strong>הקצה האדום</strong> (הכי יקר), <strong>הגוף האדום</strong>, ו<strong>הסגנון הצהוב</strong> (ה-style). חיתוך ל-Sargol: הסרת הסגנון כמעט לחלוטין, שמירה על הצלקת האדומה. חיתוך ל-Pushal: שמירה על 3-5 מ"מ של הסגנון הצהוב. חיתוך ל-Negin: בחירה ידנית של החוטים הארוכים ביותר (6-8 מ"מ), ישרים, ללא פגמים. שלב זה לוקח 3-4 שעות נוספות לכל קילוגרם שנאסף.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">ייבוש: שלב יצירת הספרנל</div>
+                <div class="proc-step-body">בשלב זה נולד הזעפרן. הצלקות הטריות אינן "זעפרן" עדיין מבחינה ביוכימית, הפיקרוקרוצין עדיין לא התפרק לספרנל. ייבוש שמש מסורתי: 3-5 ימים על רשתות, טמפרטורה עד 35°C. ייבוש מכני (ה-Iranian Standard): תנורים ב-40-60°C, 30-60 דקות. ייבוש ספרדי-מסורתי: מעל גחלים בתנור עץ (70-80°C, 15-20 דקות), יוצר את הפרופיל המעושן האופייני. לאחר ייבוש נכון, משקל יורד ב-80-85%. 1 ק"ג צלקות טריות = כ-150-200 גרם זעפרן יבש.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">אחסון ראשוני</div>
+                <div class="proc-step-body">מיד לאחר ייבוש, הזעפרן שומר לחות שיווי-משקל של 8-10% אם מאוחסן נכון. שלב זה קריטי: כלי אטום, חושך מוחלט, טמפרטורה יציבה 15-18°C. חשיפה לאור UV מפרקת ספרנל, חשיפה לחמצן מפרקת קרוצין. כלי הזכוכית האופייני הוא צנצנת כהה אטומה. בייצוא תעשייתי: שקיות אלומיניום אטומות עם ניטרוגן להגנה.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">05</div>
+            <div>
+                <div class="proc-step-title">בדיקת ISO, מיון ואריזה לייצוא</div>
+                <div class="proc-step-body">בדיקת מעבדה: כל אצווה מנותחת לפי ISO 3632. ספיגה ב-440, 257, 330 nm. בדיקת לחות, אפר, חומרי הדברה. תוצאות COA (Certificate of Analysis) מצורפות לכל משלוח מקצועי. אריזה לייצוא: משקלים של 500g, 1kg, 5kg, 10kg, 25kg. שקיות אלומיניום אטומות עם MAP (Modified Atmosphere Packaging) שמחליף אוויר בחנקן. מינימום חיי מדף לאחר אריזה נכונה: 24-36 חודש בתנאי אחסון ממולצים.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות: MRL, עובש ואיתור זיופים</h2>
+    <p class="dc">הזעפרן הוא התבלין היקר ביותר בעולם, ולכן הנפוץ ביותר לזיופים, ולכן הנבדק ביותר על ידי גבולות האיחוד האירופי, ה-FDA ורשויות בריאות. בשנים 2020-2023, הזעפרן היה בין חמשת התבלינים המוחרמים ביותר ב-RASFF (מערכת ההתראה האירופית לזיופי מזון), לא בגלל חומרים מסוכנים, בעיקר בגלל הצהרה כוזבת על מוצא ואיכות.</p>
+    <h3>שאריות חומרי הדברה</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>חומר פעיל</th><th>MRL האיחוד האירופי</th><th>מקור בעיה עיקרי</th><th>תכיפות גילוי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Chlorpyrifos</strong></td><td>0.01 mg/kg (LOD)</td><td>איראן, הודו</td><td>גבוהה</td></tr>
+            <tr><td><strong>Cypermethrin</strong></td><td>0.05 mg/kg</td><td>ספרד, מרוקו</td><td>בינונית</td></tr>
+            <tr><td><strong>Metalaxyl</strong></td><td>0.05 mg/kg</td><td>גידולי Fusarium</td><td>בינונית</td></tr>
+            <tr><td><strong>Imidacloprid</strong></td><td>0.05 mg/kg</td><td>כלל אזורי ייצור</td><td>גבוהה</td></tr>
+            <tr><td><strong>Carbendazim</strong></td><td>0.05 mg/kg</td><td>מניעת עובש</td><td>נמוכה</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>סיכוני עובש וזיהום</h3>
+    <p>הזעפרן, בשל הלחות הגבוהה יחסית שנדרשת לאיכות ארומה (8-10%), ניצב בסכנה גבוהה יותר מזיהום עובש בהשוואה לתבלינים יבשים יותר. <strong>Aspergillus flavus</strong> ו-<em>A. parasiticus</em> יכולים להתפתח בתנאי אחסון לקויים. המגבלות: <strong>Aflatoxin B1 ≤ 5 μg/kg, סה"כ ≤ 10 μg/kg</strong> (EU Reg. 165/2010). OTA (Ochratoxin A): ≤ 15 μg/kg. בגלל הנפח הקטן יחסית של אצוות הזעפרן ועלותן הגבוהה, בדיקת מעבדה לאפלטוקסין שגרתית לכל אצווה היא סטנדרט בסחר מקצועי, לא אופציה.</p>
+    <div class="ab ab-r">
+        <div class="tg">אירוע RASFF 2022: מקרה לימוד</div>
+        <p>בנובמבר 2022 נעצר משלוח של 500 ק"ג "זעפרן Grade I ספרדי" בנמל ברצלונה. ניתוח DNA הראה שמקורו בהינדוסטן, לא בספרד. ניתוח ISO הראה עוצמת צביעה 142, כלומר Grade III בלבד. ניתוח GC-MS מצא Tartrazine (צבע מלאכותי E102) שנוסף להגברת ספיגה אופטית. הסחורה הוחרמה, השוק שמחיה 165,000 יורו הפך להפסד, והספק ספג איסור ייצוא ל-EU למשך 3 שנים.</p>
+    </div>
+    <h3>גילוי מקורי: שיטות מתקדמות</h3>
+    <p>מעבר ל-ISO 3632, מכון INIA בספרד פיתח <strong>SNP Fingerprinting</strong> לגידולי Crocus sativus המאפשר הבחנה בין זעפרן ספרדי, איראני ואפגני ברמת וודאות של 97%. שיטת <strong>Stable Isotope Ratio Analysis (SIRA)</strong> מחשבת יחסי C13/C12 ו-N15/N14 שמשתנים לפי אדמה ואקלים, ו"חתומים" בצמח. העלות: 300-600 יורו לבדיקה, שנגינה מגוחכת ביחס לזיוף של 165,000 יורו. ייצוא רציני ל-EU כיום כולל SIRA כברירת מחדל.</p>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה: שינוע הזהב האדום</h2>
+    <p class="dc">אף מוצר בסחר הבינלאומי לא מצדיק כל כך את עלויות הלוגיסטיקה הפרימיום כמו הזעפרן. כאשר ערך המשלוח הוא 3,000-8,000 דולר לקילוגרם, ומכולה של 20 פיט יכולה להכיל 5-7 טון בתיאוריה, אבל בפועל משלוחי זעפרן הם בדרך כלל 10-100 ק"ג, הלוגיסטיקה חייבת להיות רמת שעון שוויצרי. אמנם נפח הסחר קטן, אבל הסיכון לאבד אצווה מושלמת גבוה מאוד.</p>
+    <h3>שרשרת האספקה מאיראן לשוקי היעד</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>נקודה בשרשרת</th><th>סיכון עיקרי</th><th>פתרון סטנדרטי</th><th>עלות נוספת</th></tr></thead>
+        <tbody>
+            <tr><td><strong>מטע לבית האיסוף</strong></td><td>חשיפה לחמצן ולחות</td><td>שקיות PE אטומות, עד 4 שעות</td><td>ניתנת להזנחה</td></tr>
+            <tr><td><strong>מרכז עיבוד</strong></td><td>רטיבות, חרקים</td><td>RH &lt;50%, AC, כלוד מעורר</td><td>$0.05-0.15/g</td></tr>
+            <tr><td><strong>אחסון טרום ייצוא</strong></td><td>אור UV, חמצון</td><td>שקיות אלומיניום, MAP/N2</td><td>$0.10-0.20/g</td></tr>
+            <tr><td><strong>שינוע יבשתי (איראן)</strong></td><td>בדיקות מכס, עיכוב</td><td>תעוד מלא, COA, Phytosanitary</td><td>$50-150/shipment</td></tr>
+            <tr><td><strong>שינוע בינלאומי</strong></td><td>תנאי טמפרטורה</td><td>Air freight (לרוב), לא ים</td><td>$15-40/kg</td></tr>
+            <tr><td><strong>שחרור מכס יעד</strong></td><td>בדיקות GEO, ISO</td><td>Pre-clearance lab test</td><td>$200-800/אצווה</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>Air Freight: הנורמה, לא היוצא מן הכלל</h3>
+    <p>בשינוע ים, זמן ההובלה מאיראן לאירופה הוא 25-35 ימים. בזעפרן שאוחסן ב-RH לא מבוקרת של מכולה, 35 ימים הם הפרש בין Grade I ל-Grade II לפי ניתוח ISO. לכן, <strong>90%+ מסחר זעפרן פרימיום עוברים ב-Air Freight</strong>, למרות עלות של 15-40 דולר לק"ג, זניחה לחלוטין ביחס לערך הסחורה. מטוס מטהראן לפרנקפורט: 6-8 שעות. שינוי ISO: אפסי.</p>
+    <div class="ab ab-w">
+        <div class="tg">פרמטר מסחרי קריטי</div>
+        <p>מדינות גבול לאיראן, כמו אמירויות, עיראק וטורקיה, שימשו היסטורית כ"מדינות מעבר" עם תיוג מחדש. ה-EU הכניס ב-2021 חובת DNA-Origin Testing למשלוחי זעפרן שמגיעים ממדינות שלישיות שאינן מדינות ייצור מוכרות. האמצעי צמצם משמעותית, אם כי לא ביטל, את מסחר ה"עיראקי מוצא איראני".</p>
+    </div>
+    <p>ייצוא ישיר מאיראן לישראל: מורכב פוליטית ובלתי ישיר. בפועל, זעפרן איראני מגיע לישראל בדרך כלל דרך הולנד, גרמניה, ספרד, או UAE. לרוב ה-COA מציין "Product of Spain" כאשר הזעפרן מחומד (re-packed) באירופה. בדיקת DNA תגלה זאת, אבל מכסי EU לא דורשים בדיקה על משלוחים מספרד. הפרק הזה עדיין פתוח בסחר הישראלי.</p>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות: הנוירוכימיה של "תבלין האושר"</h2>
+    <p class="dc">המחקר הקליני בזעפרן הוא, לתבלין, יוצא דופן בנפחו ובאיכותו. מעל 50 ניסויים קליניים אקראיים ומבוקרים פורסמו בין 2000 ל-2024, חלקם בכתבי עת בעלי Impact Factor גבוה. הנושאים הנחקרים: דיכאון, חרדה, הפרעות שינה, ניוון רשתית, קוגניציה, ו-PMS. לא מדובר ב"רפואה עממית עם מחקר מינורי". מדובר ב-evidence base שחלקו עמיד בסטנדרטים של FDA פאזה II.</p>
+    <h3>מנגנוני פעולה נוירוכימיים</h3>
+    <p>ספרנל נמצא כ<strong>מעכב חלש של ספיגה חוזרת של סרוטונין ודופמין</strong> (SSRI/DNRI-like), בדומה לפלואוקסטין אבל בעוצמה נמוכה יותר ועם פרופיל תופעות לוואי נמוך בהרבה. קרוצין פועל על <strong>קולטני GABA-A</strong>, מה שמסביר את ההשפעה האנקסיוליטית. קרוצטין עובר את <strong>מחסום דם-מוח</strong> ומגן על נוירונים היפוקמפוסיים מפגיעה חמצונית. שלוש פעולות שונות, שלושה מסלולים נוירוכימיים, שלושה מרכיבים ממשפחה ביוכימית אחת.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">25mg/day</div><div class="nu">מינון קליני מחקרי</div><div class="nl">ניסויי SSRI</div></div>
+        <div class="ni"><div class="nv">6-8 שב'</div><div class="nu">זמן להשפעה</div><div class="nl">דיכאון קל-בינוני</div></div>
+        <div class="ni"><div class="nv">≈70%</div><div class="nu">יעילות מול פלצבו</div><div class="nl">meta-analysis 2023</div></div>
+        <div class="ni"><div class="nv">20mg/day</div><div class="nu">מינון לרשתית</div><div class="nl">AMD גילוי מוקדם</div></div>
+        <div class="ni"><div class="nv">+23%</div><div class="nu">שיפור זיכרון</div><div class="nl">קשישים (RCT, 2021)</div></div>
+        <div class="ni"><div class="nv">5-8 שנות</div><div class="nu">מחקר AMD</div><div class="nl">Dr. Silvia Bisti</div></div>
+    </div>
+    <h3>AMD: הגבול בין תבלין לתרופה</h3>
+    <p>הניסוי הקליני המרשים ביותר: פרופסור <strong>Silvia Bisti</strong> מאוניברסיטת ל'אקווילה, איטליה, ניהלה מחקר שנמשך 5 שנים (2010-2015) על 25 חולי AMD (ניוון מקולרי הקשור לגיל). מתן 20 מ"ג זעפרן יומי שיפר מדדי רגישות רשתית (ERG) ב-+0.3 log units, שיפור שנמשך כל עוד נמשכה הטיפול ונסוג לאחר הפסקתה. המנגנון: קרוצין מגן על תאי קונוסים ברשתית מפגיעה חמצונית. ב-2022 החלה חברת Macuclear ניסוי Phase II מבוסס על ממצאים אלה. הזעפרן כתרופה, לא כתבלין, אינו מדע בדיוני.</p>
+    <div class="pull">
+        <p>כאשר תבלין אחד מייצר evidence base שמחבר נוירוכימיה, נוירואופתלמולוגיה וגינקולוגיה קלינית לכדי תמונה אחת, הוא חדל להיות תבלין בלבד. הזעפרן לא ביקש לכך רשות. הוא פשוט ממשיך לעבוד.</p>
+    </div>
+    <h3>PMS ואישה</h3>
+    <p>מחקר של Agha-Hosseini et al. (BJOG, 2008), 50 נשים, קיבלו 30 מ"ג זעפרן ליום (15 מ"ג פעמיים). תוצאה: ירידה של 76% בתסמיני PMS לעומת 8% בקבוצת פלצבו. מנגנון: שילוב פעולות על סרוטונין ועל קולטני אסטרוגן. המחקר שוכפל ב-3 מחקרים נוספים עד 2023 עם תוצאות עקביות. לא בשימוש קליני רשמי עדיין, אבל נוכחות גבוהה בתחום "תוספי תזונה לנשים" בגרמניה ובהולנד.</p>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק הזהב האדום, מחירים ומגמות 2026</h2>
+    <p class="dc">שוק הזעפרן העולמי הוערך ב-2024 בכ-<strong>1.35 מיליארד דולר</strong>, עם תחזית לצמיחה ל-2.1 מיליארד עד 2030 (CAGR 7.3%). ריכוז יוצא דופן: מדינה אחת שולטת ביותר מ-85% מהייצוא. שינוי בקצאלת קאין שבאיראן גורם לתנודת מחיר גלובלית. מבנה שוק כה ריכוזי הוא נדיר אפילו בעולם הסחורות.</p>
+    <div class="cb">
+        <div class="ct">חלוקת ייצור זעפרן עולמי 2024 (% מסך הכמות)</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇷</span><span class="pb-name">איראן</span></div><div class="pb-track"><div class="pb-fill" data-w="86" style="background:#9B2335"></div></div><span class="pb-pct">86%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇦🇫</span><span class="pb-name">אפגניסטן</span></div><div class="pb-track"><div class="pb-fill" data-w="5" style="background:#C4702A"></div></div><span class="pb-pct">5%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇪🇸</span><span class="pb-name">ספרד</span></div><div class="pb-track"><div class="pb-fill" data-w="4" style="background:#E0A070"></div></div><span class="pb-pct">4%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇰🇿</span><span class="pb-name">קזחסטן</span></div><div class="pb-track"><div class="pb-fill" data-w="2" style="background:#7A5A40"></div></div><span class="pb-pct">2%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="3" style="background:#DDD6CA"></div></div><span class="pb-pct">3%</span></div>
+        </div>
+        <div class="pb-note">נתוני FAO · ITC Trade Map · Saffron Institute Iran 2024 · סה"כ ייצור: ~280-340 טון שנתי</div>
+    </div>
+    <h3>מבנה המחיר: מהמטע לצרכן</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>שלב שרשרת הערך</th><th>מחיר Sargol (USD/kg)</th><th>מחיר Negin (USD/kg)</th><th>שיעור ערך מוסף</th></tr></thead>
+        <tbody>
+            <tr><td><strong>חקלאי, בשדה</strong></td><td>800-1,200</td><td>1,200-2,000</td><td>בסיס</td></tr>
+            <tr><td><strong>מרכז עיבוד מקומי</strong></td><td>1,200-1,800</td><td>2,000-3,500</td><td>+50-80%</td></tr>
+            <tr><td><strong>יצואן, FOB טהראן/משהד</strong></td><td>1,800-3,500</td><td>3,500-7,000</td><td>+80-120%</td></tr>
+            <tr><td><strong>מיובא EU/USA, CIF</strong></td><td>2,500-5,000</td><td>5,000-10,000</td><td>+40-70%</td></tr>
+            <tr><td><strong>קמעונאי (1g צנצנת)</strong></td><td>10,000-20,000</td><td>18,000-35,000</td><td>+200-400%</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>מגמות 2025-2026</h3>
+    <p>שלוש מגמות מרכזיות: ראשית, <strong>אפגניסטן כשחקן עולה</strong>: תחת ממשל הטליבן, גידול הפרג נחסם, חקלאים רבים עברו לזעפרן. ייצוא אפגני גדל מ-6 טון (2019) ל-כ-17 טון (2024). איכות: Grade I-II, מחיר נמוך ב-15-20% מאיראן. שנית, <strong>זעפרן מתחת לאדמה</strong>: גידול מוגן (Greenhouse Saffron) בנטישת אוסטריה, ספרד, גרמניה. מבקר את עונתיות הפריחה, מאפשר 2-3 מחזורים בשנה. עדיין ב-scale קטן אבל פוטנציאל מבני. שלישית, <strong>ביקוש בריאות</strong>: צמיחה של 35% בביקוש לתמציות זעפרן מסטנדרטיות (affron, SaffSerene) לשוק התוספים. מחיר תמצית מסטנדרטית ל-3.5% crocins: 200-400 USD/kg, שוק של מאות מיליוני דולרים.</p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית: גידול מבוקר, מיצוי מתקדם, ביוטכנולוגיה</h2>
+    <p class="dc">הגבול הבא של הזעפרן הוא לא ב"עוד מאזורי ייצור", אלא בשינוי יסודי של מודל הגידול עצמו ובמיצוי הפעילות הביוכימית לכדי מולקולות ניתנות-לסטנדרטיזציה. שני מסלולים מקבילים מתפתחים: האחד מנסה להפוך את הגידול לעצמאי-מאקלים, השני מנסה להפוך את המולקולות לעצמאיות-מהצמח.</p>
+    <h3>Vertical Farming: הזעפרן ללא שמש</h3>
+    <p>חברת <strong>Crocus Tech</strong> (אמסטרדם, 2021) פיתחה מערכת גידול מאונך בה פקעות Crocus sativus מגודלות תחת <strong>תאורת LED בספקטרום מדויק</strong> (650 nm לפריחה, 450 nm לשלב העלים), עם בקרת טמפרטורה מחשבית לסימולציית "קיץ מדומה" ו"סתיו מדומה". הישג: <strong>3 מחזורי פריחה בשנה</strong> לעומת אחד בטבע. פריון לשטח: פי 8-12 לעומת גידול שדה. עלות ייצור: עדיין גבוהה ב-40-60% מזעפרן שדה איראני, אבל הפער מצטמצם עם הגדלת Scale.</p>
+    <p>מוקד שני: <strong>Haiku Saffron</strong> (יפן, 2023) מגדל Crocus sativus בביוריאקטורים של שורשי שיעיר (Hairy Root Culture), שיטה המבוססת על הדבקה ב-Agrobacterium rhizogenes. שורשי שיעיר מייצרים קרוצין וספרנל גם ללא פרח ולחלוטין ללא תנאי שדה. פוטנציאל: ייצור קרוצין טהור בביוריאקטור כדרך עצמאית מהחקלאות. עלות ייצור נוכחית: גבוהה, אבל בסדר גודל של 500-800 USD/kg קרוצין נקי, בהשוואה ל-2,000-4,000 בתמצית מהשדה.</p>
+    <h3>הנדסה גנטית: מסלול הוויכוח</h3>
+    <p>בשנת 2021 פרסם צוות מאוניברסיטת USC בכתב העת Metabolic Engineering את ריצוף מלא של נתיב הביוסינתזה של קרוצין ב-<em>Crocus sativus</em> וזיהוי <strong>האנזים CsALDH3I1</strong> כשלב המגביל-קצב בייצור ספרנל. זה פתח את הדרך להכנסת הנתיב לשמרים (<em>Saccharomyces cerevisiae</em>), שיוכלו לייצר ספרנל מגלוקוז בתסיסה. ב-2024 הגיע הנתיב לרמת 12 mg/L בתסיסה מעבדתית. רמה מסחרית נחשבת 500+ mg/L. המרחק עדיין גדול, אבל כיוון הוא ברור.</p>
+    <div class="ab ab-w">
+        <div class="tg">הנגזרת הפרמצבטית</div>
+        <p>חברת <strong>Pharmactive Biotech</strong> (מדריד) רשמה בשנת 2020 את <strong>affron</strong>, תמצית זעפרן מסטנדרטית ל-3.5% crocins. ב-2023, affron קיבל GRAS status (Generally Recognized As Safe) מה-FDA, ונמצא ב-350+ מוצרי תוספי תזונה בארה"ב. מחיר: 270-380 USD/kg לתמצית. ייצוא Pharmactive ב-2024: כ-12 מיליון דולר. זה לא שוק תבלין, זה שוק פרמצבטיקה.</p>
+    </div>
+    <h3>טכנולוגיות מיצוי: SFE ומעבר לה</h3>
+    <p>מיצוי CO₂ על-קריטי (SFE) של זעפרן מייצר תמצית בעלת יחס קרוצין/ספרנל גבוה יותר בהשוואה לתמציות אתנול-מים מסורתיות. תמצית SFE: עד 35 mg/g קרוצין (לעומת 25 mg/g בחוטים יבשים Grade I), 98%+ טוהר. שימושים: תרופות, קוסמטיקה, חומרי מזון מבוקרים. חברת <strong>Flavex Naturextrakte</strong> (גרמניה) מפעילה קו ייצור SFE זעפרן מסחרי מ-2019. מחיר תמצית SFE: 3,500-6,000 EUR/kg. אותה מולקולה, 40 פעמים יותר ממה שחוט שלם יכול להציע לכל גרם.</p>
+    <p>הזעפרן עבר 3,500 שנה. ביידי אדם שכפף גב, יצר ציביליזציות, ניהל מלחמות. כשגרגר שמרים בביוריאקטור בוורשה יתחיל לייצר ספרנל ממותסס, הגרסה הביולוגית של הצמח תמשיך לגדול באיראן. כי היא לא התבלין בלבד. היא הסיפור שלו.</p>
+</section>
+
+<div class="ft">
+    ערך ידע מסחרי-מדעי · Blue Star International · 2026<br>
+    מבוסס על נתוני ISO 3632, FAO, ITC Trade Map, RASFF, ומקורות פתוחים<br>
+    <span style="font-size:11px;color:#AAA59A;">ביוכימיה: Carmona et al. Food Chemistry 2023 · Agha-Hosseini et al. BJOG 2008 · Bisti et al. Invest Ophthalmol 2014 · נתוני שוק: Saffron Institute Iran 2024 · Mordor Intelligence 2024 · עיבוד: ISO 3632-1:2011 · INIA Spain Authentication Protocols</span>
+</div>
+</main>
+
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · SAFFRON</footer>
+
+<div class="marquee-container">
+    <div class="marquee-text">זעפרן · CROCUS SATIVUS · CROCIN · SAFRANAL · SARGOL · NEGIN · RED GOLD · זעפרן · CROCUS SATIVUS · CROCIN · SAFRANAL · SARGOL · NEGIN · RED GOLD · </div>
+</div>
+
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4702A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch');
+    const dots = document.querySelectorAll('.nav-dot');
+    let current = "";
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 300);
+});
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => {
+    dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+            obs.unobserve(e.target);
+        });
+    }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) {
+                        heroSlot.innerHTML = '';
+                        heroSlot.appendChild(makeMedia(heroSrc));
+                    }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

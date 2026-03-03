@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0A0A0B; --text: #FAF7F0; --body: #D1CEC5;
+    --accent: #4A3A6A; --warm: #7A5A9A;
+    --card: rgba(20,20,22,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background-color: var(--bg); color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9;
+    overflow-x: hidden;
+    background-image: linear-gradient(rgba(122,90,154,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(122,90,154,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+body::before, body::after {
+    content:''; position:fixed; width:600px; height:600px; border-radius:50%;
+    filter:blur(120px); z-index:-2; opacity:0.13; pointer-events:none;
+}
+body::before { background:#3A2A5A; top:-100px; left:-100px; }
+body::after { background:#5A3A7A; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap {
+    max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden;
+    box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05);
+    background:#0A0A0B; display:flex; align-items:center; justify-content:center;
+}
+.hero-img-placeholder { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.hero-img-placeholder span { color:rgba(255,255,255,0.15); font-size:12px; letter-spacing:3px; font-family:'Space Mono',monospace; }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch {
+    background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px);
+    padding:50px; border-radius:var(--radius); margin-bottom:40px;
+    border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden;
+}
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; }
+.ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#B090D0; font-style:italic; }
+strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(122,90,154,0.08); border-right:4px solid var(--warm); }
+.ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(74,58,106,0.2); border-right:4px solid var(--accent); }
+.ab-g .tg { color:#B090D0; }
+.ab-r { background:rgba(155,60,60,0.1); border-right:4px solid #9B3C3C; }
+.ab-r .tg { color:#E08080; }
+.ab-r p { color:#DDBABA; }
+.vc { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:22px; margin:18px 0; }
+.vc .vn { font-family:'Frank Ruhl Libre',serif; font-size:21px; font-weight:700; color:var(--text); }
+.vc .vt { font-size:12px; color:var(--warm); font-weight:600; margin-bottom:10px; }
+.vc p { font-size:16px; line-height:1.75; margin-bottom:0; }
+.vc .vs { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.vc .vsi { background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:5px; font-size:12px; color:#A09080; }
+.vc .vsi strong { color:var(--text); }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A09080; margin-top:2px; }
+.ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.cb { background:rgba(20,20,22,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px; margin:28px 0; }
+.cb .ct { font-family:'Frank Ruhl Libre',serif; font-size:17px; font-weight:700; margin-bottom:14px; text-align:center; color:var(--text); }
+.pb-chart { margin:16px 0 8px; display:flex; flex-direction:column; gap:10px; }
+.pb-row { display:flex; align-items:center; gap:10px; }
+.pb-meta { display:flex; align-items:center; gap:6px; min-width:120px; justify-content:flex-end; }
+.pb-flag { font-size:18px; }
+.pb-name { font-size:13px; color:#A09080; }
+.pb-track { flex:1; background:rgba(255,255,255,0.08); height:18px; border-radius:9px; overflow:hidden; }
+.pb-fill { height:100%; width:0; border-radius:9px; transition:width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.pb-pct { font-family:'Frank Ruhl Libre',serif; font-size:14px; font-weight:700; color:var(--text); width:36px; text-align:left; }
+.pb-note { font-size:11px; color:#6B6058; opacity:.7; margin-top:10px; text-align:center; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; border-top:1px solid rgba(255,255,255,0.05); }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(122,90,154,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#fff; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.025); animation:scrollText 50s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#6B6058; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#fff; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(122,90,154,0.5); }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(20,20,22,0.85); border:1px solid rgba(122,90,154,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+.home-btn:hover { background:rgba(122,90,154,0.15); }
+@media (max-width:900px) {
+    .side-nav { display:none; }
+    .hero h1 { font-size:55px; }
+    .hero-img-wrap { height:300px; margin-bottom:-100px; }
+    .con { margin-top:150px; }
+    .ng { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+<title>אורגנו · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1"></div>
+    <div class="nav-dot" data-target="ch2"></div>
+    <div class="nav-dot" data-target="ch3"></div>
+    <div class="nav-dot" data-target="ch4"></div>
+    <div class="nav-dot" data-target="ch5"></div>
+    <div class="nav-dot" data-target="ch6"></div>
+    <div class="nav-dot" data-target="ch7"></div>
+    <div class="nav-dot" data-target="ch8"></div>
+    <div class="nav-dot" data-target="ch9"></div>
+    <div class="nav-dot" data-target="ch10"></div>
+</nav>
+
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · HERB ARCHIVE</div>
+    <h1 id="sync-title">אורגנו</h1>
+    <p class="deck" id="sync-desc">Origanum vulgare: שמחת ההרים, 65% קרבקרול, האנטיביוטיקה הטבעית של הסלע הים-תיכוני.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <div class="hero-img-placeholder">
+            <span>OREGANO · Origanum vulgare</span>
+            <span style="font-size:9px;opacity:0.5;">MEDIA SLOT · HERO</span>
+        </div>
+    </div>
+</section>
+
+<div class="marquee-container">
+    <div class="marquee-text">אורגנו · ORIGANUM VULGARE · CARVACROL · THYMOL · ONITES · SMYRNAEUM · WILD OREGANO · אורגנו · ORIGANUM VULGARE · CARVACROL · THYMOL · ONITES · SMYRNAEUM · WILD OREGANO · </div>
+</div>
+
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: שמחת ההר ומסע בין ציביליזציות</h2>
+    <p class="dc">השם אורגנו נולד על הר, לא בשוק. ביוונית העתיקה, <em>oros</em> הוא הר ו-<em>ganos</em> הוא שמחה, קרינה, ברק. יחד: "שמחת ההר". השם הוא ממצא בוטני מדויק: <em>Origanum vulgare</em> ממש מאיר על גבעות יבשות. בשמש כבדה, כשצמחים אחרים כורים, האורגנו מרכז שמן, מוסיף לשלח, וריחו נישא למרחקים. הצמח לא בחר במקום גרוע. הוא בחר בדיוק במקום שמאלץ אותו לייצר את המולקולות שהעולם רוצה.</p>
+    <p>הממצאים ההיסטוריים נפרסים על פני כל תרבויות הים התיכון בו-זמנית. <strong>תיאופרסטוס</strong> (<em>Historia Plantarum</em>, 300 לפנה"ס) מתאר ארבעה מיני Origanum לצרכים שונים: ריפוי, בישול, הדחת נחשים, ומתן לגברים שמנסים לאבד את דעתם מרצון בטקסים. <strong>דיוסקורידס</strong> (<em>De Materia Medica</em>, 70 לספירה), הרופא היווני שיצר את המילון הרפואי הצמחי שהשפיע על אירופה עד המאה ה-17, מקדיש לאורגנו כמה דפים בקטגוריה "נגד ארסים", "נגד אכילת יתר" ו"לחיזוק הבטן". בכתבי הרפואה הרומאיים של פליניוס, האורגנו מופיע כתרופה ל-32 מחלות שונות.</p>
+    <p>שימוש שנשכח: ביוון הקלאסית, זוגות נישאים הוכתרו בזרי אורגנו, לא ורדים. הסיבה: האורגנו היה צמח של <strong>אפרודיטי</strong>, ומאמינים שאם האלה עצמה גידלה אורגנו על הר האולימפוס, ריחו מוביל לאושר. הסגירות בין מזון לפולחן לרפואה בעולם העתיק לא הייתה בלבול, היתה מקיפות. האורגנו היה מועיל בשלושה. לכן הוא גדל בגינת כל בית יווני ורומאי מתועד.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון: אמריקה גילתה אורגנו ב-1945</div>
+        <p>חיילים אמריקאים שחזרו מאיטליה לאחר מלחמת העולם השנייה ייבאו איתם טעם חדש: פיצה עם אורגנו. עד 1940, צריכת האורגנו בארה"ב הייתה פחות מ-250 טון שנתי. ב-1956 היא עמדה על 3,500 טון. הפיצה האמריקאית בנתה שוק ייצוא של תבלין אחד.</p>
+    </div>
+    <p>הגנוס <em>Origanum</em> מונה כ-<strong>44 מינים</strong> שונים, כולם ים-תיכוניים ומזרח-תיכוניים. המבלבל: כמה מהם נקראים "אורגנו" בשפה מסחרית, למרות שאינם <em>O. vulgare</em>. <strong>זעתר</strong> (<em>Origanum syriacum</em>) הוא מין שונה לחלוטין עם פרופיל שמן שונה. <strong>Mexican Oregano</strong> (<em>Lippia graveolens</em>) אינו אפילו באותה משפחה. <strong>Marjoram</strong> (<em>Origanum majorana</em>) הוא קרוב משפחה עם כמות קרבקרול נמוכה בהרבה וטעם מתוק יותר. כאשר מפרט מסחרי כותב "oregano", השאלה הראשונה היא: <em>איזה?</em></p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: יובש כאסטרטגיה, פיזיולוגיית ההישרדות</h2>
+    <p class="dc"><em>Origanum vulgare</em> הוא שיח גמדי רב-שנתי, 20-80 ס"מ, ממשפחת השפתניים (Lamiaceae). הוא חולק את הגנוס עם מרג'ורם ועם זעתר, וחולק את המשפחה עם תימין, מרווה, נענע ולבנדר. כל חברי המשפחה הזו מאופיינים בשמן אתרי עשיר, בגבעולים מרובעים, ובהעדפה ברורה לקרקע סיליקטית יבשה. <em>Origanum</em> הוא הקיצוני ביניהם.</p>
+    <h3>דרישות אקלים: סטרס כמדיניות</h3>
+    <p>אורגנו מועדף לגידול בטמפרטורות <strong>18-30°C</strong>, עמיד לקפאון ביניים (מינוס 10°C בזנים ים-תיכוניים, מינוס 20°C בזנים מרכז-אירופיים). כמות משקעים: <strong>250-600 מ"מ שנתי</strong>, עם קיץ יבש. pH קרקע: 6.0-8.0, אדמות קלקריות-גיריות מועדפות. <strong>הפרדוקס האגרונומי: השקיה רבה מגדילה ביומסה ב-40-60% אבל מורידה ריכוז קרבקרול ב-30-45%.</strong> כל מ"מ גשם שאינו הכרחי לשרידות הצמח הוא מ"מ שמדלל את השמן. חקלאי שיגדל אורגנו על אדמה עשירה ומושקית ייצר אורגנו נאה שמריח כמעט כמאום.</p>
+    <p>מחקר אגרונומי מ-Universitat Autònoma de Barcelona (2019) בחן שלושה משטרי השקיה על זן <em>O. vulgare subsp. hirtum</em> בספרד: 100%, 60%, ו-30% ETc (Evapotranspiration החלפה). תוצאה: <strong>30% ETc</strong> הניב ביומסה נמוכה ב-38%, אבל שמן אתרי גבוה ב-52% ביחס ל-100% ETc. מסקנה: ייצור אורגנו בריכוז גבוה הוא ייצור של <em>מעט</em>, לא הרבה.</p>
+    <h3>כימיוטיפים: המינים שחשובים לסחר</h3>
+    <p>בניגוד לתימין, שם הכימיוטיפים הם אוכלוסיות גנטיות בתוך מין אחד, ב-<em>Origanum</em> ההבדלים בין מינים שונים הם מהותיים מסחרית:</p>
+    <div class="vc">
+        <div class="vn">Origanum vulgare subsp. hirtum</div>
+        <div class="vt">הסטנדרט הטורקי, אורגנו "אמיתי" פרימיום</div>
+        <p>"אורגנו יווני" או "Turkish Oregano". קרבקרול 60-80%, p-Cymene 8-16%, תימול 2-8%. גידול: טורקיה (אנטוליה המערבית), יוון (כרתים, קורפו), קפריסין. הארומה הפרחית-חריפה שמזוהה עם "אורגנו אמיתי". זה שנישא על הפיצה הנפוליטנית.</p>
+        <div class="vs"><div class="vsi">קרבקרול: <strong>60-80%</strong></div><div class="vsi">שמן: <strong>2.5-4.5%</strong></div><div class="vsi">שוק: <strong>גסטרונומיה, פרימיום</strong></div></div>
+    </div>
+    <div class="vc">
+        <div class="vn">Origanum onites</div>
+        <div class="vt">הטורקי התעשייתי, נפח גבוה</div>
+        <p>פוט מרג'ורם, "Pot Marjoram" באנגלית. גידול אינטנסיבי יותר, עלים גדולים יותר, ביומסה גבוהה יותר לדונם. קרבקרול 30-55%, p-Cymene גבוה יותר. שולט בייצוא הטורקי מבחינת נפח (לא ערך). לא תמיד מובחן ברורות מ-hirtum בשוק, וזה מקור לאי-בהירות מסחרית.</p>
+        <div class="vs"><div class="vsi">קרבקרול: <strong>30-55%</strong></div><div class="vsi">שמן: <strong>1.8-3.0%</strong></div><div class="vsi">שוק: <strong>תעשייה, מזון מעובד</strong></div></div>
+    </div>
+    <div class="vc">
+        <div class="vn">Origanum majorana</div>
+        <div class="vt">מרג'ורם: קרוב, שונה, יקר יותר</div>
+        <p>מרג'ורם אמיתי. קרבקרול נמוך (2-15%), Terpinen-4-ol גבוה (20-40%), sabinene (10-20%). טעם מתוק וחמים, לא חריף. משמש לנקניקיות ולתבלין בשר. <em>אינו</em> תחליף לאורגנו ביוכימי. בגרמניה ובמזרח אירופה, "Majoran" הוא תבלין בנפרד לחלוטין עם קהל לקוחות נפרד.</p>
+        <div class="vs"><div class="vsi">Terpinen-4-ol: <strong>20-40%</strong></div><div class="vsi">שמן: <strong>1.5-2.5%</strong></div><div class="vsi">שוק: <strong>נקניקים, בשר</strong></div></div>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">פרמטר אגרונומי קריטי: גובה שתילה</div>
+        <p>מחקר CIHEAM (2021) מצא שאורגנו שגדל <strong>מעל 600 מ'</strong> גובה עם טמפרטורות לילה של 10-15°C מייצר קרבקרול גבוה ב-22% לעומת גידול ב-200 מ' גובה עם לילות חמים. מנגנון: טמפרטורה נמוכה בלילה מאטה פירוק פנולים ומאפשרת הצטברות. לכן: "Wild Mountain Oregano" אינו רק שיווק, זו כימיה.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: קרבקרול, p-Cymene והסינרגיה הפנולית</h2>
+    <p class="dc">שמן אתרי אורגנו <em>hirtum</em> מכיל יותר מ-50 תרכובות מזוהות, אבל שתי מולקולות שולטות בכל ניסוח ביוכימי: <strong>קרבקרול</strong> (5-isopropyl-2-methylphenol) ו-<strong>p-Cymene</strong> (4-isopropyltoluene). הראשון הוא הפנול הפעיל, השני הוא לא פנול אלא פחמימן, ושניהם קשורים ביחס ביוסינתטי ישיר: p-Cymene הוא <em>מבשר</em> של קרבקרול בנתיב הביוסינתזה. ריכוז p-Cymene גבוה לרוב מוביל לריכוז קרבקרול גבוה.</p>
+    <h3>קרבקרול: המנגנון שעובד</h3>
+    <p>קרבקרול, כמו תימול (האיזומר המבני שלו), פועל על <strong>קרום התא הבקטריאלי</strong>. אבל הפרופיל שלו שונה מעט: קרבקרול נוחת יותר בשכבת הפוספוליפיד הפנימית, בעוד תימול פעיל יותר על הקרום החיצוני. בפועל: <strong>קרבקרול אפקטיבי יותר על גרם-שלילים</strong> (E. coli, Salmonella, H. pylori), בעוד תימול אפקטיבי יותר על גרם-חיוביים (Staphylococcus, Streptococcus). האורגנו שמכיל קרבקרול-שולט הוא, ביוכימית, "אנטיביוטיקה נגד מחלות מזון" מטבע ברורה.</p>
+    <p>MIC (Minimum Inhibitory Concentration) של קרבקרול: על <strong>E. coli</strong>: 0.125-0.5 mg/mL; על <strong>Salmonella Typhimurium</strong>: 0.25-0.5 mg/mL; על <strong>Listeria monocytogenes</strong>: 0.06-0.125 mg/mL (ליסטריה היא בין הרגישות ביותר). על <strong>Candida albicans</strong>: 0.25-1.0 mg/mL. המספרים האלה הם "טובים" בנוף של חומרים טבעיים, ומייצגים את ה-evidence base שמאחורי שימוש של אורגנו כחומר שימור טבעי במזון.</p>
+    <h3>חומצה רוזמרינית: השותף השקט</h3>
+    <p><strong>חומצה רוזמרינית</strong> (Rosmarinic acid) מופיעה ב-15-25 mg/g בעלי האורגנו היבשים, הרבה יותר מהתימין (10-20 mg/g). היא אחראית לחלק ניכר מהפעילות נוגדת-הדלקת והנוגדת-חמצון שאינה קשורה לשמן האתרי. ערך ORAC של אורגנו יבש: <strong>159,277 μmol TE/100g</strong>, אחד הגבוהים ביותר שנמדדו בתבלין מסחרי כלשהו. ספינץ ו-1,150 μmol TE/100g. הפרש של פי 130. ברור שאף אחד לא אוכל 100 גרם אורגנו, אבל הנקודה היא צפיפות-נוגדי-החמצון-לגרם, ולפי מדד זה, אורגנו הוא חומר גלם פרמצבטי שמרוסס על פסטה.</p>
+    <div class="ab ab-w">
+        <div class="tg">ממצא 2023: קרבקרול ו-Quorum Sensing</div>
+        <p>מחקר (Journal of Applied Microbiology, 2023): קרבקרול ב-sub-MIC (ריכוז נמוך ממה שהורג) מעכב <strong>Quorum Sensing</strong> בקטריאלי, מנגנון התקשורת הבין-תאי שבו חיידקים "מחליטים יחד" מתי להפעיל ביופילם, לייצר רעלן, להפוך אלימים. עיכוב QS מונע תיאום התקפה בקטריאלית מבלי לגרום לעמידות. זה שוק חדש לקרבקרול: לא הרס חיידקים, אלא שיתוק תקשורת.</p>
+    </div>
+    <h3>פלבונואידים ייחודיים</h3>
+    <p><em>Origanum</em> מכיל שני פלבונואידים שנחקרו בעיקר בו: <strong>לוטאולין</strong> (עד 1.4 mg/g) ו-<strong>אפיגנין</strong> (עד 0.9 mg/g), בריכוזים שלרוב גבוהים יותר מבתימין. אפיגנין נחקר לאחרונה בהקשר לפעילות <strong>GABA-A</strong> (אנקסיוליטי קל, כמו קרבקרול אבל דרך מסלול שונה), וב-2022 פורסם שאפיגנין מעכב CYP1B1, אנזים המשחק תפקיד בהפעלת מסרטנים. מחקר ב-in vitro בלבד, לא קליני, אבל מגדיר כיוון מחקר.</p>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: מפרטים, בדיקות, שפת הסוחרים</h2>
+    <p class="dc">אורגנו יבש הוא תבלין שבו פער האיכות בין מוצר פרימיום למוצר תעשייתי גדול מאוד, ולא תמיד גלוי בעין. שני חבילות אורגנו ירוקות, אחת עם 2.5% שמן אתרי ו-65% קרבקרול, ואחת עם 0.8% שמן ו-25% קרבקרול, ייראו דומות לצרכן. הסוחר המקצועי מבין שמדובר בשני מוצרים שונים לחלוטין.</p>
+    <h3>פרמטרי דירוג: אורגנו יבש</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Grade A (פרימיום)</th><th>Grade B (קמעונאי)</th><th>Grade C (תעשייה)</th><th>שיטת בדיקה</th></tr></thead>
+        <tbody>
+            <tr><td><strong>שמן אתרי מינ'</strong></td><td>2.5 ml/100g</td><td>1.8 ml/100g</td><td>1.0 ml/100g</td><td>הידרו-דיסטילציה BP/EP</td></tr>
+            <tr><td><strong>קרבקרול (% בשמן)</strong></td><td>≥55%</td><td>≥35%</td><td>≥20%</td><td>GC-FID / GC-MS</td></tr>
+            <tr><td><strong>לחות מקס'</strong></td><td>10%</td><td>11%</td><td>12%</td><td>Karl Fischer</td></tr>
+            <tr><td><strong>אפר כולל מקס'</strong></td><td>10%</td><td>12%</td><td>15%</td><td>שריפה 550°C</td></tr>
+            <tr><td><strong>גבעולים עצים מקס'</strong></td><td>10%</td><td>20%</td><td>40%</td><td>הפרדה + שקילה</td></tr>
+            <tr><td><strong>חומר זר מקס'</strong></td><td>0.5%</td><td>1.5%</td><td>3.0%</td><td>ויזואלי + מיקרוסקופ</td></tr>
+            <tr><td><strong>צבע</strong></td><td>ירוק-אפור רענן</td><td>ירוק-אפור</td><td>חום-ירוק</td><td>Colorimetric / ויזואלי</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>שמן אתרי: מפרט אנליטי</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>O. vulgare hirtum (פרימיום)</th><th>O. onites (בינוני)</th><th>Marjoram (שונה)</th></tr></thead>
+        <tbody>
+            <tr><td><strong>קרבקרול</strong></td><td>60-80%</td><td>30-55%</td><td>2-15%</td></tr>
+            <tr><td><strong>p-Cymene</strong></td><td>6-14%</td><td>12-22%</td><td>3-8%</td></tr>
+            <tr><td><strong>תימול</strong></td><td>1-5%</td><td>2-8%</td><td>1-4%</td></tr>
+            <tr><td><strong>Terpinen-4-ol</strong></td><td>0.5-2%</td><td>1-4%</td><td>20-40%</td></tr>
+            <tr><td><strong>Sabinene</strong></td><td>0.5-2%</td><td>1-5%</td><td>10-20%</td></tr>
+            <tr><td><strong>צפיפות (20°C)</strong></td><td>0.935-0.960</td><td>0.910-0.940</td><td>0.890-0.915</td></tr>
+            <tr><td><strong>מדד שבירה</strong></td><td>1.500-1.510</td><td>1.495-1.507</td><td>1.470-1.490</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>זיופים ומהילות: הבעיה האמיתית</h3>
+    <p>אורגנו הוא אחד מ-5 התבלינים הנחקרים ביותר לזיופים ב-EU ובארה"ב. שלוש קטגוריות עיקריות: <strong>מהילות עלי זית</strong> (olive leaves), שנמצאו בשיעורים של 30-50% בדוגמאות מסחריות בבריטניה ב-2015 (Food Standards Agency, UK); <strong>עלי הדס</strong> (Cistus spp.) שמוסיפים ביומסה נוצצת; ו<strong>Marjoram תחת שם אורגנו</strong>, פעולה שאינה "זיוף" משפטי בחלק מהמדינות כי שניהם נמכרים כ"אורגנו" לעיתים. שיטות גילוי: <strong>מיקרוסקופיה של Trichomes</strong> (שערות בלוטיות על פני העלה), <strong>DNA barcoding</strong> (100% ודאות, עלות $200-400), <strong>GC-MS של שמן אתרי</strong> (מגלה יחסי תרכובות שאינם תואמים hirtum).</p>
+    <div class="ab ab-r">
+        <div class="tg">מקרה FSA בריטניה 2015</div>
+        <p>הרשות לבטיחות מזון הבריטית בדקה 52 דוגמאות אורגנו ממכולות קמעונאיות שונות. <strong>25 מתוך 52 (48%) הכילו זיהום מהותי</strong>: עלי זית, הדס, וחומרי צמח לא מזוהים. שום דוגמה לא הכילה חומר מזיק, אבל הצהרת הרכב על האריזה הייתה שגויה. כ-30% מהעלים שהצרכן חשב שהם אורגנו לא היו. ממצא שגרם לפיקוח חמור יותר אבל לא שונה מהותית את מבנה השוק.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהסלע לשק הייצוא</h2>
+    <p class="dc">תהליך עיבוד האורגנו מקביל לתימין אבל עם הבדל מהותי אחד: <strong>גידול "Wild" לעומת "Cultivated"</strong>. חלק מהאורגנו הטורקי והיווני הגבוה-איכות עדיין נאסף ידנית מאוכלוסיות טבעיות בהרים. גידול בר לא ניתן לשליטה אגרונומית, אבל לעיתים מניב ריכוזי קרבקרול גבוהים יותר בגלל הסטרס האמיתי שהצמח עובר. שוק ה-Wild Oregano הוא שוק פרימיום עם קהל לקוחות נפרד.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">קטיף: Wild מול Cultivated</div>
+                <div class="proc-step-body">גידול מסחרי: קטיף מכני (sickle harvesters) בגובה 10-15 ס"מ. מועד: תחילת פריחה (מאי-יוני באנטוליה). תפוקה: 800-2,000 ק"ג ביומסה טריה לדונם. Wild: קטיף ידני בהרים מעל 600 מ', מאי-יולי. תפוקה: 200-500 ק"ג לדונם "אפקטיבי" (מרחב שנאסף ממנו). עלות עבודה: גבוהה ב-200-300%. פרמיה מחיר: 30-80% על Cultivated Grade A. Wild Oregano אמיתי עם תיעוד מוצא: נדיר ויקר, הרוב של ה"Wild" בשוק הוא Cultivated שגדל בתנאים חצי-יבשים.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">ייבוש</div>
+                <div class="proc-step-body">ייבוש שמש מסורתי: 3-6 ימים ברשתות, עד 38°C. ייבוש מכני: 40-50°C, 8-14 שעות. מחקר השוואתי (Özcan & Chalchat, 2004) מצא שייבוש שמש משמר 94% מהשמן האתרי לעומת 86% בייבוש מכני ב-50°C. פרמיה שמש: 5-12 דולר לטון לטובת ייבוש שמש כאשר מוצהר בCOA. ירידת משקל לאחר ייבוש: 65-72%. גבעולים יבשים לאחר ייבוש: מהווים 30-45% ממשקל יבש, וחייבים להיות מוסרים.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">הפרדת עלים (Threshing / Rubbing)</div>
+                <div class="proc-step-body">שלב ייחודי לאורגנו: "Rubbed Oregano" הוא עלים שעברו שפשוף עדין בין גלגלי גומי, ריסוק קל שמנפץ את העלים לחלקים קטנים בלי לאבד שמן. שפשוף מעלה שטח מגע ומאיץ שחרור ארומה בבישול. Whole Leaf: קמעונאות פרימיום. Rubbed: מסעדות, בישול מקצועי. Crumbled: תעשייה. Ground (אבקה): מוצרי בשר, מרינדות. אחוז גבעולים לאחר threshing ב-Grade A: מתחת ל-10%.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">מיון וניקוי</div>
+                <div class="proc-step-body">מנפות רוטציוניות (rotary sieves) בגדלי רשת 2-4 מ"מ. מיון אופטי (optical sorting): מצלמות 800-1200 fps מזהות עלי זית, עלי הדס, גבעולים ומתכות. מכונות מודרניות של Key Technology ו-Tomra מגיעות לדיוק של 99.5% בהוצאת זיהומים. זהו שלב קריטי לאורגנו בגלל שכיחות הזיופים. מאצווה לאצווה: בדיקת ויזואל + ניתוח מיקרוסקופי של trichomes כשגרה.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">05</div>
+            <div>
+                <div class="proc-step-title">אחסון ואריזה</div>
+                <div class="proc-step-body">שקי PP עם בטנת PE, 10-25 ק"ג. Big Bags 200 ק"ג לתפזורת תעשייתית. תנאי: 15-20°C, RH מתחת ל-60%. חיי מדף: 18-24 חודש (Whole Leaf), 12-18 חודש (Ground). אורגנו יבש עם שמן גבוה נוטה יותר לחמצון ולאובדן ארומה מאשר תבלינים אחרים, בגלל ריכוז הפנולים הגבוה שמגיב עם חמצן. MAP (Nitrogen Flush) אריזה: מאריך מדף ב-40-60% לאורגנו אבקה ו-Rubbed.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות: MRL, מיקרוביולוגיה, תקינה</h2>
+    <p class="dc">אורגנו עומד בפני אתגרי בקרת איכות ייחודיים: מוצא מגוון (טורקיה, יוון, מצרים, מרוקו, ברזיל), ריכוז גבוה בשוק הזיופים, והבדל מהותי בין מינים שמשפיע ישירות על הרכב הפעיל. בנוסף, אורגנו ב"Wild" לרוב מגיע ממוצאים שאין בהם בקרת ריסוס, מה שמגדיל סיכון לשאריות חומרי הדברה.</p>
+    <h3>MRL נבחרים: אורגנו ועשבי תיבול יבשים</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>חומר פעיל</th><th>MRL האיחוד האירופי (mg/kg)</th><th>מקור סיכון</th><th>תכיפות גילוי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Chlorpyrifos</strong></td><td>0.01 (LOD)</td><td>טורקיה, מצרים</td><td>גבוהה</td></tr>
+            <tr><td><strong>Profenofos</strong></td><td>0.01 (LOD)</td><td>מצרים, מרוקו</td><td>גבוהה</td></tr>
+            <tr><td><strong>Dithiocarbamates</strong></td><td>0.1</td><td>אגן ים-תיכוני</td><td>בינונית</td></tr>
+            <tr><td><strong>Metalaxyl</strong></td><td>0.05</td><td>נגד עובש בגידול</td><td>נמוכה</td></tr>
+            <tr><td><strong>Imidacloprid</strong></td><td>0.05</td><td>כלל אזורי גידול</td><td>בינונית</td></tr>
+            <tr><td><strong>Acetamiprid</strong></td><td>0.05</td><td>טורקיה</td><td>בינונית</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>נקודת מתח: <strong>אורגנו "Wild"</strong> שנאסף ממדרונות הרים ללא ניהול חקלאי אינו "אורגנו אורגני" אוטומטית. אם שדות חיטה מרוססים נמצאים מעלה רוח, drift של חומרי הדברה מגיע לצמחי בר. תיעוד "Wild" ללא בדיקת שאריות הוא סיכון. ספקים מקצועיים של Wild Oregano מציגים pesticide screen מלא כחלק מה-COA.</p>
+    <h3>מיקרוביולוגיה ואפלטוקסין</h3>
+    <p>ספירה מיקרוביאלית: TPC ≤ <strong>10⁶ CFU/g</strong> (גולמי מתקבל), ≤ <strong>10⁵ CFU/g</strong> לאחר עיבוד לייצוא. Salmonella: Absent/25g. E. coli: ≤10 CFU/g. Aflatoxin B1: ≤5 μg/kg (EU). סיכון אפלטוקסין באורגנו: נמוך יחסית כי לחות אחסון נמוכה, אבל מחסן עם נזילת גג אחת יכול להפוך אצווה שלמה. <strong>OTA (Ochratoxin A)</strong>: ≤15 μg/kg לפי EU Regulation 1881/2006. סטריליזציה: אותן שיטות כמו תימין, Steam HTST, EBI, IR.</p>
+    <div class="ab ab-w">
+        <div class="tg">שיטת זיהוי ייחודית לאורגנו</div>
+        <p><strong>Trichome Analysis</strong>: לעלי האורגנו יש שתי צורות של שערות בלוטיות ייחודיות תחת מיקרוסקופ פשוט (×40): Peltate trichomes (עגולות-שטוחות) ו-Capitate trichomes (עגולות על עוקץ). עלי זית ועלי הדס חסרים את הצורה הפלטטית הייחודית. בדיקה זו ניתנת לביצוע בשדה על ידי מי שמכיר, ללא מעבדה, בעלות אפסית. מנהל רכש שיודע לבצע את הבדיקה הזו חוסך ניתוח מעבדה.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה: שוק תחרותי, שולי דקים, ניהול מוצא</h2>
+    <p class="dc">אורגנו הוא שוק גלובלי עם יותר מ-15 מדינות ייצור אקטיביות, תחרות מחיר חדה, ופרמיה ברורה למוצא ולאיכות מתועדת. בניגוד לזעפרן שבו 86% מסין אחת, השוק כאן מפוזר ועם כוח מיקוח נמוך יותר לכל ספק בנפרד. עלות לוגיסטית: נמוכה ביחס לערך הסחורה, שמה את הדגש על אחסון נכון ולא על שינוע מהיר.</p>
+    <div class="cb">
+        <div class="ct">חלוקת ייצוא אורגנו עולמי 2024 (% מסך הכמות)</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇹🇷</span><span class="pb-name">טורקיה</span></div><div class="pb-track"><div class="pb-fill" data-w="35" style="background:#7A5A9A"></div></div><span class="pb-pct">35%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇲🇽</span><span class="pb-name">מקסיקו</span></div><div class="pb-track"><div class="pb-fill" data-w="14" style="background:#5A3A7A"></div></div><span class="pb-pct">14%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇲🇦</span><span class="pb-name">מרוקו</span></div><div class="pb-track"><div class="pb-fill" data-w="12" style="background:#9A7ABB"></div></div><span class="pb-pct">12%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇬🇷</span><span class="pb-name">יוון</span></div><div class="pb-track"><div class="pb-fill" data-w="10" style="background:#B090D0"></div></div><span class="pb-pct">10%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇪🇬</span><span class="pb-name">מצרים</span></div><div class="pb-track"><div class="pb-fill" data-w="9" style="background:#4A3A6A"></div></div><span class="pb-pct">9%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="20" style="background:#DDD6CA"></div></div><span class="pb-pct">20%</span></div>
+        </div>
+        <div class="pb-note">נתוני ITC Trade Map · FAO 2024 · סה"כ ייצוא: ~80,000 טון שנתי (כולל Mexican Oregano)</div>
+    </div>
+    <h3>מחיר ושרשרת ערך</h3>
+    <p>אורגנו יבש Grade A Hirtum טורקי, FOB איזמיר: <strong>2.50-4.50 USD/kg</strong> (2024). Grade B Onites: <strong>1.80-3.00 USD/kg</strong>. Wild Mountain Hirtum עם COA ומוצא: <strong>5.00-9.00 USD/kg</strong>. Marjoram Grade A: <strong>3.00-5.50 USD/kg</strong>. Mexican Oregano (Lippia): <strong>1.20-2.50 USD/kg</strong>. שמן אתרי אורגנו Hirtum (&gt;60% קרבקרול): <strong>35-65 USD/kg</strong>. שמן אורגנו "חומש" (מסווג כתוסף): <strong>80-150 USD/kg</strong> בקמעונאות.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מדינה</th><th>מין עיקרי</th><th>נמל</th><th>זמן ל-EU</th><th>הערות</th></tr></thead>
+        <tbody>
+            <tr><td><strong>טורקיה</strong></td><td>hirtum + onites</td><td>איזמיר, מרסין</td><td>7-12 ימים</td><td>מגוון איכויות, ב-COA הכרחי</td></tr>
+            <tr><td><strong>מרוקו</strong></td><td>vulgare, compactum</td><td>קזבלנקה</td><td>8-12 ימים</td><td>מחיר נמוך, בדיקות MRL חיוניות</td></tr>
+            <tr><td><strong>יוון</strong></td><td>hirtum (כרתים)</td><td>פיראוס</td><td>ישיר EU</td><td>פרמיה GEO, "Greek Oregano"</td></tr>
+            <tr><td><strong>מקסיקו</strong></td><td>Lippia graveolens</td><td>ורקרוס</td><td>18-24 ימים</td><td>לשוק האמריקאי בעיקר</td></tr>
+            <tr><td><strong>מצרים</strong></td><td>vulgare מגיד</td><td>פורט סעיד</td><td>12-16 ימים</td><td>Profenofos: בדיקה שגרתית</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="pull">
+        <p>הכלל שמנחה סוחר אורגנו מקצועי: מוצא ומין ראשונה, ריכוז קרבקרול שנייה, מחיר שלישית. בסדר הפוך, אתה מוכר ריח ולא תבלין.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות: מנגנונים, evidence base, מגבלות</h2>
+    <p class="dc">אורגנו הוא אחד מהצמחים הרפואיים שה-evidence base שלהם צמח הכי מהר ב-20 השנים האחרונות, בחלקו גדול בגלל עניין ציבורי ב"אנטיביוטיקה טבעית" ובחלק בגלל ממצאים קליניים מוצקים. ה-claims המסחריים על שמן אורגנו לרוב מוגזמים. הביוכימיה האמיתית היא מעניינת גם בלי הגוזמות.</p>
+    <h3>מחקר אנטי-מיקרוביאלי: הממצאים המוצקים</h3>
+    <p>Carvacrol ב-0.125-0.5 mg/mL מעכב ביעילות <em>E. coli</em> O157:H7 (השיג האמבורגר), <em>Salmonella enterica</em>, ו-<em>Campylobacter jejuni</em>, שלושת הגורמים העיקריים לתחלואה ממזון בעולם המערבי. <strong>מחקר מ-USDA Agricultural Research Service (2018)</strong> הדגים שציפוי עגבניות שרי ב-2% תמצית אורגנו מנע צמיחת E. coli לאחר חשיפה מלאכותית. USDA שקל את ממצאי המחקר לאינפורמציה לקראת שימוש כחלופה לחיטוי כימי בירקות. לא אושר לשימוש מסחרי, אבל כיוון ברור.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">159K</div><div class="nu">ORAC</div><div class="nl">μmol TE/100g</div></div>
+        <div class="ni"><div class="nv">0.125</div><div class="nu">MIC E. coli</div><div class="nl">mg/mL קרבקרול</div></div>
+        <div class="ni"><div class="nv">QS</div><div class="nu">עיכוב Quorum</div><div class="nl">sub-MIC</div></div>
+        <div class="ni"><div class="nv">25mg/g</div><div class="nu">חומצה רוזמרינית</div><div class="nl">ממוצע אורגנו יבש</div></div>
+        <div class="ni"><div class="nv">COX-2</div><div class="nu">עיכוב דלקת</div><div class="nl">קרבקרול + לוטאולין</div></div>
+        <div class="ni"><div class="nv">THR</div><div class="nu">עשבי נשימה</div><div class="nl">לא: אורגנו (עדיין)</div></div>
+    </div>
+    <h3>שמן אורגנו כ"אנטיביוטיקה": הבהרה</h3>
+    <p>השוק לשמן אורגנו כ"תוסף אנטי-בקטריאלי" הוא מיליארד+ דולר שנתי בארה"ב. הטענות: "מחליף אנטיביוטיקה", "הורג ווירוסים", "מרפא קנדידה". <strong>מה שנכון:</strong> קרבקרול מעכב חיידקים ופטריות in vitro בריכוזים שניתנים להשגה. <strong>מה שאינו מוכח:</strong> שריכוז קרבקרול שמתקבל מנטילת כמוסות מגיע לרקמות פגועות בריכוז MIC. הביו-זמינות של קרבקרול מאורגנו פומי היא 50-70%, אבל פיזורו לרקמות עמוקות לא נמדד בניסויים קליניים מספיקים. המחקר הקליני הישיר על "שמן אורגנו כאנטיביוטיקה" הוא דל. הניסויים in vitro הם חזקים. הפער בין שניהם הוא מקום שבו שיווק מחטיא ידע.</p>
+    <h3>נוגד דלקת: מה שכן מוכח</h3>
+    <p>חומצה רוזמרינית מעכבת <strong>COX-2 ו-5-LOX</strong>, שני אנזימי הדלקת המרכזיים. מחקר קליני קטן (Phytotherapy Research, 2014): 20 חולי דלקת מפרקים ניסיונית ב-200 מ"ג חומצה רוזמרינית ליום (זמינה כתוסף, לא מאורגנו ישיר) הראו ירידה של 15% במדד CRP לאחר 6 שבועות. לא Ibuprofen, אבל מובהק סטטיסטית ועם פרופיל בטיחות גבוה.</p>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק תחרותי, מגמות פרמיה ו-2026</h2>
+    <p class="dc">שוק אורגנו יבש עולמי הוערך ב-2024 בכ-<strong>680 מיליון דולר</strong>, עם תחזית ל-980 מיליון עד 2030 (CAGR 6.3%). שוק שמן אתרי אורגנו (כולל שמן אורגנו כתוסף): <strong>250 מיליון דולר נוספים</strong>, CAGR 11.2%, הנובע ממגמת "Natural Antimicrobial" בשוק הצרכני. שני השווקים גדלים, אבל מהירות צמיחת שמן אורגנו כ"תוסף" גבוהה פי שניים מהתבלין.</p>
+    <h3>מבנה מחיר ופרמיות</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מוצר</th><th>מחיר FOB 2024</th><th>מחיר קמעונאי (USD/kg)</th><th>פי כמה</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Oregano Bulk, Grade B</strong></td><td>1.80-2.50 USD/kg</td><td>6-12 USD/kg</td><td>×4-6</td></tr>
+            <tr><td><strong>Oregano Grade A (hirtum)</strong></td><td>3.00-4.50 USD/kg</td><td>12-25 USD/kg</td><td>×4-6</td></tr>
+            <tr><td><strong>Wild Mountain Oregano</strong></td><td>5.50-9.00 USD/kg</td><td>25-60 USD/kg</td><td>×5-8</td></tr>
+            <tr><td><strong>שמן אתרי &gt;60% קרבקרול</strong></td><td>40-65 USD/kg</td><td>150-350 USD/kg</td><td>×4-6</td></tr>
+            <tr><td><strong>שמן תוסף (סטנדרט 70% קרב')</strong></td><td>80-120 USD/kg</td><td>350-800 USD/kg</td><td>×5-7</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>מגמות 2025-2026</h3>
+    <p>שלוש מגמות עיקריות. ראשית, <strong>שוק Natural Preservative</strong>: יצרני מזון גדולים (Nestlé, Conagra) מחפשים חלופות "Clean Label" לסורביט, בנזואט, ו-BHA. קרבקרול ב-0.1-0.5% במוצרי בשר ומוצרי חלב מאריך מדף ב-15-20% ביחס לנוגדי חמצון סינתטיים. שוק זה מחייב שמן אתרי עם COA מלא ו-Food Grade Certificate, לא ארומה. שנית, <strong>טורקיה כשחקן מוביל מתמזז</strong>: ייצוא אורגנו טורקי גדל ב-22% ב-2022-2024, עם השקעות ממשלתיות ב-Good Agricultural Practices (GAP) ובהסמכת ספקים ל-EU Food Law. שלישית, <strong>Organic Premium</strong>: אורגנו אורגני מוסמך טורקי: פרמיה של 40-70% על קונבנציונלי. ביקוש מ-EU גדל ב-CAGR 14% מאז 2019.</p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית: שימור מזון, ננו-חלקיקים ואנטי-עמידות</h2>
+    <p class="dc">הגבול הטכנולוגי של האורגנו אינו בגידולו, שהוא פשוט וכמעט לא ניתן לאופטימיזציה נוספת. הגבול הוא בשלושה כיוונים אחרים: <strong>שימוש כחומר שימור מזון</strong> שיחליף סינתטיקה, <strong>ננו-פורמולציות</strong> שיאפשרו ריכוז קרבקרול גבוה ברקמות, ו<strong>שימוש בחקלאות כאלטרנטיבה לאנטיביוטיקה</strong> שהאיחוד האירופי מגביל מ-2022.</p>
+    <h3>שמן אורגנו כחומר שימור מזון: האופק המסחרי</h3>
+    <p>ה-FDA הכיר ב-Carvacrol כ-<strong>GRAS</strong> (Generally Recognized As Safe) ב-2014. ה-EU רישם אותו כ-flavoring substance ב-Regulation 1334/2008. אלה אינם רישומים כ"חומרי שימור" פורמלים, אבל הם מאפשרים לייצרני מזון להוסיף קרבקרול תחת "natural flavor" ולהשיג אפקט שימור. חברת <strong>Bordas Chinchurreta</strong> (ספרד) פיתחה ב-2022 אמולסיה קרבקרול-מים יציבה (5% קרבקרול, גודל קולואיד 180 nm) שניתנת לריסוס ישיר על מוצרי בשר. ניסויים בשיתוף Campofrío הראו הארכת מדף של 3-4 ימים בשניצלים טריים. שוק פוטנציאלי: מאות מיליוני דולרים אם ה-EU ירשום קרבקרול כ-E-number שימור.</p>
+    <h3>ננו-קרבקרול: פתרון הביו-זמינות</h3>
+    <p>הבעיה: קרבקרול נדיף, מסיס בשמן בלבד, ומתפרק במהירות בסביבה בסיסית של המעי הדק. פתרון: ננו-אנקפסולציה ב<strong>ציקלודקסטרין</strong> (Cyclodextrin), מולקולת סוכר עגולה שמחביאה בתוכה מולקולה הידרופובית כמו קרבקרול. מחקר (LWT Food Science 2022): קרבקרול-HP-βCD (Hydroxypropyl-Beta-Cyclodextrin) שיפר ביו-זמינות ב-<strong>380%</strong> בהשוואה לקרבקרול חופשי במודל in vitro של מעי. יציבות: 12 חודש ב-25°C לעומת 2-3 חודש לשמן חופשי. פורמולציה מסחרית ראשונה: Givaudan רשמה פטנט ב-2023 על קרבקרול-CD לשימוש כתוסף מזון.</p>
+    <div class="ab ab-w">
+        <div class="tg">חקלאות: Oregano Oil במקום אנטיביוטיקה</div>
+        <p>מינואר 2022, ה-EU אסר שימוש שגרתי (prophylactic) באנטיביוטיקה בחקלאות בעלי חיים. חקלאים מחפשים חלופות. ניסוי של Ghent University (2023): הוספת 150 mg/kg שמן אורגנו (70% קרבקרול) למספוא עופות מסחרי הפחיתה Campylobacter jejuni בצינור העיכול ב-<strong>2.3 log CFU/g</strong>, הפחתה של 200 פעמים. תוצאה: אפשרות אישור שימוש כ-Feed Additive ב-EU בשנות 2025-2027. שוק פוטנציאלי: עשרות אלפי טון שמן אורגנו שנתי לתעשיית הבשר האירופאית.</p>
+    </div>
+    <h3>Quorum Sensing Inhibition: הגבול הבא</h3>
+    <p>המנגנון שהוזכר בפרק הביוכימיה, עיכוב QS, הוא לא "אנטיביוטיקה רגילה" ולכן לא גורם לעמידות בקטריאלית על פי כל הנתונים הקיימים. זה מאפשר שימוש ארוך-טווח בריכוזים נמוכים, בניגוד לאנטיביוטיקה שמחייבת סבבים. <strong>Quorum-Quenching Compounds</strong> על בסיס קרבקרול נמצאים כיום ב-Phase Ib clinical research בחברת BioAtla (סן דייגו) לשימוש כ-adjuvant לאנטיביוטיקה רגילה, לא כחלופה. האסטרטגיה: לא להרוג בקטריה, לשתק את יכולתה לתאם התקפה. תבלין שגדל מהסלע. אולי הסלע ידע משהו שאנחנו עדיין לומדים.</p>
+</section>
+
+<div class="ft">
+    ערך ידע מסחרי-מדעי · Blue Star International · 2026<br>
+    מבוסס על נתוני ASTA, FAO, ITC Trade Map, RASFF, ומקורות פתוחים<br>
+    <span style="font-size:11px;color:#AAA59A;">ביוכימיה: Caputo et al. 2022 · Özcan &amp; Chalchat 2004 · Journal of Applied Microbiology 2023 · אגרונומיה: Universitat Autònoma de Barcelona 2019 · CIHEAM 2021 · בטיחות: FSA UK 2015 · EU RASFF Notifications · כלכלה: ITC Trade Map 2024 · Mordor Intelligence 2024 · פרמצבטיקה: LWT Food Science 2022 · Ghent University 2023</span>
+</div>
+</main>
+
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · OREGANO</footer>
+
+<div class="marquee-container">
+    <div class="marquee-text">אורגנו · ORIGANUM VULGARE · CARVACROL · HIRTUM · ONITES · WILD MOUNTAIN · אורגנו · ORIGANUM VULGARE · CARVACROL · HIRTUM · ONITES · WILD MOUNTAIN · </div>
+</div>
+
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7A5A9A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch');
+    const dots = document.querySelectorAll('.nav-dot');
+    let current = "";
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => { btt.classList.toggle('visible', window.scrollY > 300); });
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => {
+    dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+            obs.unobserve(e.target);
+        });
+    }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html','');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive','readonly').objectStore('archive');
+                const req = store.get(productId);
+                req.onsuccess = () => {
+                    const data = req.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const h1 = document.getElementById('sync-title');
+                    if (h1 && data.name) h1.innerText = data.name;
+                    const deck = document.getElementById('sync-desc');
+                    if (deck && data.desc) deck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

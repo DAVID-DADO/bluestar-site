@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תאנה מיובשת · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0B;--text:#FAF7F0;--body:#D1CEC5;--accent:#8B6340;--warm:#B8894A;--card:rgba(20,20,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;position:relative;background-image:linear-gradient(rgba(184,137,74,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(184,137,74,0.03) 1px,transparent 1px);background-size:30px 30px}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:.15;pointer-events:none}
+body::before{background:#3A1A40;top:-100px;left:-100px}
+body::after{background:#5A2820;bottom:20%;right:-150px}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000}
+.back-btn{position:absolute;top:40px;left:40px;z-index:10;display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;opacity:.5;transition:.3s}
+.back-btn:hover{opacity:1;color:var(--warm)}
+#backToTop{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;display:none;z-index:1000;transition:.3s}
+#backToTop:hover{transform:scale(1.1);box-shadow:0 0 20px rgba(184,137,74,0.4)}
+.home-btn{position:fixed;bottom:30px;right:30px;background:rgba(20,20,22,.9);border:1px solid rgba(184,137,74,.3);color:#C9A96E;padding:10px 16px;border-radius:30px;text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;display:flex;align-items:center;gap:8px;transition:.3s;z-index:200}
+.home-btn:hover{background:rgba(184,137,74,.15);border-color:var(--warm)}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);position:relative}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:.8;margin-bottom:25px;letter-spacing:-2px}
+.hero .deck{font-size:20px;opacity:.8;max-width:650px;margin:0 auto 40px;font-weight:300}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#000;border:1px solid rgba(255,255,255,.05)}
+.hero-img-wrap video,.hero-img-wrap img{width:100%;height:100%;object-fit:cover}
+.hero-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:#0A0A0B}
+.hero-img-placeholder span{color:rgba(255,255,255,.15);font-size:12px;letter-spacing:3px;font-family:'Space Mono',monospace}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:.3;cursor:pointer;transition:.3s}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm)}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden;color:var(--body)}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:.4}
+.ch::before{top:15px;left:15px}
+.ch::after{bottom:15px;right:15px}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm)}
+.ch p{margin-bottom:18px;color:var(--body)}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px}
+em{color:#C4A878;font-style:italic}
+strong{color:var(--text)}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px}
+.ab p{margin:0;font-size:16px;line-height:1.75}
+.ab-w{background:rgba(184,137,74,.08);border-right:4px solid var(--warm)}
+.ab-w .tg{color:var(--warm)}
+.ab-g{background:rgba(90,62,40,.2);border-right:4px solid var(--accent)}
+.ab-g .tg{color:#C4A878}
+.ab-r{background:rgba(184,50,50,.1);border-right:4px solid #B83030}
+.ab-r .tg{color:#E06060}
+.ab-r p{color:#DDB0B0}
+.vc{background:rgba(30,28,25,.7);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:22px;margin:18px 0}
+.vc .vn{font-family:'Frank Ruhl Libre',serif;font-size:21px;font-weight:700;color:var(--text)}
+.vc .vt{font-size:12px;color:var(--warm);font-weight:600;margin-bottom:10px}
+.vc p{font-size:16px;line-height:1.75;margin-bottom:0;color:var(--body)}
+.vc .vs{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.vc .vsi{background:rgba(255,255,255,.04);padding:6px 12px;border-radius:5px;font-size:12px;color:#A09080}
+.vc .vsi strong{color:var(--text)}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.ni{background:rgba(30,28,25,.7);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px;text-align:center}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text)}
+.ni .nu{font-size:13px;color:#A09080;margin-top:2px}
+.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600}
+.cb{background:rgba(20,20,22,.6);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:24px;margin:28px 0}
+.cb .ct{font-family:'Frank Ruhl Libre',serif;font-size:17px;font-weight:700;margin-bottom:14px;text-align:center;color:var(--text)}
+.pb-chart{margin:16px 0 8px;display:flex;flex-direction:column;gap:10px}
+.pb-row{display:flex;align-items:center;gap:10px}
+.pb-meta{display:flex;align-items:center;gap:6px;min-width:120px;justify-content:flex-end}
+.pb-flag{font-size:18px}
+.pb-name{font-size:13px;color:#A09080}
+.pb-track{flex:1;background:rgba(255,255,255,.08);height:18px;border-radius:9px;overflow:hidden}
+.pb-fill{height:100%;width:0;border-radius:9px;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.pb-pct{font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:700;color:var(--text);width:36px;text-align:left}
+.pb-note{font-size:11px;color:#6B6058;opacity:.7;margin-top:10px;text-align:center}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;border-top:1px solid rgba(255,255,255,.05)}
+.gt th{background:rgba(0,0,0,.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,.1)}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--body)}
+.gt tr:nth-child(even){background:rgba(255,255,255,.02)}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(184,137,74,.2)}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic}
+.reveal{opacity:0;transform:translateY(50px);transition:all .8s cubic-bezier(.2,1,.2,1)}
+.reveal.active{opacity:1;transform:translateY(0)}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.03);animation:scrollText 40s linear infinite}
+@keyframes scrollText{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ft{text-align:center;padding:44px 24px;font-size:13px;color:#6B6058;border-top:1px solid rgba(255,255,255,.06);margin-top:36px}
+.inner-ft{background:rgba(0,0,0,.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:.6;border-top:1px solid rgba(255,255,255,.05)}
+.proc-steps{display:flex;flex-direction:column;gap:20px;margin:24px 0}
+.proc-step{display:flex;gap:20px;align-items:flex-start}
+.proc-step-num{min-width:36px;height:36px;border-radius:50%;background:var(--warm);color:#000;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.proc-step-title{font-family:'Frank Ruhl Libre',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
+.proc-step-body{font-size:16px;color:var(--body);line-height:1.75}
+.media-slot-inline{width:100%;aspect-ratio:16/9;background:var(--card);border-radius:var(--radius);overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;position:relative}
+.media-slot-inline img,.media-slot-inline video{width:100%;height:100%;object-fit:cover;filter:brightness(.92);transition:filter .3s}
+.media-slot-inline:hover img,.media-slot-inline:hover video{filter:brightness(1.05)}
+.media-slot-placeholder{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.1)}
+@media(max-width:900px){.side-nav{display:none}.back-btn{top:20px;left:20px}.hero h1{font-size:55px}.hero-img-wrap{height:300px;margin-bottom:-100px}.con{margin-top:150px}.ng{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="marquee-container">
+  <div class="marquee-text">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · </div>
+</div>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div>
+  <div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div>
+  <div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div>
+  <div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div>
+  <div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div>
+  <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+  <a href="../index.html" class="back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-left:6px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>דף הבית</a>
+  <div class="hero-k">ערך ידע חקלאי · Blue Star International</div>
+  <h1 id="sync-title">תאנה מיובשת</h1>
+  <p class="deck" id="sync-desc">הפרי הקדוש שנזכר בתנ"ך לפני הענב, שריפא מלכים ושיזין נביאים, וכיום מגיע בשני צבעים ממדינות שלא מדברות זו עם זו.</p>
+  <div class="hero-img-wrap" id="slot-product-hero">
+    <div class="hero-img-placeholder"><span>SLOT · PRODUCT · HERO</span></div>
+  </div>
+</section>
+<main class="con">
+
+<section class="ch" id="ch1">
+  <span class="cl">פרק ראשון</span>
+  <h2>חזקיהו המלך, 701 לפנה"ס: השחין שנרפא בעוגת תאנים</h2>
+  <p class="dc">בשנת 701 לפנה"ס, כשסנחריב מלך אשור צר על ירושלים, חלה חזקיהו המלך בשחין ממאיר שהרופאים שלו לא יכלו לרפא. הנביא ישעיהו, לפי מלכים ב' כ', הורה: "שאו דבלת תאנים." דבלת תאנים, עוגת תאנים מיובשות, הוצמדה לשחין. המלך החלים. זה לא רק אגדה. ספינות אשוריות שנחפרו בנינוה נשאו עוגות תאנים כמזון מסע וכרפואה. ד"ר רוג'ר אנדרוז ממוזיאון הבריטי מאשר שתאנה מיובשת הייתה תרופה מסמנת בכל רפואה עתיקה של המזרח התיכון, מצרים, יוון ורומא.</p>
+  <p>התאנה, <em>Ficus carica</em>, היא אחד משבעת המינים שנמנו בתורה: "ארץ חיטה ושעורה וגפן ותאנה ורימון, ארץ זית שמן ודבש." הארכיאולוגיה מאשרת: תאנות מיובשות נמצאו ביריחו מלפני 11,400 שנה, ממצא שהפך אותן לאחד מהמאכלים המבויתים הקדומים ביותר שנמצאו. ביוון קדומה, תאנה הייתה מוגנת בחוק: ייצוא תאנים טריות מאתיקה נאסר, מפני שהמרחק הגיאוגרפי שנוצר בין עץ לשוק גרם לפרי להירקב בדרך. הפתרון היחיד: ייבוש. מה שנאסר לייצוא טרי, יצא מיובש לכל פינה של הים התיכון.</p>
+  <p>רומא קיבלה את התאנה מיוון ולא הייתה מוכנה לוותר עליה. קאטו הזקן, בחיבורו <em>De Agri Cultura</em> מ-160 לפנה"ס, כלל מתכון לאחסון תאנים מיובשות שנראה זהה לשיטת האחסון הטורקית המסורתית עד היום. שתיים ועשרים מאות שנה בין שתי ההוראות, ואותה שיטה. תאנה מיובשת היא אחד הדברים שבני אדם עשו אותו דבר מאז שהיו ערים.</p>
+  <div class="pull"><p>פרי שנזכר בתורה, ריפא מלכים, והגיע לשולחן הרומאים, עדיין מחפש בשנת 2025 את הסוחר שיספר את הסיפור שלו נכון.</p></div>
+</section>
+
+<section class="ch" id="ch2">
+  <span class="cl">פרק שני</span>
+  <h2>מפת הייצור: תורכיה שולטת, איראן מאיימת</h2>
+  <p class="dc">שוק התאנה המיובשת מרוכז בצורה חריגה. שתי מדינות שולטות ביחד ביותר מ-70% מהנפח העולמי, ובניהן יש תחרות שמשפיעה על מחירים בצורה ישירה.</p>
+  <div class="cb">
+    <div class="ct">חלוקת ייצור תאנה מיובשת עולמי</div>
+    <div class="pb-chart">
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇹🇷</span><span class="pb-name">טורקיה</span></div><div class="pb-track"><div class="pb-fill" data-w="50" style="background:#8B4A20"></div></div><span class="pb-pct">50%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇷</span><span class="pb-name">איראן</span></div><div class="pb-track"><div class="pb-fill" data-w="22" style="background:#A05A30"></div></div><span class="pb-pct">22%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇲🇦</span><span class="pb-name">מרוקו</span></div><div class="pb-track"><div class="pb-fill" data-w="8" style="background:#6A3A18"></div></div><span class="pb-pct">8%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇪🇸</span><span class="pb-name">ספרד</span></div><div class="pb-track"><div class="pb-fill" data-w="7" style="background:#7A4A28"></div></div><span class="pb-pct">7%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇺🇸</span><span class="pb-name">ארה"ב (קליפורניה)</span></div><div class="pb-track"><div class="pb-fill" data-w="5" style="background:#5A3018"></div></div><span class="pb-pct">5%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌐</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="8" style="background:#3A2010"></div></div><span class="pb-pct">8%</span></div>
+    </div>
+    <div class="pb-note">נתוני 2023-2024 · כולל whole, layer, block ו-diced</div>
+  </div>
+  <p>טורקיה, בעיקר אזור איזמיר ואיגה, מייצרת את הסטנדרט הגלובלי: Sarılop, Bursa Siyahı, ו-Sarılop לבן. ייצור איכותי, QC שעומד בתקני EU, ותשתית ייצוא מפותחת. איראן מייצרת נפח גדול יותר ממה שחושבים, בעיקר מאזור Estahban, אבל סנקציות מגבילות ייצוא ישיר לשווקים מערביים. תאנה איראנית מגיעה לרוב דרך מתווכים, עם pricing שמשקף את הסיכון.</p>
+  <div class="ab ab-w">
+    <div class="tg">Stark OS · איראן כמשתנה מחיר</div>
+    <p>כשסנקציות על איראן מתחזקות, תאנה איראנית נעלמת מהשוק ומחיר טורקי עולה 15-20%. כשסנקציות מתרכות, נפח איראני חוזר דרך UAE ו-Georgia. סוחר שעוקב אחרי מדיניות OFAC, יכול לתמחר קנייה מוקדמת מטורקיה בעיתוי שרוב המתחרים פספסו.</p>
+  </div>
+</section>
+
+<div id="slot-inline-2" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_02</div></div>
+
+<section class="ch" id="ch3">
+  <span class="cl">פרק שלישי</span>
+  <h2>איזמיר, 1922: שריפת העיר שבנתה את שוק התאנים</h2>
+  <p class="dc">בספטמבר 1922, בתום מלחמת יוון-טורקיה, נשרפה איזמיר בשריפה שהרגה עשרות אלפים וגירשה מאות אלפים. הרבעים היוניים והארמניים שהיו המרכז המסחרי של העיר, כולל השוק הגדול שבו נמכרה תאנה מיובשת ממאות שנים, הפכו לאפר תוך 72 שעות.</p>
+  <p>לפני השריפה, היוונים והארמנים שחיו באיזמיר שלטו בשרשרת הסחר של התאנה: גידול, עיבוד, ייצוא. כ-40% מהחקלאים שגידלו תאנים באזור היו יוונים. בעקבות השריפה והחלפת האוכלוסין של 1923, הם גורשו ליוון. הטורקים שנשארו ושקיבלו בתמורה מיוון, לא ידעו לגדל תאנים. שנות הייצור הבאות היו קטסטרופה.</p>
+  <div class="ab ab-g">
+    <div class="tg">הלקח המסחרי</div>
+    <p>בשנות ה-30, ממשלת אתאטורק שלחה אגרונומים לאזור לשקם את עצי התאנה ולהכשיר חקלאים חדשים. התהליך לקח 15 שנה. ב-1950 חזר הייצור לרמות של 1920. הלקח: שרשרת ייצור חקלאית שנשענת על ידע אנושי שנמחק, לא מתשקמת מהר. ספק שאין לו continuity של ידע, ספק שלא ניתן לבנות עליו.</p>
+  </div>
+  <p>המשבר של 1922-1935 לימד גם שיעור גיאוגרפי: הייצוא של תאנה טורקית עבר מנמלי איזמיר לנמל אחד מרכזי. Cooperative איזמיר, שהוקם ב-1938, מרכז עד היום כ-70% מייצוא התאנה הטורקי. מונופול cooperatif זה שומר על מחיר יציב אבל גם מונע ניהול מחיר חד-צדדי מצד ספקים בודדים. הסוחר שמבין את מבנה ה-cooperative הטורקי, מבין מדוע מחיר תאנה טורקית לא קופץ בבועות כמו שמן זית.</p>
+  <div class="pull"><p>שריפה שמחקה שרשרת ייצור לקחה 15 שנה לשיקום. ידע חקלאי אינו מוצר שניתן לייבא עם המשלוח הבא.</p></div>
+</section>
+
+<section class="ch" id="ch4">
+  <span class="cl">פרק רביעי</span>
+  <h2>הזנים: לבן, שחור, ושניים שמוכרים בשמות אחרים</h2>
+  <p>לתאנה המיובשת יש הבחנה אחת שקובעת את כל שיחת המכירה: צבע. לבן (בלונד) לעומת שחור (ארגמן). שני מוצרים לשני שווקים שחופפים חלקית.</p>
+  <div class="vc">
+    <div class="vn">Sarılop (Turkish White)</div>
+    <div class="vt">הסטנדרט הגלובלי · צהוב-זהוב, מתוק</div>
+    <p>הזן הדומיננטי בייצוא הטורקי. בשלה לצבע צהוב-בז' עם בשר ורוד-זהוב פנימי. מתיקות גבוהה, מרקם רך ורטוב יחסית, ארומה מבושמת. 90% מה-bulk export של איזמיר. מוכר ל-EU, ארה"ב, ישראל. הסטנדרט שרוב הלקוחות מכירים.</p>
+    <div class="vs"><span class="vsi">מקור: <strong>איזמיר, טורקיה</strong></span><span class="vsi">צבע: <strong>זהוב-בז'</strong></span><span class="vsi">מחיר: <strong>$$</strong></span></div>
+  </div>
+  <div class="vc">
+    <div class="vn">Bursa Siyahı (Black Fig)</div>
+    <div class="vt">הפרמיום הטורקי · כהה, עמוק, מיוחד</div>
+    <p>תאנה שחורה-סגולה עם בשר כהה-אדום עז. טעם עמוק ומורכב, פחות מתוק מ-Sarılop, עם נגיעות של יין ותמר. נפח ייצור קטן יותר. מחיר 30-50% מעל לבן. שוק גורמה, שוקולטיירים, ואריזות gift. לקוח שמחפש תאנה "מיוחדת" לא מחפש Sarılop.</p>
+    <div class="vs"><span class="vsi">מקור: <strong>בורסה, טורקיה</strong></span><span class="vsi">צבע: <strong>סגול-שחור</strong></span><span class="vsi">מחיר: <strong>$$$</strong></span></div>
+  </div>
+  <div class="vc">
+    <div class="vn">Calimyrna (California)</div>
+    <div class="vt">אמריקאי · גדול, בז', ייעודי</div>
+    <p>גרסה קליפורנית של הזן הטורקי Sarılop. גדול יותר, מעט פחות מתוק, מרקם נוקשה יותר לאחר ייבוש. מועדף בתעשיית האפייה האמריקאית בגלל גודל אחיד ומרקם שעומד בבישול. מחיר גבוה מהטורקי, נפח מוגבל.</p>
+    <div class="vs"><span class="vsi">מקור: <strong>קליפורניה</strong></span><span class="vsi">גודל: <strong>גדול, אחיד</strong></span><span class="vsi">מחיר: <strong>$$$</strong></span></div>
+  </div>
+  <div class="vc">
+    <div class="vn">Estahban (Iranian)</div>
+    <div class="vt">איראני · זהוב-כהה, סוכרי</div>
+    <p>מאזור Estahban בפרס. מתיקות קיצונית עם ריכוז סוכר גבוה מהממוצע. מרקם יבש יותר מהטורקי. מחיר נמוך ב-20-30% מהטורקי, אבל ייצוא ישיר מוגבל בגלל סנקציות. מגיע לשוק דרך מתווכים. איכות יכולה להיות גבוהה, consistency בין לוטים נמוכה יותר.</p>
+    <div class="vs"><span class="vsi">מקור: <strong>Estahban, איראן</strong></span><span class="vsi">נגישות: <strong>דרך מתווכים</strong></span><span class="vsi">מחיר: <strong>$</strong></span></div>
+  </div>
+</section>
+
+<section class="ch" id="ch5">
+  <span class="cl">פרק חמישי</span>
+  <h2>פרופיל תזונתי: סידן, ברזל, ופיברין שמאפשרים claim</h2>
+  <p class="dc">תאנה מיובשת היא המקור הצמחי הטוב ביותר לסידן בין כל הפירות היבשים. נתון שרוב הסוחרים לא מכירים ולא מנצלים.</p>
+  <div class="ng">
+    <div class="ni"><div class="nv">249</div><div class="nu">קלוריות</div><div class="nl">ל-100 גרם</div></div>
+    <div class="ni"><div class="nv">63g</div><div class="nu">פחמימות</div><div class="nl">ל-100 גרם</div></div>
+    <div class="ni"><div class="nv">162mg</div><div class="nu">סידן</div><div class="nl">16% יומי</div></div>
+    <div class="ni"><div class="nv">2.0mg</div><div class="nu">ברזל</div><div class="nl">11% יומי</div></div>
+    <div class="ni"><div class="nv">9.8g</div><div class="nu">סיבים</div><div class="nl">35% יומי מומלץ</div></div>
+    <div class="ni"><div class="nv">680mg</div><div class="nu">אשלגן</div><div class="nl">ל-100 גרם</div></div>
+  </div>
+  <p>162 מיליגרם סידן ל-100 גרם. שקד מיובש מכיל 264mg, אבל שקד לא מוכר כ"פרי." בין הפירות היבשים, תאנה היא הראשונה ברשימת הסידן. זה נתון שפותח שיחה עם תזונאים, עם מותגי dairy-free, ועם שוק צמחוני שמחפש מקורות סידן שאינם חלב.</p>
+  <table class="gt">
+    <tr><th>פרמטר</th><th>תאנה מיובשת</th><th>משמש מיובש</th><th>שזיף מיובש</th></tr>
+    <tr><td>סידן mg / 100g</td><td><strong>162</strong></td><td>55</td><td>43</td></tr>
+    <tr><td>סיבים g / 100g</td><td>9.8</td><td>7.3</td><td>7.1</td></tr>
+    <tr><td>ברזל mg / 100g</td><td>2.0</td><td>2.7</td><td>0.9</td></tr>
+    <tr><td>קלוריות / 100g</td><td>249</td><td>241</td><td>240</td></tr>
+    <tr><td>FOB $/kg ממוצע</td><td>2.50-5.50</td><td>2.50-5.00</td><td>2.00-4.00</td></tr>
+  </table>
+  <div class="ab ab-w">
+    <div class="tg">Stark OS · נשק מכירה</div>
+    <p>תאנה עם COA שמציין 162mg+ סידן ל-100g היא מוצר שנכנס לשיחה עם לקוחות dairy-free, plant-based, ו-bone health. EFSA (EU food authority) מאשר health claim לסידן ו-bone health. מוצר שנמכר עם approved health claim ל-EU retailer שווה $1-2/kg יותר ממוצר "תאנה." שינוי שיחה, לא שינוי מוצר.</p>
+  </div>
+</section>
+
+<div id="slot-inline-3" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_03</div></div>
+
+<section class="ch" id="ch6">
+  <span class="cl">פרק שישי</span>
+  <h2>שרשרת העיבוד: מהעץ ל-layer</h2>
+  <p>עיבוד תאנה מיובשת הוא תהליך שמשלב ייבוש טבעי עם שלבי עיבוד ידניים שלא ניתן להחליף. הבנת השרשרת מסבירה מדוע QC variability גבוה יותר מברוב הפירות היבשים.</p>
+  <div class="proc-steps">
+    <div class="proc-step">
+      <div class="proc-step-num">1</div>
+      <div><div class="proc-step-title">קציר טבעי</div><div class="proc-step-body">תאנה מיובשת מייבשת עצמה על העץ או נופלת לאדמה בבשלות מלאה. בטורקיה: איסוף מהאדמה פעם ביומיים-שלושה. תאנים שנשארות על האדמה יותר מדי: עובש, חרקים. לוגיסטיקת האיסוף קובעת את איכות הבסיס. לא ניתן לפצות בעיבוד על בסיס גרוע.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">2</div>
+      <div><div class="proc-step-title">ייבוש שמש</div><div class="proc-step-body">פריסה על מחצלות בשטח פתוח, 5-7 ימים. הפיכה פעמיים ביום. ייבוש שמש מפתח את פרופיל הטעם המורכב של תאנה טורקית: Maillard קל, ריכוז סוכרים, ארומה מעמיקה. ייבוש תנור מהיר יותר אבל טעם שטוח יותר. לתאנה פרמיום, שמש.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">3</div>
+      <div><div class="proc-step-title">כביסה ו-SO₂</div><div class="proc-step-body">שטיפה, לעתים טיפול קצר ב-SO₂ לשמירת צבע בהיר. תאנה ללא SO₂ מחמירה לחום-חמור. שוק organic ו-natural: ללא SO₂, צבע כהה, פרמיום 20-30%. תקן EU לSO₂ בתאנה: עד 500 ppm. נמוך מאפרסק (2,000 ppm).</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">4</div>
+      <div><div class="proc-step-title">מיון ידני</div><div class="proc-step-body">מיון לפי גודל: jumbo (40+ גרם), large, medium, small. מיון לפי צבע ואחידות. תאנות שנשברו, כהות מדי, או פגומות, נפסלות לblock ו-diced. מיון ידני הוא העיקר, מיון מכני משלים. זה מסביר מדוע מחיר תאנה תעסוקה-אינטנסיבי יחסית.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">5</div>
+      <div><div class="proc-step-title">פורמטים ואריזה</div><div class="proc-step-body">Whole: שלמות, פרמיום. Layer/pulled: שטוחות, אחת על גבי השנייה ב-layers, גדולות ויפות. Block: דחוסות לצורת ח"פ, תעשייה. Diced: חתוכות לקוביות. כל פורמט: שוק ומחיר שונה. Layer בתיבת עץ: gift market. Block 10kg: תעשיית אפייה.</div></div>
+    </div>
+  </div>
+  <div class="ab ab-r">
+    <div class="tg">סיכון: חרקים מאוחסנים</div>
+    <p>תאנה מיובשת עם לחות מעל 23% מושכת Plodia interpunctella, חרק אחסון נפוץ. המנה הראשונה שמגיעה נקייה יכולה להיות נגועה אחרי שלושה חודשי אחסון לא נכון. פחית חום, לחות יחסית מעל 65%. בדוק אחסון ועיין בתאריך ייצור. COA מיקרוביולוגי לא מחליף בדיקה ויזואלית של שק דוגמה.</p>
+  </div>
+</section>
+
+<section class="ch" id="ch7">
+  <span class="cl">פרק שביעי</span>
+  <h2>שימושים ושווקים: חמישה שווקים, מחיר משתנה</h2>
+  <p class="dc">תאנה מיובשת היא מוצר עם עוגן היסטורי חזק מאוד בכמה תרבויות. זה לא מוצר "חדש" בשוק, זה מוצר שיש לו שורשים, ואפשר לבנות עליהם.</p>
+  <h3>שוק ה-Snacking הקמעונאי</h3>
+  <p>Whole figs בשקית, layer figs בקופסה. הצרכן הישראלי, הגרמני, והבריטי מכיר תאנה כחטיף ישיר. Jumbo layers בקופסה מקושטת: gift market. כאן הגדלות, האסתטיקה, והאריזה קובעות. Sarılop לבן גדול בקופסת עץ: תאנה שמוכרת את עצמה.</p>
+  <h3>תעשיית האפייה</h3>
+  <p>Diced ו-block. עוגות, לחמים, ביסקוויטים. Fig Newton, LÄRABAR, רוב מותגי ה-energy bar. כאן block 10-12kg הוא הפורמט הנפוץ. אחידות, Brix, ולחות קריטיים. רכישה בנפחים, מחיר נמוך, שולי רווח צרים. שוק שאינו מקום לחדש, הוא מקום ל-reliability.</p>
+  <h3>Functional Food ובריאות</h3>
+  <p>תאנה organic unsulfured עם calcium claim. שוק צמחוני ו-dairy-free שמחפש bone health. מותגי premium כמו Made in Nature, Bare, Sunsweet. COA עם calcium analysis + EFSA health claim = שיחה שונה לגמרי. 30-50% פרמיום על whole organic.</p>
+  <h3>שוק הגורמה</h3>
+  <p>Black fig, Bursa Siyahı, שוקולד, גבינה. תאנה שחורה עם גבינת עיזים: שולחן גורמה. תאנה מיובשת מצופה שוקולד מריר: שוקולטייר. אריזות gift בתיבות עץ לחגים. מחיר גבוה, נפח קטן, margin גבוה.</p>
+  <h3>תעשיית ה-Fig Paste</h3>
+  <p>תאנה טחונה ל-paste לממתקים, עוגיות, ופילינג. Fig Newton paste הוא fig paste. מרוקו מספקת חלק ניכר. בשל מסורת הייצוא המרוקאית ל-EU. מחיר: $1.50-3.00/kg FOB, נפח גדול.</p>
+  <div class="pull"><p>תאנה מיובשת היא המוצר שאפשר למכור לחנות בריאות ב-$8/kg ו-לתעשיית ביסקוויטים ב-$2.50/kg. ההבדל הוא לא המוצר. ההבדל הוא לאיזה שולחן אתה יושב.</p></div>
+</section>
+
+<div id="slot-inline-4" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_04</div></div>
+
+<section class="ch" id="ch8">
+  <span class="cl">פרק שמיני</span>
+  <h2>אגרונומיה: עץ שלא צריך הרבה, ונותן הרבה</h2>
+  <p class="dc">עץ תאנה הוא אחד הצמחים החסכוניים ביותר בחקלאות פירות. הבנת דרישותיו מסבירה מדוע הוא שרד אלפי שנים ללא שיפורים טכנולוגיים.</p>
+  <h3>עמידות לחום ולבצורת</h3>
+  <p>עץ תאנה בוגר עמיד לבצורת ארוכה: שורשיו יורדים עמוק לאדמה ומוצאים מי תהום. אזורים כמו Estahban באיראן, שנקלט בגשמים שנתיים של 200-300mm בלבד (ירושלים מקבלת 550mm), מגדלים תאנים ללא השקיה. זה מסביר מדוע תאנה נמצאת בכל אזורי ים תיכוני ללא תשתית השקיה.</p>
+  <h3>Caprifig ו-Caprification</h3>
+  <p>רוב זני התאנה הסחירים דורשים הפריה על-ידי חרק, <em>Blastophaga psenes</em>, שחי בתאנה הבר (caprifig). חקלאים טורקים תולים ענפי caprifig על עצי Sarılop במהלך עונת הפריחה. ללא הפריה: פרי קטן, ריק, חסר ערך. זו אחת הסימביוזות הקדומות ביותר הידועות בין חרק לצמח, מתועדת על-ידי אריסטו ב-350 לפנה"ס.</p>
+  <div class="ab ab-g">
+    <div class="tg">מידע שימושי לקונה</div>
+    <p>שנה שבה caprifig blooming מאוחר מהרגיל בגלל חורף קר, הפריה נכשלת חלקית. תוצאה: יבול קטן יותר עם אחוז גבוה יותר של תאנים ריקות. בדוק עם הספק הטורקי שלך את תנאי האביב בכל שנה. TUIK (הלשכה לסטטיסטיקה הטורקית) מפרסם יבול תאנים ביולי. 3 חודשים לפני שהמלאי מגיע לנמל.</p>
+  </div>
+  <h3>מחזור עץ</h3>
+  <p>עץ תאנה מניב מגיל 3-5. שיא ייצור: 10-30 שנה. ייצור סביר: עד 80-100 שנה. עצים וותיקים מייצרים פרי קטן יותר אבל עמוק יותר בטעם. חלק מחקלאי איזמיר מתגאים בעצים בני 50-70 שנה. הוריות לעוצמת טעם שלא ניתן לשכפל בשתיל חדש.</p>
+</section>
+
+<section class="ch" id="ch9">
+  <span class="cl">פרק תשיעי</span>
+  <h2>QC ואחסון: הפרמטרים שקובעים כניסה לשוק</h2>
+  <p class="dc">תאנה מיובשת עם לחות גבוהה מדי היא תאנה שמחכה לפטרייה. עם לחות נמוכה מדי, היא קשה כסלע. הטווח הנכון הוא צר יחסית.</p>
+  <table class="gt">
+    <tr><th>פרמטר</th><th>ערך מקובל</th><th>הערה</th></tr>
+    <tr><td>תכולת לחות</td><td>18-23%</td><td>מעל 25%: עובש. מתחת 16%: קשה מדי</td></tr>
+    <tr><td>Water Activity (Aw)</td><td>0.60-0.70</td><td>מעל 0.75: סיכון ביולוגי</td></tr>
+    <tr><td>Brix</td><td>58-70°Bx</td><td>מתחת 55: פגם בבשלות</td></tr>
+    <tr><td>SO₂ residue</td><td>עד 500 ppm (EU)</td><td>נמוך מאפרסק, בדוק לפי שוק</td></tr>
+    <tr><td>Yeast &amp; Mold</td><td>מתחת ל-100 CFU/g</td><td>תאנה רגישה לעובש</td></tr>
+    <tr><td>Aflatoxin</td><td>מתחת ל-4 ppb (EU)</td><td>בדיקה חובה, מעבדה עצמאית</td></tr>
+    <tr><td>E.Coli</td><td>Negative</td><td>חובה</td></tr>
+    <tr><td>גודל (whole)</td><td>לפי grade: XL/L/M/S</td><td>אחידות קובעת מחיר</td></tr>
+  </table>
+  <h3>אחסון</h3>
+  <p>0-5°C, לחות יחסית 55-65%. חיי מדף: 12-18 חודשים. בטמפרטורת חדר (עד 20°C): 6-9 חודשים. תאנות שצריחות זו לזו באחסון חם פיתחות fermentation: ריח חמוצני, אלכוהולי קל. זה לא בטוח, לפחות לא מושך. בדוק ריח עם קבלת כל לוט לפני חתימת מסמכים.</p>
+</section>
+
+<section class="ch" id="ch10">
+  <span class="cl">פרק עשירי</span>
+  <h2>מחירים וסחר: FOB, מחזורים, ואיפה הכסף</h2>
+  <p class="dc">תאנה מיובשת היא מוצר עם מחיר FOB נמוך יחסית לקטגוריה, אבל עם פוטנציאל פרמיום מוגדר היטב למי שמכוון נכון.</p>
+  <table class="gt">
+    <tr><th>מוצר</th><th>FOB ($/kg)</th><th>הערה</th></tr>
+    <tr><td>Whole, Sarılop, conventional</td><td>2.50 - 4.50</td><td>איזמיר, bulk 10kg</td></tr>
+    <tr><td>Whole, organic/unsulfured</td><td>4.50 - 7.50</td><td>בריאות, EU organic</td></tr>
+    <tr><td>Layer figs, jumbo</td><td>4.00 - 7.00</td><td>gift market, תיבות עץ</td></tr>
+    <tr><td>Black fig (Bursa Siyahı)</td><td>5.00 - 9.00</td><td>גורמה, שוקולד</td></tr>
+    <tr><td>Block / diced, conventional</td><td>1.80 - 3.00</td><td>תעשיית אפייה</td></tr>
+    <tr><td>Fig paste</td><td>1.50 - 3.00</td><td>filling תעשייתי</td></tr>
+    <tr><td>California Calimyrna</td><td>5.00 - 8.00</td><td>נפח מוגבל, פרמיום</td></tr>
+  </table>
+  <h3>עונתיות</h3>
+  <p>קציר טורקי: אוגוסט-ספטמבר. מלאי חדש מגיע לנמלים אוקטובר-נובמבר. מחירים נוטים לרדת בנובמבר-דצמבר עם כניסת המלאי החדש. שיא מחיר: יוני-יולי, לפני קציר. ספק שקנה במחיר שפל של נובמבר ומכר ביוני, ריווח margin של 20-30% ללא כל שיפור מוצר.</p>
+  <p><strong>חמש נקודות לסוחר:</strong></p>
+  <p><strong>1. Aflatoxin certificate הוא שער EU.</strong> תאנה ידועה כבעלת נטייה ל-aflatoxin בתנאי אחסון לא נכונים. EU בודק. ללא תעודה מ-SGS, Eurofins, או Intertek, הסחורה נעצרת בנמל.</p>
+  <p><strong>2. לחות 23%+ היא תאנה שמסתכנת.</strong> בדוק moisture content בכל לוט. ספק שלא יכול לאשר לחות מדויקת בכתב, ספק שלא שולט בתהליך שלו.</p>
+  <p><strong>3. Black fig הוא $2-4/kg יותר גבוה מ-Sarılop לאותו לקוח נכון.</strong> לקוח שוקולטייר שמחפש "משהו מיוחד" ולא שמע על Bursa Siyahı, לא שמע כי אף אחד לא סיפר לו. שיחה של 5 דקות שמשנה עסקה.</p>
+  <p><strong>4. עקוב אחרי TUIK יולי.</strong> נתוני יבול תאנה טורקית מפורסמים יולי-אוגוסט. יבול נמוך = מחיר עולה עם כניסת המלאי. שלושה חודשים advance notice שמקנים יתרון.</p>
+  <p><strong>5. Calcium health claim הוא כניסה לשוק חדש.</strong> COA עם 160mg+ סידן ל-100g + EFSA approved claim = נכנסים לשיחה עם EU retailer על טובין בריאות. לא צריך להיות organic בשביל זה. רק תיעוד.</p>
+  <div class="ab ab-w">
+    <div class="tg">Stark OS · עמדת שוק</div>
+    <p>תאנה מיובשת היא מוצר שנשכח בין שזיף למשמש ברשימות הפירות היבשים. אין לה את הסיפור של השקד, אין לה את ה-antioxidant buzz של האוכמנייה, ואין לה את ה-superfood label של ה-goji. מה שיש לה: סידן גבוה שניתן לתעד, היסטוריה של אלפי שנים שניתן לספר, ו-black fig שנמכר לשוקולטיירים ב-$8/kg. כשלוש קנייות בשוק הנכון, תאנה משנה כיתה.</p>
+  </div>
+  <div class="pull"><p>חזקיהו ריפא שחין עם עוגת תאנים. סוחר שיודע לספר את זה בשיחת מכירה, מריפא בעיה אחרת לגמרי.</p></div>
+</section>
+
+<div class="ft">
+  ערך ידע חקלאי · Blue Star International · 2025<br>
+  מבוסס על נתוני FAO, TUIK ומקורות פתוחים<br>
+  <span style="font-size:11px;color:#AAA59A;">נתוני תזונה: USDA FoodData Central · היסטוריה: Anthelme Brillat-Savarin, 1825; Cato, De Agri Cultura, 160 BCE · נתוני ייצור: INC Statistical Yearbook 2024</span>
+</div>
+</main>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL &middot; GLOBAL COMMODITY ARCHIVE</footer>
+<a href="../index.html" class="home-btn">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8894A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  <span>ספרייה</span>
+</a>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+<script>
+window.onscroll = () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+  const sections = document.querySelectorAll('.ch');
+  const dots = document.querySelectorAll('.nav-dot');
+  let current = '';
+  sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+  dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+  document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+};
+document.querySelectorAll('.nav-dot').forEach(dot => {
+  dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+      obs.unobserve(e.target);
+    });
+  }, {threshold: 0.3});
+  document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+  const dbName = 'StarkOS_DB';
+  const productId = 'dried-fig';
+  function syncProductPage() {
+    const request = indexedDB.open(dbName, 1);
+    request.onsuccess = (e) => {
+      const db = e.target.result;
+      try {
+        const store = db.transaction('archive', 'readonly').objectStore('archive');
+        const getRequest = store.get(productId);
+        getRequest.onsuccess = () => {
+          const data = getRequest.result;
+          if (!data) return;
+          function makeMedia(src) {
+            const isVid = src.startsWith('data:video');
+            const el = document.createElement(isVid ? 'video' : 'img');
+            el.src = src; el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+            if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+            return el;
+          }
+          const heroH1 = document.getElementById('sync-title');
+          if (heroH1 && data.name) heroH1.innerText = data.name;
+          const heroDeck = document.getElementById('sync-desc');
+          if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+          const heroSrc = data.media1 || data.media;
+          const heroSlot = document.getElementById('slot-product-hero');
+          if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); }
+          [['slot-inline-2', data.media2], ['slot-inline-3', data.media3], ['slot-inline-4', data.media4]].forEach(function([id, src]) {
+            if (!src) return;
+            const slot = document.getElementById(id);
+            if (!slot) return;
+            slot.innerHTML = '';
+            slot.appendChild(makeMedia(src));
+            slot.classList.add('has-media');
+          });
+        };
+      } catch(e) {}
+    };
+  }
+  function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.ch').forEach(card => { card.classList.add('reveal'); observer.observe(card); });
+  }
+  initScrollReveal();
+  window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

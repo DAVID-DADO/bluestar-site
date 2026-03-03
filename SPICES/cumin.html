@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0A0A0B; --text: #FAF7F0; --body: #D1CEC5;
+    --accent: #8B6340; --warm: #B8894A;
+    --card: rgba(20,20,22,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background-color: var(--bg); color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9;
+    overflow-x: hidden;
+    background-image: linear-gradient(rgba(184,137,74,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,137,74,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+body::before, body::after {
+    content:''; position:fixed; width:600px; height:600px; border-radius:50%;
+    filter:blur(120px); z-index:-2; opacity:0.15; pointer-events:none;
+}
+body::before { background:var(--warm); top:-100px; left:-100px; }
+body::after { background:#5A3E28; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap {
+    max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden;
+    box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05);
+    background:#0A0A0B; display:flex; align-items:center; justify-content:center;
+}
+.hero-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.hero-img-placeholder { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.hero-img-placeholder span { color:rgba(255,255,255,0.15); font-size:12px; letter-spacing:3px; font-family:'Space Mono',monospace; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch {
+    background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px);
+    padding:50px; border-radius:var(--radius); margin-bottom:40px;
+    border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden;
+}
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; }
+.ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#C4A878; font-style:italic; }
+strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(184,137,74,0.08); border-right:4px solid var(--warm); }
+.ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(90,62,40,0.2); border-right:4px solid var(--accent); }
+.ab-g .tg { color:#C4A878; }
+.ab-r { background:rgba(184,50,50,0.1); border-right:4px solid #B83030; }
+.ab-r .tg { color:#E06060; }
+.ab-r p { color:#DDB0B0; }
+.vc { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:22px; margin:18px 0; }
+.vc .vn { font-family:'Frank Ruhl Libre',serif; font-size:21px; font-weight:700; color:var(--text); }
+.vc .vt { font-size:12px; color:var(--warm); font-weight:600; margin-bottom:10px; }
+.vc p { font-size:16px; line-height:1.75; margin-bottom:0; }
+.vc .vs { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.vc .vsi { background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:5px; font-size:12px; color:#A09080; }
+.vc .vsi strong { color:var(--text); }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A09080; margin-top:2px; }
+.ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.cb { background:rgba(20,20,22,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px; margin:28px 0; }
+.cb .ct { font-family:'Frank Ruhl Libre',serif; font-size:17px; font-weight:700; margin-bottom:14px; text-align:center; color:var(--text); }
+.pb-chart { margin:16px 0 8px; display:flex; flex-direction:column; gap:10px; }
+.pb-row { display:flex; align-items:center; gap:10px; }
+.pb-meta { display:flex; align-items:center; gap:6px; min-width:120px; justify-content:flex-end; }
+.pb-flag { font-size:18px; }
+.pb-name { font-size:13px; color:#A09080; }
+.pb-track { flex:1; background:rgba(255,255,255,0.08); height:18px; border-radius:9px; overflow:hidden; }
+.pb-fill { height:100%; width:0; border-radius:9px; transition:width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.pb-pct { font-family:'Frank Ruhl Libre',serif; font-size:14px; font-weight:700; color:var(--text); width:36px; text-align:left; }
+.pb-note { font-size:11px; color:#6B6058; opacity:.7; margin-top:10px; text-align:center; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; border-top:1px solid rgba(255,255,255,0.05); }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(184,137,74,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.03); animation:scrollText 40s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#6B6058; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(184,137,74,0.4); }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(20,20,22,0.85); border:1px solid rgba(184,137,74,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+.home-btn:hover { background:rgba(184,137,74,0.15); }
+@media (max-width:900px) {
+    .side-nav { display:none; }
+    .hero h1 { font-size:55px; }
+    .hero-img-wrap { height:300px; margin-bottom:-100px; }
+    .con { margin-top:150px; }
+    .ng { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+<title>כמון · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות ובקרת איכות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="פיזיולוגיה ובריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="טכנולוגיה עתידית"></div>
+</nav>
+
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">כמון</h1>
+    <p class="deck" id="sync-desc">הזרע הקדום ביותר של נתיבי הבשמים. מהחניטה במצרים ועד לבורסת Unjha בגוג'אראט, ביוכימיה של Cuminaldehyde, ותעשייה שנשלטת על ידי מזג האוויר.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <div class="hero-img-placeholder">
+            <span>CUMIN · Cuminum cyminum</span>
+            <span style="font-size:9px;opacity:0.5;">MEDIA SLOT · HERO</span>
+        </div>
+    </div>
+</section>
+
+<div class="marquee-container">
+    <div class="marquee-text">CUMINUM CYMINUM · EARTH SPICE · UNJHA · CUMINALDEHYDE · GUJARAT · CUMIN · CUMINUM CYMINUM · EARTH SPICE · UNJHA · CUMINALDEHYDE · GUJARAT · CUMIN · </div>
+</div>
+
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: הזרע ששמר על הנצח</h2>
+    <p class="dc">הכמון (<em>Cuminum cyminum</em>) הוא אחד התבלינים העתיקים ביותר המתועדים בכתבי האנושות. במצרים העתיקה, זרעי כמון נמצאו בקברי פרעונים, לא כתבלין מזון אלא כמרכיב חובה בתהליך החניטה (Mummification). התכונות האנטי-מיקרוביאליות של השמנים האתריים שימשו לשימור רקמות. פפירוס אברס (כ-1550 לפנה"ס), אחד הטקסטים הרפואיים העתיקים בעולם, מזכיר כמון כ-34 מתכונים נפרדים לטיפול בבעיות עיכול, דלקות עיניים וכאבי שיניים.</p>
+    <p>היוונים והרומאים ראו בכמון סמל של נאמנות ואירוח. פליניוס הזקן כתב ב-<em>Naturalis Historia</em> שתלמידים טובים היו "מריחים כמו כמון" כי למדו בקלות כפי שהתבלין חודר לכל מנה. בימי הביניים, הכמון נסחר לצד פלפל וקינמון בנתיבי המשי; ערכו היה גבוה מספיק כדי לשמש כתחליף למס בחלקים מגרמניה.</p>
+    <p>מבחינה בוטנית, הכמון הוא צמח עשבוני ממשפחת הסוככיים (<em>Apiaceae</em>), אותה משפחה של גזר, כוסברה ושומר. הזרע שאנו צורכים הוא למעשה הפרי היבש (<strong>Schizocarp</strong>), מורכב משני Mericarps שנפרדים בבשלות. הייחודיות טמונה ב-<strong>vittae</strong>, תעלות שמן אתרי המוטמעות לאורך הזרע, שמשתחררות רק ברגע של כתישה, קלייה בחום, או לעיסה.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>ב-1498, כאשר וואסקו דה גמה הגיע לקליקוט (Kozhikode), הוא מצא כמון הודי שנסחר בנמל לצד פלפל שחור. הכמון ההודי היה שונה מהכמון הים-תיכוני שהכירו הפורטוגזים: <strong>קטן יותר, כהה יותר, וחריף יותר</strong>. ההבדל הזה קיים עד היום ומגדיר שני קווי מוצר נפרדים בשוק העולמי.</p>
+    </div>
+    <p>כיום, הכמון הוא התבלין השני בנפח מסחר עולמי אחרי הפלפל השחור. כ-<strong>600,000-700,000 טון</strong> נסחרים בשנה. הודו מייצרת כ-70% מהנפח העולמי. הכמון הוא הגשר שמחבר בין המטבח המקסיקני, המזרח-תיכוני וההודי: תבלין שהצליח להפוך למכנה משותף גלובלי בזכות הארומה האדמתית שמעניקה "גוף" לכל מנה.</p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: פיזיולוגיית האקלים היבש</h2>
+    <p class="dc">הכמון הוא צמח של בצורת. לא סובלנות לבצורת, אלא <em>דרישה</em> לבצורת. עודף גשם בשלב הפריחה הוא האסון הגדול ביותר: הוא מוביל להתפרצות של <em>Alternaria blight</em> שעלולה להשמיד יבול שלם תוך 48-72 שעות. מסיבה זו, מרכז הייצור העולמי נמצא באזורים הצחיחים ביותר של הודו (Gujarat, Rajasthan) ובאגן הים התיכון המזרחי (סוריה, טורקיה, איראן).</p>
+    <p>טמפרטורה אידיאלית: <strong>25-30°C</strong> ביום, <strong>15-20°C</strong> בלילה. לחות יחסית מתחת ל-<strong>60%</strong> בשלב הפריחה. הצמח מגיע לגובה של 30-50 ס"מ בלבד, עם שורש עיקרי רדוד (15-30 ס"מ), מה שהופך אותו לרגיש מאוד לתנאי קרקע. pH אופטימלי <strong>6.8-8.3</strong>, קרקע חולית-חרסיתית עם ניקוז מצוין. הצמח אינו סובל מי קרקע גבוהים.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">25-30°C</div><div class="nu">טמפרטורת יום</div><div class="nl">אופטימלית</div></div>
+        <div class="ni"><div class="nv">&lt;60%</div><div class="nu">RH בפריחה</div><div class="nl">קריטי</div></div>
+        <div class="ni"><div class="nv">90-120</div><div class="nu">ימי גידול</div><div class="nl">זריעה עד קציר</div></div>
+    </div>
+    <h3>מחזור הגידול ופנולוגיה</h3>
+    <p>מחזור גידול קצר: <strong>90-120 ימים</strong> מזריעה עד קציר. בהודו, הזריעה בנובמבר-דצמבר (Rabi season), קציר בפברואר-מרץ. הזרעים נזרעים בשורות במרווחים של 25-30 ס"מ, בעומק 1-2 ס"מ. שיעור נביטה ממוצע: <strong>65-80%</strong>. כל צמח מייצר 5-8 סוככים (umbels), כל סוכך נושא 5-7 סוככונים (umbellets), כל סוככון נושא 3-5 פרחים. תפוקה ממוצעת: <strong>400-600 ק"ג/הקטר</strong> בגידול מסורתי, <strong>800-1,200 ק"ג/הקטר</strong> בזנים משופרים עם השקיה מבוקרת.</p>
+    <div class="ab ab-g">
+        <div class="tg">גזרת מחקר אגרונומית</div>
+        <p>זן <strong>GC-4</strong> (Gujarat Cumin 4), שפותח ב-Sardarkrushinagar Dantiwada Agricultural University, מציג עמידות גבוהה ל-<em>Alternaria burnsii</em> ותפוקה של <strong>1,000 ק"ג/הקטר</strong>, כפליים מהזנים המסורתיים. הבעיה: GC-4 מכיל <strong>2.8% שמנים אתריים</strong> בלבד, מתחת לסף של 3.0% שנדרש לשווקי פרימיום. הפחתת סיכון אגרונומי באה על חשבון ביוכימיה.</p>
+    </div>
+    <h3>פתוגנים קריטיים</h3>
+    <p><em>Alternaria burnsii</em>: הגורם ל-<strong>Alternaria Blight</strong>, המחלה ההרסנית ביותר בכמון. מתפשטת ברוח ובגשם. נגיעות של 50% אפשרית תוך שבוע במזג אוויר לח. <em>Fusarium oxysporum f. sp. cumini</em>: ריקבון שורש, wilt. <em>Erysiphe polygoni</em>: קימחון (Powdery Mildew), נפוץ כשהלילות קרים והבקרים לחים. הדברה: Mancozeb (2.5 g/L) הוא הסטנדרט, אבל MRL אירופי הולך ומחמיר. חקלאים בגוג'אראט עוברים ל-<strong>Trichoderma viride</strong> כביו-קונטרול, עם יעילות של 60-70% בהשוואה לכימי.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: המולקולות שמאחורי החום האדמתי</h2>
+    <p class="dc">הארומה המובהקת של הכמון נובעת מ-<strong>Cuminaldehyde</strong> (4-isopropylbenzaldehyde), אלדהיד ארומטי שמהווה <strong>25-35%</strong> מהשמן האתרי. זהו המרקר הכימי המרכזי של הכמון, וריכוזו הוא המדד הראשון שהמעבדה בודקת. אבל Cuminaldehyde הוא רק ההתחלה.</p>
+    <h3>פרופיל שמן אתרי</h3>
+    <p>שמן אתרי של כמון מהווה <strong>2.5-4.5% ממשקל יבש</strong>. הרכבו מורכב מ-50-80 תרכובות מזוהות. מעבר ל-Cuminaldehyde, המרכיבים העיקריים: <strong>γ-terpinene</strong> (15-25%), מונוטרפן עם ניחוח עשבי; <strong>β-pinene</strong> (10-20%), ריח אורני; <strong>p-cymene</strong> (5-15%), ארומטי חם; <strong>cuminol</strong> (כמון אלכוהול, 3-8%). היחס בין התרכובות הוא "חתימת מוצא": כמון הודי (Gujarat) עשיר ב-Cuminaldehyde (<strong>30-35%</strong>) וב-p-cymene; כמון סורי/טורקי עשיר יותר ב-γ-terpinene (<strong>20-28%</strong>) ובעל פרופיל עשבי-ציטרוסי יותר.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">2.5-4.5%</div><div class="nu">שמנים אתריים</div><div class="nl">ממשקל יבש</div></div>
+        <div class="ni"><div class="nv">25-35%</div><div class="nu">Cuminaldehyde</div><div class="nl">מהשמן האתרי</div></div>
+        <div class="ni"><div class="nv">18%</div><div class="nu">חלבון</div><div class="nl">גבוה לתבלין</div></div>
+        <div class="ni"><div class="nv">15%</div><div class="nu">שומן</div><div class="nl">סיכון חמצון</div></div>
+        <div class="ni"><div class="nv">10.5%</div><div class="nu">סיבים</div><div class="nl">תזונתי</div></div>
+        <div class="ni"><div class="nv">66mg</div><div class="nu">ברזל/100g</div><div class="nl">373% RDI</div></div>
+    </div>
+    <h3>ברזל: הסיפור התזונתי</h3>
+    <p>הכמון מכיל <strong>66 mg ברזל ל-100 גרם</strong>, אחד הריכוזים הגבוהים ביותר בכל מוצר צמחי. כף אחת של כמון (כ-6 גרם) מספקת <strong>4 mg ברזל</strong>, כ-22% מהצריכה היומית לגברים ו-16% לנשים. הברזל בכמון הוא non-heme iron (ברזל לא-חמי), שנספג פחות טוב מברזל חמי. אבל בנוכחות ויטמין C (מלימון, למשל), הספיגה עולה פי 2-3. זו הסיבה הביולוגית לשילוב כמון-לימון שנמצא בעשרות תרבויות בישול.</p>
+    <div class="ab ab-w">
+        <div class="tg">הממצא הביוכימי</div>
+        <p>מחקר שפורסם ב-<em>Food Chemistry</em> (2022) הראה שקליית כמון ב-<strong>150°C למשך 5 דקות</strong> מעלה את ריכוז ה-Cuminaldehyde ב-40%, כתוצאה מתגובות Maillard ומפירוק פרקורסורים. אבל קלייה מעל 180°C למשך 10 דקות מפרקת 60% מהשמן האתרי. החלון התרמי לקלייה אופטימלית צר: <strong>140-160°C, 3-6 דקות</strong>.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: ניקיון, גודל ושפת הסוחרים</h2>
+    <p class="dc">במסחר בכמון, המדד החשוב ביותר אינו הטעם. הטעם אחיד יחסית בתוך זן ומוצא. המדד הוא <strong>ניקיון</strong>. מכיוון שהכמון גדל נמוך על האדמה ונקצר ידנית, הוא אוסף אבנים, שאריות עשבים, גרגירי חול ושאריות גבעולים. Extraneous Matter (EM) הוא שם המשחק.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Singapore (99.5%)</th><th>Europe (99%)</th><th>FAQ</th><th>תעשייתי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>ניקיון (Purity)</strong></td><td>99.5% מינ'</td><td>99.0% מינ'</td><td>97-98%</td><td>95%</td></tr>
+            <tr><td><strong>לחות מקס'</strong></td><td>8.0%</td><td>9.0%</td><td>10.0%</td><td>12.0%</td></tr>
+            <tr><td><strong>Extraneous Matter</strong></td><td>≤0.5%</td><td>≤1.0%</td><td>≤2.0%</td><td>≤5.0%</td></tr>
+            <tr><td><strong>שמנים אתריים מינ'</strong></td><td>3.0%</td><td>2.5%</td><td>2.0%</td><td>1.5%</td></tr>
+            <tr><td><strong>שברי זרעים מקס'</strong></td><td>≤1.0%</td><td>≤2.0%</td><td>≤5.0%</td><td>ללא הגבלה</td></tr>
+            <tr><td><strong>מחיר סמך (2024)</strong></td><td>$2,800-3,200/t</td><td>$2,500-2,800/t</td><td>$2,000-2,400/t</td><td>$1,500-1,800/t</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>מינוחי המסחר</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>שם מסחרי</th><th>מוצא</th><th>שמן אתרי</th><th>מאפיין</th><th>שימוש עיקרי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Gujarat Bold</strong></td><td>גוג'אראט, הודו</td><td>3.0-4.0%</td><td>זרע גדול, חום בהיר, ארומה חזקה</td><td>קמעונאות, גורמה</td></tr>
+            <tr><td><strong>Rajasthan Medium</strong></td><td>ראג'סטאן, הודו</td><td>2.5-3.5%</td><td>זרע בינוני, צבע כהה יותר</td><td>תעשייה, תערובות</td></tr>
+            <tr><td><strong>Syrian Cumin</strong></td><td>סוריה</td><td>3.0-4.5%</td><td>זרע קטן, ארומה חריפה, פרופיל עשבי</td><td>מטבח ערבי, פרימיום</td></tr>
+            <tr><td><strong>Turkish Cumin</strong></td><td>טורקיה</td><td>2.8-3.5%</td><td>זרע בהיר, עגול, ארומה עדינה</td><td>אירופה, קמעונאות</td></tr>
+            <tr><td><strong>Iranian Cumin</strong></td><td>איראן (חוראסן)</td><td>3.5-4.5%</td><td>זרע דק, ארומה מורכבת, ציטרוסי</td><td>מטבח פרסי, פרימיום</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">שיקול מקצועי</div>
+        <p><strong>"Singapore Quality"</strong> אינו מתייחס למוצא סינגפורי. זהו שם תקן ניקיון שנולד מנמל הסחר של סינגפור, שדרש את דרגת הניקיון הגבוהה ביותר ממשלוחי תבלינים שעברו דרכו. כיום זהו סמן איכות גלובלי. כמון "Singapore" מגוג'אראט עובר ניקוי כפול ו-Sortex, ומחירו גבוה ב-<strong>20-30%</strong> מ-Europe Quality.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהשדה לשק בנמל</h2>
+    <p class="dc">בין צמח חום-צהבהב בשדה בגוג'אראט לבין שק כמון נקי במכולה לאירופה, עוברת שרשרת הנדסית של הפרדה פיזיקלית. כל שלב מסיר שכבה נוספת של זיהום. אין קיצורי דרך: כמון שלא עבר Sortex מכיל חומרים זרים שנראים בעין ומשתקפים מיד באנליזה ובמחיר.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">קציר ודישה</div>
+                <div class="proc-step-body">הצמח נקצר כשהוא הופך לחום-צהבהב, לפני שהזרעים נושרים. קציר ידני או חצי-מכני. הצמחים נערמים בשדות לייבוש של <strong>3-5 ימים</strong>, לאחר מכן דישה (threshing) ידנית או במכונות Thresher. נזק מכני לזרעים בשלב זה: שברים שמאיצים חמצון שומנים וירידת ערך.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">ניפוי ראשוני (Winnowing)</div>
+                <div class="proc-step-body">הפרדה באוויר. קליפות, אבק ושאריות גבעולים קלות עפות; זרעים כבדים שוקעים. שיטה מסורתית: ניפוי ברוח בשדה. שיטה מודרנית: Aspirators תעשייתיים.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">De-stoner</div>
+                <div class="proc-step-body">מכונה קריטית. משתמשת בזרימת אוויר ושולחן רוטט להפרדת אבנים קטנות בעלות משקל סגולי דומה לזרע. בכמון, אבנים הן הזיהום העיקרי כי הצמח גדל על אדמה חולית. De-stoner מודרני: <strong>2-5 טון/שעה</strong>, יעילות הפרדה <strong>98%</strong>.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">נפות ריבוד (Gravity Tables)</div>
+                <div class="proc-step-body">הפרדה לפי משקל סגולי. זרעים מלאים ואיכותיים שוקעים. זרעים חלולים, שבורים, או פגומים עולים. שלב זה קובע את ה-Bulk Density הסופי ואת דירוג האיכות.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">05</div>
+            <div>
+                <div class="proc-step-title">Sortex: מיון אופטי</div>
+                <div class="proc-step-body">השיא הטכנולוגי. מצלמות במהירות גבוהה סורקות <strong>כל זרע וזרע</strong>. פרץ אוויר מדויק מעיף כל זרע פגום, שחור, או שייך לעשב בר. מכונות מודרניות (Bühler SORTEX A): <strong>5-7 טון/שעה</strong> עם דיוק של <strong>99.8%</strong> בהוצאת פגמים. זהו כרטיס הכניסה לשווקי EU ו-Singapore Quality.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">06</div>
+            <div>
+                <div class="proc-step-title">אריזה ואחסון</div>
+                <div class="proc-step-body">שקי PP (Polypropylene) עם בטנת PE, <strong>25 ק"ג</strong> סטנדרט, או Big Bags <strong>500-1,000 ק"ג</strong>. טמפרטורת אחסון: <strong>15-20°C</strong>, RH מתחת ל-<strong>65%</strong>. חובה: אחסון בחשכה מלאה. חשיפה לאור UV מפרקת Cuminaldehyde ומחמצנת שומנים תוך שבועות.</div>
+            </div>
+        </div>
+    </div>
+    <p>אבקת כמון המיוצרת מזרעים שלא עברו Sortex תהיה בעלת טעם "בוצי" ומריר בשל נוכחות חומרים זרים. זו הסיבה שטוחנים בישראל ובאירופה דורשים Singapore Quality כחומר גלם: הניקוי כבר בוצע בארץ המוצא.</p>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות: PA, פסטיצידים, וסלמונלה</h2>
+    <p class="dc">הכמון גדל קרוב לאדמה ונקצר ידנית. שילוב זה מייצר שלושה סיכוני בטיחות עיקריים: זיהום מיקרוביאלי, שאריות חומרי הדברה, ובעיה ייחודית שהפכה לכותרות ב-2015: <strong>Pyrrolizidine Alkaloids (PA)</strong>.</p>
+    <h3>Pyrrolizidine Alkaloids: הבעיה הייחודית</h3>
+    <p>PA הם רעלנים טבעיים המצויים בעשבי בר ממשפחת <em>Boraginaceae</em> ו-<em>Asteraceae</em> הגדלים בין שורות הכמון. אם עשבים אלו נקצרים יחד עם הכמון, זרעיהם (קטנים, קשים לזיהוי) מרעילים את כל המשלוח. PA גורמים לנזק כבדי מצטבר. ב-2015, ה-BfR (המכון הפדרלי הגרמני להערכת סיכונים) פרסם אזהרה על ריכוזי PA גבוהים בתה צמחים ובתבלינים, כולל כמון. מגבלת EU (Regulation 2023/915): <strong>400 μg/kg</strong> לתבלינים (כולל כמון). בדיקת LC-MS/MS מכסה 35 סוגי PA ספציפיים. עלות: <strong>200-350 דולר לדגימה</strong>.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>תקן EU</th><th>תקן FDA</th><th>הערה</th></tr></thead>
+        <tbody>
+            <tr><td><strong>TPC</strong></td><td>≤10⁶ CFU/g</td><td>≤10⁶ CFU/g</td><td>תבלינים יבשים</td></tr>
+            <tr><td><strong>Yeast & Mould</strong></td><td>≤10⁴ CFU/g</td><td>≤10⁴ CFU/g</td><td>סטנדרט</td></tr>
+            <tr><td><strong>Salmonella</strong></td><td>Absent/25g</td><td>Absent/25g</td><td>אפס סובלנות</td></tr>
+            <tr><td><strong>E. coli</strong></td><td>≤10 CFU/g</td><td>≤10 CFU/g</td><td>סמן היגייני</td></tr>
+            <tr><td><strong>אפלטוקסין B1</strong></td><td>≤5 μg/kg</td><td>≤20 ppb סה"כ</td><td>סיכון בינוני</td></tr>
+            <tr><td><strong>PA (סה"כ)</strong></td><td>≤400 μg/kg</td><td>אין מגבלה פדרלית</td><td>EU בלבד, חדש</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>סטריליזציה וחומרי הדברה</h3>
+    <p>Steam Sterilization (HTST): חשיפה ל-<strong>120-135°C</strong> למשך <strong>15-60 שניות</strong>. מורידה TPC ל-10⁴ CFU/g, הורגת סלמונלה. פגיעה של <strong>8-15%</strong> בשמנים אתריים. מרבית הייצוא לאירופה דורש סטריליזציה. Ethylene Oxide (EtO): <strong>אסור ב-EU מ-2021</strong>. עדיין חוקי בהודו ובארה"ב, אך המגמה ברורה.</p>
+    <div class="ab ab-r">
+        <div class="tg">אזהרת MRL</div>
+        <p>Chlorpyrifos: MRL אירופי <strong>0.01 mg/kg (LOD)</strong>. בשנת 2022, <strong>23 התראות RASFF</strong> על כמון מהודו עם חריגות Chlorpyrifos. ספקים שלא הסבו לפרוטוקול הודי חדש (Integrated Pest Management) מאבדים גישה לשוק האירופי. עלות ציות: <strong>15-25 דולר/טון</strong> בנהלי הדברה מחמירים.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה: הנדסת מכולות למוצר קל ונדיף</h2>
+    <p class="dc">הכמון הוא מוצר בעל משקל סגולי נמוך: <strong>400-450 g/L</strong>. מכולת 20 רגל תתמלא בנפח (כ-<strong>8-10 טון</strong>) לפני שתגיע למגבלת המשקל שלה (21 טון). אריזה סטנדרטית: שקי PP של 25 ק"ג, <strong>400 שקים למכולה</strong>.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">8-10t</div><div class="nu">מכולת 20'</div><div class="nl">מוגבל בנפח</div></div>
+        <div class="ni"><div class="nv">15-20°C</div><div class="nu">טמפרטורת שינוע</div><div class="nl">אידיאלית</div></div>
+        <div class="ni"><div class="nv">&lt;65%</div><div class="nu">RH במכולה</div><div class="nl">מקסימום</div></div>
+    </div>
+    <h3>נדיפות ומיגרציה ארומטית</h3>
+    <p>הכמון פולט ארומה חזקה מאוד, גם באריזה סגורה. Cuminaldehyde נדיף בטמפרטורה חדר ומחלחל דרך שקי PP. בנמלים חמים (Mundra, Kandla), טמפרטורת המכולה עולה ל-<strong>45-55°C</strong> בזמן המתנה, מה שמאיץ נדיפות. סיכון: סחורה שמאוחסנת ליד כמון (קשיו, קמח, אורז) סופגת את הריח. בארכיון אנו מוודאים שמשלוחי כמון לעולם לא יאוחסנו לצד מוצרים סופגים.</p>
+    <h3>Container Rain ולחות</h3>
+    <p>עם לחות זרע של <strong>8-10%</strong>, הכמון פחות רגיש מווניל לעיבוי. אבל Container Sweat (עיבוי על דפנות) יכול להרטיב שקים עליונים ולגרום ל-caking (הצטברות) ולעובש מקומי. פתרונות: <strong>Desiccant bags</strong> (סיליקה ג'ל, 500g ליחידה), <strong>Kraft paper liner</strong> בין שכבת השקים לדפנות. עלות Desiccants: <strong>30-50 דולר למכולה</strong>.</p>
+    <div class="ab ab-w">
+        <div class="tg">אזהרת חמצון</div>
+        <p>הכמון מכיל <strong>15% שומן טבעי</strong>. חשיפה לאור ולחמצן הופכת שומנים אלו ל-Rancid. הטעם משתנה מאדמתי ל-<strong>"מתכתי"</strong>. חובה: אחסון בחשכה, באריזות חוסמות חמצן, וניטור Peroxide Value (PV). PV מעל <strong>10 meq O₂/kg</strong> מסמן חמצון ברמה שניתנת לזיהוי אורגנולפטי.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות: המדע שמאחורי המסורת</h2>
+    <p class="dc">השימוש בכמון בסוף הארוחה בתרבויות רבות אינו מקרי. ה-Cuminaldehyde מעורר הפרשת אנזימי עיכול ומרה, מקל על פירוק שומנים וחלבונים מורכבים. זו ידיעה אמפירית בת אלפי שנים שמקבלת כיום אישור מעבדתי מפורט.</p>
+    <h3>פעילות עיכולית (Carminative)</h3>
+    <p>מחקר ב-<em>Middle East Journal of Digestive Diseases</em> (2013) הדגים שתמצית כמון מימית ב-<strong>200 mg/day</strong> למשך 4 שבועות הפחיתה תסמיני IBS (Irritable Bowel Syndrome) ב-<strong>57%</strong> בהשוואה לפלצבו. המנגנון: Cuminaldehyde מרפה שריר חלק במעי דרך חסימת ערוצי סידן (Ca²⁺ channel blocking), מפחית ספאזמים ונפיחות.</p>
+    <h3>השפעה על מטבוליזם ומשקל</h3>
+    <p>מחקר קליני אקראי ב-<em>Complementary Therapies in Clinical Practice</em> (2015): 88 נשים עם עודף משקל חולקו לשתי קבוצות. קבוצת הכמון צרכה <strong>3 גרם/יום</strong> אבקת כמון ביוגורט למשך 3 חודשים. תוצאות: ירידה של <strong>1.4 ק"ג</strong> משקל יותר מפלצבו, ירידה של <strong>14.6%</strong> בשומן גוף, וירידה משמעותית ב-<strong>LDL כולסטרול</strong> ובטריגליצרידים. המנגנון המשוער: עלייה בקצב חילוף חומרים בסיסי (BMR) דרך השפעת Cuminaldehyde על thermogenesis.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">57%</div><div class="nu">הפחתת IBS</div><div class="nl">200mg/d, 4 שבועות</div></div>
+        <div class="ni"><div class="nv">14.6%</div><div class="nu">ירידת שומן גוף</div><div class="nl">3g/d, 3 חודשים</div></div>
+        <div class="ni"><div class="nv">22%</div><div class="nu">ברזל RDI</div><div class="nl">כף אחת (6g)</div></div>
+    </div>
+    <h3>פעילות אנטי-דיאבטית</h3>
+    <p>מחקר ב-<em>Iranian Journal of Basic Medical Sciences</em> (2017) הראה ש-Cuminaldehyde מעכב אנזים <strong>α-glucosidase</strong> (IC50 = 37 μM), מה שמאט ספיגת גלוקוז במעי. בנוסף, כמון מגביר רגישות לאינסולין דרך הפעלת <strong>PPAR-γ pathway</strong>. מחקר קליני בחולי סוכרת סוג 2 הראה ירידה של <strong>0.6% ב-HbA1c</strong> עם צריכה יומית של תמצית כמון למשך 8 שבועות. זהו אפקט מתון אך עקבי שמצדיק מחקר נוסף.</p>
+    <div class="pull">
+        <p>הכמון הוא היסוד האדמתי של המטבח; הוא המעגן של הטעמים והמנוע השקט של העיכול.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: Unjha, מחירים, ודינמיקת שוק 2026</h2>
+    <p class="dc">מרכז הכובד של שוק הכמון העולמי נמצא בעיירה קטנה בגוג'אראט בשם <strong>Unjha</strong>. כאן נמצאת הבורסה הגדולה בעולם לכמון, <strong>NCDEX (National Commodity & Derivatives Exchange)</strong>, שמכתיבה מחירים לכל היצוא ההודי ולשווקים בניו יורק, לונדון ודובאי.</p>
+    <div class="cb">
+        <div class="ct">חלוקת ייצור כמון עולמי 2024 (% מסך הכמות)</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇳</span><span class="pb-name">הודו</span></div><div class="pb-track"><div class="pb-fill" data-w="70" style="background:#8B6340"></div></div><span class="pb-pct">70%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇸🇾</span><span class="pb-name">סוריה</span></div><div class="pb-track"><div class="pb-fill" data-w="8" style="background:#6E4A28"></div></div><span class="pb-pct">8%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇹🇷</span><span class="pb-name">טורקיה</span></div><div class="pb-track"><div class="pb-fill" data-w="7" style="background:#C4A060"></div></div><span class="pb-pct">7%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇷</span><span class="pb-name">איראן</span></div><div class="pb-track"><div class="pb-fill" data-w="5" style="background:#9E7A50"></div></div><span class="pb-pct">5%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇲🇽</span><span class="pb-name">מקסיקו</span></div><div class="pb-track"><div class="pb-fill" data-w="3" style="background:#7D5A38"></div></div><span class="pb-pct">3%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="7" style="background:#DDD6CA"></div></div><span class="pb-pct">7%</span></div>
+        </div>
+        <div class="pb-note">נתוני NCDEX · Spice Board India · FAO 2024 · סה"כ ייצור עולמי: ~600,000-700,000 טון</div>
+    </div>
+    <h3>דינמיקת מחיר 2020-2026</h3>
+    <p>מחיר כמון הודי (Gujarat FAQ, Unjha): ב-2020 עמד על כ-<strong>$1,800/טון</strong>. ב-2022 עלייה ל-<strong>$2,500-3,000</strong> בעקבות בצורת בגוג'אראט. ב-2023 קפיצה חריגה ל-<strong>$4,000-5,500/טון</strong> בעקבות ירידה של 30% ביבול ההודי וביקוש גובר מסין. ב-2024 ירידה הדרגתית ל-<strong>$2,500-3,200</strong> עם יבול גדול בראג'סטאן. תחזית 2026: <strong>$2,200-3,000/טון</strong>, תלוי במונסון.</p>
+    <div class="pull">
+        <p>סוחרים ותיקים ב-Unjha יודעים לספר על שנים שבהן סופת גשם אחת בפברואר הקפיצה את מחיר הכמון ב-300% תוך יום. הדינמיקה אגרסיבית ומושפעת ישירות מתחזיות מזג אוויר בראג'סטאן. הבנת Unjha היא הכרחית לכל ברוקר.</p>
+    </div>
+    <h3>מגמות 2025-2026</h3>
+    <p>שלוש מגמות: (1) <strong>סוריה חוזרת</strong>: עם ייצוב יחסי, הכמון הסורי (איכותי מאוד, ריכוז שמנים גבוה) חוזר לשווקים בכמויות גדלות, מתחרה בהודי על פלח הפרימיום. (2) <strong>אורגני</strong>: ביקוש לכמון אורגני מוסמך עולה ב-15-20% בשנה, אבל ההיצע מצומצם כי Alternaria blight קשה לשליטה ללא כימיקלים. פרמיה אורגנית: <strong>40-60%</strong> מעל קונבנציונלי. (3) <strong>מיון AI</strong>: מכונות Sortex מדור חדש עם Deep Learning מזהות פגמים שמצלמות רגילות מפספסות, מורידות EM מ-1% ל-0.2% בפעולה אחת.</p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית: ספקטרוסקופיה, מיון AI, ושוק 2030</h2>
+    <p class="dc">הכמון של 2026 נמצא בנקודת מפנה טכנולוגית. הכלים שהיו זמינים רק למעבדות מחקר לפני עשור הופכים לזמינים בקווי עיבוד תעשייתיים. שני מהפכים עומדים בפתח: בקרת איכות בזמן אמת, ומיון אופטי מבוסס AI.</p>
+    <h3>NIR Spectroscopy בקו ייצור</h3>
+    <p>ספקטרוסקופיית <strong>Near-Infrared (NIR)</strong> מאפשרת מדידה לא-הרסנית של לחות, שמנים אתריים, וחלבון בכמון <strong>תוך 3 שניות</strong>, ללא הכנת דגימה. מערכות כמו <strong>FOSS DS2500</strong> מותקנות ישירות בקו העיבוד ומודדות כל שק שעובר. סטייה מהסף מפעילה התראה ודחייה אוטומטית. עלות מערכת: <strong>$40,000-80,000</strong>. ROI: שנה וחצי בקו שמעבד 500 טון/חודש, דרך הפחתת דחיות ייצוא.</p>
+    <h3>Sortex AI-Powered</h3>
+    <p>מכונות Bühler SORTEX מדור 2024-2025 משלבות <strong>Deep Learning</strong> לזיהוי פגמים. במקום חוקי צבע קבועים (הכהה = פגום), הרשת העצבית למדה ממיליוני דוגמאות לזהות: זרעי עשבי בר שצבעם דומה לכמון, חלקיקי קליפה שנראים כמו זרע, ופגמי Alternaria ברמה תת-מילימטרית. שיפור: ירידה ב-EM מ-<strong>0.5% ל-0.1%</strong>, רמה שפותחת שווקי יפן וקוריאה שדורשים ניקיון קיצוני.</p>
+    <div class="ab ab-w">
+        <div class="tg">אתגר Traceability</div>
+        <p>ה-EU Regulation 2024/1451 (One Health approach) צפוי לחייב <strong>Farm-to-Fork traceability</strong> מלא לתבלינים עד 2027. בכמון, שבו שרשרת האספקה כוללת אלפי חקלאים קטנים בגוג'אראט, זה אתגר לוגיסטי עצום. חברות כמו <strong>Olam Spices</strong> ו-<strong>Nedspice</strong> משקיעות במערכות blockchain לתיעוד מוצא. חקלאי שלא ייכנס למערכת הטרייסביליטי יאבד גישה לשוק האירופי.</p>
+    </div>
+    <h3>Black Cumin: השוק הצומח</h3>
+    <p><strong>Black Cumin</strong> (<em>Nigella sativa</em>) אינו כמון כלל מבחינה בוטנית (משפחת <em>Ranunculaceae</em>), אבל הוא נסחר באותם ערוצים ויש בלבול מסחרי תמידי. Thymoquinone, המולקולה הפעילה ב-Nigella, נמצאת במוקד מחקרי אונקולוגי ואימונולוגי אינטנסיבי. שוק ה-Black Seed Oil צמח ב-<strong>25% CAGR</strong> בין 2020 ל-2024. ברוקרים של כמון רגיל נתקלים בביקושים ל-Nigella ולהפך. ההבחנה חייבת להיות ברורה: <strong>Cuminum cyminum ≠ Nigella sativa</strong>.</p>
+    <p>מן הסוככים, מן האדמה החולית, מזרע שנערם על שולחנות פרעונים ונמצא עדיין על כל דלפק בשוק. הכמון הוא התבלין הכי פחות מרשים למראה והכי חיוני לכל מטבח. הוא לא מפציץ; הוא מעגן. זה מה שתבלין של חמשת אלפים שנה עושה.</p>
+</section>
+
+<div class="ft">
+    ערך ידע מסחרי-מדעי · Blue Star International · 2026<br>
+    מבוסס על נתוני NCDEX, Spice Board India, FAO, ESA, ומקורות פתוחים<br>
+    <span style="font-size:11px;color:#AAA59A;">ביוכימיה: Li & Jiang, LWT Food Science 2004 · Allahghadri et al. Food Chemistry 2010 · שוק ונתוני ייצור: NCDEX 2024 · Spice Board India Annual Report · בטיחות: EU Reg 2023/915 · RASFF Notifications 2020-2024 · BfR Risk Assessment PA 2015</span>
+</div>
+</main>
+
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · CUMIN</footer>
+
+<div class="marquee-container">
+    <div class="marquee-text">כמון · CUMINUM CYMINUM · UNJHA · CUMINALDEHYDE · GUJARAT · כמון · CUMINUM CYMINUM · UNJHA · CUMINALDEHYDE · GUJARAT · </div>
+</div>
+
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8894A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch');
+    const dots = document.querySelectorAll('.nav-dot');
+    let current = "";
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 300);
+});
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => {
+    dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+            obs.unobserve(e.target);
+        });
+    }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) {
+                        heroSlot.innerHTML = '';
+                        heroSlot.appendChild(makeMedia(heroSrc));
+                    }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

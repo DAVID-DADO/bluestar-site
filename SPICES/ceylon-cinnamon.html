@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0A0A0B; --text: #FAF7F0; --body: #D1CEC5;
+    --accent: #8B6340; --warm: #B8894A;
+    --card: rgba(20,20,22,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background-color: var(--bg); color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9;
+    overflow-x: hidden;
+    background-image: linear-gradient(rgba(184,137,74,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,137,74,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+body::before, body::after {
+    content:''; position:fixed; width:600px; height:600px; border-radius:50%;
+    filter:blur(120px); z-index:-2; opacity:0.15; pointer-events:none;
+}
+body::before { background:var(--warm); top:-100px; left:-100px; }
+body::after { background:#5A3E28; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap {
+    max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden;
+    box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05);
+    background:#0A0A0B; display:flex; align-items:center; justify-content:center;
+}
+.hero-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.hero-img-placeholder { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.hero-img-placeholder span { color:rgba(255,255,255,0.15); font-size:12px; letter-spacing:3px; font-family:'Space Mono',monospace; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch {
+    background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px);
+    padding:50px; border-radius:var(--radius); margin-bottom:40px;
+    border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden;
+}
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; }
+.ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#C4A878; font-style:italic; }
+strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(184,137,74,0.08); border-right:4px solid var(--warm); }
+.ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(90,62,40,0.2); border-right:4px solid var(--accent); }
+.ab-g .tg { color:#C4A878; }
+.ab-r { background:rgba(184,50,50,0.1); border-right:4px solid #B83030; }
+.ab-r .tg { color:#E06060; }
+.ab-r p { color:#DDB0B0; }
+.vc { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:22px; margin:18px 0; }
+.vc .vn { font-family:'Frank Ruhl Libre',serif; font-size:21px; font-weight:700; color:var(--text); }
+.vc .vt { font-size:12px; color:var(--warm); font-weight:600; margin-bottom:10px; }
+.vc p { font-size:16px; line-height:1.75; margin-bottom:0; }
+.vc .vs { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.vc .vsi { background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:5px; font-size:12px; color:#A09080; }
+.vc .vsi strong { color:var(--text); }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A09080; margin-top:2px; }
+.ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.cb { background:rgba(20,20,22,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px; margin:28px 0; }
+.cb .ct { font-family:'Frank Ruhl Libre',serif; font-size:17px; font-weight:700; margin-bottom:14px; text-align:center; color:var(--text); }
+.pb-chart { margin:16px 0 8px; display:flex; flex-direction:column; gap:10px; }
+.pb-row { display:flex; align-items:center; gap:10px; }
+.pb-meta { display:flex; align-items:center; gap:6px; min-width:120px; justify-content:flex-end; }
+.pb-flag { font-size:18px; }
+.pb-name { font-size:13px; color:#A09080; }
+.pb-track { flex:1; background:rgba(255,255,255,0.08); height:18px; border-radius:9px; overflow:hidden; }
+.pb-fill { height:100%; width:0; border-radius:9px; transition:width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.pb-pct { font-family:'Frank Ruhl Libre',serif; font-size:14px; font-weight:700; color:var(--text); width:36px; text-align:left; }
+.pb-note { font-size:11px; color:#6B6058; opacity:.7; margin-top:10px; text-align:center; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; border-top:1px solid rgba(255,255,255,0.05); }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(184,137,74,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.03); animation:scrollText 40s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#6B6058; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(184,137,74,0.4); }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(20,20,22,0.85); border:1px solid rgba(184,137,74,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+.home-btn:hover { background:rgba(184,137,74,0.15); }
+@media (max-width:900px) {
+    .side-nav { display:none; }
+    .hero h1 { font-size:55px; }
+    .hero-img-wrap { height:300px; margin-bottom:-100px; }
+    .con { margin-top:150px; }
+    .ng { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+<title>קינמון ציילון · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות ובקרת איכות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="פיזיולוגיה ובריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="טכנולוגיה עתידית"></div>
+</nav>
+
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">קינמון ציילון</h1>
+    <p class="deck" id="sync-desc">הקליפה האמיתית. מהיערות הלחים של סרי לנקה דרך מלחמות האימפריות ועד לביוכימיה של Cinnamaldehyde, Coumarin כמחסום בטיחות, ותעשייה של 25,000 טון שעדיין נשלטת על ידי ידיים אנושיות.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <div class="hero-img-placeholder">
+            <span>CEYLON CINNAMON · Cinnamomum verum</span>
+            <span style="font-size:9px;opacity:0.5;">MEDIA SLOT · HERO</span>
+        </div>
+    </div>
+</section>
+
+<div class="marquee-container">
+    <div class="marquee-text">CINNAMOMUM VERUM · TRUE CINNAMON · CEYLON · CINNAMALDEHYDE · SRI LANKA · CINNAMOMUM VERUM · TRUE CINNAMON · CEYLON · CINNAMALDEHYDE · SRI LANKA · </div>
+</div>
+
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: הקליפה ששינתה מפות</h2>
+    <p class="dc">השם המדעי <em>Cinnamomum verum</em> אינו מקרי. "Verum" בלטינית פירושו "אמיתי", הכרזה בוטנית שמבדילה את הקינמון של סרי לנקה מכל זן אחר. בעולם שבו <strong>95% מהקינמון הנמכר הוא קסיה</strong> (<em>Cinnamomum cassia</em>, סינית/אינדונזית/וייטנאמית), ה-Verum עומד כסמן של מוצא, של איכות, ושל בטיחות. המאבק על ציילון (השם הקולוניאלי של סרי לנקה) הניע שלוש אימפריות למלחמות דמים: הפורטוגזים כבשו את האי ב-1505, ההולנדים סילקו אותם ב-1658, והבריטים השתלטו ב-1796. שלושתם רצו דבר אחד: <strong>מונופול על הקינמון</strong>.</p>
+    <p>השם "cinnamon" מגיע מהעברית העתיקה <em>קינמון</em> (המוזכר בשיר השירים ד', י"ד ובספר שמות ל', כ"ג כרכיב בשמן המשחה), שעבר דרך הפיניקית ליוונית <em>kinnamomon</em> ולטינית <em>cinnamomum</em>. הקינמון מופיע בפפירוס אברס (כ-1550 לפנה"ס) כרכיב רפואי, ובטקסטים סיניים מ-2700 לפנה"ס. הרודוטוס כתב שציפורים ענקיות אוספות מקלות קינמון לקינים שלהן על צוקים נישאים, וסוחרים ערבים מפתים אותן בחתיכות בשר כדי להשיג את הקליפה. הסיפור שקרי, כמובן: הערבים המציאו אותו כדי לשמור על המונופול ולהצדיק את המחיר.</p>
+    <p>מבחינה בוטנית, <em>Cinnamomum verum</em> הוא עץ ירוק-עד ממשפחת ה-<em>Lauraceae</em> (משפחת הדפנה), שמגיע לגובה של <strong>10-15 מטרים</strong> בטבע אך נגזם לגובה <strong>2-3 מטרים</strong> בגידול מסחרי. הקינמון שאנו צורכים הוא הקליפה הפנימית (<strong>inner bark</strong>) של ענפים צעירים, שנקלפת ידנית ומתגלגלת לצורת סיגר (Quill). הייחודיות: קינמון ציילון מורכב מ-<strong>שכבות דקות מרובות</strong> המגולגלות זו בתוך זו, בניגוד לקסיה שהיא שכבה עבה אחת. השבריריות של ציילון היא סימן ההיכר: כשאתה שובר מקל ציילון אמיתי, הוא מתפורר לשכבות דקיקות.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>ב-1770, ההולנדים החלו בניסיון הראשון בהיסטוריה לגדל קינמון בצורה מבוקרת (cultivation) במקום לקטוף מיערות פרא (wild harvesting). הניסוי הצליח, וקינמון ציילון הפך מ-wild spice למוצר חקלאי. <strong>אבל העיבוד נשאר ידני עד היום.</strong> אף מכונה בעולם לא הצליחה לחקות את הדיוק של קולפי ה-Salagama.</p>
+    </div>
+    <p>כיום, סרי לנקה מייצרת כ-<strong>90% מקינמון הציילון העולמי</strong>, כ-<strong>25,000 טון בשנה</strong>, עם ייצוא של כ-<strong>19,000 טון</strong> בשווי <strong>$230-250 מיליון</strong>. מקסיקו היא היבואנית הגדולה ביותר (39%), ארה"ב (18%), ופרו (12%). התעשייה מפרנסת <strong>70,000 חקלאים קטנים</strong> ומעסיקה למעלה מ-<strong>350,000 איש</strong> בשרשרת הערך.</p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: אמנות הקילוף של ה-Salagama</h2>
+    <p class="dc">הקינמון דורש טרופיקה לחה. גשם שנתי של <strong>1,500-2,500 מ"מ</strong>, טמפרטורה של <strong>25-32°C</strong>, ולחות יחסית גבוהה ועקבית. קרקע חולית-חרסיתית עם ניקוז מצוין, pH של <strong>4.5-5.5</strong> (חומצית). הקינמון גדל ברצועה הצרה של חוף מערב ודרום סרי לנקה, בעיקר באזורי <strong>Galle, Matara, Ratnapura</strong> ו-<strong>Kalutara</strong>. גובה אידיאלי: <strong>0-500 מטרים</strong> מעל פני הים.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">25-32°C</div><div class="nu">טמפרטורה</div><div class="nl">אופטימלית</div></div>
+        <div class="ni"><div class="nv">1,500-2,500</div><div class="nu">מ"מ גשם/שנה</div><div class="nl">קריטי</div></div>
+        <div class="ni"><div class="nv">pH 4.5-5.5</div><div class="nu">קרקע חומצית</div><div class="nl">דרישה</div></div>
+    </div>
+    <h3>Coppicing: הגיזום שיוצר קליפה</h3>
+    <p>העצים <strong>אינם נכרתים</strong>. הם עוברים <strong>Coppicing</strong>: גיזום סמוך לקרקע שמעודד צמיחה של ענפים צעירים וישרים (Shoots). כל עץ מייצר <strong>5-10 Shoots</strong> בציקל של <strong>18-24 חודשים</strong>. הענפים הצעירים, בקוטר של <strong>3-5 ס"מ</strong>, הם אלו שהקליפה שלהם דקה, ריחנית, וניתנת לקילוף. ענפים ישנים מדי: הקליפה עבה, מרירה, ועשירה בעמילן (טעם גרוע). עץ מנוהל היטב ממשיך לתת Shoots למשך <strong>30-50 שנה</strong>.</p>
+    <p>הקטיף מתבצע בתזמון מדויק: <strong>מיד אחרי עונת הגשמים</strong>, כאשר הקליפה רוויה בלחות וניתנת להפרדה בקלות מהעץ. הקולפים (<strong>Salagama</strong>) הם קסטה ייחודית בסרי לנקה, שכבות על שכבות של ידע שעובר מאב לבן. הם משתמשים בשני כלים: סכין מעוקלת לגירוד הקליפה החיצונית (<strong>Epidermis</strong>), וסכין שטוחה להפרדת הקליפה הפנימית מהעץ. <strong>הכל ידני</strong>. ניסיונות לפתח מכונות קילוף נכשלו: הקליפה שברירית מדי, וכל עץ ייחודי בצורתו.</p>
+    <div class="ab ab-g">
+        <div class="tg">משבר כוח אדם</div>
+        <p>תעשיית הקינמון בסרי לנקה מתמודדת עם <strong>מחסור חמור בקולפים</strong>. הדור הצעיר מעדיף עבודה בערים או הגירה לחו"ל. הסטיגמה החברתית שנלוות לקסטת ה-Salagama מקשה על גיוס עובדים חדשים. UNIDO ו-Spice Council של סרי לנקה פיתחו תוכנית הכשרה מקצועית (NVQ) לקולפים, אבל הבעיה מבנית: ללא Salagama, <strong>אין קינמון ציילון</strong>.</p>
+    </div>
+    <h3>פתוגנים קריטיים</h3>
+    <p><em>Colletotrichum gloeosporioides</em>: הגורם ל-<strong>Cinnamon Leaf Blight</strong>, מחלה פטרייתית שתוקפת עלים וענפים צעירים. מתפשטת בתנאי לחות גבוהים. <em>Phytophthora cinnamomi</em>: ריקבון שורש, איום קיומי בקרקעות עם ניקוז לקוי. <em>Cinnamon Gall Mite</em> (<em>Aceria doctersi</em>): גורם לעיוותים בעלים ובענפים, מפחית את איכות הקליפה. הדברה: מוגבלת בגלל הדרישה ל-MRL נמוך. <strong>Bordeaux Mixture</strong> (1%) ו-<strong>Trichoderma</strong> כביו-קונטרול הם האפשרויות העיקריות. קינמון אורגני (שוק צומח) אינו מאפשר שום כימיקל.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: Cinnamaldehyde, Coumarin, והגבול בין תרופה לרעל</h2>
+    <p class="dc">שני מרכיבים כימיים מגדירים את ההבדל בין קינמון ציילון לקסיה: <strong>Cinnamaldehyde</strong> (המרכיב הארומטי המרכזי) ו-<strong>Coumarin</strong> (הרעלן שקובע את גבול הבטיחות). קינמון ציילון מכיל <strong>50-75% Cinnamaldehyde</strong> בשמן האתרי (בקליפה), לעומת <strong>85-98%</strong> בקסיה. ההבדל אינו חיסרון: ב-Verum, ה-Cinnamaldehyde מאוזן על ידי <strong>Eugenol</strong> (5-10%), <strong>Linalool</strong> (3-7%), ו-<strong>β-caryophyllene</strong> (2-6%), מה שיוצר פרופיל טעם מורכב, רב-שכבתי, עם תווים של פרחים, ציפורן, ועץ.</p>
+    <h3>Coumarin: הגבול הרגולטורי</h3>
+    <p>Coumarin (1,2-benzopyrone) הוא חומר טבעי שגורם לנזק כבדי מצטבר בריכוזים גבוהים. ההבדל הדרמטי: קסיה מכילה <strong>1,000-10,000 mg/kg Coumarin</strong> (עד 1% מהמשקל). קינמון ציילון מכיל <strong>0.017-0.18 mg/kg</strong>, כלומר <strong>פחות מ-0.004%</strong>. פער של פי <strong>250-1,000</strong>. ה-BfR (המכון הפדרלי הגרמני) קבע TDI (Tolerable Daily Intake) של <strong>0.1 mg/kg משקל גוף</strong>. בן אדם ששוקל 70 ק"ג יכול לצרוך <strong>7 mg Coumarin ביום</strong>. בקסיה, זה שווה ל-<strong>~2 גרם</strong> אבקת קינמון. בציילון, זה שווה ל-<strong>כמה קילוגרמים</strong>.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">0.004%</div><div class="nu">Coumarin</div><div class="nl">בטוח</div></div>
+        <div class="ni"><div class="nv">50-75%</div><div class="nu">Cinnamaldehyde</div><div class="nl">בשמן הקליפה</div></div>
+        <div class="ni"><div class="nv">1-2.5%</div><div class="nu">שמנים אתריים</div><div class="nl">volatile oil</div></div>
+        <div class="ni"><div class="nv">5-10%</div><div class="nu">Eugenol</div><div class="nl">בשמן הקליפה</div></div>
+        <div class="ni"><div class="nv">3-7%</div><div class="nu">Linalool</div><div class="nl">פרחוני</div></div>
+        <div class="ni"><div class="nv">4%</div><div class="nu">חלבון</div><div class="nl">תזונתי</div></div>
+    </div>
+    <h3>שמן עלים vs. שמן קליפה</h3>
+    <p>עץ קינמון מייצר שני סוגי שמן אתרי שונים לחלוטין. <strong>שמן קליפה</strong> (Bark Oil): עשיר ב-Cinnamaldehyde (50-75%), יקר, משמש בתעשיית המזון והפארמה. תפוקה: <strong>0.5-1% ממשקל הקליפה היבשה</strong>. מחיר: <strong>$70-120/ק"ג</strong>. <strong>שמן עלים</strong> (Leaf Oil): עשיר ב-Eugenol (70-85%), זול יחסית, משמש בתעשיית הבשמים, סבונים, ותרופות. תפוקה: <strong>2-3% ממשקל העלים</strong>. מחיר: <strong>$15-25/ק"ג</strong>. עלי קינמון הם תוצר לוואי של הגיזום, מה שהופך את שמן העלים למקור הכנסה נוסף לחקלאים.</p>
+    <div class="ab ab-w">
+        <div class="tg">הממצא הביוכימי</div>
+        <p>trans-Cinnamaldehyde הוא המולקולה שאחראית ל-<strong>95% מהטעם</strong> של קינמון. הוא נדיף בטמפרטורת חדר (נקודת רתיחה: 248°C) ומתפרק בחום גבוה. קלייה של קינמון מעל <strong>200°C</strong> מפרקת <strong>40-60%</strong> מה-Cinnamaldehyde. זו הסיבה שבמאפה, קינמון מתווסף בשלב מאוחר, ובמשקאות (קפה, תה) הוא מושרה ולא מבושל.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: מ-Alba ועד Hamburg</h2>
+    <p class="dc">בניגוד לכל תבלין אחר בעולם, קינמון ציילון מדורג לפי <strong>קוטר הקוויל (Quill)</strong>. לא לפי צבע, לא לפי ריכוז שמנים, לא לפי מוצא גיאוגרפי. העובי הפיזי של המקל הוא הכל. ככל שהקוויל דק יותר, הקינמון איכותי יותר, כי הקליפה הפנימית הדקה ביותר מכילה את הריכוז הגבוה ביותר של שמנים אתריים ואת הכמות הנמוכה ביותר של עמילן (שגורם למרירות).</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>דירוג</th><th>קוטר Quill</th><th>מאפיין</th><th>שימוש</th><th>מחיר סמך 2025</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Alba</strong></td><td>≤6 מ"מ</td><td>דק ביותר, שביר, ארומה לימונית-מתקתקה</td><td>גורמה, יוקרה, רוקחות</td><td>$25-40/ק"ג</td></tr>
+            <tr><td><strong>C-Special (C-SP)</strong></td><td>≤8 מ"מ</td><td>דק, איכותי, ארומה מתוקה</td><td>קמעונאות פרימיום, EU</td><td>$18-28/ק"ג</td></tr>
+            <tr><td><strong>C-4</strong></td><td>≤12 מ"מ</td><td>Continental, סטנדרט אירופי</td><td>קמעונאות, תעשייה</td><td>$12-18/ק"ג</td></tr>
+            <tr><td><strong>C-5</strong></td><td>≤16 מ"מ</td><td>Continental, עבה יותר</td><td>תעשייה, אבקה</td><td>$8-14/ק"ג</td></tr>
+            <tr><td><strong>M-4 / M-5</strong></td><td>≤22 מ"מ</td><td>Mexican grade, עבה</td><td>שוק מקסיקני, אמריקה הלטינית</td><td>$6-10/ק"ג</td></tr>
+            <tr><td><strong>Hamburg (H1/H2)</strong></td><td>>22 מ"מ</td><td>הכי עבה, שברי קליפה</td><td>טחינה לאבקה, תעשייה</td><td>$4-7/ק"ג</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="vc">
+        <div class="vn">Alba Grade Quills</div>
+        <div class="vt">The Pinnacle of Ceylon Cinnamon · ≤6mm Diameter · Handcrafted</div>
+        <p>הדרגה הגבוהה ביותר בעולם. קוויליים דקים כשערה, שבירים להפליא, בעלי ריכוז שמנים אתריים מקסימלי. כמות העבודה הנדרשת לייצור ק"ג אחד של Alba: <strong>כפולה</strong> מכל דירוג אחר. רק הענפים הצעירים והדקים ביותר מתאימים. תפוקה: <strong>חקלאי מיומן מייצר 3-5 ק"ג Alba ביום</strong>.</p>
+        <div class="vs">
+            <div class="vsi"><strong>≤6mm</strong> קוטר</div>
+            <div class="vsi"><strong>1.5-2.5%</strong> Volatile Oil</div>
+            <div class="vsi"><strong>$25-40</strong>/ק"ג</div>
+            <div class="vsi"><strong>&lt;0.004%</strong> Coumarin</div>
+        </div>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">שיקול מקצועי</div>
+        <p><strong>Quillings</strong> ו-<strong>Featherings</strong> הם תוצרי לוואי של ייצור קוויליים: שברי קליפה, חתיכות לא אחידות, וקצוות. הם מכילים את אותו פרופיל כימי כמו הקוויליים, אבל ללא המראה האסתטי. מחירם נמוך ב-<strong>30-50%</strong> מהקוויליים, והם משמשים לייצור <strong>אבקת קינמון ציילון</strong>. ברוקר שמבין את ההבדל בין Quillings ל-Hamburg יכול לחסוך ללקוח 20% על אבקה באותה איכות כימית.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהענף לקוויל</h2>
+    <p class="dc">בין ענף ירוק על עץ קינמון ליד Galle לבין מקל Alba ארוז בבייל לייצוא, עוברת שרשרת עבודה ידנית כמעט לחלוטין. אין קיצורי דרך. אין אוטומציה משמעותית. כל שלב תלוי במיומנות אנושית שנצברה לאורך דורות.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">קטיף Shoots</div>
+                <div class="proc-step-body">ענפים צעירים (18-24 חודשים, קוטר 3-5 ס"מ) נחתכים מהעץ מיד אחרי הגשמים. התזמון קריטי: הקליפה חייבת להיות רוויה בלחות כדי להיפרד בקלות. קטיף בעונה יבשה = קליפה שנקרעת, לא נקלפת.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">גירוד הקליפה החיצונית (Scraping)</div>
+                <div class="proc-step-body">ה-Salagama גורד את ה-Epidermis (שכבה חיצונית חומה-ירקרקה) בסכין מעוקלת. נשארת שכבת ה-<strong>Cambium/Phloem</strong> הריחנית. שלב זה מגדיר את הצבע: גירוד מדויק = צבע זהוב-בהיר. גירוד לקוי = כתמים חומים, ירידה בדירוג.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">קילוף הקליפה הפנימית (Peeling)</div>
+                <div class="proc-step-body">הקליפה הפנימית מופרדת מהעץ בסכין שטוחה. חתיכות ארוכות (<strong>40-100 ס"מ</strong>) נשלפות בזהירות. קליפה שנקרעת באמצע = ירידה באורך הקוויל ובמחיר.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">גלגול לקוויליים (Rolling)</div>
+                <div class="proc-step-body">חתיכות קליפה מגולגלות ידנית זו בתוך זו ליצירת <strong>Quill</strong> בצורת סיגר. קליפות דקות מוחדרות לתוך קליפות עבות יותר למילוי חללים. <strong>Alba</strong> דורש 5-8 שכבות דקיקות. קוויל סטנדרטי: <strong>42 אינץ' (107 ס"מ)</strong> אורך.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">05</div>
+            <div>
+                <div class="proc-step-title">ייבוש בצל</div>
+                <div class="proc-step-body">הקוויליים מיובשים <strong>4-5 ימים בצל</strong> תחת אוורור, <strong>לעולם לא בשמש ישירה</strong>. שמש ישירה גורמת לחמצון של Cinnamaldehyde (שינוי צבע לחום כהה) ולמרירות. לחות סופית: <strong>≤12%</strong>. ייבוש מכני בטמפרטורה מבוקרת (<strong>40-50°C</strong>) הוא חלופה מודרנית.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">06</div>
+            <div>
+                <div class="proc-step-title">מיון, חיתוך ואריזה</div>
+                <div class="proc-step-body">הקוויליים נמדדים, ממוינים לפי קוטר (Alba, C-SP, C-4...), נחתכים לאורך סטנדרטי, ונארזים ב-<strong>Bales</strong> (חבילות יוטה) של <strong>45 ק"ג</strong> סטנדרט. <strong>Sulphur Fumigation</strong>: שיטה מסורתית לשימור צבע בהיר, אך מגבלת EU על SO₂ (<strong>≤150 mg/kg</strong>) מצמצמת שימוש.</div>
+            </div>
+        </div>
+    </div>
+    <p>תפוקת חקלאי מיומן: <strong>8-12 ק"ג קוויליים מעובדים ביום</strong>. משמעות: ק"ג אחד של קינמון ציילון דורש <strong>שעות של עבודה ידנית</strong>. זו הסיבה שהמחיר גבוה פי 5-10 מקסיה, וזו הסיבה שאין תחליף.</p>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות: SO₂, Coumarin, וזיוף</h2>
+    <p class="dc">קינמון ציילון נחשב לתבלין בטוח יחסית (Coumarin אפסי, לחות נמוכה), אבל שלושה סיכונים עיקריים מאיימים על המוצר: <strong>שאריות גופרית דו-חמצנית (SO₂)</strong>, <strong>זיוף (Adulteration)</strong> עם קסיה, ו-<strong>זיהום מיקרוביאלי</strong> בתהליך הייבוש הפתוח.</p>
+    <h3>SO₂: הבעיה הוותיקה</h3>
+    <p>מעבדי קינמון בסרי לנקה משתמשים ב-<strong>Sulphur Fumigation</strong> לשמירה על צבע בהיר ולמניעת עובש. אבל שאריות SO₂ גבוהות מ-<strong>150 mg/kg</strong> (מגבלת EU) גורמות לדחיית משלוחים. מאז 2004, סרי לנקה מתמודדת עם בעיות חוזרות של SO₂ גבוה בייצוא לאירופה. פתרון: מעבר ל-<strong>ייבוש מכני מבוקר</strong> ללא גיפור, או גיפור מינימלי עם ניטור SO₂ בכל שלב.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>תקן EU</th><th>תקן FDA</th><th>תקן SLS (סרי לנקה)</th></tr></thead>
+        <tbody>
+            <tr><td><strong>SO₂</strong></td><td>≤150 mg/kg</td><td>≤10 ppm (strict)</td><td>≤150 mg/kg</td></tr>
+            <tr><td><strong>Coumarin</strong></td><td>≤50 mg/kg (food)</td><td>אין מגבלה ספציפית</td><td>≤0.5%</td></tr>
+            <tr><td><strong>Volatile Oil מינ'</strong></td><td>≥1.0%</td><td>לא מוגדר</td><td>≥1.0%</td></tr>
+            <tr><td><strong>לחות מקס'</strong></td><td>≤12%</td><td>≤12%</td><td>≤13%</td></tr>
+            <tr><td><strong>Salmonella</strong></td><td>Absent/25g</td><td>Absent/25g</td><td>Absent/25g</td></tr>
+            <tr><td><strong>TPC</strong></td><td>≤10⁶ CFU/g</td><td>≤10⁶ CFU/g</td><td>≤10⁶ CFU/g</td></tr>
+            <tr><td><strong>אפלטוקסין B1</strong></td><td>≤5 μg/kg</td><td>≤20 ppb סה"כ</td><td>≤5 μg/kg</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>Adulteration: המלחמה בערבוב הקליפות</h3>
+    <p>בשל מחירו הגבוה של ציילון (פי 5-10 מקסיה), <strong>זיוף הוא בעיה מערכתית</strong>. שיטות: ערבוב אבקת קסיה באבקת ציילון, מכירת קסיה אינדונזית כ"קינמון ציילון", ושינוי תיעוד מוצא. זיהוי: <strong>HPLC</strong> לקומרין (מעל 100 ppm = נוכחות קסיה), <strong>מיקרוסקופיה</strong> של גרגירי עמילן (Starch Granules: ציילון מכיל פחות ובצורה שונה), ו-<strong>DNA barcoding</strong> שמבדיל בין <em>C. verum</em> ל-<em>C. cassia</em> ברמה גנטית.</p>
+    <div class="ab ab-r">
+        <div class="tg">אזהרת EU</div>
+        <p>ב-2022, האיחוד האירופי העניק ל-Ceylon Cinnamon <strong>סטטוס GI (Geographical Indication)</strong>. 45 חקלאים/מעבדים קיבלו הסמכה ראשונה. ה-GI אמור להגן מפני זיוף, אבל האכיפה חלשה. ממצא מדאיג: <strong>17% מדגימות קינמון בשוק האירופי</strong> נמצאו בסיכון לזיוף (EU Coordinated Control Plan). קונה שרוכש "Ceylon Cinnamon" באבקה ללא תיעוד מוצא מאומת אינו יודע מה הוא מקבל.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה: שינוע זהב שביר</h2>
+    <p class="dc">שינוע קינמון ציילון Alba הוא אתגר לוגיסטי ייחודי. המוצר <strong>שביר, קל, סופג ריחות, ורגיש ללחות</strong>. כל אחד מהמאפיינים הללו דורש טיפול מיוחד. זהו אחד המוצרים היקרים ביותר ביחס למשקל בעולם התבלינים.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">6-8t</div><div class="nu">מכולת 20'</div><div class="nl">מוגבל בנפח</div></div>
+        <div class="ni"><div class="nv">15-22°C</div><div class="nu">טמפרטורת שינוע</div><div class="nl">אידיאלית</div></div>
+        <div class="ni"><div class="nv">&lt;65%</div><div class="nu">RH במכולה</div><div class="nl">מקסימום</div></div>
+    </div>
+    <h3>שבריריות וארגון Bales</h3>
+    <p>קוויליים של Alba נשברים במגע קל. האריזה ב-Bales (חבילות יוטה של <strong>45 ק"ג</strong>) כוללת סידור מדויק: מקלות עבים יותר (C-grade) יוצרים "שלד" חיצוני שמגן על מקלות דקים (Alba) בפנים. <strong>Bale Liners</strong> (ציפויים פנימיים מ-PE) מונעים חדירת לחות וריחות. מכולת 20 רגל מכילה <strong>350-400 Bales</strong>, כ-<strong>6-8 טון</strong> בלבד (מוגבל בנפח, לא במשקל).</p>
+    <h3>ספיגת ריחות</h3>
+    <p>הקינמון הוא <strong>מוצר "סופח" קיצוני</strong>. הוא יספוג ריח של דלק, גומי, צבע, תבלינים אחרים (כמון, שום, כורכום), או כל חומר חריף בסביבה. <strong>תוך שעות</strong>. ריח שנספג אינו ניתן לתיקון. חובה: מכולות נקיות (food grade), ללא שאריות משלוח קודם. הפרדה מוחלטת במחסן. בדיקת ריח של המכולה לפני טעינה.</p>
+    <div class="ab ab-w">
+        <div class="tg">מסלולי שינוע עיקריים 2025</div>
+        <p>סרי לנקה (קולומבו) → מקסיקו (Veracruz): <strong>30-35 ימים</strong>. קולומבו → ניו יורק: <strong>22-28 ימים</strong>. קולומבו → המבורג: <strong>18-22 ימים</strong>. קולומבו → חיפה/אשדוד: <strong>10-14 ימים</strong> (קרבה גיאוגרפית, מסלול ישיר דרך ים סוף כשזמין). Freight rates (20' FCL) 2025: <strong>$1,200-2,800</strong> תלוי מסלול. עלות ביטוח גבוהה יחסית בשל ערך המטען.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות: הווסת המולקולרי</h2>
+    <p class="dc">הסיבה שקינמון ציילון מופיע ביותר ממאה מתכוני רוקחות עתיקים אינה רק הטעם. ה-Cinnamaldehyde, Eugenol ו-Proanthocyanidins פועלים על שלושה מערכות מטבוליות מרכזיות: <strong>סוכר בדם, שומנים, ודלקת</strong>. ובגלל Coumarin אפסי, ציילון הוא הזן היחיד שמתאים <strong>לצריכה יומית ממושכת</strong>.</p>
+    <h3>Insulin Mimetic: חקיין אינסולין</h3>
+    <p>Cinnamaldehyde ו-Proanthocyanidins מסוג A מגבירים ספיגת גלוקוז בתאים דרך הפעלת <strong>GLUT4 transporter</strong> ושיפור רגישות לאינסולין. מטא-אנליזה ב-<em>Journal of Medicinal Food</em> (2011): צריכת <strong>1-6 גרם/יום</strong> של קינמון למשך 40 יום עד 4 חודשים הורידה <strong>סוכר בצום ב-18-29%</strong> בחולי סוכרת סוג 2. מחקר ב-<em>Diabetes Care</em> (2003): <strong>1 גרם/יום</strong> למשך 40 יום הוריד טריגליצרידים ב-<strong>23-30%</strong>, LDL ב-<strong>7-27%</strong>, וכולסטרול כולל ב-<strong>12-26%</strong>.</p>
+    <h3>פעילות אנטי-מיקרוביאלית</h3>
+    <p>Cinnamaldehyde ו-Eugenol פוגעים בממברנת התא של חיידקים ופטריות. יעילות מוכחת נגד <strong>Staphylococcus aureus, E. coli, Salmonella, Candida albicans</strong>, ו-<strong>Listeria</strong>. שמן קינמון (בפאזה גזית) מראה פעילות אנטי-מיקרוביאלית <strong>חזקה יותר מבמגע ישיר</strong>. יישום מעשי: שמן קינמון כחומר שימור טבעי במזון ובאריזות אקטיביות.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">18-29%</div><div class="nu">ירידה בסוכר צום</div><div class="nl">1-6g/d</div></div>
+        <div class="ni"><div class="nv">23-30%</div><div class="nu">ירידה בטריגליצרידים</div><div class="nl">1g/d, 40 ימים</div></div>
+        <div class="ni"><div class="nv">GLUT4</div><div class="nu">Insulin Mimetic</div><div class="nl">Proanthocyanidins</div></div>
+    </div>
+    <div class="pull">
+        <p>קינמון ציילון הוא לא תבלין למאפה. הוא ממשק בין קולינריה לפארמקולוגיה, בין ארומה להשפעה מטבולית, בין מסורת בת אלפי שנים לאישור קליני מודרני.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: סרי לנקה, מחירים, ודינמיקת שוק 2026</h2>
+    <p class="dc">שוק קינמון הציילון הוא מונופול גיאוגרפי טבעי: <strong>סרי לנקה מייצרת 90% מהמוצר העולמי</strong>. אין "וייטנאם של קינמון" שתוכל להציף את השוק. סיישל, מדגסקר, והודו מייצרות כמויות זעירות. זה אומר ששוק הציילון <strong>לא תחרותי</strong> באותו מובן כמו שוק הפלפל או הכמון. המחיר נקבע על ידי היצע סרי-לנקי ועל ידי ביקוש ממקסיקו וארה"ב.</p>
+    <div class="cb">
+        <div class="ct">חלוקת יעדי ייצוא קינמון ציילון 2024 (% מסך הכמות)</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇲🇽</span><span class="pb-name">מקסיקו</span></div><div class="pb-track"><div class="pb-fill" data-w="39" style="background:#8B6340"></div></div><span class="pb-pct">39%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇺🇸</span><span class="pb-name">ארה"ב</span></div><div class="pb-track"><div class="pb-fill" data-w="18" style="background:#6E4A28"></div></div><span class="pb-pct">18%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇵🇪</span><span class="pb-name">פרו</span></div><div class="pb-track"><div class="pb-fill" data-w="12" style="background:#C4A060"></div></div><span class="pb-pct">12%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇴</span><span class="pb-name">קולומביה</span></div><div class="pb-track"><div class="pb-fill" data-w="7" style="background:#9E7A50"></div></div><span class="pb-pct">7%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇪🇸</span><span class="pb-name">ספרד</span></div><div class="pb-track"><div class="pb-fill" data-w="5" style="background:#7D5A38"></div></div><span class="pb-pct">5%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="19" style="background:#DDD6CA"></div></div><span class="pb-pct">19%</span></div>
+        </div>
+        <div class="pb-note">נתוני EDB Sri Lanka · TrendEconomy 2024 · ייצוא שנתי: ~19,000 טון · שווי: ~$230-250M</div>
+    </div>
+    <h3>דינמיקת מחיר</h3>
+    <p>מחירי קינמון ציילון יציבים יחסית לתבלינים אחרים, כי ההיצע מוגבל ואינו מתרחב מהר (עבודה ידנית, Coppicing cycle של 18-24 חודשים). Alba: <strong>$25-40/ק"ג</strong> FOB קולומבו. C-4 (Continental): <strong>$12-18/ק"ג</strong>. C-5: <strong>$8-14/ק"ג</strong>. Hamburg/שברים: <strong>$4-7/ק"ג</strong>. שמן קליפה: <strong>$70-120/ק"ג</strong>. שמן עלים: <strong>$15-25/ק"ג</strong>. אבקה (Quillings ground): <strong>$8-15/ק"ג</strong>.</p>
+    <h3>מגמות 2025-2026</h3>
+    <p>שלוש מגמות: (1) <strong>GI Certification</strong>: ההסמכה האירופית צפויה להעלות מחירי פרימיום ב-<strong>10-20%</strong> למוצרים מאומתים. (2) <strong>מוצרי ערך מוסף</strong>: סרי לנקה דוחפת לייצא <strong>אבקה, שמן, כמוסות ותמציות</strong> במקום מקלות גולמיים. שווי ייצוא של ק"ג אבקה ארוזה: פי 3-5 מק"ג מקלות גולמיים. (3) <strong>בריאות וסופלמנטים</strong>: שוק תוספי הקינמון (capsules, extracts) צומח ב-<strong>12-15% בשנה</strong>. ציילון הוא הזן היחיד שמותר למכור כתוסף יומי (Coumarin safe). יעד ממשלת סרי לנקה: הכפלת הכנסות ייצוא ל-<strong>$500 מיליון</strong> בשנים הקרובות.</p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית: Cryogenic, DNA, ושוק 2030</h2>
+    <p class="dc">הקינמון הציילוני של 2026 נמצא בצומת בין מסורת לטכנולוגיה. שלוש מהפכות מתקדמות: טחינה קריוגנית ששומרת על ארומה, זיהוי DNA לאימות מוצא, ומערכות ייבוש חכמות שמחליפות את הגיפור.</p>
+    <h3>Cryogenic Grinding</h3>
+    <p>טחינה קריוגנית תחת <strong>חנקן נוזלי (-196°C)</strong> שומרת על שמנים אתריים שנהרסים בטחינה רגילה. בטחינה מכנית רגילה, החום מגיע ל-<strong>80-120°C</strong>, מפרק <strong>30-40% מה-Cinnamaldehyde</strong>. בטחינה קריוגנית, אובדן של <strong>פחות מ-5%</strong>. התוצאה: אבקה בגוון <strong>זהוב-בהיר</strong> (לא חום כהה כמו קסיה), עם ארומה זהה למקל המקורי. עלות מערכת: <strong>$100,000-200,000</strong>. מפעלים בסרי לנקה (Rathna, TopCinnamon) מתחילים להשקיע.</p>
+    <h3>DNA Barcoding</h3>
+    <p>טכנולוגיית <strong>DNA barcoding</strong> מאפשרת לזהות <em>C. verum</em> לעומת <em>C. cassia</em>, <em>C. burmannii</em> (אינדונזית), ו-<em>C. loureiroi</em> (וייטנאמית) <strong>ברמת הגנום</strong>. בניגוד ל-HPLC שמודד Coumarin (שיכול להשתנות לפי תנאי גידול), DNA הוא אבסולוטי: ציילון = verum, תמיד. עלות: <strong>$50-150 לדגימה</strong>. חברות כמו <strong>Eurofins</strong> ו-<strong>SGS</strong> מציעות שירות. IFC (World Bank) תומכת ביישום ברחבי שרשרת הציילון.</p>
+    <div class="ab ab-w">
+        <div class="tg">Smart Drying</div>
+        <p>מערכות ייבוש חכמות עם חיישני <strong>IoT</strong> (לחות, טמפרטורה, זרימת אוויר) מאפשרות ייבוש מבוקר ללא גיפור. המערכת עוצרת את הייבוש ברגע שלחות הקליפה יורדת מתחת ל-<strong>12%</strong>, מונעת ייבוש יתר (שגורם לשבריריות ואובדן שמנים) ותת-ייבוש (שגורם לעובש). עלות: <strong>$20,000-50,000</strong> ליחידה. יכולה להחליף גיפור לחלוטין ולפתור את בעיית ה-SO₂ מהשורש.</p>
+    </div>
+    <h3>Cassia vs. Verum: הקרב הגלובלי</h3>
+    <p>ככל שמודעות הצרכנים ל-Coumarin עולה, הביקוש לציילון אמיתי גדל. גרמניה, שבה ה-BfR פרסם אזהרות ספציפיות, הגדילה יבוא ציילון ב-<strong>25% בין 2020 ל-2024</strong>. ארה"ב ואוסטרליה מתחילות להבדיל בין "cinnamon" ל-"Ceylon cinnamon" בתיוג. הבעיה: רוב הצרכנים עדיין לא יודעים שה-"cinnamon" שהם קונים בסופרמרקט הוא קסיה, לא ציילון. <strong>תיוג חובה</strong> של species (Verum vs. Cassia) על אריזה הוא המהלך הרגולטורי הבא.</p>
+    <p>מהיערות הלחים של סרי לנקה, מהקליפה שנגזרת ביד על ידי Salagama שעושים את זה כמו שאבותיהם עשו, מהמולקולה שנותנת טעם ומרפאת. קינמון ציילון הוא לא מוצר מדף. הוא הכרזה על מוצא, על מיומנות אנושית, ועל הבדל ביוכימי שמציל כבדים.</p>
+</section>
+
+<div class="ft">
+    ערך ידע מסחרי-מדעי · Blue Star International · 2026<br>
+    מבוסס על נתוני EDB Sri Lanka, UNIDO, IFC, FAO, ESA, BfR, ומקורות פתוחים<br>
+    <span style="font-size:11px;color:#AAA59A;">ביוכימיה: Suriyagoda et al. Plants People Planet 2021 · Rao & Gan, Food Funct 2014 · שוק ונתוני ייצור: EDB Sri Lanka · TrendEconomy 2022 · DHL Sri Lanka Report · בטיחות: EU Reg 2023/915 · BfR Coumarin Risk Assessment · GI: IFC/EU Ceylon Cinnamon GI 2022 · Coumarin: Abraham et al. Mol Nutr Food Res 2010</span>
+</div>
+</main>
+
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · CEYLON CINNAMON</footer>
+
+<div class="marquee-container">
+    <div class="marquee-text">קינמון ציילון · CINNAMOMUM VERUM · SRI LANKA · CINNAMALDEHYDE · ALBA · קינמון ציילון · CINNAMOMUM VERUM · SRI LANKA · CINNAMALDEHYDE · ALBA · </div>
+</div>
+
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8894A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch');
+    const dots = document.querySelectorAll('.nav-dot');
+    let current = "";
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 300);
+});
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => {
+    dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+            obs.unobserve(e.target);
+        });
+    }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) {
+                        heroSlot.innerHTML = '';
+                        heroSlot.appendChild(makeMedia(heroSrc));
+                    }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

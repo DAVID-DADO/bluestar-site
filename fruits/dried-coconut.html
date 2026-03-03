@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>קוקוס מיובש · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0B;--text:#FAF7F0;--body:#D1CEC5;--accent:#8B6340;--warm:#B8894A;--card:rgba(20,20,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;position:relative;background-image:linear-gradient(rgba(184,137,74,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(184,137,74,0.03) 1px,transparent 1px);background-size:30px 30px}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:.15;pointer-events:none}
+body::before{background:#1A3A20;top:-100px;left:-100px}
+body::after{background:#0E2A18;bottom:20%;right:-150px}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000}
+.back-btn{position:absolute;top:40px;left:40px;z-index:10;display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;opacity:.5;transition:.3s}
+.back-btn:hover{opacity:1;color:var(--warm)}
+#backToTop{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;display:none;z-index:1000;transition:.3s}
+#backToTop:hover{transform:scale(1.1);box-shadow:0 0 20px rgba(184,137,74,0.4)}
+.home-btn{position:fixed;bottom:30px;right:30px;background:rgba(20,20,22,.9);border:1px solid rgba(184,137,74,.3);color:#C9A96E;padding:10px 16px;border-radius:30px;text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;display:flex;align-items:center;gap:8px;transition:.3s;z-index:200}
+.home-btn:hover{background:rgba(184,137,74,.15);border-color:var(--warm)}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);position:relative}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:.8;margin-bottom:25px;letter-spacing:-2px}
+.hero .deck{font-size:20px;opacity:.8;max-width:650px;margin:0 auto 40px;font-weight:300}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#000;border:1px solid rgba(255,255,255,.05)}
+.hero-img-wrap video,.hero-img-wrap img{width:100%;height:100%;object-fit:cover}
+.hero-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:#0A0A0B}
+.hero-img-placeholder span{color:rgba(255,255,255,.15);font-size:12px;letter-spacing:3px;font-family:'Space Mono',monospace}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:.3;cursor:pointer;transition:.3s}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm)}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden;color:var(--body)}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:.4}
+.ch::before{top:15px;left:15px}
+.ch::after{bottom:15px;right:15px}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm)}
+.ch p{margin-bottom:18px;color:var(--body)}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px}
+em{color:#C4A878;font-style:italic}
+strong{color:var(--text)}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px}
+.ab p{margin:0;font-size:16px;line-height:1.75}
+.ab-w{background:rgba(184,137,74,.08);border-right:4px solid var(--warm)}
+.ab-w .tg{color:var(--warm)}
+.ab-g{background:rgba(90,62,40,.2);border-right:4px solid var(--accent)}
+.ab-g .tg{color:#C4A878}
+.ab-r{background:rgba(184,50,50,.1);border-right:4px solid #B83030}
+.ab-r .tg{color:#E06060}
+.ab-r p{color:#DDB0B0}
+.vc{background:rgba(30,28,25,.7);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:22px;margin:18px 0}
+.vc .vn{font-family:'Frank Ruhl Libre',serif;font-size:21px;font-weight:700;color:var(--text)}
+.vc .vt{font-size:12px;color:var(--warm);font-weight:600;margin-bottom:10px}
+.vc p{font-size:16px;line-height:1.75;margin-bottom:0;color:var(--body)}
+.vc .vs{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.vc .vsi{background:rgba(255,255,255,.04);padding:6px 12px;border-radius:5px;font-size:12px;color:#A09080}
+.vc .vsi strong{color:var(--text)}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.ni{background:rgba(30,28,25,.7);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px;text-align:center}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text)}
+.ni .nu{font-size:13px;color:#A09080;margin-top:2px}
+.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600}
+.cb{background:rgba(20,20,22,.6);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:24px;margin:28px 0}
+.cb .ct{font-family:'Frank Ruhl Libre',serif;font-size:17px;font-weight:700;margin-bottom:14px;text-align:center;color:var(--text)}
+.pb-chart{margin:16px 0 8px;display:flex;flex-direction:column;gap:10px}
+.pb-row{display:flex;align-items:center;gap:10px}
+.pb-meta{display:flex;align-items:center;gap:6px;min-width:120px;justify-content:flex-end}
+.pb-flag{font-size:18px}
+.pb-name{font-size:13px;color:#A09080}
+.pb-track{flex:1;background:rgba(255,255,255,.08);height:18px;border-radius:9px;overflow:hidden}
+.pb-fill{height:100%;width:0;border-radius:9px;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.pb-pct{font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:700;color:var(--text);width:36px;text-align:left}
+.pb-note{font-size:11px;color:#6B6058;opacity:.7;margin-top:10px;text-align:center}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;border-top:1px solid rgba(255,255,255,.05)}
+.gt th{background:rgba(0,0,0,.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,.1)}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--body)}
+.gt tr:nth-child(even){background:rgba(255,255,255,.02)}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(184,137,74,.2)}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic}
+.reveal{opacity:0;transform:translateY(50px);transition:all .8s cubic-bezier(.2,1,.2,1)}
+.reveal.active{opacity:1;transform:translateY(0)}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.03);animation:scrollText 40s linear infinite}
+@keyframes scrollText{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ft{text-align:center;padding:44px 24px;font-size:13px;color:#6B6058;border-top:1px solid rgba(255,255,255,.06);margin-top:36px}
+.inner-ft{background:rgba(0,0,0,.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:.6;border-top:1px solid rgba(255,255,255,.05)}
+.proc-steps{display:flex;flex-direction:column;gap:20px;margin:24px 0}
+.proc-step{display:flex;gap:20px;align-items:flex-start}
+.proc-step-num{min-width:36px;height:36px;border-radius:50%;background:var(--warm);color:#000;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.proc-step-title{font-family:'Frank Ruhl Libre',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
+.proc-step-body{font-size:16px;color:var(--body);line-height:1.75}
+.media-slot-inline{width:100%;aspect-ratio:16/9;background:var(--card);border-radius:var(--radius);overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;position:relative}
+.media-slot-inline img,.media-slot-inline video{width:100%;height:100%;object-fit:cover;filter:brightness(.92);transition:filter .3s}
+.media-slot-inline:hover img,.media-slot-inline:hover video{filter:brightness(1.05)}
+.media-slot-placeholder{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.1)}
+@media(max-width:900px){.side-nav{display:none}.back-btn{top:20px;left:20px}.hero h1{font-size:55px}.hero-img-wrap{height:300px;margin-bottom:-100px}.con{margin-top:150px}.ng{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="marquee-container">
+  <div class="marquee-text">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · </div>
+</div>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div>
+  <div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div>
+  <div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div>
+  <div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div>
+  <div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div>
+  <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+  <a href="../index.html" class="back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-left:6px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>דף הבית</a>
+  <div class="hero-k">ערך ידע חקלאי · Blue Star International</div>
+  <h1 id="sync-title">קוקוס מיובש</h1>
+  <p class="deck" id="sync-desc">העץ שנסע עם הגלים עצמם, הכלכל צוותי ספינות בלי יציאה לנמל, ועכשיו מוכר בשלושים פורמטים לשלושים שווקים שלא מדברים זה עם זה.</p>
+  <div class="hero-img-wrap" id="slot-product-hero">
+    <div class="hero-img-placeholder"><span>SLOT · PRODUCT · HERO</span></div>
+  </div>
+</section>
+<main class="con">
+
+<section class="ch" id="ch1">
+  <span class="cl">פרק ראשון</span>
+  <h2>פרדיננד מגלן, 1521: האיש שנהרג לפני שהספיק לטעום את הקוקוס</h2>
+  <p class="dc">ב-27 באפריל 1521, על חוף האי מקטן בפיליפינים, נורה פרדיננד מגלן בחץ מורעל בזמן קרב עם שבט מקומי. לפני שיצא לקרב, הוא הורה לצוות להישאר בסירות. הצוות שרד. הם נשאו איתם, בין השאר, מה שתיאר אנטוניו פיגאפטה, הכרוניסט של המסע, כ"פרי גדול כמו ראש אדם, עם קליפה ומיץ מתוק שהחליף מים מתוקים על הספינה שלושה ימים שלמים." הוא תיאר אוכמנייה. הוא התכוון לקוקוס.</p>
+  <p>אבל מגלן לא גילה את הקוקוס. הוא מצא פרי שכבר נסע יותר ממנו. <em>Cocos nucifera</em> הוא אחד הצמחים עם תפוצה גיאוגרפית טבעית הרחבה ביותר בעולם, לא בגלל שבני אדם נשאו אותו, אלא בגלל שאגוז הקוקוס צף. הוא אטום למים, שורד חודשים בים הפתוח, ונפלט על חופים במרחק אלפי קילומטרים מהעץ שממנו נפל. ארכיאולוגים מצאו אגוזי קוקוס שמורים בקברים הודים מלפני 3,000 שנה. הסנסקריט שלו, <em>narikela</em>, מופיע בטקסטים הינדיים עתיקים כ"אוכל בעל שלושה עיניים שמנחה את הנפש."</p>
+  <p>הספרדים שהגיעו לפיליפינים ב-1565 מצאו תעשייה מקומית מפותחת: קופרה, בשר הקוקוס המיובש, כבר נמכרה בין האיים. הם לא המציאו את הייצוא, הם רק פתחו את הנתיב לאירופה. ספינות של 200 ימים בלב ים היו צריכות מזון עמיד. קופרה, יבשה ושומנית, החזיקה חודשים. ממסעות מגלן ואחריו, הקוקוס המיובש נסע לאירופה על כל ספינה שחצתה את האוקיינוס השקט.</p>
+  <div class="pull"><p>הפרי שנסע לבד על הגלים לפני שבני אדם בנו ספינות, סיפק מזון לאנשים שבנו ספינות שחצו עולמות. עצמאות היא לא רק מידה, היא לפעמים אסטרטגיית הישרדות.</p></div>
+</section>
+
+<section class="ch" id="ch2">
+  <span class="cl">פרק שני</span>
+  <h2>מפת הייצור: אסיה שולטת, פיליפינים מובילות</h2>
+  <p class="dc">שוק הקוקוס המיובש מרוכז באסיה בצורה שאין לה אח ורע בקטגוריה. שלוש מדינות מספקות כ-75% מהנפח העולמי, ושתיים מהן חולקות ים.</p>
+  <div class="cb">
+    <div class="ct">חלוקת ייצור קוקוס מיובש עולמי</div>
+    <div class="pb-chart">
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇵🇭</span><span class="pb-name">פיליפינים</span></div><div class="pb-track"><div class="pb-fill" data-w="38" style="background:#3A7A40"></div></div><span class="pb-pct">38%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇩</span><span class="pb-name">אינדונסיה</span></div><div class="pb-track"><div class="pb-fill" data-w="27" style="background:#2A6A30"></div></div><span class="pb-pct">27%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇳</span><span class="pb-name">הודו</span></div><div class="pb-track"><div class="pb-fill" data-w="12" style="background:#4A8A50"></div></div><span class="pb-pct">12%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇻🇳</span><span class="pb-name">וייטנאם</span></div><div class="pb-track"><div class="pb-fill" data-w="8" style="background:#1A5A20"></div></div><span class="pb-pct">8%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇸🇷</span><span class="pb-name">סרי לנקה</span></div><div class="pb-track"><div class="pb-fill" data-w="7" style="background:#5A9A60"></div></div><span class="pb-pct">7%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌐</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="8" style="background:#2A4A30"></div></div><span class="pb-pct">8%</span></div>
+    </div>
+    <div class="pb-note">נתוני 2023-2024 · כולל desiccated, flakes, chips, coconut flour ו-coconut sugar</div>
+  </div>
+  <p>פיליפינים היא המייצאת הגדולה בעולם של desiccated coconut, הצורה המיובשת הסטנדרטית. אינדונסיה מובילה ביצוא שמן קוקוס ועולה מהר בdesiccated. הודו מתמחה בwhole coconut ובproducts מיוחדים. וייטנאם, שאנחנו מכירים היטב, היא ספקית הצומחת הכי מהר בסגמנט coconut chips ו-coconut flakes עם QC שמשתפר בעקביות.</p>
+  <div class="ab ab-w">
+    <div class="tg">Stark OS · וייטנאם</div>
+    <p>וייטנאם מספקת coconut products במחיר הנמוך ב-10-20% מפיליפינים, עם זמן ייצוא מוכר ורשת לוגיסטיקה שאנחנו כבר עובדים בה. הסיכון: consistency בין לוטים עדיין פחות אחידה. דרוש ספק ותיק שיש לו track record. לא ספק חדש לחוזה ראשון.</p>
+  </div>
+</section>
+
+<div id="slot-inline-2" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_02</div></div>
+
+<section class="ch" id="ch3">
+  <span class="cl">פרק שלישי</span>
+  <h2>פיליפינים, 1946: כשקופרה הייתה יותר יקרה מדם</h2>
+  <p class="dc">בשנת 1946, שנה לאחר שיפן כבשה ואז שחררה את פיליפינים, עמד הרפובליקה החדשה על תהום כלכלית. תשתיות הרוסות, אוכלוסייה רעבה, ואוצר ריק. מה שהציל אותה לא היה סיוע אמריקאי בלבד. זה היה קופרה.</p>
+  <p>מחיר הקופרה בשוק הגלובלי קפץ ב-1947 ל-$320 לטון, שיא שלא נראה מאז 1920. הסיבה: אירופה הרוסה חיפשה שמן בישול, מרגרינה, וסבון. שמן קוקוס, שמיוצר מקופרה, היה חומר הגלם הזמין ביותר. כל חקלאי פיליפיני עם עצי קוקוס הפך לנכס אסטרטגי. אזורים כמו Quezon, Davao, ו-Bicol, שהיו בשוליים הכלכליים, הפכו לעמוד השדרה של שיקום לאומי. ב-1948 היוו הכנסות הקוקוס 60% מכלל ייצוא פיליפינים.</p>
+  <div class="ab ab-r">
+    <div class="tg">הפרדוקס של קופרה</div>
+    <p>החקלאים שגידלו את הקוקוס לא התעשרו. מחיר השוק זרם דרך middle-men ומפעלי עיבוד שהיו בבעלות משפחות עשירות. ב-1972 ניצל פרדיננד מרקוס את כוחו כנשיא כדי ליצור מונופול ממשלתי על קופרה שנסגר בידי ידידיו. חקלאים המשיכו לקבל מחיר נמוך. המבנה לא השתנה הרבה גם אחרי מרקוס. בשנת 2024, ממוצע ההכנסה של חקלאי קוקוס פיליפיני: פחות מ-$3 ליום.</p>
+  </div>
+  <p>ב-1980, פיליפינים הייתה עדיין ה-powerhouse הגלובלי של קוקוס. ואז שמן סויה וחמניות הפכו לזולים יותר, ויצוא קופרה קרס. המדינה שבנתה שיקום לאומי על פרי אחד, גילתה שוב שמונוסגמנטציה היא סיכון. היום פיליפינים משקיעה בגיוון: desiccated, oil, water, sugar, flour. אחד הפירות שמשתמשים בכמעט 100% מהאגוז לא מסתבר כמוצר אחד.</p>
+  <div class="pull"><p>מדינה ששיקמה עצמה על גב פרי אחד, ונפלה כשהשוק זז, לימדה אותנו שדיבורסיפיקציה אינה אסטרטגיה של פחד. היא אסטרטגיה של זיכרון.</p></div>
+</section>
+
+<section class="ch" id="ch4">
+  <span class="cl">פרק רביעי</span>
+  <h2>הפורמטים: קוקוס הוא לא מוצר, הוא קטגוריה</h2>
+  <p>שום מוצר בספרייה הזו לא מגיע בכמות הפורמטים שהקוקוס מגיע בהם. כל פורמט שוק שונה, לקוח שונה, מחיר שונה. בלבול בין הפורמטים הוא אחת הטעויות הנפוצות בסחר.</p>
+  <div class="vc">
+    <div class="vn">Desiccated Coconut</div>
+    <div class="vt">הסטנדרט · גרוס, פתיתים, אבקה</div>
+    <p>בשר קוקוס מגורד ומיובש ל-3% לחות. מגיע ב-fine grade (דק כמו קמח), medium grade, ו-coarse/shred (סיבים ארוכים). הסטנדרט לתעשיית האפייה העולמית. lamingtons, macaroons, גרנולה, שוקולד. 90% מהsupply chain של desiccated coconut עובר דרך פיליפינים.</p>
+    <div class="vs"><span class="vsi">לחות: <strong>3% max</strong></span><span class="vsi">מחיר: <strong>$1.80-3.50/kg</strong></span><span class="vsi"><strong>אפייה, ממתקים</strong></span></div>
+  </div>
+  <div class="vc">
+    <div class="vn">Coconut Flakes / Chips</div>
+    <div class="vt">הפרמיום הוויזואלי · גדול, שלם, טוסטד</div>
+    <p>פרוסות גדולות של בשר קוקוס, לרוב 10-30mm, לרוב toasted. אסתטיקה גבוהה, מוכרות ב-trail mix, granola artisan, ו-chocolate bark. שוק שקנה על הצבע ועל ה-crunch. Toasted flakes עם מעט מלח: אחד המרכיבים שמוכרים את עצמם. מחיר גבוה מdesiccated ב-60-100%.</p>
+    <div class="vs"><span class="vsi">גודל: <strong>10-30mm</strong></span><span class="vsi">מחיר: <strong>$3.00-5.50/kg</strong></span><span class="vsi"><strong>trail mix, גרנולה פרמיום</strong></span></div>
+  </div>
+  <div class="vc">
+    <div class="vn">Coconut Sugar</div>
+    <div class="vt">ממתיק פרמיום · GI נמוך, נרטיב חזק</div>
+    <p>מסירת פרחי קוקוס, לא מהפרי. מגיע בצורת גרגרים חומים או קוביות. טעם קארמלי עמוק. GI של כ-35, נמוך משמעותית מסוכר קנה (65) ומדבש (58). שוק הבריאות שילם $8-15/kg עבורו בשנות ה-2010. עדיין מוצר עם מרווח טוב לספק שיש לו את הקישור לאינדונסיה או פיליפינים.</p>
+    <div class="vs"><span class="vsi">GI: <strong>~35</strong></span><span class="vsi">מחיר: <strong>$4.50-9.00/kg</strong></span><span class="vsi"><strong>בריאות, אפייה clean label</strong></span></div>
+  </div>
+  <div class="vc">
+    <div class="vn">Coconut Flour</div>
+    <div class="vt">שאריית ייצור שמשכה ב-gluten-free</div>
+    <p>תוצר לוואי של ייצור שמן קוקוס: בשר קוקוס אחרי סחיטה, מיובש וטחון. עשיר בסיבים (38-45%), דל פחמימות. השתלט על חלק משוק ה-gluten-free כשקמח שקדים היה יקר מדי. מחיר $2.50-5.00/kg FOB, צמיחה של 18% בשנה בביקוש. ספק שיש לו coconut flour בפורטפוליו, יש לו כניסה לשוק שלא מצפה לו.</p>
+    <div class="vs"><span class="vsi">סיבים: <strong>38-45%</strong></span><span class="vsi">מחיר: <strong>$2.50-5.00/kg</strong></span><span class="vsi"><strong>gluten-free, paleo</strong></span></div>
+  </div>
+</section>
+
+<section class="ch" id="ch5">
+  <span class="cl">פרק חמישי</span>
+  <h2>פרופיל תזונתי: שומן רווי שלא כולם מבינים</h2>
+  <p class="dc">קוקוס מיובש הוא מוצר עם תכולת שומן גבוהה מאוד, ורוב השומן רווי. זה המספר שמבריח קונים שלא מבינים. וזה גם בדיוק הנרטיב שנותן לו קהל נאמן.</p>
+  <div class="ng">
+    <div class="ni"><div class="nv">660</div><div class="nu">קלוריות</div><div class="nl">ל-100 גרם desiccated</div></div>
+    <div class="ni"><div class="nv">64g</div><div class="nu">שומן כולל</div><div class="nl">ל-100 גרם</div></div>
+    <div class="ni"><div class="nv">57g</div><div class="nu">שומן רווי</div><div class="nl">MCT בעיקר</div></div>
+    <div class="ni"><div class="nv">16g</div><div class="nu">סיבים</div><div class="nl">ל-100 גרם</div></div>
+    <div class="ni"><div class="nv">50%</div><div class="nu">לורית חומצה</div><div class="nl">מסך השומן הרווי</div></div>
+    <div class="ni"><div class="nv">6.9g</div><div class="nu">חלבון</div><div class="nl">ל-100 גרם</div></div>
+  </div>
+  <p>57 גרם שומן רווי ל-100 גרם. זה המספר שעצר את הקוקוס מלהיכנס לתזונה המערבית עד שנות ה-2010. ה-AHA (American Heart Association) המליץ לאורך עשרות שנים להגביל שומן רווי. קוקוס היה אויב.</p>
+  <p>ואז הגיע הנרטיב של MCT, Medium Chain Triglycerides. חומצת לורית, 50% מהשומן של הקוקוס, היא MCT שמתנהג שונה בגוף מ-LCT (long chain). הוא לא מצטבר ברקמות שומן באותו אופן, מתחמצן מהר, ומשמש אנרגיה זמינה. שוק ה-keto ו-paleo אימץ את הנרטיב. מאז 2015 מחיר הקוקוס המיובש עלה 40%.</p>
+  <table class="gt">
+    <tr><th>פרמטר</th><th>Desiccated (unsweetened)</th><th>Coconut Flakes (toasted)</th><th>Coconut Sugar</th></tr>
+    <tr><td>קלוריות / 100g</td><td>660</td><td>592</td><td>375</td></tr>
+    <tr><td>שומן g / 100g</td><td>64</td><td>55</td><td>0.5</td></tr>
+    <tr><td>סיבים g / 100g</td><td>16</td><td>14</td><td>0</td></tr>
+    <tr><td>סוכר g / 100g</td><td>6</td><td>8</td><td>92</td></div></tr>
+    <tr><td>מחיר FOB $/kg</td><td>1.80-3.50</td><td>3.00-5.50</td><td>4.50-9.00</td></tr>
+  </table>
+  <div class="ab ab-w">
+    <div class="tg">Stark OS · נשק מכירה</div>
+    <p>לקוח keto, paleo, ו-clean label לא מפחד משומן רווי של קוקוס. הוא מחפש אותו. MCT content ו-lauric acid percentage ב-CoA הם המספרים שפותחים שיחה. ספק שמוכר desiccated unsweetened עם MCT analysis ב-spec sheet, מוכר ב-$3.50/kg. ספק שמוכר "coconut" בלי תיעוד, מוכר ב-$1.80/kg. אותו מוצר. תיעוד שונה.</p>
+  </div>
+</section>
+
+<div id="slot-inline-3" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_03</div></div>
+
+<section class="ch" id="ch6">
+  <span class="cl">פרק שישי</span>
+  <h2>שרשרת העיבוד: מהאגוז לעשרים מוצרים</h2>
+  <p>אין פרי שמנצל כמעט 100% מעצמו כמו הקוקוס. שרשרת העיבוד של desiccated היא ספציפית, אבל כל שלב מייצר תוצרי לוואי שנמכרים בנפרד.</p>
+  <div class="proc-steps">
+    <div class="proc-step">
+      <div class="proc-step-num">1</div>
+      <div><div class="proc-step-title">קציר ובחירה</div><div class="proc-step-body">קציר ידני בגיל 11-13 חודש לdesiccated (fully mature). קוקוס לcoconut water: 6-7 חודש (young/green). גיל הקציר קובע את ההרכב: mature = שומן גבוה, בשר עבה. young = מים מרובים, בשר דק. שגיאה בגיל הקציר = מוצר שלא מתאים לייעוד.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">2</div>
+      <div><div class="proc-step-title">פיצוח והסרת בשר</div><div class="proc-step-body">פיצוח הקליפה החיצונית (husk) והקשה (shell). הסרת בשר (meat/kernel) מהקליפה הפנימית. שלב ידני בחקלאות קטנה, מכני במפעלים. יעילות הפרדה קריטית: שאריות קליפה שחורה ב-desiccated = פגם שנראה ונפסל.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">3</div>
+      <div><div class="proc-step-title">הלבנה (Paring)</div><div class="proc-step-body">הסרת השכבה החומה הדקה (testa) מהבשר הלבן. מייצרת desiccated לבן נקי. ללא הלבנה: desiccated "high fat" עם שכבה חומה, זול יותר, שוק תעשייתי. desiccated לבן = שוק אפייה קמעונאי. ההבחנה הזו קריטית לתמחור.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">4</div>
+      <div><div class="proc-step-title">גירוד וגריסה</div><div class="proc-step-body">גירוד לגדלים שונים: fine (0.5-1mm), medium (1-3mm), coarse/shred (3-8mm), flakes (10-30mm). כל גודל: שוק שונה. Fine: אפייה ומרקים. Flakes: trail mix ו-topping. ייצור flakes דורש ציוד שונה ומחזיר פרמיום.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">5</div>
+      <div><div class="proc-step-title">ייבוש</div><div class="proc-step-body">תנורים ב-70-80°C לdesiccated standard. ייבוש נמוך טמפרטורה (55°C): raw coconut שמשמר enzymes, פרמיום 30-50%. יעד לחות: 3% max לdesiccated, 5-7% לflakes. ייבוש יתר: מוצר קשה. ייבוש חסר: עובש תוך שבועות.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">6</div>
+      <div><div class="proc-step-title">QC ואריזה</div><div class="proc-step-body">בדיקות: לחות, FFA (free fatty acid לשומן רווי), Aw, microbiology, aflatoxin (חובה), SO₂. אריזה: 25kg poly-lined bags או 50lb. nitrogen flush לraw ו-premium. ייבוא ל-EU: EU MRL + aflatoxin certificate חובה.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ch" id="ch7">
+  <span class="cl">פרק שביעי</span>
+  <h2>שימושים ושווקים: שישה שווקים נפרדים</h2>
+  <p class="dc">קוקוס מיובש הוא המוצר היחיד בקטגוריה שמשרת במקביל שישה שווקים שלא חופפים. כל שוק: פורמט אחר, spec אחר, מחיר אחר.</p>
+  <h3>תעשיית האפייה</h3>
+  <p>Desiccated fine ו-medium. Lamingtons אוסטרליים, coconut macaroons אמריקאיים, bounty bars, raffaello. הנפח הגדול ביותר. Cadbury, Ferrero, מאפיות תעשייתיות. המחיר הנמוך ביותר. אחידות ולחות קריטיות. לא מקום לפרמיום.</p>
+  <h3>Trail Mix וגרנולה</h3>
+  <p>Flakes ו-chips, לרוב toasted. KIND, Quaker, Nature Valley. צבע, גודל, ו-crunch. כאן unsweetened toasted flakes עם מעט מלח ים מוכרות את עצמן. מחיר בינוני-גבוה. QC חשוב בגלל נוכחות ויזואלית.</p>
+  <h3>Keto / Paleo / Clean Label</h3>
+  <p>Desiccated unsweetened, coconut flakes raw, coconut flour. שוק שגדל 22% בשנה. MCT content מתועד, organic preferred, ללא תוספות. המרווח הכי גבוה ל-desiccated. לקוח שמוכן לשלם $5/kg על "raw unsweetened organic desiccated" שהקרוב ביותר לעץ.</p>
+  <h3>Coconut Sugar</h3>
+  <p>שוק נפרד לחלוטין. ממתיק פרמיום. אינדונסיה ופיליפינים. לקוחות: תעשיית האפייה הבריאותית, יצרני chocolate bean-to-bar, ולקוחות קמעונאיים מודעים. GI נמוך הוא נרטיב המכירה. COA עם GI certified: פרמיום 20%.</p>
+  <h3>Coconut Flour</h3>
+  <p>Gluten-free baking. Bob's Red Mill, King Arthur, מותגים קטנים. סיבים גבוהים, פחמימות נמוכות. עדיין פחות מוכר מקמח שקדים אבל זול יותר ב-40%. שוק שצומח. ספק שיש לו coconut flour בנוסף לdesiccated, הכפיל את נקודות הגישה לאותו לקוח.</p>
+  <h3>Beauty ותעשיית Cosmetics</h3>
+  <p>שמן קוקוס virgin ו-MCT oil. לא desiccated, אבל לעתים אותו ספק. מוצרי שיער, לחות, וספא. בישראל: Dead Sea cosmetics שמשלב coconut oil. שוק שמשלם $4-8/kg על coconut oil. לא בדיוק פירות יבשים, אבל כן קישור שכדאי לדעת.</p>
+  <div class="pull"><p>הקוקוס הוא המוצר היחיד שאתה יכול למכור לחברת אפייה, לחנות paleo, לשוקולטייר, וליצרן קוסמטיקה. לא בגלל שהוא "versatile", אלא בגלל שהוא באמת שישה מוצרים שונים בתוך פרי אחד.</p></div>
+</section>
+
+<div id="slot-inline-4" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_04</div></div>
+
+<section class="ch" id="ch8">
+  <span class="cl">פרק שמיני</span>
+  <h2>אגרונומיה: עץ שחי עד 80 שנה ושונא קור</h2>
+  <p class="dc">עץ קוקוס הוא אחד מהצמחים הכי אורך-חיים בחקלאות מסחרית. הבנת מחזור חיי העץ היא הבנת מדוע supply disruptions בקוקוס ארוכים ממרבית הפירות.</p>
+  <h3>מחזור חיי עץ קוקוס</h3>
+  <p>שתיל קוקוס מניב לראשונה בגיל 6-10 שנים. שיא ייצור: גיל 15-40. ייצור מסחרי סביר: עד גיל 60-80. זה אחד הפירות שבהם השקעה בנטיעה היא הבטחה לדור הבא, לא לעונה הבאה. ה-implication: חקלאי שלא מחדש שדה כל 20-30 שנה, מחזיק עצים זקנים שפריון יורד. חלק גדול משדות פיליפינים כיום מעל גיל 60.</p>
+  <h3>דרישות אקלים</h3>
+  <p>טרופי קלאסי: טמפרטורה 20-35°C, גשמים שנתיים 1,500-2,500mm, לחות גבוהה. רגיש מאוד לקור: מתחת ל-10°C נזק לעלים. מתחת ל-5°C: מוות. לא ניתן לגדל מחוץ לטרופיות. בניגוד לאגוזים שדורשים chilling hours, הקוקוס לא יודע לחכות לחורף.</p>
+  <div class="ab ab-r">
+    <div class="tg">סיכון: WCLWD</div>
+    <p>Wilt Coconut Lethal Yellowing Disease, מחלת הלהבה הקטלנית, מחלה בקטריאלית שהרסה מיליוני עצים בקריבי ובאפריקה מאז שנות ה-70. פיליפינים דיווחו על cases ב-Mindanao ב-2019. אין ריפוי. עצים נגועים נכרתים ונשרפים. מחלה שמגיעה לאינדונסיה יכולה לאיים על 27% מהספק הגלובלי. ספק שיש לו diversification מעבר לפיליפינים-אינדונסיה, ספק עמיד.</p>
+  </div>
+  <h3>אל ניניו והשפעה על ייצור</h3>
+  <p>אל ניניו מייבש את פיליפינים ואינדונסיה, שניהן על ה-Pacific Ring. שנות El Niño חזקות (2015-2016, 2023-2024) מפחיתות ייצור קוקוס ב-15-25%. המחיר עולה 3-6 חודשים מאוחר יותר כשמלאי מתרוקן. NOAA El Niño forecast, ספטמבר-נובמבר, הוא כלי חינמי שכל קונה קוקוס צריך לעקוב אחריו.</p>
+</section>
+
+<section class="ch" id="ch9">
+  <span class="cl">פרק תשיעי</span>
+  <h2>QC ואחסון: Aflatoxin הוא הגבול</h2>
+  <p class="dc">קוקוס מיובש הוא מוצר שומני שמאוחסן בטמפרטורות טרופיות בחלק מהדרך. שני סיכונים ייחודיים: FFA גבוה ו-aflatoxin. שניהם ניתנים לניהול עם COA נכון.</p>
+  <table class="gt">
+    <tr><th>פרמטר</th><th>ערך מקובל</th><th>הערה</th></tr>
+    <tr><td>תכולת לחות</td><td>3% max (desiccated)</td><td>מעל 3.5%: עובש תוך שבועות</td></tr>
+    <tr><td>Water Activity (Aw)</td><td>מתחת ל-0.40</td><td>desiccated: יציב מאוד</td></tr>
+    <tr><td>Free Fatty Acid (FFA)</td><td>מתחת ל-0.1%</td><td>FFA גבוה = חמצון שומן = ריח סבוניבי</td></tr>
+    <tr><td>Aflatoxin (B1+B2+G1+G2)</td><td>מתחת ל-4 ppb (EU)</td><td>חובה מוחלטת. לא למשא ומתן</td></tr>
+    <tr><td>Yeast &amp; Mold</td><td>מתחת ל-100 CFU/g</td><td>סטנדרט</td></tr>
+    <tr><td>E.Coli</td><td>Negative</td><td>חובה</td></tr>
+    <tr><td>Salmonella</td><td>Absent / 25g</td><td>חובה לכל ייצוא</td></tr>
+    <tr><td>Pesticide MRL</td><td>EU MRL</td><td>בדוק לפי עונה ומקור</td></tr>
+  </table>
+  <h3>אחסון</h3>
+  <p>Desiccated: טמפרטורה מתחת ל-25°C, לחות יחסית מתחת ל-50%, nitrogen flush. בתנאים אלה: חיי מדף 12-18 חודשים. Flakes ו-chips: זהה, אבל גודל פרוסה גדול יותר מייצר יותר שטח חשיפה = מהיר יותר לחמצון. Coconut sugar: יציב יותר, עד 24 חודשים.</p>
+  <div class="ab ab-r">
+    <div class="tg">אזהרה: Aflatoxin</div>
+    <p>Aflatoxin, רעלן פטרייתי מ-Aspergillus flavus, מצוי בקוקוס ששוהה ברטיבות. EU limit: 4 ppb total aflatoxins. ספק שלא מציג aflatoxin certificate מעבדה מוסמכת (SGS, Eurofins, Intertek) הוא ספק שלא עובר EU customs. לא הנחה, לא "אנחנו בדקנו". תעודה מעבדה חיצונית בלבד.</p>
+  </div>
+</section>
+
+<section class="ch" id="ch10">
+  <span class="cl">פרק עשירי</span>
+  <h2>מחירים וסחר: שישה מוצרים, שישה מחירים</h2>
+  <p class="dc">הטווח המחירי של קוקוס מיובש הוא הרחב ביותר בקטגוריה: $1.80 לdesiccated bulk ועד $22 לraw coconut chips organic. כל מוצר שוק שונה לחלוטין.</p>
+  <table class="gt">
+    <tr><th>מוצר</th><th>FOB ($/kg)</th><th>הערה</th></tr>
+    <tr><td>Desiccated fine/medium, conventional</td><td>1.80 - 3.00</td><td>אפייה תעשייתית, bulk 25kg</td></tr>
+    <tr><td>Desiccated unsweetened, organic</td><td>3.50 - 6.00</td><td>clean label, paleo</td></tr>
+    <tr><td>Coconut flakes/chips, toasted</td><td>3.00 - 5.50</td><td>trail mix, granola</td></tr>
+    <tr><td>Raw coconut chips, organic</td><td>7.00 - 14.00</td><td>premium, שוק בריאות</td></tr>
+    <tr><td>Coconut sugar, conventional</td><td>4.50 - 7.00</td><td>אינדונסיה/פיליפינים</td></tr>
+    <tr><td>Coconut flour</td><td>2.50 - 5.00</td><td>gluten-free, צומח</td></tr>
+    <tr><td>MCT oil / Coconut oil (virgin)</td><td>3.50 - 8.00</td><td>keto, cosmetics</td></tr>
+  </table>
+  <h3>עונתיות</h3>
+  <p>קוקוס מניב כמעט כל השנה בטרופיות. אין "עונת קציר" בודדת. המחיר מושפע מEl Niño, ממחלות, ומשינויי ביקוש בשוק הsuperfood. לא מחזור עונתי קלאסי, מחזור אירועים.</p>
+  <p><strong>חמש נקודות לסוחר:</strong></p>
+  <p><strong>1. Aflatoxin certificate הוא שער EU.</strong> ללא תעודה מ-SGS, Eurofins, או Intertek, הסחורה לא עוברת. לא COA מהמפעל, COA מעבדה עצמאית. נקודה שאינה ניתנת לוויתור.</p>
+  <p><strong>2. FFA test לdesiccated לפני כל קנייה.</strong> שומן קוקוס עם FFA מעל 0.1% מפתח ריח סבוניבי שהלקוח מרגיש מיד. זה לא נושא לדיון. זה מוצר שחוזר.</p>
+  <p><strong>3. הכר את ההבדל בין desiccated grades.</strong> Fine, medium, coarse, shred, flakes. לקוח מאפייה שביקש medium ומקבל coarse, מקבל מרקם שגוי בתוצר הסופי. שאל לפני שמאשרים.</p>
+  <p><strong>4. El Niño = 6 חודשים של מחיר עולה.</strong> שנת El Niño חזקה בפיליפינים ואינדונסיה, מחיר desiccated עולה 15-25% בינואר-יוני של השנה שאחריה. מי שצייד ב-Q3 של שנת El Niño, ריווח.</p>
+  <p><strong>5. Coconut flour הוא ה-gap של הפורטפוליו.</strong> ספק שמייצר desiccated כמעט תמיד מייצר גם coconut flour כתוצר לוואי. לקוח שקונה desiccated עשוי לקנות גם flour. שאלה אחת בסוף שיחה יכולה לפתוח SKU שני.</p>
+  <div class="ab ab-w">
+    <div class="tg">Stark OS · עמדת שוק</div>
+    <p>הקוקוס הוא המוצר עם הפוטנציאל הרחב ביותר לcross-sell בכל הקטגוריה. ספק שמוכר desiccated יכול להציע גם flour, גם sugar, גם oil, לאותו לקוח. זה לא פיזור סיכון. זה הגדלת ארנק לקוח קיים בלי עלות רכישה. כל ספק קוקוס ששיחת ה-SKU השנייה לא נפתחת איתו, הוא ספק שלא עובד מספיק קשה עבורנו.</p>
+  </div>
+  <div class="pull"><p>הפרי שנסע לבד על הגלים לפני שבני אדם הגיעו ללמוד ממנו, עדיין מלמד שיעור: הישרדות מגיעה מרב-תכליתיות, לא מהתמחות.</p></div>
+</section>
+
+<div class="ft">
+  ערך ידע חקלאי · Blue Star International · 2025<br>
+  מבוסס על נתוני FAO, Asian and Pacific Coconut Community ומקורות פתוחים<br>
+  <span style="font-size:11px;color:#AAA59A;">נתוני תזונה: USDA FoodData Central · היסטוריה: Antonio Pigafetta, Relazione del primo viaggio intorno al mondo, 1525 · נתוני ייצור: APCC Statistical Yearbook 2024</span>
+</div>
+</main>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL &middot; GLOBAL COMMODITY ARCHIVE</footer>
+
+<a href="../index.html" class="home-btn">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8894A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  <span>ספרייה</span>
+</a>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+<script>
+window.onscroll = () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+  const sections = document.querySelectorAll('.ch');
+  const dots = document.querySelectorAll('.nav-dot');
+  let current = '';
+  sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+  dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+  document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+};
+document.querySelectorAll('.nav-dot').forEach(dot => {
+  dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+      obs.unobserve(e.target);
+    });
+  }, {threshold: 0.3});
+  document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+  const dbName = 'StarkOS_DB';
+  const productId = 'dried-coconut';
+  function syncProductPage() {
+    const request = indexedDB.open(dbName, 1);
+    request.onsuccess = (e) => {
+      const db = e.target.result;
+      try {
+        const store = db.transaction('archive', 'readonly').objectStore('archive');
+        const getRequest = store.get(productId);
+        getRequest.onsuccess = () => {
+          const data = getRequest.result;
+          if (!data) return;
+          function makeMedia(src) {
+            const isVid = src.startsWith('data:video');
+            const el = document.createElement(isVid ? 'video' : 'img');
+            el.src = src; el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+            if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+            return el;
+          }
+          const heroH1 = document.getElementById('sync-title');
+          if (heroH1 && data.name) heroH1.innerText = data.name;
+          const heroDeck = document.getElementById('sync-desc');
+          if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+          const heroSrc = data.media1 || data.media;
+          const heroSlot = document.getElementById('slot-product-hero');
+          if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); }
+          [['slot-inline-2', data.media2], ['slot-inline-3', data.media3], ['slot-inline-4', data.media4]].forEach(function([id, src]) {
+            if (!src) return;
+            const slot = document.getElementById(id);
+            if (!slot) return;
+            slot.innerHTML = '';
+            slot.appendChild(makeMedia(src));
+            slot.classList.add('has-media');
+          });
+        };
+      } catch(e) {}
+    };
+  }
+  function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.ch').forEach(card => { card.classList.add('reveal'); observer.observe(card); });
+  }
+  initScrollReveal();
+  window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

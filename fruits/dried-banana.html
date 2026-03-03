@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>בננה מיובשת · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── BLUE STAR OS · PREMIUM DARK THEME v4.0 ── */
+:root{--bg:#0A0A0B;--text:#FAF7F0;--body:#D1CEC5;--accent:#8B6340;--warm:#B8894A;--card:rgba(20,20,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;position:relative;background-image:linear-gradient(rgba(184,137,74,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(184,137,74,0.03) 1px,transparent 1px);background-size:30px 30px}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:.15;pointer-events:none}
+body::before{background:#7A6820;top:-100px;left:-100px}
+body::after{background:#4A3E10;bottom:20%;right:-150px}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000}
+.back-btn{position:absolute;top:40px;left:40px;z-index:10;display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;opacity:.5;transition:.3s}
+.back-btn:hover{opacity:1;color:var(--warm)}
+#backToTop{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;display:none;z-index:1000;transition:.3s}
+#backToTop:hover{transform:scale(1.1);box-shadow:0 0 20px rgba(184,137,74,0.4)}
+.home-btn{position:fixed;bottom:30px;right:30px;background:rgba(20,20,22,.9);border:1px solid rgba(184,137,74,.3);color:#C9A96E;padding:10px 16px;border-radius:30px;text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;display:flex;align-items:center;gap:8px;transition:.3s;z-index:200}
+.home-btn:hover{background:rgba(184,137,74,.15);border-color:var(--warm)}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);position:relative}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:.8;margin-bottom:25px;letter-spacing:-2px}
+.hero .deck{font-size:20px;opacity:.8;max-width:650px;margin:0 auto 40px;font-weight:300}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#000;border:1px solid rgba(255,255,255,.05)}
+.hero-img-wrap video,.hero-img-wrap img{width:100%;height:100%;object-fit:cover}
+.hero-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:#0A0A0B}
+.hero-img-placeholder span{color:rgba(255,255,255,.15);font-size:12px;letter-spacing:3px;font-family:'Space Mono',monospace}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:.3;cursor:pointer;transition:.3s}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm)}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden;color:var(--body)}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:.4}
+.ch::before{top:15px;left:15px}
+.ch::after{bottom:15px;right:15px}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm)}
+.ch p{margin-bottom:18px;color:var(--body)}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px}
+em{color:#C4A878;font-style:italic}
+strong{color:var(--text)}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px}
+.ab p{margin:0;font-size:16px;line-height:1.75}
+.ab-w{background:rgba(184,137,74,.08);border-right:4px solid var(--warm)}
+.ab-w .tg{color:var(--warm)}
+.ab-g{background:rgba(90,62,40,.2);border-right:4px solid var(--accent)}
+.ab-g .tg{color:#C4A878}
+.ab-r{background:rgba(184,50,50,.1);border-right:4px solid #B83030}
+.ab-r .tg{color:#E06060}
+.ab-r p{color:#DDB0B0}
+.vc{background:rgba(30,28,25,.7);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:22px;margin:18px 0}
+.vc .vn{font-family:'Frank Ruhl Libre',serif;font-size:21px;font-weight:700;color:var(--text)}
+.vc .vt{font-size:12px;color:var(--warm);font-weight:600;margin-bottom:10px}
+.vc p{font-size:16px;line-height:1.75;margin-bottom:0;color:var(--body)}
+.vc .vs{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.vc .vsi{background:rgba(255,255,255,.04);padding:6px 12px;border-radius:5px;font-size:12px;color:#A09080}
+.vc .vsi strong{color:var(--text)}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.ni{background:rgba(30,28,25,.7);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px;text-align:center}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text)}
+.ni .nu{font-size:13px;color:#A09080;margin-top:2px}
+.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600}
+.cb{background:rgba(20,20,22,.6);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:24px;margin:28px 0}
+.cb .ct{font-family:'Frank Ruhl Libre',serif;font-size:17px;font-weight:700;margin-bottom:14px;text-align:center;color:var(--text)}
+.pb-chart{margin:16px 0 8px;display:flex;flex-direction:column;gap:10px}
+.pb-row{display:flex;align-items:center;gap:10px}
+.pb-meta{display:flex;align-items:center;gap:6px;min-width:120px;justify-content:flex-end}
+.pb-flag{font-size:18px}
+.pb-name{font-size:13px;color:#A09080}
+.pb-track{flex:1;background:rgba(255,255,255,.08);height:18px;border-radius:9px;overflow:hidden}
+.pb-fill{height:100%;width:0;border-radius:9px;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.pb-pct{font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:700;color:var(--text);width:36px;text-align:left}
+.pb-note{font-size:11px;color:#6B6058;opacity:.7;margin-top:10px;text-align:center}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;border-top:1px solid rgba(255,255,255,.05)}
+.gt th{background:rgba(0,0,0,.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,.1)}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--body)}
+.gt tr:nth-child(even){background:rgba(255,255,255,.02)}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(184,137,74,.2)}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic}
+.reveal{opacity:0;transform:translateY(50px);transition:all .8s cubic-bezier(.2,1,.2,1)}
+.reveal.active{opacity:1;transform:translateY(0)}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.03);animation:scrollText 40s linear infinite}
+@keyframes scrollText{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ft{text-align:center;padding:44px 24px;font-size:13px;color:#6B6058;border-top:1px solid rgba(255,255,255,.06);margin-top:36px}
+.inner-ft{background:rgba(0,0,0,.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:.6;border-top:1px solid rgba(255,255,255,.05)}
+.proc-steps{display:flex;flex-direction:column;gap:20px;margin:24px 0}
+.proc-step{display:flex;gap:20px;align-items:flex-start}
+.proc-step-num{min-width:36px;height:36px;border-radius:50%;background:var(--warm);color:#000;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.proc-step-title{font-family:'Frank Ruhl Libre',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
+.proc-step-body{font-size:16px;color:var(--body);line-height:1.75}
+.media-slot-inline{width:100%;aspect-ratio:16/9;background:var(--card);border-radius:var(--radius);overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;position:relative}
+.media-slot-inline img,.media-slot-inline video{width:100%;height:100%;object-fit:cover;filter:brightness(.92);transition:filter .3s}
+.media-slot-inline:hover img,.media-slot-inline:hover video{filter:brightness(1.05)}
+.media-slot-placeholder{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.1)}
+@media(max-width:900px){.side-nav{display:none}.back-btn{top:20px;left:20px}.hero h1{font-size:55px}.hero-img-wrap{height:300px;margin-bottom:-100px}.con{margin-top:150px}.ng{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="marquee-container">
+  <div class="marquee-text">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · </div>
+</div>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div>
+  <div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div>
+  <div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div>
+  <div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div>
+  <div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div>
+  <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+  <a href="../index.html" class="back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-left:6px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>דף הבית</a>
+  <div class="hero-k">ערך ידע חקלאי · Blue Star International</div>
+  <h1 id="sync-title">בננה מיובשת</h1>
+  <p class="deck" id="sync-desc">הפרי שיצא מהג'ונגל, עצר מלחמות, והפך לצ'יפס שמגדלים אוכלים בגרנולה בתל אביב.</p>
+  <div class="hero-img-wrap" id="slot-product-hero">
+    <div class="hero-img-placeholder"><span>SLOT · PRODUCT · HERO</span></div>
+  </div>
+</section>
+<main class="con">
+
+<section class="ch" id="ch1">
+  <span class="cl">פרק ראשון</span>
+  <h2>סם זמוראי, 1876: הבחור שמכר בננה ב-10 סנט ליחידה</h2>
+  <p class="dc">בחודש יולי 1876, בתערוכת המאה בפילדלפיה, עמד סוחר בשם סם זמוראי ליד דוכן קטן ומכר לאמריקאים בננות עטופות בנייר כסף. המחיר: 10 סנט ליחידה, בתקופה שפועל יום הרוויח 80 סנט. אנשים עמדו בתור. רובם לא ידעו מה זה הדבר הצהוב המוזר הזה. הוראות ההכנה על הדוכן הסבירו: "קלפו, בישלו, או אכלו כמו שהוא." חלק ניסה לנגוס עם הקליפה. אבל הבננה עשתה את המהלך ההיסטורי הראשון שלה על אדמת אמריקה, ומאותו יום שום דבר בשוק הפירות הגלובלי לא היה אותו הדבר.</p>
+  <p>הבננה, <em>Musa acuminata</em> ו-<em>Musa balbisiana</em>, עברה ביות לפני כ-8,000 שנה בפפואה גינאה החדשה. משם התפשטה מערבה לאינדונסיה, להודו, לחוף מזרח אפריקה, ולקריבי. הנחיות מסויימות של הנביא מוחמד מתייחסות לבננה כ"פרי גן העדן", וגרסאות בודהיסטיות של הסיפור הציגו אותה כהפרי שאכל הבודהה תחת עץ בהארה. ב-6 ביולי 1944, תוך כדי מלחמת העולם השנייה, כתב הגנרל דאגלס מקארתור יומן פרטי שבו תיאר את שרידות הצבא שלו בפיליפינים בחלקו בזכות שדות בננה שאיפשרו מזון לאלפי חיילים שנכסחו לג'ונגל.</p>
+  <p>אבל הסיפור של הבננה <strong>המיובשת</strong> הוא סיפור אחר לגמרי. הוא לא עתיק. הוא תעשייתי, מאוחר, ומתחיל בשנות ה-60 של המאה ה-20 בפיליפינים, כשמפעלים ניסו לפתור בעיה פשוטה: בננות מתבגרות מהר מדי. 10% מהיבול הגלובלי נרקב לפני שמגיע לצרכן. ייבוש היה הפתרון ההגיוני. בנינו תעשייה שלמה על בעיה לוגיסטית.</p>
+  <div class="pull"><p>הבננה היא הפרי היחיד שנלחמו עליו מלחמות, הקימו בגינו רפובליקות, והפכו אותו ל-chip לגרנולה. לא בהכרח בסדר הזה.</p></div>
+</section>
+<section class="ch" id="ch2">
+  <span class="cl">פרק שני</span>
+  <h2>מפת הייצור: הטרופיות שולטות</h2>
+  <p class="dc">בננה מיובשת מגיעה ממקומות שבהם בננה גדלה בשפע, ושבהם עלות העבודה נמוכה מספיק כדי שהייבוש יהיה כלכלי. זו פשוט אריתמטיקה. אבל הגיאוגרפיה של השוק מורכבת יותר ממה שנראה.</p>
+  <div class="cb">
+    <div class="ct">חלוקת ייצור בננה מיובשת עולמי</div>
+    <div class="pb-chart">
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇵🇭</span><span class="pb-name">פיליפינים</span></div><div class="pb-track"><div class="pb-fill" data-w="35" style="background:#B8894A"></div></div><span class="pb-pct">35%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇪🇨</span><span class="pb-name">אקוודור</span></div><div class="pb-track"><div class="pb-fill" data-w="18" style="background:#9A7038"></div></div><span class="pb-pct">18%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇹🇭</span><span class="pb-name">תאילנד</span></div><div class="pb-track"><div class="pb-fill" data-w="14" style="background:#7A5028"></div></div><span class="pb-pct">14%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇳</span><span class="pb-name">הודו</span></div><div class="pb-track"><div class="pb-fill" data-w="12" style="background:#6A4018"></div></div><span class="pb-pct">12%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇻🇳</span><span class="pb-name">וייטנאם</span></div><div class="pb-track"><div class="pb-fill" data-w="9" style="background:#5A3010"></div></div><span class="pb-pct">9%</span></div>
+      <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌐</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="12" style="background:#3A2008"></div></div><span class="pb-pct">12%</span></div>
+    </div>
+    <div class="pb-note">נתונים משוקללים, 2023-2024 · כולל banana chips ו-soft dried</div>
+  </div>
+  <p>פיליפינים מובילה בזכות שילוב: זן Saba המקומי המתאים לייצור chips, תשתית ייבוש שנבנתה מהשנות ה-70, ועלויות ייצור נמוכות. אקוודור, המייצאת הגדולה בעולם של בננה טרייה, מייבשת עודפים ופגמי ייצוא שלא עומדים בתקן Chiquita ו-Dole. תאילנד מתמחה ב-soft dried banana, מוצר שונה לגמרי מהחיתוך הפריך.</p>
+  <div class="ab ab-g">
+    <div class="tg">Stark OS · הזדמנות וייטנאם</div>
+    <p>וייטנאם היא הספק הצומח הכי מהר בסגמנט. עלויות נמוכות מהפיליפינים, QC שמשתפר שנה אחר שנה, ולוגיסטיקת ייצוא ל-IL שאנחנו כבר מכירים. לסוחר שמכיר את הספקים המקומיים, זה עדיין שוק פחות תחרותי מהפיליפינים. החלון לא יהיה פתוח לנצח.</p>
+  </div>
+</section>
+<div id="slot-inline-2" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_02</div></div>
+<section class="ch" id="ch3">
+  <span class="cl">פרק שלישי</span>
+  <h2>מלחמת הבננה: כשחברה אחת שלטה בממשלות</h2>
+  <p class="dc">בשנת 1954, ב-18 ביוני בדיוק, מטוסים ממוצא לא ברור הפציצו את נמל פוארטו בריוס בגואטמלה. זה לא היה מלחמה רשמית. זה היה "מבצע PBSUCCESS": פעולה סמויה של ה-CIA שתוכננה בחלקה לשמור על האינטרסים של <strong>United Fruit Company</strong>, החברה שהחזיקה בשיעור ניכר מהאדמות החקלאיות, מהנמלים, ומקווי הרכבת בשש מדינות אמריקה המרכזית.</p>
+  <p>זה לא היפרבולה. United Fruit, שייצרה ומכרה בעיקר בננות, הייתה בשיאה הגדולה הכלכלית יותר ממדינות שלמות. היא כינתה את הטריטוריות שבהן פעלה בשם שנדבק בהיסטוריה: <em>Banana Republics</em>. ממשלות הוחלפו. שביתות דוכאו. ב-1928, בקולומביה, צבא ממשלתי ירה לעובדי United Fruit שיצאו לשביתה. ההערכות לנפגעים נעות בין עשרות למאות. האירוע הפך לאחד הרגעים המוזכרים ב"מאה שנים של בדידות" של גבריאל גרסיה מרקס.</p>
+  <div class="ab ab-r">
+    <div class="tg">הרקע הכלכלי</div>
+    <p>ב-1950, United Fruit שלטה ב-42% מהאדמות החקלאיות של גואטמלה. הנשיא הנבחר ארבנס ניסה להפקיע חלק מהאדמות הבלתי מעובדות לרפורמה אגרארית. United Fruit שכנעה את מחלקת המדינה האמריקאית שזו "קומוניזם". ה-CIA הפיל את הממשלה. הבננה לא הייתה רק מוצר. היא הייתה כלי שלטון.</p>
+  </div>
+  <p>United Fruit הפכה לאחר מכן ל-Chiquita Brands International. הסמל המפורסם שלה, "צ'יקיטה בננה" עם כובע הפירות, תוכנן בשנת 1944 כדי ללמד אמריקאים איך לאחסן בננות. מוצר שנלחמו עליו מלחמות, שינה ממשלות, ויצא בסוף כקמע חמוד על מדבקה צהובה.</p>
+  <p>היום, שוק הבננה הגלובלי מחולק בין Chiquita, Dole, Del Monte, ו-Fyffes. ארבע חברות שולטות בכ-47% מהייצוא העולמי. העובדים בשדות מרוויחים בממוצע 1-3 דולר ליום. המבנה לא השתנה כל כך מאז 1954.</p>
+  <div class="pull"><p>בננה היא הפרי שלימד את המאה ה-20 מה קורה כשחברה גדולה ממדינה.</p></div>
+</section>
+<section class="ch" id="ch4">
+  <span class="cl">פרק רביעי</span>
+  <h2>הזנים: לא כל בננה מתאימה לייבוש</h2>
+  <p>ההבחנה בין זני בננה קריטית לסוחר. הצרכן האירופי שאוכל גרנולה לא יודע מה זן Saba. הוא יודע אם ה-chip פריך או רך, מתוק מדי או עם מרירות. הזן קובע את כל אלה.</p>
+  <div class="vc">
+    <div class="vn">Cavendish</div>
+    <div class="vt">הזן הסטנדרטי · 47% מהייצוא הגלובלי</div>
+    <p>הבננה שכולם מכירים מהסופר. בשלה, מתוקה, עם פרופיל טעם עגול. כשמיובשת היטב היא מייצרת soft dried banana עם מרקם לעיס וצבע שמנת-צהוב. הבעיה: Cavendish מאבדת הרבה נפח בייבוש, וה-chip שלה פחות פריך מזנים מקומיים. ה-soft dried Cavendish הוא הסטנדרט לשוק המיינסטרים.</p>
+    <div class="vs"><span class="vsi">מקור: <strong>אקוודור, קוסטה ריקה</strong></span><span class="vsi">מוצר: <strong>Soft dried</strong></span><span class="vsi">מחיר: <strong>$</strong></span></div>
+  </div>
+  <div class="vc">
+    <div class="vn">Saba (Cardaba)</div>
+    <div class="vt">זן פיליפיני · מלך ה-Banana Chips</div>
+    <p>עמילני, פחות מתוק, עם דופן עבה יותר. בדיוק הזן שמתאים לחיתוך לפרוסות דקות וטיגון או ייבוש לפריכות מקסימלית. 90% מ-banana chips שנמכרים בעולם מגיעים מ-Saba פיליפיני. הצבע לאחר עיבוד: שמנת-זהוב. טעם: עמוק, קארמלי, עם מרקם snap אמיתי.</p>
+    <div class="vs"><span class="vsi">מקור: <strong>פיליפינים</strong></span><span class="vsi">מוצר: <strong>Banana chips</strong></span><span class="vsi">מחיר: <strong>$$</strong></span></div>
+  </div>
+  <div class="vc">
+    <div class="vn">Pisang Mas (Honey Banana)</div>
+    <div class="vt">זן תאילנדי-מלזי · הנישה המתוקה</div>
+    <p>קטן, מתוק עד כדי כאב, עם ארומה פרחונית. מיובש ב-low temperature עד מרקם semi-soft שמרמז על עצמת מתיקות קיצונית. מבוקש בשוק היפני ובתעשיית הממתקים האסייתית. מחירו גבוה ב-40-60% מ-Cavendish. כמויות מוגבלות.</p>
+    <div class="vs"><span class="vsi">מקור: <strong>תאילנד, מלזיה</strong></span><span class="vsi">מוצר: <strong>Premium soft dried</strong></span><span class="vsi">מחיר: <strong>$$$</strong></span></div>
+  </div>
+  <div class="vc">
+    <div class="vn">Plantain (בננה ירוקה)</div>
+    <div class="vt">לא קינוח, מרכיב תעשייתי</div>
+    <p>עמילן גבוה, מתיקות נמוכה, שימושי לאורך. מיובש ומוטחן לקמח בננה, שפרץ לשוק ה-gluten-free בשנים האחרונות. גם מיובש לשבבים מלוחים (tostones chips). שוק אחר לגמרי מ-sweet banana. קמח בננה: $3-6/kg FOB. שוק צומח ב-12% בשנה.</p>
+    <div class="vs"><span class="vsi">מקור: <strong>גנה, קולומביה, אקוודור</strong></span><span class="vsi">מוצר: <strong>קמח, chips מלוחים</strong></span><span class="vsi">מחיר: <strong>$$</strong></span></div>
+  </div>
+</section>
+<section class="ch" id="ch5">
+  <span class="cl">פרק חמישי</span>
+  <h2>פרופיל תזונתי: מה שנשאר אחרי הייבוש</h2>
+  <p class="dc">ייבוש בננה מרכז את הסוכרים, הפחמימות, והמינרלים. מה שנשאר הוא מוצר קלורי גבוה עם פרופיל אשלגן יוצא דופן. מי שמחפש תחליף אנרגיה לסוכריות, מצא.</p>
+  <div class="ng">
+    <div class="ni"><div class="nv">346</div><div class="nu">קלוריות</div><div class="nl">ל-100 גרם</div></div>
+    <div class="ni"><div class="nv">88g</div><div class="nu">פחמימות</div><div class="nl">ל-100 גרם</div></div>
+    <div class="ni"><div class="nv">74g</div><div class="nu">סוכרים</div><div class="nl">טבעיים בעיקר</div></div>
+    <div class="ni"><div class="nv">1,491</div><div class="nu">mg אשלגן</div><div class="nl">ל-100 גרם</div></div>
+    <div class="ni"><div class="nv">9.9g</div><div class="nu">סיבים תזונתיים</div><div class="nl">36% יומי</div></div>
+    <div class="ni"><div class="nv">0.6g</div><div class="nu">שומן</div><div class="nl">כמעט אפס</div></div>
+  </div>
+  <p>1,491 מיליגרם אשלגן ל-100 גרם. בננה טרייה מכילה 358mg. הייבוש מרכז את האשלגן פי ארבעה. זו הסיבה שבננה מיובשת הפכה למוצר ספורט: ספורטאי סיבולת, רוכבי אופניים, ורצי מרתון צורכים אותה כתחליף אנרגיה מיידי עם פרופיל אלקטרוליטים טבעי.</p>
+  <table class="gt">
+    <tr><th>פרמטר</th><th>בננה מיובשת</th><th>תמר מיובש</th><th>אוכמניות מיובשות</th></tr>
+    <tr><td>קלוריות / 100g</td><td>346</td><td>282</td><td>325</td></tr>
+    <tr><td>אשלגן mg / 100g</td><td><strong>1,491</strong></td><td>696</td><td>77</td></tr>
+    <tr><td>סיבים g / 100g</td><td>9.9</td><td>8.0</td><td>5.7</td></tr>
+    <tr><td>סוכר g / 100g</td><td>74</td><td>63</td><td>65</td></tr>
+    <tr><td>מחיר FOB ממוצע $/kg</td><td>2.50-5.00</td><td>1.80-4.00</td><td>9.00-14.00</td></tr>
+  </table>
+  <div class="ab ab-w">
+    <div class="tg">Stark OS · ניתוח שוק</div>
+    <p>פרופיל האשלגן הוא נשק המכירה שרוב הספקים לא משתמשים בו. שוק ה-sports nutrition גדל ב-9% בשנה. מוצר שמגיע עם CoA שמציין 1,400mg+ אשלגן יכול להיכנס לכנס sports nutrition ולהימכר ב-30% פרמיום. לא צריך להיות organic בשביל זה. צריך תיעוד.</p>
+  </div>
+</section>
+<div id="slot-inline-3" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_03</div></div>
+<section class="ch" id="ch6">
+  <span class="cl">פרק שישי</span>
+  <h2>שרשרת העיבוד: מהשדה לשקית</h2>
+  <p>שני מוצרים שונים, שתי שרשראות שונות. Banana chips ו-soft dried banana עוברים תהליכי ייצור שונים לחלוטין. הסוחר שמערבב ביניהם מקבל תגובות שגויות מהלקוח.</p>
+  <div class="proc-steps">
+    <div class="proc-step">
+      <div class="proc-step-num">1</div>
+      <div><div class="proc-step-title">בחירת בשלות</div><div class="proc-step-body">לחיתוך chips: בננות ב-3/4 בשלות, עוד ירוקות-צהובות. עמילן גבוה = פריכות אחרי טיגון. לsoftdried: בשלות מלאה, צהוב עם נקודות חומות. סוכרים מרוכזים = מתיקות אינטנסיבית. שגיאה בבחירת בשלות = מוצר לא מתאים לשוק.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">2</div>
+      <div><div class="proc-step-title">קילוף ופרוסה</div><div class="proc-step-body">קילוף ידני או מכני. chips: פרוסה ל-2-3mm עם מכונות slicer. soft dried: פרוסה ל-8-15mm או חצי בננה שלמה. דיוק העובי קריטי לאחידות הייבוש. עובי לא אחיד = שרפת קצוות + ריכות מרכז.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">3</div>
+      <div><div class="proc-step-title">עיבוד ראשוני</div><div class="proc-step-body">chips: טבילה בתמיסת לימון (למניעת חמצון) ואז טיגון בשמן קוקוס או דקלים ב-170-180°C. soft dried: ייבוש תנור ב-60-70°C למשך 8-24 שעות, או ייבוש שמש מסורתי. כל שיטה מייצרת פרופיל שונה.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">4</div>
+      <div><div class="proc-step-title">ציפוי ותוספות</div><div class="proc-step-body">chips: לרוב מצופות סוכר, דבש, או ציפוי שוקולד. soft dried: לפעמים SO₂ לשימור צבע (בדוק תקן יעד). organic: ללא תוספות, חיי מדף קצרים יותר. כל ציפוי משנה את הגדרת המוצר ואת הרגולציה הנדרשת.</div></div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-step-num">5</div>
+      <div><div class="proc-step-title">QC ואריזה</div><div class="proc-step-body">בדיקות: לחות (chips: מתחת 3%, soft dried: 15-18%), Aw, חמצת שומן (לchips, בגלל תכולת שמן), ריח. אריזה: שקיות ממוברגות (nitrogen flush לchips), 10kg, 20kg, 25kg. chips דורשים אריזת חסימת חמצן יותר ממ-soft dried.</div></div>
+    </div>
+  </div>
+  <div class="ab ab-r">
+    <div class="tg">סיכון: חמצת שומן ב-chips</div>
+    <p>Banana chips מכילות 20-35% שמן. שומן מחמצן. chips שנאחסנו בחום מעל 25°C למעלה מ-3 חודשים מפתחות rancidity שלא ניתן להסתיר. ריח חמוצני, טעם מר. בדוק תנאי אחסון ותאריך ייצור לפני כל קנייה. CoA עם free fatty acid test הוא חובה.</p>
+  </div>
+</section>
+<section class="ch" id="ch7">
+  <span class="cl">פרק שביעי</span>
+  <h2>שימושים ושווקים: ארבעה שוקים, ארבע שפות</h2>
+  <p class="dc">בננה מיובשת משרתת שווקים שמדברים שפות שונות לגמרי. סוחר שנכנס לכולם בו-זמנית בלי ספק ייעודי לכל אחד, סוחר שמפסיד מרווח.</p>
+  <h3>גרנולה, שיבולת שועל, ומוצרי בוקר</h3>
+  <p>הסגמנט הגדול ביותר. chips קטנות ו-soft dried נכנסות לגרנולה, trail mix, ודגני בוקר. כאן הדרישה: גודל אחיד, צבע אחיד, מחיר. לקוח כמו Kellogg's או Jordans לא ישלם פרמיום. הוא ישלם על עקביות. כשלון אחד בלוט = ביטול חוזה שנתי.</p>
+  <h3>ספורט ו-Functional Snacking</h3>
+  <p>הסגמנט הצומח. אנרגיה + אשלגן + no artificial stuff. מוצרים כמו Larabar, Kind Bars, Clif Bar כוללים בננה מיובשת. כאן שווה לציין את פרופיל האשלגן בתיעוד. organic preferred, אבל לא חובה אם ה-CoA נקי.</p>
+  <h3>ממתקים ושוקולד</h3>
+  <p>chips מצופות שוקולד, בננה מיובשת ב-chocolate bark, ו-freeze-dried banana בחטיפי נישה. שוק יפני ואירופי. מחיר premium, נפחים קטנים. הלקוח כאן מחפש אסתטיקה ואחידות ויזואלית, לא רק טעם.</p>
+  <h3>קמח בננה ו-Gluten Free</h3>
+  <p>plantain וbananagreen מיובשים ומוטחנים. שוק ה-gluten-free צמח ב-300% מאז 2015. קמח בננה עם תכולת עמילן עמיד (resistant starch) גבוה, מועדף על-ידי תזונאים. ייצוא מגנה, קולומביה, אקוודור. FOB: $3-6/kg. שוק שעוד לא הגיע לבשלות מלאה.</p>
+  <div class="pull"><p>בננה מיובשת היא המוצר היחיד שיכול להיות גם חטיף ילדים בשקית של 2 שקל וגם מרכיב premium ב-energy bar של 30 שקל. הפער הוא לא המוצר. הוא הסיפור.</p></div>
+</section>
+<div id="slot-inline-4" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_04</div></div>
+<section class="ch" id="ch8">
+  <span class="cl">פרק שמיני</span>
+  <h2>אגרונומיה וסיכוני גידול: הפגיעות שהשוק לא רואה</h2>
+  <p class="dc">הבננה היא אחת מהתוצרות החקלאיות הפגיעות ביותר לשינויי אקלים ולמחלות. ספק שלא מבין את זה לא יכול להסביר לך למה המחיר זינק בחצי שנה.</p>
+  <h3>Panama Disease TR4</h3>
+  <p>הסיפור הבוטני הגדול של המאה ה-21. Tropical Race 4, פטרייה שתוקפת שורשי בננה, מאיימת על 80% מייצור ה-Cavendish הגלובלי. אין כלי ריסוס, אין ריפוי. ברגע שהאדמה נגועה, היא נגועה לעשרות שנים. אינדונזיה, אוסטרליה, מוזמביק, ו-5 מדינות נוספות כבר אישרו זיהום. אם TR4 יגיע לאקוודור, שוק הבננה הגלובלי ישתנה תוך שנתיים.</p>
+  <div class="ab ab-r">
+    <div class="tg">אזהרת TR4</div>
+    <p>Cavendish הוא מעין עתיד-עבר. הגרוס Michel, שהיה הזן הדומיננטי לפני 1965, נמחק על-ידי גרסה קודמת של אותה פטרייה. Cavendish נכנס להחלפה. TR4 עלולה לחסל אותו גם. ספק שמגדל רק Cavendish הוא סיכון. ספק שגידל Saba ו-Plantain בצד, הוא הגנה.</p>
+  </div>
+  <h3>הורקנות וגשמים</h3>
+  <p>בננה רגישה מאוד לרוחות חזקות. הורקן אחד יכול להשמיד 40-70% מהיבול של אזור שלם. קריבי, פיליפינים, ומדינות מרכז אמריקאיות סובלות ממחזורי הורקן שנתיים. Ondoy ב-2009, Haiyan ב-2013, Odette ב-2021 כולן פגעו קשה בשדות פיליפיניים.</p>
+  <h3>מחזור הגידול</h3>
+  <p>עץ בננה מניב פעם אחת בחיים. לאחר קציר הפרי, גזע הצאצא הבא כבר גדל מהשורשים. מחזור שלם: 9-12 חודשים. זה אחד הצמחים שמייצרים הכנסה המהירה ביותר בחקלאות טרופית. אבל זה גם אומר שכל שיבוש בהיבול שנה אחת, לא מתאושש מהר.</p>
+</section>
+<section class="ch" id="ch9">
+  <span class="cl">פרק תשיעי</span>
+  <h2>איכות, QC ואחסון: מה לבדוק לפני שחותמים</h2>
+  <p class="dc">שני מוצרים, שני checklist. Banana chips ו-soft dried banana נבדקים אחרת. גישה אחת לשניהם היא טעות שעולה כסף.</p>
+  <table class="gt">
+    <tr><th>פרמטר</th><th>Banana Chips</th><th>Soft Dried Banana</th></tr>
+    <tr><td>תכולת לחות</td><td>מתחת ל-3%</td><td>15-18%</td></tr>
+    <tr><td>Water Activity (Aw)</td><td>מתחת ל-0.30</td><td>0.55-0.65</td></tr>
+    <tr><td>תכולת שמן</td><td>20-35% (לבדוק)</td><td>לא רלוונטי</td></tr>
+    <tr><td>Free Fatty Acid (FFA)</td><td>מתחת ל-0.5%</td><td>לא נדרש</td></tr>
+    <tr><td>SO₂</td><td>לפי תקן שוק</td><td>עד 100 ppm (EU)</td></tr>
+    <tr><td>Yeast &amp; Mold</td><td>מתחת ל-100 CFU/g</td><td>מתחת ל-100 CFU/g</td></tr>
+    <tr><td>E.Coli</td><td>Negative</td><td>Negative</td></tr>
+    <tr><td>חיי מדף (אחסון קר)</td><td>6-12 חודשים</td><td>12-18 חודשים</td></tr>
+  </table>
+  <h3>אחסון מיטבי</h3>
+  <p>Chips: טמפרטורה מתחת ל-20°C, לחות יחסית מתחת ל-50%, nitrogen flush באריזה. חשיפה לאוויר מזרזת חמצון שומן. soft dried: 10-15°C, לחות 55-60%. שניהם: הרחק מריחות חזקים, מאור ישיר, ומשינויי טמפרטורה חדים.</p>
+  <div class="ab ab-w">
+    <div class="tg">Stark OS · כלי עבודה</div>
+    <p>ביקשו ממך מחיר על chips? לפני שאתה שולח הצעה, שאל: "מה תאריך הייצור?" chips ישנות מ-6 חודשים שמחירן "נוח" יכולות לגרום להחזרה שמוחקת 3 עסקאות של רווח. זול שמגיע עם FFA גבוה הוא לא מציאה. הוא זמין בום.</p>
+  </div>
+</section>
+<section class="ch" id="ch10">
+  <span class="cl">פרק עשירי</span>
+  <h2>מחירים וסחר: FOB, ודינמיקת השוק</h2>
+  <p class="dc">בננה מיובשת היא מהמוצרים הזולים יותר בקטגוריית הפירות היבשים. אבל "זול" לא אומר "מרווח נמוך" אם מוכרים לשוק הנכון.</p>
+  <table class="gt">
+    <tr><th>מוצר</th><th>FOB ($/kg)</th><th>הערה</th></tr>
+    <tr><td>Banana chips, conventional, Saba</td><td>1.80 - 2.80</td><td>פיליפינים, bulk 20kg</td></tr>
+    <tr><td>Banana chips, organic</td><td>3.00 - 4.50</td><td>עם תעודת USDA/EU organic</td></tr>
+    <tr><td>Soft dried Cavendish</td><td>2.50 - 3.80</td><td>אקוודור/תאילנד</td></tr>
+    <tr><td>Soft dried premium (Pisang Mas)</td><td>5.00 - 8.00</td><td>נישה, נפחים קטנים</td></tr>
+    <tr><td>Banana flour (plantain)</td><td>3.00 - 6.00</td><td>gluten-free, שוק צומח</td></tr>
+    <tr><td>Freeze-dried banana slices</td><td>12.00 - 22.00</td><td>פרמיום מוחלט, שוק נישה</td></tr>
+  </table>
+  <h3>עונתיות ומחזוריות</h3>
+  <p>שלא כמו עצי אגוזים, בננה היא תוצרת שמייצרת כל השנה. אין "עונת קציר" בודדת. אבל יש תנודות: הורקן, El Niño, ומחלות יכולים לשנות תפוקה דרמטית. El Niño 2023-2024 ייבש חלק מאזורי הגידול בפיליפינים והוביל לעלייה של 15-20% במחיר chips.</p>
+  <p><strong>חמש נקודות לסוחר:</strong></p>
+  <p><strong>1. הפרד chips ו-soft dried.</strong> לקוח ש"רוצה בננה מיובשת" יכול לרצות שניים שונים לחלוטין. שאל לפני שאתה מדבר על מחיר.</p>
+  <p><strong>2. FFA test לפני כל רכישת chips.</strong> chips ישנות עם FFA גבוה חוזרות אליך. תוסף בדיקה של $50 לכל לוט.</p>
+  <p><strong>3. TR4 הוא סיכון שוק.</strong> עקוב אחרי דוחות FAO על התפשטות TR4. פגיעה בשוק הפיליפיני תעלה מחירים. ספק שיש לו שדות Saba ו-plantain בצד הוא יותר עמיד.</p>
+  <p><strong>4. Organic premium שווה רק עם תעודה מאושרת.</strong> "Natural" ו-"organic" אינם אותו הדבר. USDA organic ו-EU organic הן תעודות עם עלות ייצור שמצדיקות פרמיום. ללא תעודה, אין פרמיום.</p>
+  <p><strong>5. שוק קמח הבננה הוא ההזדמנות של 2025-2030.</strong> מוצר צומח, תחרות נמוכה, ביקוש מוכח. ספק שמייצר plantain flour עם resistant starch מתועד הוא שיחה שכדאי לנהל עכשיו לפני שכולם יגלו אותו.</p>
+  <div class="ab ab-w">
+    <div class="tg">Stark OS · עמדת שוק</div>
+    <p>בננה מיובשת אינה מוצר פרימיום מטבעה. היא מוצר בנפח. אבל יש שלושה נקודות כניסה לשוליים גבוהים: organic certified, freeze-dried נישה, וקמח בננה. הסוחר שמוכר bulk Cavendish conventional לגרנולה מייצר עסק. הסוחר שמצמד את הסיפור לאחד מהשלושה, מייצר ערך.</p>
+  </div>
+  <div class="pull"><p>כשחברה אחת שלטה בממשלות בשבילה, הבננה לא הייתה פרי. היא הייתה כוח. גם היום, כשהיא נמכרת ב-chips, היא עדיין מלמדת שיעורים על ריכוז שוק.</p></div>
+</section>
+<div class="ft">
+  ערך ידע חקלאי · Blue Star International · 2025<br>
+  מבוסס על נתוני FAO, INC ומקורות פתוחים<br>
+  <span style="font-size:11px;color:#AAA59A;">נתוני תזונה: USDA FoodData Central · היסטוריה: Rich Cohen, "The Fish That Ate the Whale" · נתוני TR4: FAO 2024</span>
+</div>
+</main>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL &middot; GLOBAL COMMODITY ARCHIVE</footer>
+<a href="../index.html" class="home-btn">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8894A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  <span>ספרייה</span>
+</a>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+<script>
+window.onscroll = () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+  const sections = document.querySelectorAll('.ch');
+  const dots = document.querySelectorAll('.nav-dot');
+  let current = '';
+  sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+  dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+  document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+};
+document.querySelectorAll('.nav-dot').forEach(dot => {
+  dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+      obs.unobserve(e.target);
+    });
+  }, {threshold: 0.3});
+  document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+  const dbName = 'StarkOS_DB';
+  const productId = 'dried-banana';
+  function syncProductPage() {
+    const request = indexedDB.open(dbName, 1);
+    request.onsuccess = (e) => {
+      const db = e.target.result;
+      try {
+        const store = db.transaction('archive', 'readonly').objectStore('archive');
+        const getRequest = store.get(productId);
+        getRequest.onsuccess = () => {
+          const data = getRequest.result;
+          if (!data) return;
+          function makeMedia(src) {
+            const isVid = src.startsWith('data:video');
+            const el = document.createElement(isVid ? 'video' : 'img');
+            el.src = src; el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+            if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+            return el;
+          }
+          const heroH1 = document.getElementById('sync-title');
+          if (heroH1 && data.name) heroH1.innerText = data.name;
+          const heroDeck = document.getElementById('sync-desc');
+          if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+          const heroSrc = data.media1 || data.media;
+          const heroSlot = document.getElementById('slot-product-hero');
+          if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); }
+          [['slot-inline-2', data.media2], ['slot-inline-3', data.media3], ['slot-inline-4', data.media4]].forEach(function([id, src]) {
+            if (!src) return;
+            const slot = document.getElementById(id);
+            if (!slot) return;
+            slot.innerHTML = '';
+            slot.appendChild(makeMedia(src));
+            slot.classList.add('has-media');
+          });
+        };
+      } catch(e) {}
+    };
+  }
+  function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.ch').forEach(card => { card.classList.add('reveal'); observer.observe(card); });
+  }
+  initScrollReveal();
+  window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

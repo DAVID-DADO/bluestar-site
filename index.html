@@ -1,0 +1,1455 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blue Star · Global Commodity Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400&family=Frank+Ruhl+Libre:wght@300;400;700;900&family=Space+Mono:wght@400;700&family=Noto+Sans+Hebrew:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   BLUE STAR · CINEMATIC ARCHIVE · CSS v6.0
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --gold:       #d4a843;
+  --gold-dim:   rgba(212,175,55,0.08);
+  --gold-glow:  rgba(212,175,55,0.12);
+  --gold-warm:  #c9a84c;
+  --border:     rgba(212,175,55,0.08);
+  --body:       rgba(255,255,255,0.45);
+  --text:       #ffffff;
+  --card-bg:    #0a0a0a;
+  --lib-max:    1440px;
+  --lib-pad:    6%;
+  --gap-grid:   clamp(2.5rem, 4vw, 5rem);
+  --gap-section: 12rem;
+  --radius:     6px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+/* ── BASE: INKY BLACK ATMOSPHERE ── */
+body {
+  background: #000000;
+  color: var(--text);
+  font-family: 'Noto Sans Hebrew', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Layer A: Cinematic vignette + gold crown */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(1200px 600px at 50% 12%, rgba(212,175,55,0.05), transparent 60%),
+    radial-gradient(900px 500px at 20% 40%, rgba(255,255,255,0.015), transparent 65%),
+    radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+  opacity: 0.95;
+}
+
+/* Layer B: Film grain */
+body::after {
+  content: "";
+  position: fixed; inset: -20%;
+  pointer-events: none; z-index: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  animation: grain-float 14s steps(8) infinite;
+}
+
+@keyframes grain-float {
+  0%, 100% { transform: translate(0,0); }
+  10%  { transform: translate(-0.5%,-0.5%); }
+  50%  { transform: translate(0.5%,0.5%); }
+}
+
+/* ── AMBIENT — keep blobs, lower key ── */
+.ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.ambient-blob { position: absolute; border-radius: 50%; filter: blur(180px); }
+.ambient-blob:nth-child(1) { width:600px; height:600px; background:#4A3210; opacity:0.06; top:-160px; right:-140px; }
+.ambient-blob:nth-child(2) { width:440px; height:440px; background:#0A1E0E; opacity:0.07; bottom:8%; left:-120px; }
+.ambient-blob:nth-child(3) { width:360px; height:360px; background:#1A0B22; opacity:0.05; bottom:28%; right:8%; }
+
+/* ── MASTHEAD ── */
+.masthead {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 48px;
+  border-bottom: 1px solid rgba(212,175,55,0.1);
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(0,0,0,0.88); backdrop-filter: blur(28px);
+}
+.masthead-brand {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  letter-spacing: 0.35em; color: var(--gold); text-decoration: none;
+}
+.masthead-meta {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; color: var(--body); opacity: 0.7;
+}
+.masthead-admin {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; color: var(--body); opacity: 0.35;
+  text-decoration: none; transition: opacity 0.3s;
+}
+.masthead-admin:hover { opacity: 0.7; }
+
+/* ── HERO ── */
+.hero {
+  padding: 72px 48px 56px;
+  position: relative; overflow: visible; z-index: 1;
+}
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 0.45em; color: var(--gold); margin-bottom: 22px;
+  display: flex; align-items: center; gap: 18px; justify-content: center;
+  text-transform: uppercase; opacity: 0.65;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; display: block; height: 1px; width: 48px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.hero-eyebrow::after { background: linear-gradient(270deg, transparent, var(--gold)); }
+.hero-h1 {
+  font-family: 'Frank Ruhl Libre', serif; font-weight: 900;
+  font-size: clamp(56px, 10vw, 128px); line-height: 0.88;
+  letter-spacing: -3px; text-align: center; margin-bottom: 26px;
+}
+.hero-h1 em { font-style: italic; color: var(--gold); }
+.hero-desc {
+  font-size: 15px; line-height: 1.8; opacity: 0.35; max-width: 440px;
+  margin: 0 auto 34px; font-weight: 300; text-align: center;
+}
+.hero-stats {
+  display: flex; justify-content: center; gap: 52px;
+  border-top: 1px solid rgba(212,175,55,0.1); padding-top: 26px;
+}
+.hero-stat { text-align: center; }
+.hero-stat-val {
+  font-family: 'Playfair Display', serif; font-size: 30px;
+  font-weight: 900; color: var(--gold); display: block;
+}
+.hero-stat-label {
+  font-family: 'Space Mono', monospace; font-size: 8px;
+  letter-spacing: 0.28em; opacity: 0.3; margin-top: 5px; display: block;
+  text-transform: uppercase;
+}
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  display: flex; justify-content: center; align-items: center;
+  border-top: 1px solid rgba(212,175,55,0.08);
+  border-bottom: 1px solid rgba(212,175,55,0.08);
+  position: sticky; top: 49px; z-index: 90;
+  background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
+  overflow-x: auto;
+}
+.filter-tab {
+  font-family: 'Space Mono', monospace; font-size: 13px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 22px 36px; cursor: pointer;
+  border: none; background: none; color: rgba(255,255,255,0.4); opacity: 1;
+  border-bottom: 2px solid transparent; transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.filter-tab:hover { color: rgba(255,255,255,0.7); }
+.filter-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.filter-count {
+  display: inline-block; background: var(--gold-dim); color: var(--gold);
+  font-size: 8px; padding: 2px 6px; border-radius: 20px;
+  margin-right: 7px; letter-spacing: 0;
+}
+
+/* ── SEARCH BAR ── */
+.search-wrap {
+  position: relative;
+  max-width: 380px;
+  margin: 0 auto 28px;
+  z-index: 85;
+}
+.search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(212,168,67,0.25);
+  padding: 7px 28px 7px 6px;
+  font-family: 'Noto Sans Hebrew', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  outline: none;
+  transition: border-color 0.3s;
+  direction: rtl;
+  text-align: right;
+  letter-spacing: 0.04em;
+}
+.search-input::placeholder { color: rgba(255,255,255,0.18); }
+.search-input:focus { border-bottom-color: rgba(212,168,67,0.65); }
+.search-icon {
+  position: absolute; left: 4px; top: 50%; transform: translateY(-50%);
+  color: rgba(212,168,67,0.3); font-size: 14px; pointer-events: none;
+}
+.search-results {
+  position: absolute; top: calc(100% + 10px); right: 0; left: 0;
+  background: #0c0c0c;
+  border: 1px solid rgba(212,168,67,0.15);
+  border-radius: 4px;
+  max-height: 320px; overflow-y: auto;
+  z-index: 200;
+  display: none;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.85);
+}
+.search-results.visible { display: block; }
+.search-result-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 16px;
+  text-decoration: none; color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.2s;
+  direction: rtl;
+}
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover, .search-result-item.active { background: rgba(212,168,67,0.07); }
+.search-result-he {
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 1.05rem; font-weight: 700; color: var(--gold);
+}
+.search-result-latin {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.63rem; color: rgba(255,255,255,0.22);
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.search-result-cat {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem; color: rgba(255,255,255,0.14);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-right: auto;
+}
+.search-no-results {
+  padding: 16px; text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem; color: rgba(255,255,255,0.16);
+  letter-spacing: 0.1em;
+}
+@media (max-width: 800px) {
+  .search-wrap { margin: 0 24px 24px; max-width: none; }
+}
+
+/* ── LIBRARY ── */
+.library {
+  max-width: var(--lib-max);
+  margin: 0 auto;
+  padding: 0 var(--lib-pad) 140px;
+  position: relative; z-index: 1;
+}
+
+/* ── CATEGORY SECTIONS ── */
+.category-section { margin-bottom: var(--gap-section); margin-top: var(--gap-section); }
+.category-section:first-child { margin-top: 6rem; }
+.category-section.hidden { display: none; }
+
+/* Fruits: tonal band */
+.category-section[data-section="fruits"] {
+  margin-left: calc(-1 * var(--lib-pad));
+  margin-right: calc(-1 * var(--lib-pad));
+  padding: 72px var(--lib-pad) 80px;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(212,175,55,0.018) 10%,
+    rgba(212,175,55,0.018) 90%,
+    transparent 100%);
+}
+
+/* Seeds: 2-col dramatic break */
+.category-section[data-section="seeds"] .product-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+.category-section[data-section="seeds"] .product-card { min-height: 360px; }
+.category-section[data-section="seeds"] .card-title-he { font-size: 40px; }
+
+/* ── CATEGORY HEADER ── */
+.category-header {
+  display: flex; align-items: baseline; gap: 1.5rem;
+  margin-bottom: 4rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(212,175,55,0.1);
+  position: relative;
+}
+.category-header::after {
+  content: '';
+  position: absolute; bottom: -1px; right: 0;
+  width: 72px; height: 1px;
+  background: linear-gradient(270deg, var(--gold), transparent);
+}
+.category-title {
+  color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 900; line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  animation: header-glow 6s ease-in-out infinite alternate;
+}
+.category-title em { font-style: italic; color: var(--gold); }
+
+@keyframes header-glow {
+  from { text-shadow: 0 0 10px rgba(212,175,55,0.1); }
+  to   { text-shadow: 0 0 25px rgba(212,175,55,0.35); }
+}
+
+.category-latin {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 0.25em; color: var(--gold); opacity: 0.3;
+  text-transform: uppercase;
+}
+.category-count {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; opacity: 0.15; margin-right: auto;
+}
+
+/* ── PRODUCT GRID ── */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--gap-grid);
+}
+
+/* ── PRODUCT CARD ── */
+.card-num { display: none; }
+
+.product-card {
+  background: #0a0a0a;
+  padding: 1.6rem 1.8rem;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+  border-radius: var(--radius);
+  border: 1px solid rgba(212,175,55,0.08);
+  position: relative; overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.2,1,0.3,1),
+              box-shadow 0.6s ease,
+              background 0.6s ease;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.55);
+  min-height: 260px;
+}
+
+/* Inner highlight line */
+.product-card::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none; border-radius: var(--radius);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+/* Cinematic sheen sweep */
+.product-card::before {
+  content: "";
+  position: absolute; inset: -50%;
+  background: linear-gradient(120deg,
+    transparent 35%,
+    rgba(212,175,55,0.1) 50%,
+    transparent 65%);
+  transform: translateX(-100%);
+  transition: transform 1.2s ease-out;
+  pointer-events: none;
+}
+.product-card:hover::before { transform: translateX(100%); }
+
+.product-card:hover {
+  transform: translateY(-8px);
+  background: #0f0f0f;
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.8),
+    0 0 20px rgba(212,175,55,0.05);
+}
+.product-card:hover .card-arrow { opacity: 1; transform: translate(0,0); }
+
+.card-title-he {
+  font-family: 'Frank Ruhl Libre', serif; font-size: 34px;
+  font-weight: 900; color: var(--gold); line-height: 1;
+  margin-bottom: 6px;
+}
+.card-title-latin {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 0.12em; color: var(--gold);
+  margin-bottom: 18px; display: block; text-transform: uppercase;
+  opacity: 0.7;
+}
+.card-media {
+  width: 100%; aspect-ratio: 4/3;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  overflow: hidden; margin-bottom: 20px;
+  border-radius: 4px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.card-media img, .card-media video {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: saturate(0.95) contrast(1.05);
+  transition: transform 0.8s ease;
+}
+.product-card:hover .card-media img,
+.product-card:hover .card-media video { transform: scale(1.04); }
+.card-media-placeholder {
+  font-family: 'Space Mono', monospace; font-size: 8px;
+  letter-spacing: 0.25em; color: rgba(255,255,255,0.05);
+}
+.card-desc {
+  font-size: 1.05rem; line-height: 1.78; color: rgba(255,255,255,0.5);
+  font-weight: 300; flex: 1; margin-bottom: 16px;
+}
+.card-footer-row {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px;
+  margin-top: auto;
+}
+.card-meta {
+  font-family: 'Space Mono', monospace; font-size: 8px;
+  opacity: 0.25; letter-spacing: 0.1em;
+  transition: opacity 0.4s ease;
+}
+.product-card:hover .card-meta { opacity: 0.5; }
+.card-meta span {
+  display: block; color: var(--gold);
+  margin-bottom: 4px; text-transform: uppercase;
+}
+.card-meta strong { color: rgba(255,255,255,0.6); font-weight: 400; }
+.card-arrow {
+  font-size: 16px; color: var(--gold); opacity: 0;
+  transform: translate(-5px,5px); transition: all 0.4s ease;
+}
+
+/* ── FOCUS / ACCESSIBILITY ── */
+.product-card:focus-within {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(212,175,55,0.35), 0 20px 50px rgba(0,0,0,0.8);
+}
+
+/* ── SPICES accent ── */
+.spices-section .category-title { color: #c9a84c; }
+.spices-section .category-title em { color: #c9a84c; }
+.spices-section .card-title-he { color: #c9a84c; }
+.spices-section .category-header::after {
+  background: linear-gradient(270deg, #c9a84c, transparent);
+}
+
+/* ── SCROLL REVEAL (modern browsers) ── */
+@supports (animation-timeline: view()) {
+  .product-card {
+    animation: card-reveal 1s ease both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 30%;
+  }
+}
+@keyframes card-reveal {
+  from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+/* ── FOOTER ── */
+.ft {
+  border-top: 1px solid rgba(212,175,55,0.1); padding: 56px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  position: relative; z-index: 1;
+}
+.ft-brand {
+  font-family: 'Playfair Display', serif; font-size: 22px;
+  font-weight: 900; color: var(--gold);
+}
+.ft-meta {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; opacity: 0.18;
+}
+.ft-admin {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; color: rgba(255,255,255,0.4); opacity: 0.4;
+  text-decoration: none; transition: opacity 0.3s;
+}
+.ft-admin:hover { opacity: 0.7; }
+
+/* ── PERFORMANCE GUARDS ── */
+@media (hover: none) {
+  .product-card:hover { transform: none; }
+  .product-card::before { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+  .product-card { animation: none; transition: none; }
+  .category-title { animation: none; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   CINEMATIC ARCHIVE v7.0 — OVERRIDE LAYER
+   ══════════════════════════════════════════════════════════ */
+
+/* ── CHAPTERS & SILENCE ── */
+.page-index .category-section {
+  margin: 12rem 0 18rem !important;
+  position: relative; z-index: 1;
+}
+.page-index .category-section:nth-of-type(even)::before {
+  content: "";
+  position: absolute; inset: -6rem -10vw;
+  background: radial-gradient(ellipse at center, rgba(212,175,55,0.028) 0%, transparent 70%);
+  pointer-events: none; z-index: -1;
+}
+.page-index .category-header {
+  margin-bottom: 5.5rem !important;
+  padding-left: 1.6rem;
+}
+.page-index .category-title {
+  font-size: clamp(2.6rem, 5vw, 5rem) !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── CARDS: CINEMATIC OBJECTS ── */
+.page-index a.product-card {
+  border-radius: 8px !important;
+  padding: 1.6rem 1.8rem !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55) !important;
+  transition: transform .8s cubic-bezier(.19,1,.22,1), box-shadow .8s ease, background .8s ease !important;
+}
+.page-index a.product-card::before {
+  inset: -60%;
+  background: linear-gradient(120deg, transparent 35%, rgba(212,175,55,0.12) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 1.3s cubic-bezier(.19,1,.22,1);
+}
+.page-index a.product-card:hover::before { transform: translateX(120%); }
+.page-index a.product-card:hover {
+  transform: perspective(1200px) rotateX(3deg) translateY(-12px) !important;
+  background: #101010 !important;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 25px rgba(212,175,55,0.06) !important;
+}
+
+/* ── PER-SECTION DIRECTING ── */
+
+/* NUTS: Classic Wall */
+.page-index .category-section[data-section="nuts"] .product-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  gap: 4rem !important;
+}
+
+/* FRUITS: Featured anchor — תמר span 2 */
+.page-index .category-section[data-section="fruits"] {
+  background: none !important;
+  margin-left: 0 !important; margin-right: 0 !important;
+  padding: 0 !important;
+}
+.page-index .category-section[data-section="fruits"] .product-grid {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+}
+.page-index .category-section[data-section="fruits"] a.product-card:first-child {
+  grid-column: span 2 !important;
+  background: linear-gradient(135deg, #121212 0%, #070707 100%) !important;
+  border-left: 3px solid var(--gold) !important;
+}
+
+/* SEEDS: The Lab — transparent, no shadow */
+.page-index .category-section[data-section="seeds"] .product-grid {
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)) !important;
+  gap: 8rem !important;
+}
+.page-index .category-section[data-section="seeds"] a.product-card {
+  background: transparent !important;
+  border-color: rgba(212,175,55,0.04) !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* SPICES: Cinematic Panels */
+.page-index .category-section[data-section="spices"] .product-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+.page-index .category-section[data-section="spices"] a.product-card {
+  min-height: 480px !important;
+}
+
+/* ── TYPOGRAPHY ── */
+.page-index .card-title-he {
+  font-size: 2.2rem !important;
+  margin: 2rem 0 0.8rem 0 !important;
+  transition: letter-spacing 0.5s ease, color 0.5s ease;
+}
+.page-index a.product-card:hover .card-title-he {
+  letter-spacing: 0.05em;
+  color: #fff !important;
+}
+.page-index .card-desc {
+  color: #9a9a9a !important;
+  font-size: 1.05rem !important;
+  line-height: 1.75 !important;
+}
+.page-index .card-num {
+  display: block !important;
+  opacity: 0.15 !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.2em !important;
+}
+.page-index .card-meta { opacity: 0.6 !important; }
+
+/* ── SCROLL REVEAL ── */
+@supports (animation-timeline: view()) {
+  .page-index a.product-card {
+    animation: reveal-and-slide 1s linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 28%;
+  }
+}
+@keyframes reveal-and-slide {
+  from { opacity: 0; transform: translateY(60px) scale(0.98); filter: blur(10px); }
+  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* ── RESPONSIVE GUARDS v7 ── */
+@media (max-width: 768px) {
+  .page-index .product-grid,
+  .page-index .category-section[data-section="spices"] .product-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .page-index .category-section[data-section="fruits"] a.product-card:first-child {
+    grid-column: span 1 !important;
+  }
+}
+@media (hover: none) {
+  .page-index a.product-card:hover { transform: none !important; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1280px) {
+  .product-grid { grid-template-columns: repeat(3, 1fr); }
+  .category-section[data-section="seeds"] .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 960px) {
+  :root { --gap-section: 8rem; }
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .category-section[data-section="fruits"] { margin-left: -5%; margin-right: -5%; padding-left: 5%; padding-right: 5%; }
+}
+@media (max-width: 800px) {
+  .masthead { padding: 14px 24px; }
+  .hero { padding: 52px 24px 36px; }
+  .filter-bar { justify-content: flex-start; top: 45px; }
+  .hero-stats { gap: 20px; }
+  .ft { flex-direction: column; gap: 14px; text-align: center; padding: 40px 24px; }
+  .product-card { padding: 2rem; }
+}
+@media (max-width: 540px) {
+  .product-grid,
+  .category-section[data-section="seeds"] .product-grid { grid-template-columns: 1fr; }
+  .hero-h1 { font-size: 52px; }
+  .category-section[data-section="seeds"] .card-title-he { font-size: 34px; }
+}
+</style>
+</head>
+<body class="page-index">
+
+<div class="ambient">
+  <div class="ambient-blob"></div>
+  <div class="ambient-blob"></div>
+  <div class="ambient-blob"></div>
+</div>
+
+<header class="masthead">
+  <a href="index.html" class="masthead-brand">BLUE STAR INTERNATIONAL</a>
+  <span class="masthead-meta">GLOBAL COMMODITY ARCHIVE · v3.0</span>
+  <a href="admin.html" class="masthead-admin">ADMIN</a>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">KNOWLEDGE LIBRARY</div>
+
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input type="text" class="search-input" placeholder="חפש סחורה..." id="searchInput" autocomplete="off" />
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <h1 class="hero-h1">ספריית<br><em>הסחורות</em></h1>
+  <p class="hero-desc">ארכיב ידע מזוקק לסוחר הרציני. בוטניקה, היסטוריה, מפרטים טכניים, ואנליזת שוק לכל סחורה.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-val">40</span>
+      <span class="hero-stat-label">סחורות</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-val">4</span>
+      <span class="hero-stat-label">קטגוריות</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-val">310</span>
+      <span class="hero-stat-label">פרקי ידע</span>
+    </div>
+  </div>
+</section>
+
+<nav class="filter-bar">
+  <button class="filter-tab active" data-cat="all">
+    <span class="filter-count">40</span>הכל
+  </button>
+  <button class="filter-tab" data-cat="nuts">
+    <span class="filter-count">9</span>אגוזים
+  </button>
+  <button class="filter-tab" data-cat="fruits">
+    <span class="filter-count">14</span>פירות יבשים
+  </button>
+  <button class="filter-tab" data-cat="seeds">
+    <span class="filter-count">4</span>זרעים
+  </button>
+  <button class="filter-tab" data-cat="spices">
+    <span class="filter-count">13</span>תבלינים
+  </button>
+</nav>
+
+<main class="library">
+
+  <!-- ══ NUTS ══ -->
+  <section class="category-section" data-section="nuts">
+    <div class="category-header">
+      <h2 class="category-title">אגו<em>זים</em></h2>
+      <span class="category-latin">TREE NUTS</span>
+      <span class="category-count">09 יחידות</span>
+    </div>
+    <div class="product-grid">
+
+      <a href="nuts/almond.html" class="product-card">
+        <div class="card-num">NUTS_01</div>
+        <div class="card-title-he">שקד</div>
+        <span class="card-title-latin">PRUNUS DULCIS</span>
+        <div class="card-media" id="slot-almond"><img src="images/Wooden_bowl_with_nuts_30895d79cb.jpeg" alt="slot-almond"></div>
+        <p class="card-desc">שמונים אחוז מהשקדים בעולם גדלים בעמק אחד בקליפורניה — בצורת אחת סוגרת שוק.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>קליפורניה</strong></div>
+          <div class="card-meta"><span>נפח</span><strong>80% שוק</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="nuts/cashew.html" class="product-card">
+        <div class="card-num">NUTS_02</div>
+        <div class="card-title-he">קשיו</div>
+        <span class="card-title-latin">ANACARDIUM OCCIDENTALE</span>
+        <div class="card-media" id="slot-cashew"><img src="images/Bowl_of_nuts_on_table_02d1557483.jpeg" alt="slot-cashew"></div>
+        <p class="card-desc">הקשיו לא גדל על עץ — הוא תלוי מתחת לפרי, בתוך קליפה רעילה שרק ידיים מיומנות פותחות.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>וייטנאם</strong></div>
+          <div class="card-meta"><span>גרייד</span><strong>WW320</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="nuts/walnut.html" class="product-card">
+        <div class="card-num">NUTS_03</div>
+        <div class="card-title-he">אגוז מלך</div>
+        <span class="card-title-latin">JUGLANS REGIA</span>
+        <div class="card-media" id="slot-walnut"><img src="images/Walnut_in_wooden_bowl_e7581e8bed.jpeg" alt="slot-walnut"></div>
+        <p class="card-desc">הרומאים קראו לו "אגוז יופיטר" — ועדיין אחרי אלפיים שנה הוא הכי נמכר בעולם.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>צ'ילה / סין</strong></div>
+          <div class="card-meta"><span>קלאס</span><strong>EXTRA LIGHT</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="nuts/pecan.html" class="product-card">
+        <div class="card-num">NUTS_04</div>
+        <div class="card-title-he">פקאן</div>
+        <span class="card-title-latin">CARYA ILLINOINENSIS</span>
+        <div class="card-media" id="slot-pecan"><img src="images/Bowl_of_pecans_on_table_7385355a34.jpeg" alt="slot-pecan"></div>
+        <p class="card-desc">האגוז האמריקאי היחיד שמקורו בצפון אמריקה — ועדיין רוב האמריקאים לא יודעים מאיפה הוא בא.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>ג'ורג'יה</strong></div>
+          <div class="card-meta"><span>גרייד</span><strong>MAMMOTH</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="nuts/pistachio.html" class="product-card">
+        <div class="card-num">NUTS_05</div>
+        <div class="card-title-he">פיסטוק</div>
+        <span class="card-title-latin">PISTACIA VERA</span>
+        <div class="card-media" id="slot-pistachio"><img src="images/Bowl_of_pistachios_on_table_485ce30171.jpeg" alt="slot-pistachio"></div>
+        <p class="card-desc">בגלל סנקציות על איראן, הפיסטוק הכי טוב בעולם כמעט לא מגיע לשוק המערבי.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>ארה"ב / איראן</strong></div>
+          <div class="card-meta"><span>היסטוריה</span><strong>9,000 שנה</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="nuts/hazelnut.html" class="product-card">
+        <div class="card-num">NUTS_06</div>
+        <div class="card-title-he">אגוז לוז</div>
+        <span class="card-title-latin">CORYLUS AVELLANA</span>
+        <div class="card-media" id="slot-hazelnut"><img src="images/Wooden_bowl_with_nuts_f81d5eb8de.jpeg" alt="slot-hazelnut"></div>
+        <p class="card-desc">פרנרו רושה אוכלת רבע מהיצוא העולמי של אגוז הלוז — חברה אחת קובעת את המחיר לכולם.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>טורקיה</strong></div>
+          <div class="card-meta"><span>נתח</span><strong>70% עולמי</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="nuts/brazil.html" class="product-card">
+        <div class="card-num">NUTS_07</div>
+        <div class="card-title-he">אגוז ברזיל</div>
+        <span class="card-title-latin">BERTHOLLETIA EXCELSA</span>
+        <div class="card-media" id="slot-brazil"><img src="images/brazil_nuts.png" alt="slot-brazil"></div>
+        <p class="card-desc">לא ניתן לגדל אותו בשדות מפוקחים — רק עצי ברזיל בר של האמזונס יכולים לייצר אותו.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>אמזונס</strong></div>
+          <div class="card-meta"><span>סוג</span><strong>WILD ONLY</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="nuts/macadamia.html" class="product-card">
+        <div class="card-num">NUTS_08</div>
+        <div class="card-title-he">מקדמיה</div>
+        <span class="card-title-latin">MACADAMIA INTEGRIFOLIA</span>
+        <div class="card-media" id="slot-macadamia"><img src="images/Bowl_of_nuts_on_table_4c3cec7990.jpeg" alt="slot-macadamia"></div>
+        <p class="card-desc">הקליפה שלה קשה פי שלוש מאורת פגז — לכן היא היקרה ביותר לעיבוד, והיקרה ביותר לקנות.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>דרא"פ</strong></div>
+          <div class="card-meta"><span>ערך</span><strong>HIGHEST</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="nuts/pinenut.html" class="product-card">
+        <div class="card-num">NUTS_09</div>
+        <div class="card-title-he">צנובר</div>
+        <span class="card-title-latin">PINUS PINEA</span>
+        <div class="card-media" id="slot-pinenut"><img src="images/Bowl_of_nuts_on_table_6ee3d62074.jpeg" alt="slot-pinenut"></div>
+        <p class="card-desc">ארבע מינים שונות נמכרות תחת שם אחד — רק אחת מהן היא הצנובר האמיתי שאתה חושב שאתה קונה.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>איטליה / סין</strong></div>
+          <div class="card-meta"><span>סיכון</span><strong>PINE MOUTH</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══ FRUITS ══ -->
+  <section class="category-section" data-section="fruits">
+    <div class="category-header">
+      <h2 class="category-title">פירות <em>יבשים</em></h2>
+      <span class="category-latin">DRIED FRUITS</span>
+      <span class="category-count">14 יחידות</span>
+    </div>
+    <div class="product-grid">
+
+      <a href="fruits/date.html" class="product-card">
+        <div class="card-num">FRUIT_01</div>
+        <div class="card-title-he">תמר</div>
+        <span class="card-title-latin">PHOENIX DACTYLIFERA</span>
+        <div class="card-media" id="slot-date"><img src="images/Bowl_of_dates_on_table_f9101cede4.jpeg" alt="slot-date"></div>
+        <p class="card-desc">התמר שרד במדבריות שבהן שום דבר אחר לא גדל — וזה בדיוק מה שהופך אותו לסחורה של ציוויליזציות.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>ישראל / מרוקו</strong></div>
+          <div class="card-meta"><span>זן</span><strong>MEDJOUL</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/prune.html" class="product-card">
+        <div class="card-num">FRUIT_02</div>
+        <div class="card-title-he">שזיף מיובש</div>
+        <span class="card-title-latin">PRUNUS DOMESTICA</span>
+        <div class="card-media" id="slot-prune"><img src="images/Wooden_bowl_with_fruit_547d122855.jpeg" alt="slot-prune"></div>
+        <p class="card-desc">שוק הבריאות עזב אותו — אבל שוק האפייה נשאר נאמן, ושם נבנה עסק יציב יותר מכל טרנד.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>קליפורניה</strong></div>
+          <div class="card-meta"><span>זן</span><strong>D'AGEN</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/apricot.html" class="product-card">
+        <div class="card-num">FRUIT_03</div>
+        <div class="card-title-he">משמש מיובש</div>
+        <span class="card-title-latin">PRUNUS ARMENIACA</span>
+        <div class="card-media" id="slot-apricot"><img src="images/Dried_apricots_in_wooden_bowl_65c2fb3862.jpeg" alt="slot-apricot"></div>
+        <p class="card-desc">כשאתה קונה משמש כתום בהיר — אתה לא קונה טבעי, אתה קונה SO₂. הטבעי הוא חום ומכוער ויקר בהרבה.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>טורקיה</strong></div>
+          <div class="card-meta"><span>עיר</span><strong>MALATYA</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/raisins.html" class="product-card">
+        <div class="card-num">FRUIT_04</div>
+        <div class="card-title-he">צימוקים</div>
+        <span class="card-title-latin">VITIS VINIFERA</span>
+        <div class="card-media" id="slot-raisins"><img src="images/raisins.png" alt="raisins"></div>
+        <p class="card-desc">ענב אחד שמת בשמש הפך לשוק של מיליארדים — ועדיין קליפורניה שולטת כאילו לא עבר מאה שנה.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>קליפורניה</strong></div>
+          <div class="card-meta"><span>זן</span><strong>THOMPSON</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/cranberry.html" class="product-card">
+        <div class="card-num">FRUIT_05</div>
+        <div class="card-title-he">חמוציות</div>
+        <span class="card-title-latin">VACCINIUM MACROCARPON</span>
+        <div class="card-media" id="slot-cranberry"><img src="images/Dried_cranberries_on_table_e46a586a46.jpeg" alt="slot-cranberry"></div>
+        <p class="card-desc">מחקר אחד על UTI פתח שוק בריאות עולמי — זה הכוח של claim אחד שיש מאחוריו נתון אמיתי.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>ארה"ב</strong></div>
+          <div class="card-meta"><span>שוק</span><strong>HEALTH</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/dried-blueberry.html" class="product-card">
+        <div class="card-num">FRUIT_06</div>
+        <div class="card-title-he">אוכמניות</div>
+        <span class="card-title-latin">VACCINIUM CORYMBOSUM</span>
+        <div class="card-media" id="slot-blueberry"><img src="images/Dried_blueberries_arranged_radially_0a5cbbdfe5.jpeg" alt="slot-blueberry"></div>
+        <p class="card-desc">הבדל של עשרה דולר לקילו בין wild לבין cultivated — ורוב הקונים לא יודעים לשאול מה ההבדל.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>מיין / קנדה</strong></div>
+          <div class="card-meta"><span>סוג</span><strong>WILD</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/dried-cherry.html" class="product-card">
+        <div class="card-num">FRUIT_07</div>
+        <div class="card-title-he">דובדבן</div>
+        <span class="card-title-latin">PRUNUS CERASUS</span>
+        <div class="card-media" id="slot-cherry"><img src="images/Dried_prunes_arranged_radially_578e81c1fc.jpeg" alt="slot-cherry"></div>
+        <p class="card-desc">הדובדבן החמוץ ממישיגן מכר יותר ממה שהדובדבן המתוק אי פעם יוכל — כי לו יש מדע מאחוריו.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>מישיגן</strong></div>
+          <div class="card-meta"><span>זן</span><strong>MONTMORENCY</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/dried-peach.html" class="product-card">
+        <div class="card-num">FRUIT_08</div>
+        <div class="card-title-he">אפרסק</div>
+        <span class="card-title-latin">PRUNUS PERSICA</span>
+        <div class="card-media" id="slot-peach"><img src="images/Dried_peaches_arranged_radially_3262a71be2.jpeg" alt="slot-peach"></div>
+        <p class="card-desc">האפרסק המיובש נסע מסין לפרס, ומפרס לכל העולם — ועדיין רוב האנשים לא יודעים מאיפה הוא בא.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>קליפורניה</strong></div>
+          <div class="card-meta"><span>פורמט</span><strong>HALVES</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/dried-banana.html" class="product-card">
+        <div class="card-num">FRUIT_09</div>
+        <div class="card-title-he">בננה</div>
+        <span class="card-title-latin">MUSA ACUMINATA</span>
+        <div class="card-media" id="slot-banana"><img src="images/Dried_banana_in_wooden_bowl_c875f86e9f.jpeg" alt="slot-banana"></div>
+        <p class="card-desc">פטריה אחת בשם TR4 יכולה למחוק את כל עצי הבננה Cavendish — ורוב הסוחרים עדיין לא מדברים על זה.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>פיליפינים</strong></div>
+          <div class="card-meta"><span>סוג</span><strong>CHIPS / SOFT</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/dried-coconut.html" class="product-card">
+        <div class="card-num">FRUIT_10</div>
+        <div class="card-title-he">קוקוס</div>
+        <span class="card-title-latin">COCOS NUCIFERA</span>
+        <div class="card-media" id="slot-coconut"><img src="images/Dried_coconut_in_wooden_bowl_96fafbf396.jpeg" alt="slot-coconut"></div>
+        <p class="card-desc">פרי אחד שמניב שישה מוצרים שונים לחלוטין — מי שמבין את כל השישה שולט בשוק שלם.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>פיליפינים</strong></div>
+          <div class="card-meta"><span>פורמטים</span><strong>6 מוצרים</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/dried-fig.html" class="product-card">
+        <div class="card-num">FRUIT_11</div>
+        <div class="card-title-he">תאנה</div>
+        <span class="card-title-latin">FICUS CARICA</span>
+        <div class="card-media" id="slot-fig"><img src="images/Dried_figs_arranged_radially_2bc6cb3954.jpeg" alt="slot-fig"></div>
+        <p class="card-desc">התאנה מוזכרת בתנ"ך לפני החיטה — ועדיין היא אחת הסחורות הכי פחות מובנות בשוק היבש.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>איזמיר</strong></div>
+          <div class="card-meta"><span>סידן</span><strong>162mg/100g</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/mango.html" class="product-card">
+        <div class="card-num">FRUIT_12</div>
+        <div class="card-title-he">מנגו</div>
+        <span class="card-title-latin">MANGIFERA INDICA</span>
+        <div class="card-media" id="slot-mango"><img src="images/Dried_mango_in_wooden_bowl_78f2251e9b.jpeg" alt="slot-mango"></div>
+        <p class="card-desc">הפרי שגדל בתאילנד, מתייבש בשמש, ומגיע לילדים ישראלים כ"מנגו" — אבל איכותו נקבעת על הדרך.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>תאילנד</strong></div>
+          <div class="card-meta"><span>סוג</span><strong>SLICES</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/papaya.html" class="product-card">
+        <div class="card-num">FRUIT_13</div>
+        <div class="card-title-he">פפאיה</div>
+        <span class="card-title-latin">CARICA PAPAYA</span>
+        <div class="card-media" id="slot-papaya"><img src="images/Dried_papaya_in_wooden_bowl_27784d663f.jpeg" alt="slot-papaya"></div>
+        <p class="card-desc">כמעט כל הפפאיה המיובשת בשוק היא sweetened — אם אתה מוצא unsweetened, אתה בשוק אחר לחלוטין.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>תאילנד</strong></div>
+          <div class="card-meta"><span>שוק</span><strong>TRAIL MIX</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="fruits/pineapple.html" class="product-card">
+        <div class="card-num">FRUIT_14</div>
+        <div class="card-title-he">אננס</div>
+        <span class="card-title-latin">ANANAS COMOSUS</span>
+        <div class="card-media" id="slot-pineapple"><img src="images/Dried_pineapple_arranged_radially_788be975c2.jpeg" alt="slot-pineapple"></div>
+        <p class="card-desc">אננס מיובש נראה פשוט — אבל SO₂, טמפרטורת ייבוש ופורמט החיתוך קובעים שלושה שווקי מחיר שונים.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>תאילנד</strong></div>
+          <div class="card-meta"><span>פורמט</span><strong>RINGS</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══ SEEDS ══ -->
+  <section class="category-section" data-section="seeds">
+    <div class="category-header">
+      <h2 class="category-title">זר<em>עים</em></h2>
+      <span class="category-latin">SEEDS</span>
+      <span class="category-count">04 יחידות</span>
+    </div>
+    <div class="product-grid">
+
+      <a href="seeds/chia.html" class="product-card">
+        <div class="card-num">SEED_01</div>
+        <div class="card-title-he">צ'יה</div>
+        <span class="card-title-latin">SALVIA HISPANICA</span>
+        <div class="card-media" id="slot-chia"><img src="images/CHIA.jpeg" alt="slot-chia"></div>
+        <p class="card-desc">הצ'יה עשתה בעשר שנים מה שדגנים אחרים לא עשו במאה — כי היא מכרה תזונה, לא טעם.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>מקסיקו</strong></div>
+          <div class="card-meta"><span>שוק</span><strong>SUPERFOOD</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="seeds/sesame.html" class="product-card">
+        <div class="card-num">SEED_02</div>
+        <div class="card-title-he">שומשום</div>
+        <span class="card-title-latin">SESAMUM INDICUM</span>
+        <div class="card-media" id="slot-sesame"><img src="images/SESAME.jpeg" alt="slot-sesame"></div>
+        <p class="card-desc">הגרעין הקדום ביותר שגדל יחד עם האנושות — ועדיין הבדל של שטיפה אחת מפריד בין פרמיום לסחורה.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>אתיופיה</strong></div>
+          <div class="card-meta"><span>שוק</span><strong>TAHINI</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="seeds/sunflower.html" class="product-card">
+        <div class="card-num">SEED_03</div>
+        <div class="card-title-he">חמנייה</div>
+        <span class="card-title-latin">HELIANTHUS ANNUUS</span>
+        <div class="card-media" id="slot-sunflower"><img src="images/Sunflower_seed_on_clay_plate_aa6a9e7a4d.jpeg" alt="sunflower"></div>
+        <p class="card-desc">לפני 2022 אוקראינה ורוסיה שלטו בחמישים אחוז מהשוק — המלחמה שינתה את מפת הספקים לצמיתות.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>אוקראינה</strong></div>
+          <div class="card-meta"><span>ויטמין E</span><strong>35mg/100g</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="seeds/pumpkin-seeds.html" class="product-card">
+        <div class="card-num">SEED_04</div>
+        <div class="card-title-he">גרעיני דלעת</div>
+        <span class="card-title-latin">CUCURBITA PEPO</span>
+        <div class="card-media" id="slot-pumpkin"><img src="images/PUMPKIN.jpeg" alt="slot-pumpkin"></div>
+        <p class="card-desc">גרעין דלעת אוסטרי ירוק כהה ללא קליפה — זן שפותח רק לאכילה, ולא יכול להצמיח עוד דלעת.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>אוסטריה / סין</strong></div>
+          <div class="card-meta"><span>אבץ</span><strong>7.6mg/100g</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══ SPICES ══ -->
+  <section class="category-section spices-section" data-section="spices">
+    <div class="category-header">
+      <h2 class="category-title">תב<em>לינים</em></h2>
+      <span class="category-latin">SPICES</span>
+      <span class="category-count">13 יחידות</span>
+    </div>
+    <div class="product-grid">
+
+      <a href="SPICES/black_pepper.html" class="product-card">
+        <div class="card-num">SPICE_01</div>
+        <div class="card-title-he">פלפל שחור</div>
+        <span class="card-title-latin">PIPER NIGRUM</span>
+        <div class="card-media" id="slot-black_pepper"><img src="images/Black_pepper_on_clay_plate_9b29ce3274.jpeg" alt="black pepper"></div>
+        <p class="card-desc">פעם הוא עלה יותר מזהב ביחס למשקל — היום הוא בכל מטבח, ועדיין וייטנאם קובעת את המחיר.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>וייטנאם</strong></div>
+          <div class="card-meta"><span>גרייד</span><strong>ASTA 550+</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/turmeric.html" class="product-card">
+        <div class="card-num">SPICE_02</div>
+        <div class="card-title-he">כורכום</div>
+        <span class="card-title-latin">CURCUMA LONGA</span>
+        <div class="card-media" id="slot-turmeric"><img src="images/Turmeric_on_clay_plate_9239c84189.jpeg" alt="turmeric"></div>
+        <p class="card-desc">כורכום בלי פלפל שחור הוא כמעט חסר תועלת — הגוף סופג אחוז אחד, עם פיפרין הוא סופג עשרים.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>הודו</strong></div>
+          <div class="card-meta"><span>שוק</span><strong>FUNCTIONAL</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/ceylon-cinnamon.html" class="product-card">
+        <div class="card-num">SPICE_03</div>
+        <div class="card-title-he">קינמון ציילון</div>
+        <span class="card-title-latin">CINNAMOMUM VERUM</span>
+        <div class="card-media" id="slot-ceylon-cinnamon"><img src="images/Ceylon_cinnamon_on_clay_plate_22d9e174fc.jpeg" alt="ceylon cinnamon"></div>
+        <p class="card-desc">כל הקינמון שמכירים זה Cassia — הציילון האמיתי הוא פרמיום שונה לחלוטין, ורוב השוק לא יודע להבדיל.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>סרי לנקה</strong></div>
+          <div class="card-meta"><span>פרמיום</span><strong>ALBA GRADE</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/cumin.html" class="product-card">
+        <div class="card-num">SPICE_04</div>
+        <div class="card-title-he">כמון</div>
+        <span class="card-title-latin">CUMINUM CYMINUM</span>
+        <div class="card-media" id="slot-cumin"><img src="images/Cumin_on_clay_plate_0fb2ba0a03.jpeg" alt="cumin"></div>
+        <p class="card-desc">מצאו אותו בקברי פרעה לפני ארבעת אלפים שנה — ועדיין בורסת אונג'ה בגוג'ראט קובעת את מחירו היום.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>הודו / איראן</strong></div>
+          <div class="card-meta"><span>בורסה</span><strong>UNJHA</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/ginger.html" class="product-card">
+        <div class="card-num">SPICE_05</div>
+        <div class="card-title-he">ג'ינג'ר</div>
+        <span class="card-title-latin">ZINGIBER OFFICINALE</span>
+        <div class="card-media" id="slot-ginger"><img src="images/GINGER.jpeg" alt="slot-ginger"></div>
+        <p class="card-desc">ג'ינג'ר טרי וג'ינג'ר מיובש הם שתי סחורות שונות לחלוטין — עם שני שווקים, שני מחירים, ושתי שרשראות אספקה.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>הודו / ניגריה</strong></div>
+          <div class="card-meta"><span>שוק</span><strong>FUNCTIONAL</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/chili.html" class="product-card">
+        <div class="card-num">SPICE_06</div>
+        <div class="card-title-he">צ'ילי</div>
+        <span class="card-title-latin">CAPSICUM ANNUUM</span>
+        <div class="card-media" id="slot-chili"><img src="images/Chilli_on_clay_plate_0341f5e5a8.jpeg" alt="chili"></div>
+        <p class="card-desc">מקסיקו, הודו, סין. Scoville קובע פרמיום. Capsaicin מוכר לשוק הבריאות והקוסמטיקה.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>הודו / מקסיקו</strong></div>
+          <div class="card-meta"><span>מדד</span><strong>SCOVILLE</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/paprika.html" class="product-card">
+        <div class="card-num">SPICE_07</div>
+        <div class="card-title-he">פפריקה</div>
+        <span class="card-title-latin">CAPSICUM ANNUUM</span>
+        <div class="card-media" id="slot-paprika"><img src="images/Paprika_on_clay_plate_453699769c.jpeg" alt="paprika"></div>
+        <p class="card-desc">ספרד והונגריה הם הפרמיום. סין היא הנפח. Sweet לעומת smoked: שני עולמות.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>ספרד / הונגריה</strong></div>
+          <div class="card-meta"><span>סוג</span><strong>SWEET / SMOKED</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/cloves.html" class="product-card">
+        <div class="card-num">SPICE_08</div>
+        <div class="card-title-he">ציפורן</div>
+        <span class="card-title-latin">SYZYGIUM AROMATICUM</span>
+        <div class="card-media" id="slot-cloves"><img src="images/Cloves_on_clay_plate_14dd157432.jpeg" alt="cloves"></div>
+        <p class="card-desc">אינדונסיה 80% מהשוק. Eugenol לפרמצבטיקה ולדנטיסטים. Zanzibar הוא הפרמיום.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>אינדונסיה</strong></div>
+          <div class="card-meta"><span>active</span><strong>EUGENOL</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/saffron.html" class="product-card">
+        <div class="card-num">SPICE_09</div>
+        <div class="card-title-he">זעפרן</div>
+        <span class="card-title-latin">CROCUS SATIVUS</span>
+        <div class="card-media" id="slot-saffron"><img src="images/Saffron_on_clay_plate_98b1987989.jpeg" alt="saffron"></div>
+        <p class="card-desc">היקר ביותר בעולם. 150,000 פרחים לקילו. איראן 90% מהשוק. Crocin % קובע הכל.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>איראן</strong></div>
+          <div class="card-meta"><span>מחיר</span><strong>#1 WORLD</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/vanilla.html" class="product-card">
+        <div class="card-num">SPICE_10</div>
+        <div class="card-title-he">וניל</div>
+        <span class="card-title-latin">VANILLA PLANIFOLIA</span>
+        <div class="card-media" id="slot-vanilla"><img src="images/Vanilla_on_clay_plate_afb6af9d96.jpeg" alt="vanilla"></div>
+        <p class="card-desc">הוניל היחיד שמאובק ידנית פרח פרח — ולכן מחירו קפץ ארבע מאות אחוז בשנה אחת כשהיצוא קרס.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>מדגסקר</strong></div>
+          <div class="card-meta"><span>פרמיום</span><strong>BOURBON</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/oregano.html" class="product-card">
+        <div class="card-num">SPICE_11</div>
+        <div class="card-title-he">אורגנו</div>
+        <span class="card-title-latin">ORIGANUM VULGARE</span>
+        <div class="card-media" id="slot-oregano"><img src="images/Oregano_on_clay_plate_2b40a49761.jpeg" alt="oregano"></div>
+        <p class="card-desc">האורגנו המקסיקני והאורגנו הים-תיכוני הם שני צמחים שונים לחלוטין — רק השם המשותף מסבך את הקנייה.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>טורקיה</strong></div>
+          <div class="card-meta"><span>active</span><strong>CARVACROL</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/thyme.html" class="product-card">
+        <div class="card-num">SPICE_12</div>
+        <div class="card-title-he">תימין</div>
+        <span class="card-title-latin">THYMUS VULGARIS</span>
+        <div class="card-media" id="slot-thyme"><img src="images/Thyme_on_clay_plate_3b23c09435.jpeg" alt="thyme"></div>
+        <p class="card-desc">תימול הוא חומר ההדברה הטבעי הכי יעיל שקיים — ושוק המשמרים הטבעיים מגלה אותו עכשיו.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>ים-תיכון</strong></div>
+          <div class="card-meta"><span>active</span><strong>THYMOL</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="SPICES/poppy.html" class="product-card">
+        <div class="card-num">SPICE_13</div>
+        <div class="card-title-he">פרג</div>
+        <span class="card-title-latin">PAPAVER SOMNIFERUM</span>
+        <div class="card-media" id="slot-poppy"><img src="images/Poppy_seeds_on_clay_plate_57d40f782b.jpeg" alt="poppy"></div>
+        <p class="card-desc">גרעיני פרג כשרים ומותרים לאכילה — אבל מנה אחת יכולה להפיל בדיקת סמים, וזה סיכון שרוב הקונים מתעלמים ממנו.</p>
+        <div class="card-footer-row">
+          <div class="card-meta"><span>מקור</span><strong>הולנד / צ'כיה</strong></div>
+          <div class="card-meta"><span>סיכון</span><strong>OPIATE TRACE</strong></div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="ft">
+  <div class="ft-brand">Blue Star</div>
+  <div class="ft-meta">© 2026 · GLOBAL COMMODITY ARCHIVE · 40 UNITS</div>
+  <a href="admin.html" class="ft-admin">ADMIN TERMINAL</a>
+</footer>
+
+<script>
+/* ── PRODUCT INDEX FOR SEARCH ── */
+const PRODUCTS = [
+  { he:'שקד', latin:'Prunus Dulcis', cat:'אגוזים', href:'nuts/almond.html' },
+  { he:'קשיו', latin:'Anacardium Occidentale', cat:'אגוזים', href:'nuts/cashew.html' },
+  { he:'אגוז מלך', latin:'Juglans Regia', cat:'אגוזים', href:'nuts/walnut.html' },
+  { he:'פקאן', latin:'Carya Illinoinensis', cat:'אגוזים', href:'nuts/pecan.html' },
+  { he:'פיסטוק', latin:'Pistacia Vera', cat:'אגוזים', href:'nuts/pistachio.html' },
+  { he:'אגוז לוז', latin:'Corylus Avellana', cat:'אגוזים', href:'nuts/hazelnut.html' },
+  { he:'אגוז ברזיל', latin:'Bertholletia Excelsa', cat:'אגוזים', href:'nuts/brazil.html' },
+  { he:'מקדמיה', latin:'Macadamia Integrifolia', cat:'אגוזים', href:'nuts/macadamia.html' },
+  { he:'צנובר', latin:'Pinus Pinea', cat:'אגוזים', href:'nuts/pinenut.html' },
+  { he:'תמר', latin:'Phoenix Dactylifera', cat:'פירות יבשים', href:'fruits/date.html' },
+  { he:'שזיף מיובש', latin:'Prunus Domestica', cat:'פירות יבשים', href:'fruits/prune.html' },
+  { he:'משמש מיובש', latin:'Prunus Armeniaca', cat:'פירות יבשים', href:'fruits/apricot.html' },
+  { he:'צימוקים', latin:'Vitis Vinifera', cat:'פירות יבשים', href:'fruits/raisins.html' },
+  { he:'חמוציות', latin:'Vaccinium Macrocarpon', cat:'פירות יבשים', href:'fruits/cranberry.html' },
+  { he:'אוכמניות', latin:'Vaccinium Corymbosum', cat:'פירות יבשים', href:'fruits/dried-blueberry.html' },
+  { he:'דובדבן', latin:'Prunus Cerasus', cat:'פירות יבשים', href:'fruits/dried-cherry.html' },
+  { he:'אפרסק', latin:'Prunus Persica', cat:'פירות יבשים', href:'fruits/dried-peach.html' },
+  { he:'בננה', latin:'Musa Acuminata', cat:'פירות יבשים', href:'fruits/dried-banana.html' },
+  { he:'קוקוס', latin:'Cocos Nucifera', cat:'פירות יבשים', href:'fruits/dried-coconut.html' },
+  { he:'תאנה', latin:'Ficus Carica', cat:'פירות יבשים', href:'fruits/dried-fig.html' },
+  { he:'מנגו', latin:'Mangifera Indica', cat:'פירות יבשים', href:'fruits/mango.html' },
+  { he:'פפאיה', latin:'Carica Papaya', cat:'פירות יבשים', href:'fruits/papaya.html' },
+  { he:'אננס', latin:'Ananas Comosus', cat:'פירות יבשים', href:'fruits/pineapple.html' },
+  { he:'צ\'יה', latin:'Salvia Hispanica', cat:'זרעים', href:'seeds/chia.html' },
+  { he:'שומשום', latin:'Sesamum Indicum', cat:'זרעים', href:'seeds/sesame.html' },
+  { he:'חמנייה', latin:'Helianthus Annuus', cat:'זרעים', href:'seeds/sunflower.html' },
+  { he:'גרעיני דלעת', latin:'Cucurbita Pepo', cat:'זרעים', href:'seeds/pumpkin-seeds.html' },
+  { he:'פלפל שחור', latin:'Piper Nigrum', cat:'תבלינים', href:'SPICES/black_pepper.html' },
+  { he:'כורכום', latin:'Curcuma Longa', cat:'תבלינים', href:'SPICES/turmeric.html' },
+  { he:'קינמון ציילון', latin:'Cinnamomum Verum', cat:'תבלינים', href:'SPICES/ceylon-cinnamon.html' },
+  { he:'כמון', latin:'Cuminum Cyminum', cat:'תבלינים', href:'SPICES/cumin.html' },
+  { he:'ג\'ינג\'ר', latin:'Zingiber Officinale', cat:'תבלינים', href:'SPICES/ginger.html' },
+  { he:'צ\'ילי', latin:'Capsicum Annuum', cat:'תבלינים', href:'SPICES/chili.html' },
+  { he:'פפריקה', latin:'Capsicum Annuum', cat:'תבלינים', href:'SPICES/paprika.html' },
+  { he:'ציפורן', latin:'Syzygium Aromaticum', cat:'תבלינים', href:'SPICES/cloves.html' },
+  { he:'זעפרן', latin:'Crocus Sativus', cat:'תבלינים', href:'SPICES/saffron.html' },
+  { he:'וניל', latin:'Vanilla Planifolia', cat:'תבלינים', href:'SPICES/vanilla.html' },
+  { he:'אורגנו', latin:'Origanum Vulgare', cat:'תבלינים', href:'SPICES/oregano.html' },
+  { he:'תימין', latin:'Thymus Vulgaris', cat:'תבלינים', href:'SPICES/thyme.html' },
+  { he:'פרג', latin:'Papaver Somniferum', cat:'תבלינים', href:'SPICES/poppy.html' },
+];
+
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+let activeIdx = -1;
+
+function renderResults(q) {
+  const term = q.trim().toLowerCase();
+  if (!term) { searchResults.classList.remove('visible'); return; }
+  const matches = PRODUCTS.filter(p =>
+    p.he.includes(term) ||
+    p.latin.toLowerCase().includes(term) ||
+    p.cat.includes(term)
+  );
+  if (!matches.length) {
+    searchResults.innerHTML = '<div class="search-no-results">לא נמצאו תוצאות</div>';
+  } else {
+    searchResults.innerHTML = matches.map((p, i) => `
+      <a href="${p.href}" class="search-result-item" data-idx="${i}">
+        <span class="search-result-he">${p.he}</span>
+        <span class="search-result-latin">${p.latin}</span>
+        <span class="search-result-cat">${p.cat}</span>
+      </a>`).join('');
+  }
+  activeIdx = -1;
+  searchResults.classList.add('visible');
+}
+
+searchInput.addEventListener('input', e => renderResults(e.target.value));
+
+searchInput.addEventListener('keydown', e => {
+  const items = searchResults.querySelectorAll('.search-result-item');
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    activeIdx = Math.min(activeIdx + 1, items.length - 1);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    activeIdx = Math.max(activeIdx - 1, 0);
+  } else if (e.key === 'Enter' && activeIdx >= 0) {
+    items[activeIdx].click(); return;
+  } else if (e.key === 'Escape') {
+    searchResults.classList.remove('visible'); return;
+  }
+  items.forEach((el, i) => el.classList.toggle('active', i === activeIdx));
+  if (activeIdx >= 0) items[activeIdx].scrollIntoView({ block: 'nearest' });
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) searchResults.classList.remove('visible');
+});
+</script>
+const tabs = document.querySelectorAll('.filter-tab');
+const sections = document.querySelectorAll('.category-section');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const cat = tab.dataset.cat;
+    sections.forEach(sec => {
+      if (cat === 'all' || sec.dataset.section === cat) {
+        sec.style.display = '';
+      } else {
+        sec.style.display = 'none';
+      }
+    });
+  });
+});
+
+/* ── STARK SYNC ENGINE ── */
+const dbName = 'StarkOS_DB';
+
+function syncFrontend() {
+  const request = indexedDB.open(dbName, 1);
+  request.onsuccess = (e) => {
+    const db = e.target.result;
+    if (!db.objectStoreNames.contains('archive')) return;
+    const store = db.transaction('archive', 'readonly').objectStore('archive');
+    store.getAll().onsuccess = (ev) => {
+      ev.target.result.forEach(product => {
+        // sync media slots
+        const slotId = 'slot-' + product.id.replace('dried-','').replace('-seeds','');
+        const slot = document.getElementById(slotId) || document.getElementById('slot-' + product.id);
+        if (slot && (product.media1 || product.media)) {
+          renderMedia(slot, product.media1 || product.media);
+        }
+      });
+    };
+  };
+}
+
+function renderMedia(slot, src) {
+  slot.innerHTML = '';
+  const isVid = src.startsWith('data:video');
+  const el = document.createElement(isVid ? 'video' : 'img');
+  el.src = src;
+  el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+  if (isVid) { el.autoplay = true; el.muted = true; el.loop = true; el.setAttribute('playsinline',''); }
+  slot.appendChild(el);
+}
+
+/* ── REVEAL ON SCROLL ── */
+if (window.IntersectionObserver) {
+  const cards = document.querySelectorAll('.product-card');
+  let delay = 0;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const card = entry.target;
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(24px)';
+      card.style.transition = `opacity .5s ease ${card.dataset.delay}ms, transform .5s ease ${card.dataset.delay}ms`;
+      requestAnimationFrame(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      });
+      observer.unobserve(card);
+    });
+  }, { threshold: 0.08 });
+
+  cards.forEach((card, i) => {
+    card.dataset.delay = (i % 4) * 60;
+    observer.observe(card);
+  });
+}
+
+window.addEventListener('load', syncFrontend);
+</script>
+</body>
+</html>

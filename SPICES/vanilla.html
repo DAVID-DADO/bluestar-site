@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0A0A0B; --text: #FAF7F0; --body: #D1CEC5;
+    --accent: #8B6340; --warm: #B8894A;
+    --card: rgba(20,20,22,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background-color: var(--bg); color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9;
+    overflow-x: hidden;
+    background-image: linear-gradient(rgba(184,137,74,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,137,74,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+body::before, body::after {
+    content:''; position:fixed; width:600px; height:600px; border-radius:50%;
+    filter:blur(120px); z-index:-2; opacity:0.15; pointer-events:none;
+}
+body::before { background:var(--warm); top:-100px; left:-100px; }
+body::after { background:#5A3E28; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.back-btn {
+    position:absolute; top:40px; left:40px; z-index:10; display:flex; align-items:center; gap:8px;
+    color:var(--text); text-decoration:none; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px;
+    opacity:0.5; transition:0.3s;
+}
+.back-btn:hover { opacity:1; color:var(--warm); }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap {
+    max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden;
+    box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05);
+    background:#0A0A0B; display:flex; align-items:center; justify-content:center;
+}
+.hero-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.hero-img-placeholder { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.hero-img-placeholder span { color:rgba(255,255,255,0.15); font-size:12px; letter-spacing:3px; font-family:'Space Mono',monospace; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch {
+    background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px);
+    padding:50px; border-radius:var(--radius); margin-bottom:40px;
+    border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden;
+}
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; }
+.ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#C4A878; font-style:italic; }
+strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(184,137,74,0.08); border-right:4px solid var(--warm); }
+.ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(90,62,40,0.2); border-right:4px solid var(--accent); }
+.ab-g .tg { color:#C4A878; }
+.ab-r { background:rgba(184,50,50,0.1); border-right:4px solid #B83030; }
+.ab-r .tg { color:#E06060; }
+.ab-r p { color:#DDB0B0; }
+.vc { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:22px; margin:18px 0; }
+.vc .vn { font-family:'Frank Ruhl Libre',serif; font-size:21px; font-weight:700; color:var(--text); }
+.vc .vt { font-size:12px; color:var(--warm); font-weight:600; margin-bottom:10px; }
+.vc p { font-size:16px; line-height:1.75; margin-bottom:0; }
+.vc .vs { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.vc .vsi { background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:5px; font-size:12px; color:#A09080; }
+.vc .vsi strong { color:var(--text); }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A09080; margin-top:2px; }
+.ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.cb { background:rgba(20,20,22,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px; margin:28px 0; }
+.cb .ct { font-family:'Frank Ruhl Libre',serif; font-size:17px; font-weight:700; margin-bottom:14px; text-align:center; color:var(--text); }
+.pb-chart { margin:16px 0 8px; display:flex; flex-direction:column; gap:10px; }
+.pb-row { display:flex; align-items:center; gap:10px; }
+.pb-meta { display:flex; align-items:center; gap:6px; min-width:120px; justify-content:flex-end; }
+.pb-flag { font-size:18px; }
+.pb-name { font-size:13px; color:#A09080; }
+.pb-track { flex:1; background:rgba(255,255,255,0.08); height:18px; border-radius:9px; overflow:hidden; }
+.pb-fill { height:100%; width:0; border-radius:9px; transition:width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.pb-pct { font-family:'Frank Ruhl Libre',serif; font-size:14px; font-weight:700; color:var(--text); width:36px; text-align:left; }
+.pb-note { font-size:11px; color:#6B6058; opacity:.7; margin-top:10px; text-align:center; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; border-top:1px solid rgba(255,255,255,0.05); }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(184,137,74,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.03); animation:scrollText 40s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#6B6058; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(184,137,74,0.4); }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(20,20,22,0.85); border:1px solid rgba(184,137,74,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+.home-btn:hover { background:rgba(184,137,74,0.15); }
+@media (max-width:900px) {
+    .side-nav { display:none; }
+    .back-btn { top:20px; left:20px; }
+    .hero h1 { font-size:55px; }
+    .hero-img-wrap { height:300px; margin-bottom:-100px; }
+    .con { margin-top:150px; }
+    .ng { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+<title>וניל · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות ובקרת איכות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="פיזיולוגיה ובריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="טכנולוגיה עתידית"></div>
+</nav>
+
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">וניל</h1>
+    <p class="deck" id="sync-desc">התרמיל השחור היקר בעולם. סחלב מטפס שהפריה ידנית הפכה אותו לסחורה גלובלית, ביוכימיה של 250 תרכובות ארומטיות, ותלות מבנית במדגסקר.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <div class="hero-img-placeholder">
+            <span>VANILLA · Vanilla planifolia</span>
+            <span style="font-size:9px;opacity:0.5;">MEDIA SLOT · HERO</span>
+        </div>
+    </div>
+</section>
+
+<div class="marquee-container">
+    <div class="marquee-text">VANILLA PLANIFOLIA · BLACK GOLD · MADAGASCAR · VANILLIN · TAHITI · BOURBON · VANILLA PLANIFOLIA · BLACK GOLD · MADAGASCAR · VANILLIN · TAHITI · BOURBON · </div>
+</div>
+
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: ההפריה שיצרה תעשייה</h2>
+    <p class="dc">בבוקר ה-8 ביולי 1841, באי ראוניון שבאוקיינוס ההודי, עמד ילד בן שתים עשרה בשם אדמונד אלביוס מול פרח לבן ירקרק של <em>Vanilla planifolia</em>. הפרח היה פתוח שעות ספורות בלבד. במשך חמישים שנה ניסו בוטנאים צרפתים לגדל וניל מחוץ למקסיקו ונכשלו. הדבורה <em>Melipona beecheii</em>, המאביקה היחידה שמסוגלת לחדור אל תוך מבנה הפרח המורכב, לא חצתה אוקיינוסים. לא היו תרמילים.</p>
+    <p>אלביוס הרים במחט במבוק דקה קרום זעיר בתוך הפרח, ה-<strong>rostellum</strong>, ממברנה שמונעת הפריה עצמית. הוא הצמיד ביד את האבקן (pollinium) אל הצלקת (stigma). פעולה של שניות. שבועות לאחר מכן הופיע התרמיל הראשון מחוץ למקסיקו. לא מדובר בגילוי בוטני; מדובר בהנדסת ייצור. כל תרמיל וניל שנסחר כיום בעולם הוא תוצאה ישירה של הפריה ידנית, אחד לאחד, פרח אחר פרח, כל בוקר, כל עונה.</p>
+    <p>מקורו של הצמח במקסיקו, באזור Totonacapan שבמדינת Veracruz. תרבות הטוטונקים קישרה את הווניל לאל הפריון. הספרדים, שהגיעו עם קורטז ב-1519, מצאו את הווניל כמרכיב בשוקולד המלכותי של האצטקים, <em>xocolātl</em>, וקראו לו <strong>"vainilla"</strong>, מילה שמשמעותה "נרתיק קטן", תיאור של צורת התרמיל. במשך שלוש מאות שנה, בין 1519 ל-1841, מקסיקו שלטה במונופול מוחלט על ייצור הווניל.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>בשנת 1898 יצאו מנמל <strong>Toamasina</strong> במדגסקר כ-200 טון תרמילים אל Le Havre. הנתיב Veracruz → Sevilla → Cádiz איבד שליטה. מרכז הכובד עבר לאוקיינוס ההודי. אלביוס עצמו מת בעוני בשנת 1880, אך הפעולה הביולוגית שביצע הפכה את מדגסקר לשחקנית שמחזיקה כיום בין 70 ל-75 אחוז מהייצור העולמי.</p>
+    </div>
+    <p>הווניל הוא התבלין השני היקר בעולם אחרי הזעפרן, והיחיד שמקורו בפרח סחלב מטפס. עבור הארכיון, הוא "תבלין הנחמה": המרכיב המעניק עומק, מתיקות וניחוח משכר לכל קינוח יוקרה. תכונותיו המולקולריות משמשות בסיס לתעשיית הבשמים, הפארמה, ולתעשיית מוצרי החלב. מחירו נע בעשור האחרון בין 120 ל-600 דולר לק"ג, תנודתיות שמגדירה אותו כסחורה עתירת סיכון ועתירת ערך.</p>
+    <div class="pull">
+        <p>וניל אינו תבלין. הוא שרשרת תלויה-אקלים, תלויה-יד-אדם, תלויה-ביוכימיה.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: פיזיולוגיית הסחלב המטפס</h2>
+    <p class="dc"><em>Vanilla planifolia</em> הוא סחלב מטפס אפיפיטי ממשפחת ה-Orchidaceae, הסדרה הגדולה ביותר בצמחים פורחים. בניגוד לרוב הסחלבים המוכרים, הווניל הוא גפן עשבונית שמטפסת על עצי תמך לגובה של 10-15 מטר. אורך חייו המסחרי 12-15 שנה, כאשר שנות שיא הניבה הן 5-10 למטע.</p>
+    <p>טמפרטורה אידיאלית ביום <strong>24-32°C</strong>. בלילה לא פחות מ-16°C. חשיפה ל-10°C פוגעת ברקמות מריסטמטיות ועוצרת פריחה לעונה שלמה. משקעים שנתיים <strong>1,500-3,000 מ"מ</strong>. עודף גשם בזמן פריחה שוטף את האבקה ומפחית שיעור הפריה. pH קרקע אופטימלי <strong>5.5-7.0</strong>. הצמח זקוק להצללה חלקית, <strong>50-70%</strong>, כמו שניתן בשולי יער גשם. חשיפה ישירה לשמש שורפת עלים ומייבשת שורשי אוויר.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">24-32°C</div><div class="nu">טמפרטורת יום</div><div class="nl">אופטימלית</div></div>
+        <div class="ni"><div class="nv">3,000mm</div><div class="nu">משקעים שנתיים</div><div class="nl">מקסימום</div></div>
+        <div class="ni"><div class="nv">5.5-7.0</div><div class="nu">pH קרקע</div><div class="nl">אופטימלי</div></div>
+    </div>
+    <h3>מנגנון CAM: הישרדות בצל</h3>
+    <p>הצמח מפעיל מנגנון <strong>CAM, Crassulacean Acid Metabolism</strong>. קיבוע פחמן מתרחש בלילה דרך האנזים <strong>PEP carboxylase</strong>. הפחמן מאוחסן כחומצה מאלית בוואקואולות. ביום, עם סגירת פיוניות (stomata), מתפרקת החומצה ומשחררת CO₂ לפעילות Calvin Cycle. מנגנון זה מצמצם טרנספירציה בתנאים טרופיים של לחות גבוהה וקרינה חזקה. מבחינה אנרגטית, CAM יעיל פחות מפוטוסינתזה C3, אבל מאפשר לווניל לשרוד בתנאי שוליים שבהם צמחים אחרים מתייבשים.</p>
+    <h3>שורשי אוויר ואחיזה ביוכימית</h3>
+    <p>שורשי האוויר מצופים <strong>velamen</strong> רב שכבתי, מבנה ספוגי שסופג מים ומינרלים מהאטמוספרה. הם מפרישים אקסודטים פוליסכרידיים המאפשרים אחיזה פיזיקלית בעצי תמך. האחיזה אינה אגרסיבית כמו ליאנה; היא מבוססת חיכוך והיצמדות ביוכימית. בגידול מסחרי, עצי תמך מסורתיים כוללים <em>Gliricidia sepium</em> ו-<em>Casuarina equisetifolia</em>. בהודו ובאוגנדה מתנסים בעמודי בטון עם רשתות הצללה, שיטה שמסירה תחרות על מים ומפחיתה העברת מחלות מהעץ לגפן.</p>
+    <div class="ab ab-g">
+        <div class="tg">גזרת מחקר אגרונומית</div>
+        <p>מחקר CIRAD (צרפת, 2022) הראה שזן <strong>Vanilla planifolia var. Tsy Taitra</strong> ממדגסקר מציג עמידות של 40% יותר ל-<em>Fusarium oxysporum</em> בהשוואה לזנים מסורתיים, עם ירידה של 8% בלבד בריכוז ונילין. ההכלאה עם <em>Vanilla pompona</em> מוסיפה עמידות אך משנה את פרופיל הארומה לכיוון פירותי יותר, פחות "קלאסי".</p>
+    </div>
+    <h3>פתוגנים קריטיים</h3>
+    <p><em>Fusarium oxysporum f. sp. vanillae</em> גורם לריקבון שורש מערכתי, המחלה ההרסנית ביותר בגידול וניל. <em>Phytophthora capsici</em> תוקף גבעולים ויוצר נמק שחור מתפשט. <em>Colletotrichum gloeosporioides</em> גורם לאנתרקנוזה בעלים ובתרמילים צעירים. <strong>Cymbidium Mosaic Virus (CymMV)</strong> מתפשט דרך מגע כלים, גורם לחיוורון עלים וירידת 30-50% ביבול.</p>
+    <p>נגיעות של <strong>25-30 אחוז</strong> בשדה של 20 הקטר במדגסקר מתורגמת לאובדן של עשרות טונות יבול. בענף שבו היצע עולמי הוא כ-7,500 טון בלבד, שדה אחד שנדבק הוא תזוזת מחיר גלובלית. אין חומר הדברה רשום ספציפית ל-Fusarium בווניל; הטיפול הוא מניעתי בלבד: ניקוז, חומר שתילה נקי, וחיטוי כלים.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: מהגליקוזיד אל הארומה</h2>
+    <p class="dc">התרמיל הירוק כמעט חסר ריח. זה הפרדוקס המרכזי של הווניל: הסחורה הארומטית ביותר בעולם לא מריחה כלום לפני עיבוד. הוונילין החופשי אינו קיים בכמות משמעותית בתרמיל טרי. הצורה הדומיננטית היא <strong>Glucovanillin</strong>, גליקוזיד שבו ונילין קשור לגלוקוז דרך קשר β-glycosidic.</p>
+    <h3>Enzymatic Hydrolysis: שחרור הארומה</h3>
+    <p>בשלב ההזעה (Sweating) מתרחש התהליך הקריטי. שבירת דופן תאית וחשיפת הוואקואולות מאפשרת לאנזים <strong>β-glucosidase</strong> לפרק את הקשר הגליקוזידי ולשחרר ונילין חופשי. טמפרטורות של <strong>45-55°C</strong> מאיצות את הפעילות האנזימטית מבלי לדנטור את החלבון. מעל 65°C, האנזים מאבד מבנה תלת-ממדי והפעילות נעצרת. תוצאה: הפרש של 10 מעלות בתהליך העיבוד הוא ההבדל בין תרמיל בינוני למצוין.</p>
+    <h3>ונילין: המולקולה המרכזית</h3>
+    <p><strong>ונילין</strong>, C₈H₈O₃, משקל מולקולרי 152.15 g/mol. אלדהיד ארומטי עם טבעת בנזנית, קבוצת הידרוקסיל וקבוצת מתוקסי. ריכוז בתרמיל מדגסקר איכותי <strong>1.8-2.4%</strong> ממשקל יבש. בטהיטי <strong>1.2-1.7%</strong>. במקסיקו <strong>1.5-2.0%</strong>. הריכוז תלוי בזן, באקלים, בעיתוי הקצירה ובתהליך העיבוד.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">C₈H₈O₃</div><div class="nu">נוסחה מולקולרית</div><div class="nl">ונילין</div></div>
+        <div class="ni"><div class="nv">152.15</div><div class="nu">g/mol</div><div class="nl">משקל מולקולרי</div></div>
+        <div class="ni"><div class="nv">1.8-2.4%</div><div class="nu">ונילין</div><div class="nl">מדגסקר Grade A</div></div>
+        <div class="ni"><div class="nv">250+</div><div class="nu">תרכובות ארומטיות</div><div class="nl">בתרמיל טבעי</div></div>
+        <div class="ni"><div class="nv">95%</div><div class="nu">ונילין סינתטי</div><div class="nl">מסך הייצור העולמי</div></div>
+        <div class="ni"><div class="nv">×30-40</div><div class="nu">פער מחיר</div><div class="nl">טבעי מול סינתטי</div></div>
+    </div>
+    <h3>תרכובות משניות ואנליזה</h3>
+    <p>בנוסף לוונילין מזוהים: <strong>vanillic acid</strong> (נותן מרירות עדינה), <strong>p-hydroxybenzaldehyde</strong> (ניחוח שקדי), <strong>guaiacol</strong> (מעושן), <strong>anisyl alcohol</strong> ו-<strong>creosol</strong>. שילוב התרכובות המשניות הוא שמבדיל בין ונילין סינתטי (מולקולה אחת, טעם חד-ממדי) לבין תמצית וניל טבעית (250 תרכובות, עומק אורגנולפטי). האנליזה הסטנדרטית: <strong>GC-MS</strong> לזיהוי תרכובות נדיפות, <strong>HPLC</strong> לכימות ונילין ומרקרים.</p>
+    <p>יחס איזוטופי <strong>¹³C/¹²C</strong> נמדד ב-IRMS (Isotope Ratio Mass Spectrometry) כדי להבחין בין מקור ביוסינתטי לטבעי. ונילין מצמח מציג δ¹³C טיפוסי של <strong>-19 עד -22‰</strong>. ונילין מגואיאקול פטרוכימי: <strong>-27 עד -32‰</strong>. ונילין מביוטכנולוגיה (שמרים על גלוקוז): <strong>-10 עד -15‰</strong>. זה הנשק האנליטי נגד זיוף.</p>
+    <div class="ab ab-w">
+        <div class="tg">הממצא הביוכימי של הארכיון</div>
+        <p>כ-95% מהוונילין בעולם מיוצר סינתטית, לרוב מגואיאקול פטרוכימי. מחירו <strong>10-15 דולר לק"ג</strong>. וניל טבעי נע בעשור האחרון בין 120 ל-600 דולר לק"ג. הפער אינו רגשי אלא מולקולרי: תערובת הארומה הטבעית כוללת מעל 250 תרכובות משניות המשפיעות על תפיסת עומק שומן במוצרי חלב, על הניחוח הרב-שכבתי בבישום יוקרה, ועל ה-mouthfeel שלא ניתן לשחזר סינתטית.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: טבלאות, תקנים, ושפת הסוחרים</h2>
+    <p class="dc">בשוק הוניל, שפת האיכות נשענת על שלושה פרמטרים מרכזיים: לחות, אורך, ומראה חיצוני. אבל הפרמטר שבאמת קובע ערך הוא ריכוז הוונילין ליחידת משקל יבש. סוחרים בוחנים גמישות, ברק, וריח. מפרטים כותבים מספרים.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Grade A (Gourmet)</th><th>Grade B (Extract)</th><th>TK (Cuts)</th></tr></thead>
+        <tbody>
+            <tr><td><strong>לחות</strong></td><td>28-35%</td><td>15-25%</td><td>10-20%</td></tr>
+            <tr><td><strong>אורך תרמיל</strong></td><td>16-22 ס"מ</td><td>12-18 ס"מ</td><td>קצר / חתוך</td></tr>
+            <tr><td><strong>פגמים מקס'</strong></td><td>≤5%</td><td>≤15%</td><td>ללא הגבלה</td></tr>
+            <tr><td><strong>ונילין (משקל יבש)</strong></td><td>1.8-2.4%</td><td>1.6-2.2%</td><td>1.4-2.0%</td></tr>
+            <tr><td><strong>שימוש עיקרי</strong></td><td>קולינריה, גורמה</td><td>תמציות, אלכוהול</td><td>תמציות תעשייתיות</td></tr>
+            <tr><td><strong>מחיר סמך (2023)</strong></td><td>$350-420/kg</td><td>$250-320/kg</td><td>$180-260/kg</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>הזנים המסחריים</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>שם מסחרי</th><th>מוצא</th><th>ונילין %</th><th>פרופיל ארומה</th><th>שימוש עיקרי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Madagascar Bourbon</strong></td><td>מדגסקר, ראוניון, קומורו</td><td>1.8-2.4%</td><td>קלאסי, קרמי, עמוק</td><td>סטנדרט עולמי, גלידה</td></tr>
+            <tr><td><strong>Tahitian</strong></td><td>טהיטי, PNG</td><td>1.2-1.7%</td><td>פרחוני, אניס, דובדבן</td><td>שוקולטיירים, בישום</td></tr>
+            <tr><td><strong>Mexican</strong></td><td>ורקרוז, מקסיקו</td><td>1.5-2.0%</td><td>מעושן, חם, עמוק</td><td>קולינריה מסורתית</td></tr>
+            <tr><td><strong>Uganda</strong></td><td>אוגנדה</td><td>1.6-2.2%</td><td>שוקולדי, חמאתי</td><td>שוק מתפתח, תמציות</td></tr>
+            <tr><td><strong>Indonesia</strong></td><td>ג'אווה, באלי</td><td>1.2-1.6%</td><td>עצי, קמעי</td><td>תעשייה, תמציות</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">שיקול מקצועי</div>
+        <p>"Bourbon" אינו מתייחס לוויסקי. זהו השם ההיסטורי של האי ראוניון (Île Bourbon) ומסמן וניל ממדגסקר, ראוניון, קומורו ומאיוט, כל אזור האוקיינוס ההודי. זנים מאוגנדה ומאינדונזיה <strong>אינם</strong> Bourbon, גם אם מדובר באותו Vanilla planifolia, כי ה-terroir שונה. <strong>Tahitian Vanilla</strong> הוא זן נפרד לחלוטין: <em>Vanilla tahitensis</em>, מכלוא היסטורי של planifolia ו-odorata.</p>
+    </div>
+    <p>דווקא <strong>TK</strong> (תרמילים קצרים וחתוכים) עשוי להכיל ריכוז ונילין גבוה יותר ליחידת משקל יבש עקב איבוד מים. עבור יצרן תמציות, ה-ROI הגבוה ביותר מתקבל כאשר עלות לקילוגרם נמוכה וריכוז הוונילין ליחידת מוצק גבוה. זו הסיבה שחברות כמו McCormick ו-Nielsen-Massey רוכשות כמויות גדולות של TK.</p>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: כרונולוגיה תרמית ואנזימטית</h2>
+    <p class="dc">בין תרמיל ירוק על הגפן לבין תרמיל שחור מבריק בקופסת ארז, עוברים 6-9 חודשים של הנדסה ידנית. כל שלב משפיע על הרכב הביוכימי, על ריכוז הוונילין, על צבע, על גמישות, על מחיר. הווניל הוא התבלין עם תהליך העיבוד הארוך ביותר בעולם. אין קיצורי דרך.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">קצירה (Harvesting)</div>
+                <div class="proc-step-body">תרמילים נקצרים 8-9 חודשים אחרי ההפריה, כשהם עדיין ירוקים עם קצה צהוב. קצירה מוקדמת: ריכוז glucovanillin נמוך, תרמיל רזה. קצירה מאוחרת מדי: התרמיל נפתח (splits) ומאבד ערך מסחרי דרסטית. במדגסקר, גנבת תרמילים לפני הבשלה מלאה היא בעיה כלכלית חמורה: חקלאים קוצרים מוקדם מחשש גניבה, ומורידים את איכות כל הענף.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">Killing: הריגת הרקמה</div>
+                <div class="proc-step-body">טבילה במים ב-<strong>63-65°C</strong> למשך <strong>2-3 דקות</strong>. מטרה: עצירת מטבוליזם תאי, התחלת שבירת מבנה תאים ושחרור אנזימים. במקסיקו משתמשים בשיטת שמש ישירה (Sun Killing); בראוניון בשיטת תנור (Oven Killing ב-60°C ל-24 שעות). תוצאות שונות, טעמים שונים. שיטת המים הרותחים של מדגסקר הפכה לסטנדרט בגלל יעילות ועקביות.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">Sweating: ההזעה</div>
+                <div class="proc-step-body">התרמילים נעטפים בשמיכות צמר ומוכנסים לקופסאות עץ סגורות ב-<strong>45-55°C</strong> למשך <strong>7-10 ימים</strong>. זהו השלב הקריטי: β-glucosidase מפרק glucovanillin לוונילין חופשי. הטמפרטורה חייבת להיות מספיק גבוהה לפעילות אנזימטית, ומספיק נמוכה למנוע דנטורציה. בשלב זה התרמיל משנה צבע מירוק לחום כהה.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">Drying: ייבוש</div>
+                <div class="proc-step-body">חשיפה לשמש <strong>2-3 שעות ביום</strong>, למשך <strong>3-4 שבועות</strong>. בערב, התרמילים מוחזרים למבנים סגורים. מטרה: הורדת לחות מ-70% ל-30-35% (Grade A) או ל-15-25% (Grade B). ייבוש מהיר מדי: קרום חיצוני מתקשה והלחות נלכדת בפנים, עובש. ייבוש איטי מדי: סכנת תסיסה לא רצויה שמייצרת ריח חומצי.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">05</div>
+            <div>
+                <div class="proc-step-title">Conditioning: הבשלה</div>
+                <div class="proc-step-body">תיבות עץ ארז סגורות, <strong>20-25°C</strong>, <strong>4-6 חודשים</strong> מינימום. בשלב זה מתרחש חמצון מבוקר של אלדהידים ויצירת קומפלקסים ארומטיים משניים. אסטרים, לקטונים ותרכובות פורנוניות מתפתחים. איבוד משקל כולל מתרמיל ירוק לתרמיל מוגמר: <strong>65-75%</strong>. פעילות מים a<sub>w</sub> נשמרת סביב 0.75-0.80. מעל 0.85 מופיעה נקודת סיכון מיקרוביאלית.</div>
+            </div>
+        </div>
+    </div>
+    <div class="ab ab-r">
+        <div class="tg">נקודת כשל קריטית</div>
+        <p>במדגסקר, לחץ כלכלי גורם לקיצור שלב ה-Conditioning ל-6-8 שבועות במקום 4-6 חודשים. התוצאה: תרמילים בעלי ריח חזק אך חד-ממדי, חסרי העומק שנוצר רק בחמצון ממושך. "Express vanilla" נראה זהה אך נחות באנליזה אורגנולפטית ובניתוח GC-MS. מומחי תעשייה מזהים אותו בריח קרמל שטוח.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות: גבולות, פרוטוקולים, סיכונים</h2>
+    <p class="dc">בניגוד לתבלינים רבים, הסיכון המרכזי בווניל אינו חומרי הדברה אלא עובש, לחות, וזיוף. הווניל הוא מוצר יקר מספיק כדי שזיוף יהיה כלכלי, ולח מספיק כדי שעובש יהיה בלתי נמנע ללא ניהול קפדני.</p>
+    <h3>עובש ומיקוטוקסינים</h3>
+    <p>תרמילי Grade A מכילים <strong>28-35% לחות</strong>, רמה שמאפשרת גדילת <em>Aspergillus</em> ו-<em>Penicillium</em> בתנאי טמפרטורה חמים. a<sub>w</sub> מעל <strong>0.85</strong> הוא סף סיכון. בדיקת אפלטוקסין: <strong>B1 ≤ 5 μg/kg, סה"כ ≤ 10 μg/kg</strong> (EU). OTA (Ochratoxin A): מגבלה של <strong>15 μg/kg</strong> בתקינה אירופית שנכנסה לתוקף 2024. OTA עמיד לחום ולא מתפרק בתהליך הכנת תמצית.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר מיקרוביולוגי</th><th>תקן EU</th><th>תקן FDA</th><th>הערה</th></tr></thead>
+        <tbody>
+            <tr><td><strong>TPC (Total Plate Count)</strong></td><td>≤10⁴ CFU/g</td><td>≤10⁵ CFU/g</td><td>מחמיר מתבלינים יבשים</td></tr>
+            <tr><td><strong>Yeast & Mould</strong></td><td>≤10³ CFU/g</td><td>≤10⁴ CFU/g</td><td>קריטי בלחות גבוהה</td></tr>
+            <tr><td><strong>Salmonella</strong></td><td>Absent/25g</td><td>Absent/25g</td><td>אפס סובלנות</td></tr>
+            <tr><td><strong>אפלטוקסין B1</strong></td><td>≤5 μg/kg</td><td>≤20 ppb סה"כ</td><td>EU מחמיר</td></tr>
+            <tr><td><strong>OTA</strong></td><td>≤15 μg/kg</td><td>אין מגבלה פדרלית</td><td>חדש 2024</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>זיוף: הבעיה הכלכלית</h3>
+    <p>שלוש שיטות זיוף נפוצות: (1) <strong>השריית תרמילים בוונילין סינתטי</strong> להעלאת ריכוז, מזוהה דרך IRMS; (2) <strong>הוספת סוכר או גליצרין</strong> להגדלת משקל, מזוהה דרך ניתוח צפיפות סגולית ו-Brix; (3) <strong>מכירת תרמילים ישנים כחדשים</strong> אחרי ריענון בקיטור, מזוהה בניתוח יחס vanillic acid/vanillin שעולה עם גיל. ב-2019 פורסמו ב-RASFF (EU) שבע התראות על וניל מזויף ממדגסקר. עלות בדיקת IRMS: <strong>200-400 דולר לדגימה</strong>.</p>
+    <h3>שאריות חומרי הדברה</h3>
+    <p>הווניל גדל ברובו ללא חומרי הדברה סינתטיים, אבל זיהום צולב ממטעים סמוכים וממי השקיה מופיע לעיתים. MRL בתקינה אירופית לרוב החומרים: <strong>0.01 mg/kg (LOD)</strong>, חד-משמעי. שיטת עיבוד ה-Sweating ב-55°C אינה מספיקה להרס שאריות פסטיצידים. בדיקת Multi-Residue (GC-MS/MS, LC-MS/MS) מכסה 400+ חומרים בבדיקה אחת. עלות: <strong>120-250 דולר לדגימה</strong>.</p>
+    <div class="ab ab-r">
+        <div class="tg">אזהרת רגולציה</div>
+        <p>ה-EU Regulation 2023/915 עדכן ב-2023 את רשימת המיקוטוקסינים המחייבים בדיקה בתבלינים. וניל נוסף לרשימת המוצרים שדורשים בדיקת OTA שגרתית ביבוא. יבואנים שלא בודקים OTA מסתכנים בעיכוב משלוח של שבועות בגבול.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה: פיזיקה של מכולות ושרשרת קור</h2>
+    <p class="dc">הווניל נסחר בנמלים תחת אבטחה כבדה בשל ערכו. משלוח של 500 ק"ג Grade A שווה 175,000-210,000 דולר, מה שהופך מכולת וניל ליעד גניבה. מעבר לאבטחה, הסיכון הלוגיסטי המרכזי הוא שמירה על לחות יציבה בנסיעה של 30-45 ימים באוקיינוס.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">15-20°C</div><div class="nu">טמפרטורה אידיאלית</div><div class="nl">שינוע</div></div>
+        <div class="ni"><div class="nv">60-70%</div><div class="nu">RH אידיאלית</div><div class="nl">במכולה</div></div>
+        <div class="ni"><div class="nv">0.85</div><div class="nu">a<sub>w</sub> מקס'</div><div class="nl">סף סיכון</div></div>
+    </div>
+    <h3>Container Sweat</h3>
+    <p>כאשר טמפרטורת האוויר בתוך המכולה יורדת מתחת לנקודת הטל, נוצר עיבוי על דפנות הפלדה. הפרש של <strong>15°C</strong> בין יום ללילה בים פתוח יוצר עיבוי מספיק כדי להרטיב שכבות חיצוניות של שקים. תרמילי וניל שנחשפים ללחות נוזלית מפתחים עובש תוך 48-72 שעות.</p>
+    <p>פתרונות: <strong>אריזת ואקום</strong> (PE/PA bags, 100 micron מינימום) בתוך קופסאות קרטון גלי. <strong>Desiccant bags</strong> (סיליקה ג'ל, 500g ליחידה) בתוך המכולה. <strong>Container liner</strong> (בטנת אלומיניום מבודדת) למניעת העברת חום ישירה מדפנות. עלות ה-liner: <strong>80-150 דולר למכולה</strong>, השקעה שמגנה על מטען של מאות אלפי דולרים.</p>
+    <h3>Data Loggers ו-IoT</h3>
+    <p>שימוש ב-Data Loggers וטכנולוגיית IoT מאפשר ניטור רציף של טמפרטורה ו-a<sub>w</sub> במהלך שינוע מנמל Toamasina לאירופה (Antwerp, Hamburg, Le Havre). סטייה של <strong>5% בלחות היחסית</strong> עלולה לגרום לאובדן של <strong>8-12% מערך המטען</strong>. לוגרים מודרניים (כמו Sensitech TempTale או Emerson GO Real-Time) שולחים התראות ב-SMS כאשר נחצה סף מוגדר.</p>
+    <div class="ab ab-w">
+        <div class="tg">בדיקת גמישות</div>
+        <p>מבחן פיזי ראשוני בקבלת סחורה: תרמיל איכותי ניתן <strong>לקשור לקשר</strong> מבלי שיישבר. תרמיל יבש מדי, שביר, שנשבר בכיפוף, מעיד על איבוד לחות בשינוע או על עיבוד לקוי. זהו מבחן שהסוחר עושה ביד, לפני כל ניתוח מעבדה.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות: ונילין מעבר לארומה</h2>
+    <p class="dc">ונילין אינו רק מולקולה ארומטית. בשני העשורים האחרונים, מחקר פרמקולוגי חשף פעילויות ביולוגיות שמרחיבות את הווניל מעבר לקולינריה, אל תחומי הפרמצבטיקה, הנוירולוגיה, והאונקולוגיה. המנגנונים עדיין בשלבי חקירה, אך הממצאים מספיק משמעותיים כדי למשוך מימון מחקרי.</p>
+    <h3>נוגדי חמצון ואנטי-דלקתיות</h3>
+    <p>ונילין מציג פעילות <strong>נוגדת חמצון</strong> משמעותית ב-in vitro: הוא נוטרל רדיקלים חופשיים (DPPH scavenging של 45-60% ב-100 μM) ומעכב peroxidation שומני. מחקר שפורסם ב-<em>Food Chemistry</em> (2020) הראה שונילין ב-50 μM הפחית ייצור <strong>TNF-α ו-IL-6</strong>, ציטוקינים דלקתיים, בתאי מקרופאג' ב-35-40%.</p>
+    <h3>השפעות נוירופרוטקטיביות</h3>
+    <p>מחקרים פרה-קליניים הראו שונילין מעלה רמות <strong>BDNF (Brain-Derived Neurotrophic Factor)</strong> בהיפוקמפוס בעכברים. מחקר ב-<em>Neurochemistry International</em> (2021) הדגים שונילין ב-100 mg/kg הפחית נזק איסכמי מוחי ב-30% במודל שבץ בעכברים. המנגנון המשוער: עיכוב NF-κB pathway ו-downregulation של iNOS.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">45-60%</div><div class="nu">DPPH scavenging</div><div class="nl">100 μM ונילין</div></div>
+        <div class="ni"><div class="nv">35-40%</div><div class="nu">הפחתת TNF-α</div><div class="nl">in vitro, 50 μM</div></div>
+        <div class="ni"><div class="nv">30%</div><div class="nu">הפחתת נזק איסכמי</div><div class="nl">מודל עכברים</div></div>
+    </div>
+    <h3>אפקט אנטי-סרטני: ממצאים ראשוניים</h3>
+    <p>מחקרים ב-<em>Molecular Carcinogenesis</em> (2019) הראו שונילין מעכב שגשוג תאי סרטן מעי גס (HT-29) ב-IC50 של <strong>250 μM</strong>. ונילין מפעיל apoptosis דרך caspase-3 pathway. נגזרת סינתטית, <strong>VES (vanillin-ethanolamine)</strong>, הציגה in vivo עיכוב צמיחת גידול ב-45% בעכברים ללא רעילות כבדית. שלב Phase I טרם החל, אך Sabinsa Corporation הגישה בקשת פטנט ב-2023 לשימוש בנגזרות ונילין כ-drug delivery adjuvant.</p>
+    <div class="ab ab-w">
+        <div class="tg">הקשר הארומתרפי</div>
+        <p>מעבר לפרמקולוגיה, ריח הווניל הוכח כ<strong>מפחית חרדה</strong>. מחקר קליני (Journal of Applied Behavior Analysis, 2018) הראה שחשיפה לריח ונילין הפחיתה גירוי מערכת SNS (Sympathetic Nervous System) ב-22% אצל פגים ביחידות טיפול נמרץ. ביפן, diffusers של ונילין משמשים בבתי חולים כתוסף טיפולי סביבתי.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק עולמי, מחירים, מגמות 2026</h2>
+    <p class="dc">שוק הווניל הטבעי העולמי מוערך ב-<strong>2.5-3.0 מיליארד דולר</strong> (2024), עם תחזית ל-4.2 מיליארד עד 2030. אבל מעבר למספרים, מבנה השוק מוגדר על ידי תלות קיצונית במדגסקר, תנודתיות מחיר חריגה, ופער עצום בין ביקוש לטבעי לבין יכולת ייצור.</p>
+    <div class="cb">
+        <div class="ct">חלוקת ייצור וניל טבעי עולמי 2024 (% מסך הכמות)</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇲🇬</span><span class="pb-name">מדגסקר</span></div><div class="pb-track"><div class="pb-fill" data-w="73" style="background:#8B6340"></div></div><span class="pb-pct">73%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇩</span><span class="pb-name">אינדונזיה</span></div><div class="pb-track"><div class="pb-fill" data-w="10" style="background:#6E4A28"></div></div><span class="pb-pct">10%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇺🇬</span><span class="pb-name">אוגנדה</span></div><div class="pb-track"><div class="pb-fill" data-w="5" style="background:#C4A060"></div></div><span class="pb-pct">5%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇲🇽</span><span class="pb-name">מקסיקו</span></div><div class="pb-track"><div class="pb-fill" data-w="4" style="background:#9E7A50"></div></div><span class="pb-pct">4%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇵🇫</span><span class="pb-name">טהיטי/PNG</span></div><div class="pb-track"><div class="pb-fill" data-w="3" style="background:#7D5A38"></div></div><span class="pb-pct">3%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="5" style="background:#DDD6CA"></div></div><span class="pb-pct">5%</span></div>
+        </div>
+        <div class="pb-note">נתוני FAO 2024 · OEC · Eurostat · סה"כ ייצור עולמי: ~7,500 טון</div>
+    </div>
+    <h3>דינמיקת מחיר 2014-2026</h3>
+    <p>מחיר וניל מדגסקר Grade A (FOB Toamasina): ב-2014 עמד על כ-<strong>$80/kg</strong>, מחיר שנחשב נמוך כלכלית לחקלאי. ב-2016-2017 עלייה חדה לאחר ציקלון <strong>Enawo</strong> (מרץ 2017) שהשמיד כ-30% מיבול SAVA Region. ב-2018 נרשם שיא של <strong>$600/kg</strong>. מחיר זה חייב פרופורציה: וניל נסחר ביוקר מכסף. ב-2019-2022 ירידה הדרגתית עם התאוששות יבולים. ב-2023 התייצבות סביב <strong>$250-380/kg</strong> לפי grade. תחזית 2026: <strong>$200-350/kg</strong>, בכפוף לעונת ציקלונים.</p>
+    <div class="pull">
+        <p>מדגסקר מחזיקה 73% מהייצור העולמי. כל ציקלון, כל שינוי בדונג-ארירי, כל הפיכה פוליטית, מזיז את המחיר העולמי. זו לא תנודתיות. זה סיכון מבני של כל ענף שתלוי במדינה אחת באוקיינוס סוער.</p>
+    </div>
+    <h3>צריכה עולמית</h3>
+    <p>ארה"ב ותעשיית הגלידה/מוצרי חלב: <strong>~30%</strong> מהצריכה העולמית. אירופה (צרפת, גרמניה, בריטניה): <strong>~25%</strong>. אסיה בעלייה מתמדת, בעיקר יפן וסין. תעשיית הבישום (Symrise, Givaudan, IFF) צורכת כ-<strong>15%</strong>. שוק ה-"clean label" וה-"natural flavoring" דוחף ביקוש לוניל טבעי גם כשהמחיר גבוה פי 30-40 מסינתטי.</p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית: ביוסינתזה, רגולציה, ושוק 2030</h2>
+    <p class="dc">הווניל של 2026 נמצא בצומת טכנולוגי. ביוסינתזה מאתגרת את הגדרת "טבעי". רגולציה אירופית מחמירה סימון. אקלים משתנה מאיים על מדגסקר. הדור הבא של תעשיית הווניל לא ייראה כמו הנוכחי.</p>
+    <h3>ביוסינתזה: ונילין מתסיסה</h3>
+    <p>חברות כמו <strong>Evolva</strong> (שוויץ) ו-<strong>Solvay</strong> (בלגיה) מייצרות ונילין בתסיסה תעשייתית: שמרים מהונדסים (<em>Saccharomyces cerevisiae</em>) ממירים גלוקוז לוונילין דרך שביל מטבולי מהונדס. מחיר: <strong>$30-60/kg</strong>, זול פי 5-10 מטבעי, יקר פי 3-5 מסינתטי. היתרון: סיווג "Natural Flavor" ב-FDA (21 CFR 101.22), כי המקור הוא תסיסה ביולוגית. החיסרון: הרגולציה האירופית (EC 1334/2008) צפויה להקשיח הגדרות עד 2026, ולחייב סימון "bio-engineered" נפרד מ-"natural".</p>
+    <h3>Precision Fermentation ו-Cell Culture</h3>
+    <p>מעבר לשמרים, חברת <strong>Conagen</strong> (ארה"ב) פיתחה תהליך enzymatic conversion ישיר של ferulic acid לוונילין בביו-ריאקטור, ללא אורגניזם חי. ריכוז ונילין בתוצר: <strong>15-20 g/L</strong>, גבוה פי 10 מתסיסה קלאסית. זו לא עוד חלופה; זו טכנולוגיה שיכולה להציף את שוק ה-"natural vanillin" בכמויות שהמדינות המייצרות לא יכולות להתחרות בהן.</p>
+    <div class="ab ab-w">
+        <div class="tg">אתגר רגולטורי 2026</div>
+        <p>ה-EU צפוי להשלים ב-2026 את תיקון <strong>EC 1334/2008</strong> שיגדיר שלוש קטגוריות: <strong>Natural Vanilla Extract</strong> (מתרמיל בלבד), <strong>Natural Vanillin</strong> (מתסיסה ביולוגית), <strong>Nature-Identical Vanillin</strong> (סינתטי). חוסר הבחנה ברגולציה הנוכחית מאפשר ל-"natural vanillin" מתסיסה לשבת לצד תמצית טבעית. ההפרדה תשנה דינמיקת מחיר ותיצור שלוש שכבות שוק ברורות.</p>
+    </div>
+    <h3>שינויי אקלים וסיכון מדגסקר</h3>
+    <p>תדירות ציקלונים טרופיים באוקיינוס ההודי עולה. מחקר של <em>Nature Climate Change</em> (2022) חזה עלייה של <strong>20-30%</strong> בעוצמת ציקלונים קטגוריה 4-5 באזור מדגסקר עד 2050. אזור SAVA, שמייצר כ-80% מהווניל המלגסי, נמצא ישירות בנתיב הציקלונים. בין 2017 ל-2024 פגעו שלושה ציקלונים משמעותיים ביבולי וניל. אלה לא אירועים נדירים; זה הנורמלי החדש.</p>
+    <p>פיזור גאוגרפי הוא האסטרטגיה: אוגנדה הכפילה ייצור בין 2018 ל-2023. הודו (קרלה, Tamil Nadu) מקדמת גידול וניל כחלופה למנגו ולקוקוס. PNG (Papua New Guinea) מרחיבה שטחי Tahitian vanilla. אבל האמת: אף מדינה לא קרובה לשבור את הדומיננטיות של מדגסקר. המומנטום, הידע, ה-terroir, והתשתית כולם שם. לפחות לעשור הקרוב, כל תרמיל שחור שמגיע ללקוח מגיע דרך האי הרביעי בגודלו בעולם.</p>
+    <div class="pull">
+        <p>וניל מתחיל בפרח פתוח שש שעות בלבד. משם הוא עובר דרך מחט במבוק, דרך תסיסה אנזימטית, דרך מכולה רטובה בלילה קר, ומסתיים בחוזה סחורה שמגיב ללחץ ברומטרי מעל האוקיינוס. זה אינו תבלין. זו מערכת ביולוגית וכלכלית שמגיבה לכל שינוי אקלימי, אנזימטי ופוליטי בו זמנית.</p>
+    </div>
+</section>
+
+<div class="ft">
+    ערך ידע מסחרי-מדעי · Blue Star International · 2026<br>
+    מבוסס על נתוני FAO, OEC, Eurostat, CIRAD, ומקורות פתוחים<br>
+    <span style="font-size:11px;color:#AAA59A;">ביוכימיה: Sinha et al. Compr Rev Food Sci Food Saf 2008 · Gallage & Møller, Molecular Plant 2015 · שוק ונתוני ייצור: FAO STAT 2024 · לוגיסטיקה ובקרת איכות: EU Reg 2023/915 · RASFF Notifications 2019-2024</span>
+</div>
+</main>
+
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · VANILLA</footer>
+
+<div class="marquee-container">
+    <div class="marquee-text">וניל · VANILLA PLANIFOLIA · MADAGASCAR · VANILLIN · BOURBON · TAHITI · וניל · VANILLA PLANIFOLIA · MADAGASCAR · VANILLIN · BOURBON · TAHITI · </div>
+</div>
+
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8894A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch');
+    const dots = document.querySelectorAll('.nav-dot');
+    let current = "";
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 300);
+});
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => {
+    dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+            obs.unobserve(e.target);
+        });
+    }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) {
+                        heroSlot.innerHTML = '';
+                        heroSlot.appendChild(makeMedia(heroSrc));
+                    }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

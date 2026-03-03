@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>דובדבן מיובש · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── BLUE STAR OS · PREMIUM DARK THEME v4.0 ── */
+
+:root {
+    --bg: #0A0A0B;
+    --text: #FAF7F0;
+    --body: #D1CEC5;
+    --accent: #8B6340;
+    --warm: #B8894A;
+    --card: rgba(20, 20, 22, 0.4);
+    --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+    background-color: var(--bg);
+    color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    font-size: 18px;
+    line-height: 1.9;
+    overflow-x: hidden;
+    background-image:
+        linear-gradient(rgba(184, 137, 74, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184, 137, 74, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+body::before, body::after {
+    content: ''; position: fixed; width: 600px; height: 600px; border-radius: 50%;
+    filter: blur(120px); z-index: -2; opacity: 0.15; pointer-events: none;
+}
+body::before { background: #8B2020; top: -100px; left: -100px; }
+body::after { background: #5A1828; bottom: 20%; right: -150px; }
+
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+
+.back-btn {
+    position: absolute; top: 40px; left: 40px; z-index: 10; display: flex; align-items: center; gap: 8px;
+    color: var(--text); text-decoration: none; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    opacity: 0.5; transition: 0.3s;
+}
+.back-btn:hover { opacity: 1; color: var(--warm); }
+
+#backToTop {
+    position: fixed; bottom: 30px; left: 30px; width: 40px; height: 40px;
+    background: var(--warm); color: #000; border: none; border-radius: 50%;
+    cursor: pointer; font-size: 18px; display: none; z-index: 1000; transition: 0.3s;
+}
+#backToTop:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(184, 137, 74, 0.4); }
+
+.home-btn {
+    position: fixed; bottom: 30px; right: 30px; background: rgba(20,20,22,.9);
+    border: 1px solid rgba(184,137,74,.3); color: #C9A96E; padding: 10px 16px;
+    border-radius: 30px; text-decoration: none; font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 2px; display: flex; align-items: center; gap: 8px; transition: .3s; z-index: 200;
+}
+.home-btn:hover { background: rgba(184,137,74,.15); border-color: var(--warm); }
+
+.hero { padding: 100px 40px 160px; text-align: center; color: var(--text); position: relative; }
+.hero-k { font-size: 11px; font-weight: 700; letter-spacing: 5px; color: var(--warm); margin-bottom: 20px; text-transform: uppercase; font-family: 'Space Mono', monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre', serif; font-size: 90px; font-weight: 900; line-height: 0.8; margin-bottom: 25px; letter-spacing: -2px; }
+.hero .deck { font-size: 20px; opacity: 0.8; max-width: 650px; margin: 0 auto 40px; font-weight: 300; }
+
+.hero-img-wrap {
+    max-width: 900px; margin: 0 auto -220px; height: 500px; border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow); background: #000; border: 1px solid rgba(255,255,255,0.05);
+}
+.hero-img-wrap video, .hero-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.hero-img-placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; background:#0A0A0B; }
+.hero-img-placeholder span { color:rgba(255,255,255,0.15); font-size:12px; letter-spacing:3px; font-family:'Space Mono',monospace; }
+
+.side-nav { position: fixed; top: 50%; right: 30px; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 12px; }
+.nav-dot { width: 10px; height: 10px; border: 1px solid var(--warm); border-radius: 50%; opacity: 0.3; cursor: pointer; transition: 0.3s; }
+.nav-dot.active { opacity: 1; transform: scale(1.4); background: var(--warm); }
+
+.con { max-width: 800px; margin: 280px auto 100px; padding: 0 24px; position: relative; z-index: 5; }
+.ch {
+    background: var(--card); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+    padding: 50px; border-radius: var(--radius); margin-bottom: 40px;
+    border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
+    color: var(--body);
+}
+.ch::before, .ch::after { content: '+'; position: absolute; font-family: 'Space Mono', monospace; color: var(--warm); font-size: 14px; opacity: 0.4; }
+.ch::before { top: 15px; left: 15px; }
+.ch::after { bottom: 15px; right: 15px; }
+
+.ch h2 { font-family:'Frank Ruhl Libre', serif; font-size: 38px; margin-bottom: 25px; color: var(--text); border-right: 5px solid var(--warm); padding-right: 20px; line-height: 1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre', serif; font-size: 22px; font-weight: 700; color: var(--text); margin: 36px 0 14px; padding-right: 14px; border-right: 3px solid var(--warm); }
+.ch p { margin-bottom: 18px; color: var(--body); }
+.cl { font-size: 10px; font-weight: 700; color: var(--warm); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; display: block; font-family: 'Space Mono', monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre', serif; font-size: 2.8em; font-weight: 900; color: var(--warm); line-height: 1; float: right; margin-left: 8px; }
+em { color: #C4A878; font-style: italic; }
+strong { color: var(--text); }
+
+.ab { padding: 20px 24px; margin: 28px 0; border-radius: 0 8px 8px 0; }
+.ab .tg { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 6px; }
+.ab p { margin: 0; font-size: 16px; line-height: 1.75; }
+.ab-w { background: rgba(184,137,74,0.08); border-right: 4px solid var(--warm); }
+.ab-w .tg { color: var(--warm); }
+.ab-g { background: rgba(90,62,40,0.2); border-right: 4px solid var(--accent); }
+.ab-g .tg { color: #C4A878; }
+.ab-r { background: rgba(184,50,50,0.1); border-right: 4px solid #B83030; }
+.ab-r .tg { color: #E06060; }
+.ab-r p { color: #DDB0B0; }
+
+.vc { background: rgba(30,28,25,0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 22px; margin: 18px 0; }
+.vc .vn { font-family:'Frank Ruhl Libre', serif; font-size: 21px; font-weight: 700; color: var(--text); }
+.vc .vt { font-size: 12px; color: var(--warm); font-weight: 600; margin-bottom: 10px; }
+.vc p { font-size: 16px; line-height: 1.75; margin-bottom: 0; color: var(--body); }
+.vc .vs { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+.vc .vsi { background: rgba(255,255,255,0.04); padding: 6px 12px; border-radius: 5px; font-size: 12px; color: #A09080; }
+.vc .vsi strong { color: var(--text); }
+
+.ng { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 24px 0; }
+.ni { background: rgba(30,28,25,0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 14px; text-align: center; }
+.ni .nv { font-family:'Frank Ruhl Libre', serif; font-size: 26px; font-weight: 700; color: var(--text); }
+.ni .nu { font-size: 13px; color: #A09080; margin-top: 2px; }
+.ni .nl { font-size: 11px; color: var(--warm); margin-top: 3px; font-weight: 600; }
+
+.cb { background: rgba(20,20,22,0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 24px; margin: 28px 0; }
+.cb .ct { font-family:'Frank Ruhl Libre', serif; font-size: 17px; font-weight: 700; margin-bottom: 14px; text-align: center; color: var(--text); }
+.pb-chart { margin: 16px 0 8px; display: flex; flex-direction: column; gap: 10px; }
+.pb-row { display: flex; align-items: center; gap: 10px; }
+.pb-meta { display: flex; align-items: center; gap: 6px; min-width: 120px; justify-content: flex-end; }
+.pb-flag { font-size: 18px; }
+.pb-name { font-size: 13px; color: #A09080; }
+.pb-track { flex: 1; background: rgba(255,255,255,0.08); height: 18px; border-radius: 9px; overflow: hidden; }
+.pb-fill { height: 100%; width: 0; border-radius: 9px; transition: width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.pb-pct { font-family:'Frank Ruhl Libre', serif; font-size: 14px; font-weight: 700; color: var(--text); width: 36px; text-align: left; }
+.pb-note { font-size: 11px; color: #6B6058; opacity: .7; margin-top: 10px; text-align: center; }
+
+.gt { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 15px; border-top: 1px solid rgba(255,255,255,0.05); }
+.gt th { background: rgba(0,0,0,0.5); color: var(--text); padding: 14px; text-align: right; font-size: 12px; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.gt td { padding: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--body); }
+.gt tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+.pull { margin: 40px 0; padding: 45px; background: rgba(0,0,0,0.4); border-radius: var(--radius); text-align: center; border: 1px solid rgba(184,137,74,0.2); }
+.pull p { font-family:'Frank Ruhl Libre', serif; font-size: 22px; font-weight: 500; color: var(--body); line-height: 1.55; margin: 0; font-style: italic; }
+
+.reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.2, 1, 0.2, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+.marquee-container { position: fixed; bottom: -3vh; left: 0; width: 100vw; overflow: hidden; z-index: -1; pointer-events: none; }
+.marquee-text { font-family: 'Playfair Display', serif; font-size: 15vw; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.03); animation: scrollText 40s linear infinite; }
+@keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+.ft { text-align: center; padding: 44px 24px; font-size: 13px; color: #6B6058; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 36px; }
+.inner-ft { background: rgba(0,0,0,0.8); color: var(--text); padding: 60px 20px; text-align: center; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; opacity: 0.6; border-top: 1px solid rgba(255,255,255,0.05); }
+
+.proc-steps { display: flex; flex-direction: column; gap: 20px; margin: 24px 0; }
+.proc-step { display: flex; gap: 20px; align-items: flex-start; }
+.proc-step-num {
+    min-width: 36px; height: 36px; border-radius: 50%;
+    background: var(--warm); color: #000;
+    font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.proc-step-title { font-family: 'Frank Ruhl Libre', serif; font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.proc-step-body { font-size: 16px; color: var(--body); line-height: 1.75; }
+
+.media-slot-inline {
+    width: 100%; aspect-ratio: 16/9; background: var(--card); border-radius: var(--radius);
+    overflow: hidden; margin: 40px 0; border: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center; position: relative;
+}
+.media-slot-inline img, .media-slot-inline video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.92); transition: filter 0.3s; }
+.media-slot-inline:hover img, .media-slot-inline:hover video { filter: brightness(1.05); }
+.media-slot-placeholder { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: rgba(255,255,255,0.1); }
+
+.ch ol, .ch ul { padding-right: 24px; margin: 16px 0 18px; }
+.ch li { margin-bottom: 10px; color: var(--body); line-height: 1.8; }
+.ch ol li::marker { color: var(--warm); font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; }
+.ch ul li::marker { color: var(--warm); }
+
+@media (max-width: 900px) {
+    .side-nav { display: none; }
+    .back-btn { top: 20px; left: 20px; }
+    .hero h1 { font-size: 55px; }
+    .hero-img-wrap { height: 300px; margin-bottom: -100px; }
+    .con { margin-top: 150px; }
+    .ng { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+<div class="marquee-container">
+    <div class="marquee-text">
+        BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · 
+    </div>
+</div>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1"></div>
+    <div class="nav-dot" data-target="ch2"></div>
+    <div class="nav-dot" data-target="ch3"></div>
+    <div class="nav-dot" data-target="ch4"></div>
+    <div class="nav-dot" data-target="ch5"></div>
+    <div class="nav-dot" data-target="ch6"></div>
+    <div class="nav-dot" data-target="ch7"></div>
+    <div class="nav-dot" data-target="ch8"></div>
+    <div class="nav-dot" data-target="ch9"></div>
+    <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+    <a href="../index.html" class="back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-left:6px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>דף הבית</a>
+    <div class="hero-k">ערך ידע חקלאי · Blue Star International</div>
+    <h1 id="sync-title">דובדבן מיובש</h1>
+    <p class="deck" id="sync-desc">סיפורו של הפרי שנסע מחופי הים השחור לרומא בידי גנרל, וממישיגן לעולם בידי חקלאים ששינו את תעשיית הייבוש. מאדום לנצח.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <div class="hero-img-placeholder"><span>SLOT · PRODUCT · HERO</span></div>
+    </div>
+</section>
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>לוקולוס, הגנרל שסחב איתו פרי מהמזרח</h2>
+    <p class="dc">בשנת 74 לפני הספירה, הגנרל הרומי לוציוס לוקולוס הוביל לגיונות לחוף הדרומי של הים השחור. הוא הגיע כדי להלחם במלך מיתרידטס. הוא שב עם פרי. לפי פליניוס הזקן, הגנרל נדהם מהדובדבנים שגדלו ליד העיר הפונטית <em>Cerasus</em>, קרסוס בלטינית, ציווה לארוז ענפים, ולקח אותם לאיטליה. המילה הלטינית <strong>cerasum</strong>, שממנה צמחה המילה cherry, cherry, kirsche, cerise, ו"דובדבן" בעקיפין, היא כולה מורשת של מסע צבאי אחד.</p>
+    <p>אבל לוקולוס לא "גילה" את הדובדבן. הוא מצא עץ שבני אדם טיפחו בחוף הפוני ובאנטוליה לפחות שלושת אלפים שנה לפני הגעתו. ממצאים ארכאולוגיים מגאורגיה ומהמחוז האיראני הנוכחי מתארכים לתקופה שקדמה לו בהרבה. מה שלוקולוס עשה הוא מה שרומא עשתה תמיד: הוא לקח, שינה שם, ורשם בהיסטוריה.</p>
+    <p>מרומא התפשט הדובדבן לכל מחוזות האימפריה. מהשפלה של הריינלנד לגבעות בורגונד, מהאלפים לבריטניה. בימי הביניים גידלו אותו נזירים בנדיקטינים בגינות הנזירייה, ורשמו בכתבי יד את עונות הפריחה ותאריכי הקציר. כשמוחמד השני כבש את קונסטנטינופוליס ב-1453, מצא בגני הטופקאפי גנים שלמים של עצי דובדבן שטיפחו הביזנטים. הוא לא קצץ אותם.</p>
+    <div class="pull"><p>שם עיר אנטולית קטנה, קרסוס, הפך לשם של פרי שאנשים אוכלים היום בשוקולד בלגי, גרנולה קנדית, ועוגות חג בוורשה. פרי שנסע ראשון ברגלי גנרל.</p></div>
+</section>
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>מישיגן, 1960: האנשים שהמציאו את הדובדבן המיובש</h2>
+    <p class="dc">בשנת 1960, לדג' אוֹרצ'ארד, חווה משפחתית קטנה ליד טראוורס סיטי במישיגן, עמד בפני אותה בעיה שניצבה בפני כל מגדל דובדבן: הפרי מתקלקל תוך ימים. כשל בשוק מקומי שבוע לאחר הקציר, ולא ניתן לשלוח אותו מזרחה. יותר מ-30% מהיבול של עמקי מישיגן נזרק כל שנה.</p>
+    <p>הפתרון לא הגיע ממוסד מחקרי אלא מסקרנות מעשית. חקלאים ניסו לייבש דובדבן כמו שמייבשים שזיפים. התוצאות היו קשות, מרות, ולא ניתנות למכירה. הפרי, שרוב מסתו מים, התכווץ לגוש סיבי חסר כל ערך. ואז, בסוף שנות ה-60, הכניסו לתהליך שלב שלא היה קיים בייבוש אחר: <strong>infusion</strong>. הדובדבן, לאחר הוצאת הגלעין, הוטבל בתמיסת סוכר שספחה את הלחות ומילאה את הרקמה. התוצאה: פרי שמר על מרקם, על צבע, ועל חיי מדף של מעל שנה.</p>
+    <div class="ab ab-w">
+        <div class="tg">הנקודה שמרוב שווקים מפספסים</div>
+        <p>הדובדבן המיובש אינו פרי שיובש. הוא פרי שהומצא מחדש. תהליך ה-infusion הוא לא רק שימור, הוא שינוי מהותי של המוצר. זו הסיבה שספק שלא מבין את ההבדל בין "dried" ל-"infused & dried" מספק מוצר שונה, גם אם השם על השקית זהה.</p>
+    </div>
+    <p>תוך עשור הפכה טראוורס סיטי ל-"Cherry Capital of the World". מישיגן מייצרת היום כ-75% מדובדבני הטארט של ארצות הברית, ואורגון משלימה עם 15%. שתי המדינות יחד, עם מספר מועט של מפעלי ייבוש גדולים, בנו תעשייה שכמעט לא קיימת מחוצה לצפון אמריקה בקנה מידה זה.</p>
+</section>
+<div id="slot-inline-2" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_02</div></div>
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>הסאקורה, המלחמה על הדובדבן הלבן</h2>
+    <p class="dc">כשיפנים מדברים על דובדבן, הם לא מדברים על הפרי. הם מדברים על הפרח. הסאקורה, פריחת הדובדבן, היא האירוע השנתי הלאומי החשוב ביותר שאינו יום חג רשמי. מיליוני יפנים יוצאים מדי אפריל לחגיגות <em>hanami</em>, צפייה בפריחה, שורשיה בחצר הקיסרית לפני מעל אלף שנה.</p>
+    <p>אבל פרחי הסאקורה אינם עצי דובדבן מסחריים. זני הפאונד שממהם מגדלים פירות הוסתרו ביפן למאות שנים מאחורי תרבות שהעריכה את היופי הזמני של הפרח יותר מהפרי עצמו. זו הסיבה שיפן, שיש בה אחת מהתרבויות הדובדבן העמוקות בעולם, מייבאת כמעט את כל הדובדבן המיובש שלה מארצות הברית ומאירופה.</p>
+    <div class="ab ab-g">
+        <div class="tg">הזדמנות שוק: יפן</div>
+        <p>שוק הדובדבן המיובש ביפן צומח ב-8% בשנה. הביקוש מגיע בעיקר מתעשיית הממתקים, מחברות גרנולה, ומסגמנט מוצרי הבריאות. מוכר שיכול לספק Montmorency עם תיעוד מקור ותוצאות מלטונין מאושרות, מוצא אוזן קשבת. הקשיים: רגולציית ייבוא קפדנית ודרישת תאריך ייצור ספציפי.</p>
+    </div>
+    <p>ביפן גם התפתחה "מלחמת הדובדבן" השיווקית. בשנות ה-90 נכנסה אמריקה ליפן עם דובדבן טרי בעיקר מוושינגטון. הדובדבן הטרי האמריקאי, גדול, מבריק, אדום-כהה, הפך לסמל סטטוס. קופסת דובדבן טרייה כמתנה לרב, למורה, או לשותף עסקי, מחירה בחנויות תכשיטי הפירות של טוקיו הגיע ל-10,000-30,000 ין. כ-60-200 דולר לקופסה של 24 פירות. לא יישות קומודיטי. כלי לחברות.</p>
+</section>
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>מפת הייצור: מי מגדל, איפה, ובאיזה מחיר</h2>
+    <p class="dc">בעולם הדובדבן המיובש, שלא כמו הפרי הטרי, מפת הייצור מצטמצמת לכמה מרכזים עיקריים. הבנת הגיאוגרפיה היא הבנת מבנה המחיר.</p>
+    <div class="cb">
+        <div class="ct">חלוקת ייצור דובדבן מיובש עולמי</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇺🇸</span><span class="pb-name">ארצות הברית</span></div><div class="pb-track"><div class="pb-fill" data-w="42" style="background:#B8894A"></div></div><span class="pb-pct">42%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇹🇷</span><span class="pb-name">תורכיה</span></div><div class="pb-track"><div class="pb-fill" data-w="28" style="background:#9A7038"></div></div><span class="pb-pct">28%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇷</span><span class="pb-name">איראן</span></div><div class="pb-track"><div class="pb-fill" data-w="10" style="background:#7A5028"></div></div><span class="pb-pct">10%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇱</span><span class="pb-name">צ'ילה</span></div><div class="pb-track"><div class="pb-fill" data-w="9" style="background:#6A4018"></div></div><span class="pb-pct">9%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇬🇷</span><span class="pb-name">יוון ואיטליה</span></div><div class="pb-track"><div class="pb-fill" data-w="6" style="background:#5A3010"></div></div><span class="pb-pct">6%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌐</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="5" style="background:#3A2008"></div></div><span class="pb-pct">5%</span></div>
+        </div>
+        <div class="pb-note">נתונים משוקללים לפי נפח ייצור דובדבן מיובש, 2023-2024</div>
+    </div>
+    <p>ארצות הברית שולטת בסגמנט בזכות תשתית תיעוש מתקדמת: מפעלי pitting אוטומטיים, מערכות infusion מבוקרות, ו-QC אחיד. תורכיה, הגדולה בייצור דובדבן טרי, ממירה עודפים לייבוש אך נופלת בעקביות. צ'ילה היא הכוח הצומח: קציר ינואר-מרץ מספק חלון שאין בו תחרות אמריקאית ישירה.</p>
+    <div class="ab ab-g">
+        <div class="tg">הזדמנות עונתית</div>
+        <p>בין דצמבר למרץ, לאחר שמלאי אמריקאי ממחצית העונה הקודמת מיצה, ולפני שהקציר החדש נכנס, צ'ילה היא ספק ה-spot הכי אטרקטיבי לאירופה. לסוחר שמכיר את מחזור הנפח, זו הנקודה שבה ניתן לסגור מחיר FOB נוח לפני ריצה של ביקוש.</p>
+    </div>
+</section>
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>הזנים: לא כל דובדבן שווה לא כל שוק</h2>
+    <p>בשוק הדובדבן המיובש, הזן אינו עניין אסתטי. הוא קובע את השוק שאפשר לכנס, את המחיר שניתן לבקש, ואת הלקוחות שיחזרו.</p>
+    <div class="vc">
+        <div class="vn">Montmorency</div>
+        <div class="vt">TART CHERRY · הזן של שוק הבריאות</div>
+        <p>הזן הנפוץ ביותר לייבוש בצפון אמריקה. דובדבן בהיר-אדום עם חמיצות גבוהה. לאחר ייבוש עם infusion, מקבל את הפרופיל המוכר. הסיבה לדומיננטיות שלו בשוק הבריאות היא ספציפית: ריכוז האנתוציאנינים הגבוה ביותר בין הזנים, ומקור המלטונין הטבעי הגבוה ביותר בין כל הפירות היבשים.</p>
+        <div class="vs"><span class="vsi">מוצא: <strong>מישיגן, אורגון</strong></span><span class="vsi">עונה: <strong>יוני-יולי</strong></span><span class="vsi">מחיר: <strong>$$</strong></span><span class="vsi"><strong>בריאות, גרנולה</strong></span></div>
+    </div>
+    <div class="vc">
+        <div class="vn">Bing</div>
+        <div class="vt">SWEET CHERRY · הזן של שוק הפרימיום</div>
+        <p>הדובדבן המתוק הקלאסי, כהה עמוק ובשרני. פחות נפוץ כמיובש כי עלות חומר הגלם גבוהה יותר. לאחר ייבוש שומר על מרקם נשיך ועושר טעם שמחפש שוקולטייר שיודע מה הוא עושה. לינדט, Valrhona, ויצרני חטיפי פרימיום הם הקונים הטיפוסיים.</p>
+        <div class="vs"><span class="vsi">מוצא: <strong>וושינגטון, צ'ילה</strong></span><span class="vsi">עונה: <strong>מאי-יוני</strong></span><span class="vsi">מחיר: <strong>$$$</strong></span><span class="vsi"><strong>שוקולד, פרימיום</strong></span></div>
+    </div>
+    <div class="vc">
+        <div class="vn">Marasca</div>
+        <div class="vt">SOUR CHERRY · הזן של השוק האירופי</div>
+        <p>זן מרירות עדינה שמשמש בעיקר לייצור מרשינו ולשוק האירופי המסורתי. ייבוש ישיר פחות נפוץ, אך קיים בשוקי נישה איטלקיים וצרפתיים. עמיד יחסית לעונות גשם, ולכן פחות תנודתי בתפוקה, יתרון של ממש לספק שרוצה עקביות.</p>
+        <div class="vs"><span class="vsi">מוצא: <strong>איטליה, יוון, תורכיה</strong></span><span class="vsi">מחיר: <strong>$$-$$$</strong></span><span class="vsi"><strong>מרשינו, נישה אירופית</strong></span></div>
+    </div>
+</section>
+<div id="slot-inline-3" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_03</div></div>
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>הפרופיל התזונתי: המדע מאחורי הנרטיב</h2>
+    <p class="dc">הדובדבן המיובש הפך לכוכב תזונתי לא בגלל שיווק, אלא בגלל שהמחקר תפס אותו. ריכוז האנתוציאנינים, פיגמנטים אדומים בעלי פעילות נוגדת חמצון, גבוה במיוחד בזן Montmorency, ומחקרים מאוניברסיטת נורת'אמפטון ואחרות קשרו אותו להפחתת דלקת ושיפור שינה.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">282</div><div class="nu">קלוריות</div><div class="nl">ל-100 גרם</div></div>
+        <div class="ni"><div class="nv">67g</div><div class="nu">סוכרים</div><div class="nl">תלוי עיבוד</div></div>
+        <div class="ni"><div class="nv">3.6g</div><div class="nu">סיבים</div><div class="nl">ל-100 גרם</div></div>
+        <div class="ni"><div class="nv">13µg</div><div class="nu">מלטונין טבעי</div><div class="nl">ל-100 גרם</div></div>
+        <div class="ni"><div class="nv">1,200</div><div class="nu">mg אנתוציאנינים</div><div class="nl">ל-100g טרי</div></div>
+        <div class="ni"><div class="nv">3.0g</div><div class="nu">חלבון</div><div class="nl">ל-100 גרם</div></div>
+    </div>
+    <p>המספר שמשנה הכל לסוחר: <strong>13 מיקרוגרם מלטונין</strong> ל-100 גרם. זהו הריכוז הגבוה ביותר בין כל הפירות היבשים, ויותר מכך, זהו מלטונין ממקור טבעי בתקופה שהצרכן הולך למינימום תוספים סינתטיים. ביוני 2023 פרסמה FDA הנחיה שהדקה את הרגולציה על תוספי מלטונין. השוק כולו עשה פנייה לפתרונות מזון-בסיסי. דובדבן מיובש נמצא בדיוק בנקודה הנכונה.</p>
+    <table class="gt">
+        <tr><th>פרמטר</th><th>דובדבן מיובש</th><th>חמוציות</th><th>אוכמניות</th></tr>
+        <tr><td>אנתוציאנינים mg/100g</td><td><strong>1,200+</strong></td><td>96</td><td>840</td></tr>
+        <tr><td>מלטונין µg/100g</td><td><strong>13</strong></td><td>0.1</td><td>2.1</td></tr>
+        <tr><td>מחיר FOB ממוצע $/kg</td><td>5.50-8.00</td><td>4.00-6.00</td><td>9.00-14.00</td></tr>
+    </table>
+    <div class="ab ab-w">
+        <div class="tg">Stark OS · ניתוח שוק</div>
+        <p>דובדבן מיובש ממצב את עצמו כנקודת אמצע אידיאלית: יותר אנתוציאנינים מחמוציות, פחות יקר מאוכמניות. הסוחר החכם לא מוכר אותו כפרי יבש. הוא מוכר אותו כמרכיב functional food עם פרופיל מלטונין מתועד. ההבדל בשיחת מכירה: 30-50% פרמיום.</p>
+    </div>
+</section>
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>שרשרת העיבוד: מה קובע את האיכות</h2>
+    <p>כל שלב בשרשרת משפיע על מה שמגיע לקונה. ספק שמבין את התהליך, ואתה מבין את הספק.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">1</div>
+            <div><div class="proc-step-title">קציר ומיון ראשוני</div><div class="proc-step-body">הדובדבן נקטר ידנית או מכנית (shakers), נשטף ועובר מיון לפי גודל וצבע. פרי פגום נפסל. בשלב זה נקבעת האיכות הבסיסית. מיון רשלני בשלב הזה לא ניתן לתיקון בהמשך.</div></div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">2</div>
+            <div><div class="proc-step-title">הוצאת גלעין (Pitting)</div><div class="proc-step-body">מכונות pitting אוטומטיות. שיעור "pit miss" הוא פרמטר חוזי קריטי. סטנדרט מקובל: לא יותר מ-1 גלעין ל-100 פירות. גלעין שהחמיץ בשוקולד של לינדט הוא לא בעיית QC, הוא תביעה.</div></div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">3</div>
+            <div><div class="proc-step-title">Infusion</div><div class="proc-step-body">הפרי מוטבל בתמיסת סוכר או מיץ תפוחים. זה השלב שהמציאו בשנות ה-60 ושהפך את תעשיית הדובדבן. משך ה-infusion וריכוז התמיסה קובעים את ה-Brix הסופי וחיי המדף. מוצרי "unsweetened" מדלגים על שלב זה, עלותם גבוהה ב-30-50%.</div></div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">4</div>
+            <div><div class="proc-step-title">ייבוש (Drying)</div><div class="proc-step-body">תנורים ב-60-70°C למשך 18-36 שעות עד לחות של 17-19%. אחידות הייבוש קריטית: קצוות יבשים מדי וקריסת מרקם חיצוני מצביעים על בעיית תהליך. ייבוש שמש קיים בנישה אך לא רלוונטי מסחרית.</div></div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">5</div>
+            <div><div class="proc-step-title">ציפוי שמן ו-QC</div><div class="proc-step-body">ציפוי קל בשמן חמניות למניעת הדבקות. בדיקות: Aw, לחות, ספירת גלעינים, מיקרוביולוגיה. סחורה שעוברת אורזת ל-11.34kg (25 lb) או 25kg. חשוב לבקש CoA (Certificate of Analysis) לפני קבלה.</div></div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">6</div>
+            <div><div class="proc-step-title">אחסון ולוגיסטיקה</div><div class="proc-step-body">קירור ב-0-4°C מאריך חיי מדף ל-18-24 חודשים. Reefer container לאירופה: עלות נוספת של $1,500-2,500 אבל ההגנה שווה אותה. דובדבן שמגיע קשה או מגובש עקב אחסון חם, חזר לספק, לא לקונה.</div></div>
+        </div>
+    </div>
+</section>
+<div id="slot-inline-4" class="media-slot-inline"><div class="media-slot-placeholder">MEDIA_04</div></div>
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>שימושים ושווקים: ארבעה שוקים, ארבעה תמחורים</h2>
+    <p class="dc">דובדבן מיובש הוא מוצר שמשרת ארבעה שוקים שונים שמעולם לא פוגשים זה את זה. להיות בכולם בו-זמנית זה הגיוני רק אם יש לך ספק ש-QC שלו יכול לעמוד בכל הדרישות.</p>
+    <h3>תעשיית האפייה והממתקים</h3>
+    <p>הסגמנט הגדול ביותר בנפח. מאפיות, שוקולד, trail mix. דרישות: גודל אחיד, מרקם יציב, ספירת גלעינים, תכולת לחות ב-17-19%. מחיר הוא פרמטר ראשי. לינדט, Barry Callebaut, חברות גרנולה כמו KIND, כל אלה קונים בעשרות טון. שוק הנפח.</p>
+    <h3>Functional Food ובריאות</h3>
+    <p>הסגמנט הצומח הכי מהר. <em>Unsweetened Montmorency</em>, <em>organic</em>, ו-<em>Montmorency certified</em>. מחיר גבוה ב-30-50% מהסטנדרט. חברות כמו Cherry Bay Orchards ו-FutureCeuticals בנו מותגים שלמים על הנרטיב. זה השוק שבו פרופיל המלטונין הוא נשק מכירה.</p>
+    <div class="ab ab-r">
+        <div class="tg">סיכון: organic ללא חוזה</div>
+        <p>שוק ה-spot לדובדבן organic קטן ולא נזיל. קניית Montmorency organic ללא קונה מאושר מראש היא הימור. הפרמיה אמיתית, 40-60%, אבל היא פועלת רק לו מוכרים אותה לאיש הנכון.</p>
+    </div>
+    <h3>Private Label וקמעונאות</h3>
+    <p>Whole Foods, Trader Joe's, REWE, Sainsbury's. פרמיום על אריזה, תיעוד מקור, ותקן אורגני. נפחים בינוניים, מרווח טוב. אבל: דדליין שלא עמדת בו לרשת אירופית בחג המולד = חוזה שנתי אבוד.</p>
+    <h3>תעשיית המשקאות</h3>
+    <p>מיץ דובדבן, smoothies, functional drinks. כאן הדובדבן נמכר גם כעיסה (puree) וגם מיובש לשחזור. דרישות אסתטיות נמוכות, נפח גדול, מחיר תחרותי. לקוח של שוק זה לא ישלם פרמיום לגודל אחיד.</p>
+    <div class="pull"><p>שוק הדובדבן המיובש הוא אחד מהמוצרים הבודדים שבו הנרטיב הבריאותי, הטעם, והמחיר נפגשים בנקודה שהצרכן מוכן לשלם עליה. זה לא מקרה. זה מלטונין.</p></div>
+</section>
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>פרמטרי QC ואחסון: מה לבדוק לפני שחותמים</h2>
+    <p class="dc">קבלת קונטיינר דובדבן מיובש ללא בדיקה היא הימור. להלן הפרמטרים שמהווים את ה-checklist הסטנדרטי.</p>
+    <table class="gt">
+        <tr><th>פרמטר</th><th>ערך מקובל</th><th>הערה</th></tr>
+        <tr><td>תכולת לחות (Moisture)</td><td>17-19%</td><td>מעל 20%: סיכון עובש. מתחת 15%: מרקם קשה</td></tr>
+        <tr><td>Water Activity (Aw)</td><td>0.60-0.65</td><td>מעל 0.70: סיכון ביולוגי</td></tr>
+        <tr><td>Pit Count</td><td>מקסימום 1/100</td><td>פרמטר חוזי. דרוש ספירה מרובת דגימות</td></tr>
+        <tr><td>Brix (מתיקות)</td><td>55-70°Bx</td><td>תלוי ב-infusion. unsweetened: 35-45°Bx</td></tr>
+        <tr><td>SO₂</td><td>מקסימום 100 ppm</td><td>נדרש בתקן EU לשמירת צבע</td></tr>
+        <tr><td>Yeast &amp; Mold</td><td>מקסימום 100 CFU/g</td><td>בדיקה מיקרוביולוגית סטנדרטית</td></tr>
+        <tr><td>E.Coli</td><td>Negative</td><td>חובה. לא למשא ומתן</td></tr>
+        <tr><td>Pesticide Residues</td><td>לפי שוק יעד</td><td>EU: MRL directive. יפן: תקנים שונים</td></tr>
+    </table>
+    <div class="ab ab-r">
+        <div class="tg">אזהרה מעשית</div>
+        <p>דובדבן שנאחסן בחום מפתח clumping, גושי סוכר. לא בהכרח פסול בטיחותית, אבל לא מקובל לייצור תעשייתי ויוחזר. בדוק אחסון לפני שמזמינים QC כימי. ספק שלא יכול לאשר תנאי אחסון בכתב, ספק בעייתי.</p>
+    </div>
+    <h3>טווחי מחיר FOB 2024</h3>
+    <table class="gt">
+        <tr><th>מוצר</th><th>FOB ($/kg)</th><th>הערה</th></tr>
+        <tr><td>Montmorency conventional, infused</td><td>5.50 - 7.50</td><td>סטנדרט שוק</td></tr>
+        <tr><td>Montmorency, unsweetened</td><td>8.00 - 11.00</td><td>פרמיום 30-50%</td></tr>
+        <tr><td>Montmorency, organic</td><td>10.00 - 15.00</td><td>דורש חוזה מוכן</td></tr>
+        <tr><td>Bing (sweet cherry)</td><td>7.00 - 12.00</td><td>תלוי זן ויעד</td></tr>
+        <tr><td>תורכי/איראני, bulk</td><td>4.00 - 6.00</td><td>מחיר נמוך, QC לא אחיד</td></tr>
+    </table>
+</section>
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>מה שסוחר צריך לדעת: חמש נקודות, לא יותר</h2>
+    <p class="dc">עשרה פרקים, ועכשיו לעיקר. דובדבן מיובש הוא מוצר עם פוטנציאל אמיתי, אבל עם מספיק מורכבות שכניסה ללא הכנה תהיה יקרה.</p>
+    <p><strong>1. זן הוא לא פרט, זן הוא שוק.</strong> Montmorency ו-Bing הם שני מוצרים שמוכרים ללקוחות שונים לגמרי. לא תמיד אפשר לתחלף ביניהם. אל תניח שכל "דובדבן מיובש" עונה לדרישה.</p>
+    <p><strong>2. Pit count הוא עניין משפטי.</strong> גלעין אחד שלא יצא, שן שנשברת, תביעה. בדוק מספר דגימות, לא אחת. כלול את פרמטר ה-pit count בחוזה עם ערך מספרי מפורש.</p>
+    <p><strong>3. עקוב אחרי NOAA בין מאי ליוני.</strong> גשם בשבוע לפני קציר באורגון = מחיר FOB עולה תוך 4-6 שבועות. זה מידע שלא מקבלים ממוכרים. מקבלים אותו מתחזית מזג אוויר.</p>
+    <p><strong>4. Reefer הוא לא עלות, הוא ביטוח.</strong> דובדבן שמגיע קשה או מגובש חזר למוכר, לא לקונה. לאירופה, reefer הוא בסיס, לא אופציה.</p>
+    <p><strong>5. מלטונין הוא הנשק.</strong> לקוח שמחפש functional ingredient לא מחפש דובדבן, הוא מחפש פרופיל. ציין ריכוז מלטונין בתיעוד, שלח מחקרים. זה ההבדל בין מכירת קומודיטי למכירת פרמיום.</p>
+    <div class="ab ab-w">
+        <div class="tg">Stark OS · עמדת שוק</div>
+        <p>דובדבן מיובש מתאים לסוחר שמכיר לקוחות בתעשיית הבריאות, האפייה, או השוקולד. עם QC מאומת, ספק אמין, ונרטיב functional food מדויק, הוא מייצג מרווחים טובים עם רוח גבית של טרנד שלא מאט. הפרי שנסע עם לוקולוס, ממשיך לנסוע.</p>
+    </div>
+    <div class="pull"><p>מרומא לטראוורס סיטי, מהים השחור לגרנולה של Whole Foods, לדובדבן יש היסטוריה שרוב פירות הנישה לא יגיעו אליה. זה לא מבטיח מכירה, אבל זה נותן לסוחר משהו לספר.</p></div>
+</section>
+<div class="ft">
+    ערך ידע חקלאי · Blue Star International · 2025<br>
+    מבוסס על נתוני USDA, INC ומקורות פתוחים<br>
+    <span style="font-size:11px;color:#AAA59A;">נתוני תזונה: USDA FoodData Central · נתוני ייצור: INC Statistical Yearbook 2024 · מחקרי מלטונין: Howatson et al., European Journal of Nutrition</span>
+</div>
+</main>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL &middot; GLOBAL COMMODITY ARCHIVE</footer>
+
+<a href="../index.html" class="home-btn">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8894A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  <span>ספרייה</span>
+</a>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch');
+    const dots = document.querySelectorAll('.nav-dot');
+    let current = '';
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+    const btt = document.getElementById('backToTop');
+    btt.style.display = window.scrollY > 300 ? 'block' : 'none';
+};
+document.querySelectorAll('.nav-dot').forEach(dot => {
+    dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+            obs.unobserve(e.target);
+        });
+    }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    const dbName = 'StarkOS_DB';
+    const productId = 'dried-cherry';
+    function syncProductPage() {
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src; el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); }
+                    [['slot-inline-2', data.media2], ['slot-inline-3', data.media3], ['slot-inline-4', data.media4]].forEach(function([id, src]) {
+                        if (!src) return;
+                        const slot = document.getElementById(id);
+                        if (!slot) return;
+                        slot.innerHTML = '';
+                        slot.appendChild(makeMedia(src));
+                        slot.classList.add('has-media');
+                        slot.classList.remove('media-slot-placeholder');
+                    });
+                };
+            } catch(e) {}
+        };
+    }
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => { card.classList.add('reveal'); observer.observe(card); });
+    }
+    initScrollReveal();
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

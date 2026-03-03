@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0A0A0B; --text: #FAF7F0; --body: #D1CEC5;
+    --accent: #8B6340; --warm: #B8894A;
+    --card: rgba(20,20,22,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background-color: var(--bg); color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9;
+    overflow-x: hidden;
+    background-image: linear-gradient(rgba(184,137,74,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,137,74,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+body::before, body::after {
+    content:''; position:fixed; width:600px; height:600px; border-radius:50%;
+    filter:blur(120px); z-index:-2; opacity:0.15; pointer-events:none;
+}
+body::before { background:var(--warm); top:-100px; left:-100px; }
+body::after { background:#5A3E28; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap {
+    max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden;
+    box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05);
+    background:#0A0A0B; display:flex; align-items:center; justify-content:center;
+}
+.hero-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.hero-img-placeholder { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.hero-img-placeholder span { color:rgba(255,255,255,0.15); font-size:12px; letter-spacing:3px; font-family:'Space Mono',monospace; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch {
+    background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px);
+    padding:50px; border-radius:var(--radius); margin-bottom:40px;
+    border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden;
+}
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; }
+.ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#C4A878; font-style:italic; }
+strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(184,137,74,0.08); border-right:4px solid var(--warm); }
+.ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(90,62,40,0.2); border-right:4px solid var(--accent); }
+.ab-g .tg { color:#C4A878; }
+.ab-r { background:rgba(184,50,50,0.1); border-right:4px solid #B83030; }
+.ab-r .tg { color:#E06060; }
+.ab-r p { color:#DDB0B0; }
+.vc { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:22px; margin:18px 0; }
+.vc .vn { font-family:'Frank Ruhl Libre',serif; font-size:21px; font-weight:700; color:var(--text); }
+.vc .vt { font-size:12px; color:var(--warm); font-weight:600; margin-bottom:10px; }
+.vc p { font-size:16px; line-height:1.75; margin-bottom:0; }
+.vc .vs { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.vc .vsi { background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:5px; font-size:12px; color:#A09080; }
+.vc .vsi strong { color:var(--text); }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A09080; margin-top:2px; }
+.ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.cb { background:rgba(20,20,22,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px; margin:28px 0; }
+.cb .ct { font-family:'Frank Ruhl Libre',serif; font-size:17px; font-weight:700; margin-bottom:14px; text-align:center; color:var(--text); }
+.pb-chart { margin:16px 0 8px; display:flex; flex-direction:column; gap:10px; }
+.pb-row { display:flex; align-items:center; gap:10px; }
+.pb-meta { display:flex; align-items:center; gap:6px; min-width:120px; justify-content:flex-end; }
+.pb-flag { font-size:18px; }
+.pb-name { font-size:13px; color:#A09080; }
+.pb-track { flex:1; background:rgba(255,255,255,0.08); height:18px; border-radius:9px; overflow:hidden; }
+.pb-fill { height:100%; width:0; border-radius:9px; transition:width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.pb-pct { font-family:'Frank Ruhl Libre',serif; font-size:14px; font-weight:700; color:var(--text); width:36px; text-align:left; }
+.pb-note { font-size:11px; color:#6B6058; opacity:.7; margin-top:10px; text-align:center; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; border-top:1px solid rgba(255,255,255,0.05); }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(184,137,74,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.03); animation:scrollText 40s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#6B6058; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(184,137,74,0.4); }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(20,20,22,0.85); border:1px solid rgba(184,137,74,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+.home-btn:hover { background:rgba(184,137,74,0.15); }
+@media (max-width:900px) {
+    .side-nav { display:none; }
+    .hero h1 { font-size:55px; }
+    .hero-img-wrap { height:300px; margin-bottom:-100px; }
+    .con { margin-top:150px; }
+    .ng { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+<title>ציפורן · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות ובקרת איכות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="פיזיולוגיה ובריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="טכנולוגיה עתידית"></div>
+</nav>
+
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">ציפורן</h1>
+    <p class="deck" id="sync-desc">כפתור הפרח שלא נפתח. מאיי המולוקות דרך מלחמות הולנדיות ועד לתעשיית הקרטק האינדונזית, ביוכימיה של אאוגנול, והאנטיספטי החזק ביותר בטבע.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <div class="hero-img-placeholder">
+            <span>CLOVES · Syzygium aromaticum</span>
+            <span style="font-size:9px;opacity:0.5;">MEDIA SLOT · HERO</span>
+        </div>
+    </div>
+</section>
+
+<div class="marquee-container">
+    <div class="marquee-text">SYZYGIUM AROMATICUM · EUGENOL · MOLUCCAS · ZANZIBAR · CLOVES · SYZYGIUM AROMATICUM · EUGENOL · MOLUCCAS · ZANZIBAR · CLOVES · </div>
+</div>
+
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: המסמר שהפך לאימפריה</h2>
+    <p class="dc">הציפורן (<em>Syzygium aromaticum</em>) היא לא זרע, לא קליפה, לא עלה. היא ניצן פרח שנקטף רגע לפני שנפתח. רגע הקטיף הזה, הספציפי עד שעות, הוא מה שהופך את הציפורן לתבלין הדרמטי ביותר בטבע: אם הניצן נפתח ופורח, הוא מאבד את מרבית שמנו האתרי והופך חסר ערך מסחרי. כל ההיסטוריה של הציפורן, מאיי המולוקות ועד לתעשיית הקרטק האינדונזית, נבנתה על התזמון הזה.</p>
+    <p>מקור הציפורן הוא באיי המולוקות (<strong>Maluku Islands</strong>) שבמזרח אינדונזיה, שנודעו בשם "איי התבלינים". ממצאים ארכיאולוגיים בסוריה מתארכים שימוש בציפורן כבר ב-<strong>1721 לפנה"ס</strong>. בסין של שושלת האן, בני חצר הקיסר נדרשו ללעוס ציפורן לפני פניה לשליט, כדי לרענן את הנשימה. במסגרת סחר התבלינים של האוקיינוס ההודי בימי הביניים, הציפורן נסחרה לצד פלפל וקינמון כמוצר יוקרה ששוויו עלה על שוויו של הזהב ביחס למשקל.</p>
+    <p>המילה <em>Clove</em> באנגלית נגזרת מהלטינית <strong>clavus</strong> (מסמר), בשל צורת הניצן היבש. בצרפתית: <em>clou de girofle</em>. בעברית, "ציפורן" משקפת אותה אנלוגיה מורפולוגית. הניצן היבש, חום כהה, קשיח, בעל ארבע עלי גביע נפרשים וכדור מרכזי סגור של ארבע כותרות, נראה כמסמר עתיק. האנלוגיה הזו חוצה תרבויות ושפות.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>במאה ה-17, חברת הודו המזרחית ההולנדית (<strong>VOC</strong>) ניהלה מונופול אלים על סחר הציפורן. כדי לשמור על מחירים גבוהים, הם עקרו עצי ציפורן באיים שלמים והשמידו מלאי עודף. ב-1770, הצרפתי <strong>Pierre Poivre</strong> הבריח שתילי ציפורן לאיל דה פראנס (מאוריציוס), שבר את המונופול ההולנדי, ופתח את הדרך לגידול בזנזיבר ומדגסקר. מעשה הברחה בודד שינה את גיאוגרפיית הייצור העולמית לצמיתות.</p>
+    </div>
+    <p>מבחינה בוטנית, עץ הציפורן שייך למשפחת ההדסיים (<em>Myrtaceae</em>). הוא ירוק עד, מגיע לגובה <strong>8 עד 12 מטרים</strong>, עם עלים גדולים מבריקים ופרחים ארגמניים המסודרים באשכולות קצה. העץ מתחיל להניב ניצנים אחרי <strong>4 עד 5 שנים</strong> ויכול להמשיך להניב למשך <strong>100 שנה ומעלה</strong>. אורך חיים כזה הופך כל עץ לנכס בין-דורי: סבא נוטע, נכד קוטף. כיום, הציפורן היא התבלין השלישי בערך הסחר העולמי אחרי פלפל שחור ווניל, עם שוק עולמי המוערך ב-<strong>6 מיליארד דולר ב-2026</strong>.</p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: הפיזיולוגיה של האקלים הימי</h2>
+    <p class="dc">עץ הציפורן הוא צמח קפריזי שדורש סביבה ספציפית מאוד: אקלים טרופי ימי, קרבה לים, לחות גבוהה, וקרקע וולקנית עשירה. הוא אינו סובל יובש ממושך, לא מצליח בגבהים מעל <strong>300 מטר</strong>, ורגיש לרוחות חזקות שעלולות לשבור ענפים עמוסי ניצנים. הדרישה לאקלים ימי מסבירה מדוע הייצור מרוכז באיים: אינדונזיה, מדגסקר, זנזיבר (טנזניה), קומורו.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">20-30°C</div><div class="nu">טמפרטורה אידיאלית</div><div class="nl">שוויון יום-שנה</div></div>
+        <div class="ni"><div class="nv">70-90%</div><div class="nu">RH נדרשת</div><div class="nl">קריטי</div></div>
+        <div class="ni"><div class="nv">1,500-2,500</div><div class="nu">מ"מ גשם/שנה</div><div class="nl">אופטימלי</div></div>
+    </div>
+    <h3>מחזור צמיחה ופנולוגיה</h3>
+    <p>עונת הקטיף באינדונזיה מתחלקת לשתי תקופות: <strong>פברואר עד אפריל</strong> (עונה ראשונה) ו-<strong>ספטמבר עד נובמבר</strong> (עונה שנייה). במדגסקר, עונת הקטיף העיקרית נמשכת מ-<strong>ספטמבר עד מרץ</strong>. הניצנים מתחילים כירוקים חיוורים, עוברים לירוק כהה, ולבסוף הופכים ל-<strong>ורוד-אדמדם</strong> כשהם מוכנים לקטיף. החלון לקטיף אופטימלי צר: <strong>48 עד 72 שעות</strong> בין הופעת הגוון הוורוד לבין פריחה מלאה. קטיף מוקדם מדי נותן ניצנים דלים בשמן; קטיף מאוחר מדי נותן "ציפורן פרוחה" (<em>Blown Cloves</em>) חסרת ערך.</p>
+    <p>הקטיף מתבצע <strong>ידנית לחלוטין</strong>, מסולמות גבוהים, תוך סיכון של נפילה. עובד מנוסה קוטף <strong>3 עד 5 ק"ג ניצנים טריים ביום</strong>. יחס ייבוש: <strong>4:1</strong> עד <strong>5:1</strong>, כלומר 4 עד 5 ק"ג ניצנים טריים מניבים 1 ק"ג ציפורן יבשה. תפוקה ממוצעת לעץ בוגר: <strong>3 עד 5 ק"ג ציפורן יבשה בשנה</strong>, אך עצים מבוגרים ובריאים יכולים להניב עד <strong>20 ק"ג</strong>.</p>
+    <div class="ab ab-g">
+        <div class="tg">אתגר אגרונומי</div>
+        <p>עצי ציפורן מציגים תופעת <strong>Alternate Bearing</strong> (נשיאה לסירוגין): שנה של יבול גבוה מלווה בשנה של יבול נמוך. התופעה קשורה לדלדול מאגרי פחמימות בעץ. תכנון מלאי חייב להתחשב במחזוריות הזו. בנוסף, סופות ציקלון באוקיינוס ההודי (מדגסקר, קומורו) עלולות להרוס מטעים שלמים. ציקלון <strong>Batsirai</strong> (פברואר 2022) גרם לנזק של <strong>40%</strong> מהיבול במדגסקר.</p>
+    </div>
+    <h3>פתוגנים ומזיקים</h3>
+    <p><em>Sumatra Disease</em> (נגרמת על ידי <em>Ralstonia syzygii</em>): המחלה ההרסנית ביותר, גורמת להתייבשות פתאומית ומוות של העץ תוך <strong>שבועות עד חודשים</strong>. אין טיפול יעיל. מתפשטת באמצעות חרקים מוצצים (<em>Hindola</em>). מחלה זו מהווה איום קיומי על מטעים באינדונזיה. <em>Cylindrocladium quinqueseptatum</em>: ריקבון עלים, בעיה קריטית בשתילנות צעירות. בזנזיבר, מחלה לא מזוהה פגעה ביותר מ-<strong>500,000 עצים</strong> באזור Unguja North בשנים האחרונות, מה שמדאיג את שוק הציפורן העולמי.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: שלטון האאוגנול</h2>
+    <p class="dc">אין תבלין בטבע שנשלט על ידי מולקולה אחת כמו הציפורן. <strong>אאוגנול</strong> (Eugenol, <em>4-allyl-2-methoxyphenol</em>, C₁₀H₁₂O₂) מהווה <strong>70 עד 90%</strong> מהשמן האתרי של ניצן הציפורן. זהו ריכוז חסר תקדים: בפלפל שחור, הפיפרין מהווה 5 עד 8%; בכמון, ה-Cuminaldehyde 25 עד 35%. באאוגנול, מולקולה פנולית אחת שולטת בכל הביוכימיה.</p>
+    <h3>פרופיל שמן אתרי</h3>
+    <p>הניצנים מכילים <strong>15 עד 20% שמנים אתריים</strong> ממשקל יבש. ריכוז חריג ביחס לכל תבלין אחר (כמון: 2.5 עד 4.5%; פלפל שחור: 1 עד 3%). שלושה מרכיבים מהווים <strong>99%</strong> מהשמן: <strong>אאוגנול</strong> (70 עד 90%), <strong>Eugenyl Acetate</strong> (אצטט אאוגנול, 4 עד 15%), ו-<strong>β-Caryophyllene</strong> (5 עד 14%). מרכיבי עקבות כוללים: Furfural, Vanillin, Methyl-n-amyl ketone, α-Humulene (2%), Gallic acid.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">15-20%</div><div class="nu">שמנים אתריים</div><div class="nl">ממשקל יבש</div></div>
+        <div class="ni"><div class="nv">70-90%</div><div class="nu">אאוגנול</div><div class="nl">מהשמן האתרי</div></div>
+        <div class="ni"><div class="nv">290,283</div><div class="nu">ORAC Score</div><div class="nl">הגבוה בטבע</div></div>
+        <div class="ni"><div class="nv">5-14%</div><div class="nu">β-Caryophyllene</div><div class="nl">אנטי-דלקתי</div></div>
+        <div class="ni"><div class="nv">4-15%</div><div class="nu">Eugenyl Acetate</div><div class="nl">אנטי-ספסטי</div></div>
+        <div class="ni"><div class="nv">2%</div><div class="nu">α-Humulene</div><div class="nl">Sesquiterpene</div></div>
+    </div>
+    <h3>ביוסינתזה של אאוגנול</h3>
+    <p>הנתיב הביוסינתטי מתחיל מחומצת האמינו <strong>Tyrosine</strong>. האנזים TAL (Tyrosine Ammonia Lyase) ממיר אותה ל-p-Coumaric acid, שעוברת הידרוקסילציה ל-Caffeic acid, מתילציה ל-Ferulic acid, רדוקציה ל-Coniferyl alcohol, אצטילציה ל-Coniferyl acetate, ולבסוף האנזים <strong>Eugenol Synthase 1</strong> (בנוכחות NADPH) מייצר את האאוגנול. כל שלב מושפע מתנאי סביבה: לחות, אור, טמפרטורה. ציפורן שגודלה באקלים אופטימלי תכיל ריכוז אאוגנול גבוה יותר.</p>
+    <div class="ab ab-w">
+        <div class="tg">ממצא ביוכימי מרכזי</div>
+        <p>האאוגנול הוא <strong>מעכב MAO</strong> (Monoamine Oxidase Inhibitor), נוגד חמצון רב עוצמה, ואלחוש מקומי טבעי. הוא חוסם תעלות נתרן (Na⁺ channels) בעצבים, מה שמסביר את יעילותו בהקלה על כאבי שיניים. זהו המנגנון הפרמקולוגי שעומד מאחורי אלפי שנות שימוש אמפירי בציפורן לשיכוך כאב. מינון בטוח: <strong>2.5 mg/kg</strong> משקל גוף. מעבר לכך, קיים סיכון לרעילות כבדית.</p>
+    </div>
+    <h3>ORAC: השיא העולמי</h3>
+    <p>ציפורן מחזיקה בדירוג ה-<strong>ORAC</strong> (Oxygen Radical Absorbance Capacity) הגבוה ביותר מבין כל מוצרי המזון: <strong>290,283 μmol TE/100g</strong>. לשם השוואה: אוכמניות מגיעות ל-4,669, תרד ל-1,513. הפער עצום. היכולת האנטי-אוקסידנטית נובעת ממבנה הפנול של האאוגנול, שמאפשר תרומת מימן לנטרול רדיקלים חופשיים. זה הופך את הציפורן לחומר משמר טבעי עוצמתי ביותר.</p>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: הראש השלם והמבחן בכוס מים</h2>
+    <p class="dc">בעולם הציפורן, הדירוג נקבע על ידי שלושה מדדים: אחוז ניצנים שלמים (Head-on), ריכוז שמנים אתריים, ונוכחות חומרים זרים (גבעולים, אמהות, אבק). ניצן שלם, חום-אדמדם כהה, בעל ראש סגור ומוצק, שמזיע שמן כשלוחצים עליו עם הציפורן, הוא ציפורן פרימיום. ניצן שבור, חיוור, או ללא ראש הוא פגום.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Grade 1 / HP</th><th>Grade 2 / FAQ</th><th>תעשייתי</th><th>Stems</th></tr></thead>
+        <tbody>
+            <tr><td><strong>ניצנים שלמים</strong></td><td>≥95%</td><td>≥85%</td><td>≥70%</td><td>N/A</td></tr>
+            <tr><td><strong>לחות מקס'</strong></td><td>12%</td><td>14%</td><td>16%</td><td>14%</td></tr>
+            <tr><td><strong>שמנים אתריים מינ'</strong></td><td>17%</td><td>15%</td><td>12%</td><td>5%</td></tr>
+            <tr><td><strong>Stems מקס'</strong></td><td>≤1%</td><td>≤4%</td><td>≤8%</td><td>100%</td></tr>
+            <tr><td><strong>Blown / Mother מקס'</strong></td><td>≤1%</td><td>≤3%</td><td>≤8%</td><td>N/A</td></tr>
+            <tr><td><strong>מחיר סמך (2024)</strong></td><td>$8,000-12,000/t</td><td>$6,000-8,000/t</td><td>$4,000-6,000/t</td><td>$1,500-2,500/t</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>מונחי המסחר</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מונח</th><th>מוצא</th><th>שמן אתרי</th><th>מאפיין</th><th>שימוש עיקרי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Zanzibar Grade 1</strong></td><td>טנזניה</td><td>17-20%</td><td>ניצנים גדולים, חום-אדום כהה, ראש שלם</td><td>קמעונאות, גורמה</td></tr>
+            <tr><td><strong>Madagascar SG</strong></td><td>מדגסקר</td><td>16-19%</td><td>ניצנים בינוניים, ייבוש שמש מסורתי</td><td>ייצוא, תעשייה, שמן</td></tr>
+            <tr><td><strong>Manado / Sulawesi</strong></td><td>אינדונזיה</td><td>15-18%</td><td>זנים מקומיים, ניצנים קטנים יותר</td><td>קרטק, תעשייה מקומית</td></tr>
+            <tr><td><strong>Comoros</strong></td><td>קומורו</td><td>17-20%</td><td>איכות גבוהה, כמויות קטנות</td><td>פרימיום, שמן אתרי</td></tr>
+            <tr><td><strong>Sri Lanka</strong></td><td>סרי לנקה</td><td>16-18%</td><td>ניצנים בהירים יותר, ארומה עדינה</td><td>מטבח, קמעונאות</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">בדיקת הציפה</div>
+        <p>המבחן הישן ביותר לאיכות ציפורן, המשמש סוחרים לאורך מאות שנים: שלח ציפורן לתוך כוס מים. ציפורן עשירה בשמן <strong>תשקע או תצוף במנח אנכי</strong> (ראש למעלה). ציפורן דלה בשמן <strong>תצוף במנח אופקי</strong> על פני המים. ציפורן שתשקע לגמרי היא האיכותית ביותר. המבחן מבוסס על צפיפות: השמן האתרי כבד מהמים (צפיפות אאוגנול: <strong>1.06 g/cm³</strong>), וניצן עשיר בשמן כבד יותר מניצן ריק.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהניצן הוורוד לשק בנמל</h2>
+    <p class="dc">בין ניצן ורוד על ענף גבוה לבין שק ציפורן סגור במכולה, עוברת שרשרת של פעולות ידניות שכמעט לא השתנתה מאז המאה ה-18. הציפורן היא אחד התבלינים הכי פחות ממוכנים בעולם. הסיבה: שבריריות הניצנים. כל פגיעה מכנית שוברת את הראש ומורידה דרגת איכות.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">קטיף ידני</div>
+                <div class="proc-step-body">הניצנים נקטפים <strong>באשכולות</strong> מסולמות במבוק או טיפוס ישיר. תזמון קריטי: גוון ורוד-אדמדם, לפני פריחה. קטיף מתבצע בשעות הבוקר, כשהניצנים טורגידיים (מלאי מים) ופחות שבירים. עובד מנוסה: <strong>3 עד 5 ק"ג ניצנים טריים ליום</strong>.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">הפרדת גבעולים (Stemming)</div>
+                <div class="proc-step-body">הניצנים מופרדים ידנית מהגבעולים. הגבעולים (<strong>Stems</strong>) נאספים בנפרד, מכילים כ-<strong>5% שמנים אתריים</strong>, ומשמשים בעיקר לזיקוק שמן ציפורן תעשייתי זול. נוכחות גבעולים בציפורן קולינרית נחשבת לפגם איכותי חמור.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">ייבוש בשמש</div>
+                <div class="proc-step-body">הניצנים נפרשים על משטחי ייבוש (מחצלות, בטון, או רשתות) ל-<strong>4 עד 5 ימים</strong> בשמש. לחות יורדת מ-<strong>60 עד 70%</strong> (טרי) ל-<strong>10 עד 14%</strong> (יבש). ייבוש מהיר מדי: ניצנים שבירים, ראשים נושרים. ייבוש איטי מדי: עובש, ריקבון, סיכון אפלטוקסין. יחס משקל: <strong>4:1 עד 5:1</strong> (טרי ליבש).</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">מיון ידני / Sortex</div>
+                <div class="proc-step-body">הפרדת ניצנים שלמים מציפורן פרוחה (<strong>Blown</strong>), אמהות (<strong>Mother Cloves</strong>, פירות בשלים), וניצנים שבורים. ב-Grade 1: מיון ידני ניצן-ניצן (<strong>Hand-Picked, HP</strong>). בתעשייה: מכונות Sortex אופטיות. Mother Cloves (פירות שהבשילו) דלות בשמן ובעלות טעם עצי חלש.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">05</div>
+            <div>
+                <div class="proc-step-title">ניפוי וניקוי</div>
+                <div class="proc-step-body">הסרת אבק, חול, שאריות עלים, ופסולת. שימוש בנפות ו-Aspirators. ב-Grade 1: נוכחות חומרים זרים מתחת ל-<strong>0.5%</strong>.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">06</div>
+            <div>
+                <div class="proc-step-title">אריזה ואחסון</div>
+                <div class="proc-step-body">שקי יוטה (<strong>50 ק"ג</strong>) הם הסטנדרט המסורתי, אך המגמה עוברת ל-<strong>שקי PP עם בטנת PE</strong> (25 ק"ג) למניעת ספיגת לחות. אחסון: <strong>15 עד 20°C</strong>, RH מתחת ל-<strong>65%</strong>, חשכה מלאה. חשיפה לאור UV מפרקת את האאוגנול.</div>
+            </div>
+        </div>
+    </div>
+    <p>הגבעולים שהופרדו בשלב 02 אינם פסולת: הם נסחרים כ-<strong>Clove Stems</strong> במחיר נמוך (<strong>$1,500 עד 2,500/טון</strong>) ומשמשים לזיקוק שמן ציפורן (Clove Stem Oil). גם העלים של העץ נקטפים לזיקוק (<strong>Clove Leaf Oil</strong>), המכיל אאוגנול בריכוז נמוך יותר (76 עד 82%) אך זמין כל השנה. שלושה מוצרי שמן: Bud Oil (הטוב ביותר), Stem Oil, Leaf Oil.</p>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות: האנטיספטי שצריך בקרה</h2>
+    <p class="dc">הציפורן היא פרדוקס בטיחותי: מצד אחד, ריכוז האאוגנול הגבוה הופך אותה לחומר אנטי-מיקרוביאלי טבעי כה עוצמתי שהיא כמעט אינה סובלת מזיהומים חיידקיים. מצד שני, אותו אאוגנול ברמות גבוהות יכול להיות רעיל. והאתגר האמיתי אינו בציפורן עצמה אלא בשרשרת האספקה: חומרי הדברה, עובש באחסון, וזיהום צולב.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>תקן EU</th><th>תקן FDA</th><th>הערה</th></tr></thead>
+        <tbody>
+            <tr><td><strong>TPC</strong></td><td>≤10⁶ CFU/g</td><td>≤10⁶ CFU/g</td><td>הציפורן עצמה מעכבת TPC</td></tr>
+            <tr><td><strong>Yeast & Mould</strong></td><td>≤10⁴ CFU/g</td><td>≤10⁴ CFU/g</td><td>סיכון בייבוש לקוי</td></tr>
+            <tr><td><strong>Salmonella</strong></td><td>Absent/25g</td><td>Absent/25g</td><td>נדיר בציפורן</td></tr>
+            <tr><td><strong>E. coli</strong></td><td>≤10 CFU/g</td><td>≤10 CFU/g</td><td>סמן היגייני</td></tr>
+            <tr><td><strong>אפלטוקסין B1</strong></td><td>≤5 μg/kg</td><td>≤20 ppb סה"כ</td><td>סיכון בייבוש איטי</td></tr>
+            <tr><td><strong>Ethylene Oxide (EtO)</strong></td><td>אסור (0.05 mg/kg)</td><td>חוקי</td><td>EU מחמיר מ-2021</td></tr>
+            <tr><td><strong>שמנים אתריים מינ'</strong></td><td>≥15% (ESA)</td><td>אין תקן פדרלי</td><td>מדד איכות</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>פסטיצידים: הבעיה של מדגסקר</h3>
+    <p>בשנים האחרונות, נתגלו מקרים של שאריות חומרי הדברה בציפורן ממדגסקר, כולל ריכוזים חריגים של חומרי חיטוי באריזות. ב-<strong>דצמבר 2024</strong>, הנציבות האירופית הקשיחה את רמות ה-MRL (Maximum Residue Limits) לתבלינים מיובאים, מה שהעלה את עלויות הציות אך גם פתח נתיב פרימיום ליצואנים מוסמכים. <strong>אוקטובר 2023</strong>: מדגסקר השעתה יצוא ציפורן זמנית לבדיקת הסמכות, מה שיצר מחסור זמני בשוק.</p>
+    <div class="ab ab-r">
+        <div class="tg">אזהרת רעילות אאוגנול</div>
+        <p>אאוגנול בריכוזים גבוהים הוא רעיל. בליעת שמן ציפורן טהור (5 מ"ל ומעלה) עלולה לגרום ל-<strong>כשל כבדי חריף</strong>, דיכוי נשימתי, תסחיפי דם, והפרעות קצב לב. מינון בטוח מקובל: <strong>2.5 mg/kg</strong> משקל גוף. N-Acetylcysteine הוא הטיפול במקרי הרעלה. הנתון הזה קריטי ליצרני תוספי תזונה ולמותגי שמן ציפורן בקמעונאות.</p>
+    </div>
+    <h3>סטריליזציה</h3>
+    <p>Steam Sterilization (HTST): <strong>120 עד 135°C למשך 15 עד 60 שניות</strong>. יעילה מאוד על ציפורן, עם פגיעה של <strong>5 עד 10%</strong> בשמנים אתריים בלבד (נמוך יותר מפלפל או כמון, בזכות ריכוז השמן הגבוה שמספק "כרית" נדיפות). Ethylene Oxide: אסור ב-EU מ-2021. Gamma Irradiation: מותרת בחלק מהשווקים, מפחיתה TPC ללא פגיעה משמעותית בשמן, אך דורשת סימון מיוחד.</p>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה: שינוע הפולש הארומטי</h2>
+    <p class="dc">הציפורן היא הפולש הלוגיסטי הגדול ביותר בעולם התבלינים. האאוגנול הנדיף חודר דרך שקי PP, דרך דפנות מכולה, דרך כל אריזה שאינה חסומה לחלוטין. סחורה שמאוחסנת ליד ציפורן, בין אם זה תה, קמח, אורז או קשיו, סופגת את הריח ונפגעת. בארכיון, זהו כלל ברזל: ציפורן לעולם לא תאוחסן, תישלח, או תטופל ליד מוצרים סופגים.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">12-14t</div><div class="nu">מכולת 20'</div><div class="nl">Bulk Density גבוה</div></div>
+        <div class="ni"><div class="nv">15-20°C</div><div class="nu">טמפרטורת שינוע</div><div class="nl">אידיאלית</div></div>
+        <div class="ni"><div class="nv">&lt;65%</div><div class="nu">RH במכולה</div><div class="nl">מקסימום</div></div>
+    </div>
+    <h3>Driage: אובדן המשקל</h3>
+    <p>הציפורן מאבדת משקל בכל שלב של שינוע ואחסון בשל <strong>התנדפות לחות ושמנים</strong>. במסע ממדגסקר או אינדונזיה לישראל (4 עד 6 שבועות), אובדן משקל טיפוסי: <strong>2 עד 3%</strong>. זהו הפסד כספי ישיר. סוחרים ותיקים מתמחרים Driage מראש. בחוזים, לחות מקסימלית ב-POD (Port of Discharge) צריכה להיות מוגדרת, לא רק ב-POL (Port of Loading). ציפורן שנשלחת ב-12% לחות מגיעה ב-10% ומאבדת <strong>2% ממשקלה</strong>.</p>
+    <h3>מיגרציה ארומטית והפרדה</h3>
+    <p>הריח של הציפורן מסוגל לחדור דרך <strong>3 שכבות אריזה</strong>. פתרונות: שימוש ב-<strong>Aluminum-laminated bags</strong> (שקיות מכוסות אלומיניום), אחסון במחסן נפרד, ואיסור מוחלט על הובלה במכולה משותפת עם מוצרים רגישים. במחסנים בנמלי Toamasina (מדגסקר) או Surabaya (אינדונזיה), הציפורן מאוחסנת באזור ייעודי. עלות אריזת Aluminum-laminate: תוספת של <strong>$50 עד 80 למכולה</strong>.</p>
+    <div class="ab ab-w">
+        <div class="tg">סימנים לאובדן איכות</div>
+        <p>ציפורן איכותית: חום-אדמדם כהה, <strong>מבריקה, שומנית למגע</strong>, גמישה מעט, וריחה חזק ומיידי. ציפורן פגומה: <strong>אפרורית</strong>, יבשה, שבירה (נשברת לאבקה בלחיצה), וריחה חלש ומשעמם. השוני נראה בבירור ונותן אינדיקציה מיידית על ריכוז השמן שנותר.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות: האלחוש הטבעי</h2>
+    <p class="dc">הקשר בין ציפורן לרפואה עתיק כמעט כמו הציפורן עצמה. בסין, בהודו, ובאוקיינוס ההודי, ציפורן שימשה לאלפי שנים לשיכוך כאבי שיניים, לשימור בשר, ולטיפול בבעיות עיכול. המדע המודרני מאשר ומרחיב את הידע האמפירי הזה, אם כי ה-FDA לא אישר שימוש בציפורן לשום מטרה רפואית.</p>
+    <h3>אלחוש מקומי (Topical Anesthesia)</h3>
+    <p>האאוגנול חוסם <strong>תעלות נתרן (Na⁺ voltage-gated channels)</strong> בעצבים תחושתיים, מונע הולכה של אות הכאב. זהו אותו מנגנון פעולה של חומרי הרדמה מקומיים סינתטיים כמו Lidocaine. שמן ציפורן הוא <strong>הטיפול הביתי היחיד</strong> שרופאי שיניים מכירים בו כיעיל להקלה זמנית על כאבי שיניים. שילוב <strong>Zinc Oxide + Eugenol</strong> (ZOE) משמש ברפואת שיניים לסתימות זמניות, לחומרי איטום, ולטיפול ב-Dry Socket (תסמונת השקע היבש).</p>
+    <h3>פעילות אנטי-מיקרוביאלית</h3>
+    <p>האאוגנול, כמולקולה הידרופובית, חודר בקלות דרך הממברנה הליפופוליסכרידית של חיידקים גראם-שליליים ונכנס לציטופלזמה. שם הוא גורם לשינויים מבניים המובילים לדליפת רכיבים תוך-תאיים. בנוסף, קבוצת ה-OH של האאוגנול מעכבת אנזימים כמו Protease, Histidine carboxylase ו-Amylase. שמן ציפורן הדגים יעילות נגד: <strong>Staphylococcus aureus</strong>, <strong>Pseudomonas aeruginosa</strong>, <strong>E. coli</strong>, <strong>Salmonella enterica</strong>, <strong>Shigella flexneri</strong>, וכן פטריות כולל <strong>Candida albicans</strong>.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">290,283</div><div class="nu">ORAC μmol TE</div><div class="nl">מקום ראשון עולמי</div></div>
+        <div class="ni"><div class="nv">Na⁺</div><div class="nu">חסימת תעלות</div><div class="nl">מנגנון אלחוש</div></div>
+        <div class="ni"><div class="nv">CB2</div><div class="nu">קולטן מטרה</div><div class="nl">β-Caryophyllene</div></div>
+    </div>
+    <h3>β-Caryophyllene: הקנאבינואיד הטבעי</h3>
+    <p><strong>β-Caryophyllene</strong>, המרכיב השני בחשיבותו בשמן הציפורן (5 עד 14%), הוא ססקוויטרפן שפועל כ-<strong>אגוניסט סלקטיבי של קולטן CB2</strong> במערכת האנדוקנאבינואידית. קולטן CB2 ממוקם בעיקר במערכת החיסון ומעורב בוויסות דלקת. בניגוד ל-THC (שפועל על CB1 וגורם לאפקט פסיכואקטיבי), β-Caryophyllene אינו פסיכואקטיבי. מחקרים מוקדמים מראים פוטנציאל לטיפול בדלקת כרונית, כאב נוירופתי, וחרדה.</p>
+    <div class="pull">
+        <p>הציפורן היא המסמר שנועל את הבריאות בתוך התא; עוצמה מרוכזת בניצן אחד שלא נפתח.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: קרטק, ציקלונים, ודינמיקת שוק 2026</h2>
+    <p class="dc">הדינמיקה הכלכלית של שוק הציפורן נשלטת על ידי עובדה אחת מפתיעה: <strong>אינדונזיה היא גם המפיקה הגדולה ביותר וגם הצרכנית הגדולה ביותר</strong>. כ-70% מייצור הציפורן העולמי מגיע מאינדונזיה, אך הצריכה המקומית (בעיקר לתעשיית סיגריות הקרטק) כה גדולה שאינדונזיה נאלצת <strong>לייבא ציפורן</strong> ממדגסקר, קומורו וטנזניה. פרדוקס זה הוא המנוע של כל המסחר הבינלאומי בציפורן.</p>
+    <div class="cb">
+        <div class="ct">חלוקת ייצור ציפורן עולמי 2024 (% מסך הכמות)</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇩</span><span class="pb-name">אינדונזיה</span></div><div class="pb-track"><div class="pb-fill" data-w="73" style="background:#8B6340"></div></div><span class="pb-pct">73%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇲🇬</span><span class="pb-name">מדגסקר</span></div><div class="pb-track"><div class="pb-fill" data-w="10" style="background:#6E4A28"></div></div><span class="pb-pct">10%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇹🇿</span><span class="pb-name">טנזניה</span></div><div class="pb-track"><div class="pb-fill" data-w="7" style="background:#C4A060"></div></div><span class="pb-pct">7%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇰🇲</span><span class="pb-name">קומורו</span></div><div class="pb-track"><div class="pb-fill" data-w="4" style="background:#9E7A50"></div></div><span class="pb-pct">4%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇱🇰</span><span class="pb-name">סרי לנקה</span></div><div class="pb-track"><div class="pb-fill" data-w="2" style="background:#7D5A38"></div></div><span class="pb-pct">2%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="4" style="background:#DDD6CA"></div></div><span class="pb-pct">4%</span></div>
+        </div>
+        <div class="pb-note">נתוני FAO · Tridge · Mordor Intelligence 2024 · סה"כ ייצור עולמי: ~135,000 עד 150,000 טון</div>
+    </div>
+    <h3>הקרטק: המנוע האינדונזי</h3>
+    <p>סיגריות <strong>Kretek</strong> (תערובת טבק וציפורן) הן מוצר תרבותי באינדונזיה, לא רק מוצר צריכה. אינדונזיה היא שוק הסיגריות השני בגודלו בעולם, עם צריכה של למעלה מ-<strong>300 מיליארד סיגריות בשנה</strong>. תעשיית הקרטק צורכת את מרבית הציפורן האינדונזית, מעסיקה מיליוני אנשים, ומהווה כ-<strong>10% מהכנסות המס</strong> של הממשלה האינדונזית. <strong>Philip Morris International</strong> הרחיבה את פעילותה באינדונזיה, ומותגי קרטק מקומיים כמו <strong>Gudang Garam</strong> ו-<strong>Djarum</strong> הם ענקי תעשייה.</p>
+    <h3>דינמיקת מחיר 2020 עד 2026</h3>
+    <p>מחיר ציפורן (ממוצע יבוא עולמי): ב-2020 עמד על כ-<strong>$6,000 עד 7,000/טון</strong>. ב-2022 עליית מחירים חדה בעקבות שיבושי שרשרת אספקה פוסט-קורונה ועונה חלשה באינדונזיה, עד <strong>$9,000 עד 11,000/טון</strong>. ב-2023 ירידה הדרגתית ל-<strong>$7,000 עד 8,500</strong>. ב-2024 תנודתיות מחודשת: מחיר ממוצע יבוא עולמי <strong>$7,200/טון</strong>, עם ציקלונים במדגסקר שקיצצו <strong>50 עד 70%</strong> מהיבול המקומי. תחזית 2026: <strong>$7,000 עד 10,000/טון</strong>, תלוי בעונה האינדונזית ובציקלונים.</p>
+    <div class="pull">
+        <p>בשוק הציפורן, ציקלון אחד באוקיינוס ההודי יכול להקפיץ את המחיר בבורסת ג'קרטה תוך יום. הפער בין יצרן לצרכן מרכז הכל בידי אינדונזיה.</p>
+    </div>
+    <h3>מגמות 2025 עד 2026</h3>
+    <p>שלוש מגמות: (1) <strong>שימוש בציפורן כמשמר טבעי</strong>: תעשיית המזון עוברת מחומרים משמרים סינתטיים לשמן ציפורן, עם שילוב אאוגנול בסרטי אריזה פעילים (Active Packaging). (2) <strong>הרגולציה האירופית מחמירה</strong>: EU הקשיחה MRLs לפסטיצידים בתבלינים בדצמבר 2024; יצואנים לא מוסמכים מאבדים גישה. (3) <strong>שמן ציפורן לחקלאות אורגנית</strong>: תרסיסי אאוגנול מזוקקים נרשמים כחומרי הדברה טבעיים ב-EU, עם ביקוש עולה מחקלאים אורגניים.</p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית: מיצוי, Active Packaging, ופארמה 2030</h2>
+    <p class="dc">הציפורן של 2026 נמצאת בנקודת מפנה: מעבר לשימוש כתבלין בלבד, לעבר שימושים פרמצאוטיים, קוסמטיים ותעשייתיים מבוססי אאוגנול. הערך של הציפורן כחומר גלם ביוכימי עולה על ערכה כתבלין, והמגמה הזו הולכת ומתגברת.</p>
+    <h3>Supercritical CO₂ Extraction</h3>
+    <p>מיצוי שמן ציפורן בשיטת <strong>SCF (Supercritical Fluid)</strong> באמצעות CO₂ במצב על-קריטי (לחץ מעל <strong>73 atm</strong>, טמפרטורה מעל <strong>31°C</strong>) מניב שמן בטוהר גבוה יותר מזיקוק קיטור מסורתי: ללא שאריות ממסים, ללא פגיעה תרמית. <strong>Synthite Industries</strong> (הודו) הרחיבה ב-2023 את כושר הייצור שלה ב-<strong>600 טון שמן ציפורן בשנה</strong> בטכנולוגיה זו. עלות מערכת SCF תעשייתית: <strong>$500,000 עד 2,000,000</strong>.</p>
+    <h3>Active Packaging: סרטי אאוגנול</h3>
+    <p>חוקרים משלבים שמן ציפורן או אאוגנול טהור בפורמולציות פולימריות ליצירת סרטי אריזה פעילים. הסרטים משחררים אאוגנול באופן מבוקר, מעכבים צמיחת חיידקים ופטריות על מוצרי מזון ארוזים, ומאריכים חיי מדף ללא תוספים כימיים. מחקרים הדגימו יעילות נגד <strong>Shigella flexneri</strong> ו-<strong>Salmonella enterica</strong> בבשר ומוצרי חלב. זהו שימוש Clean Label שצומח בקצב מהיר בצפון אמריקה ואירופה.</p>
+    <div class="ab ab-w">
+        <div class="tg">אתגר Traceability</div>
+        <p>ב-<strong>מרץ 2025</strong>, קרן הסביבה העולמית (GEF) אישרה <strong>10 מיליון דולר</strong> לחיזוק שרשראות ערך חכמות-אקלים לתבלינים בקומורו, כולל תמיכה נרחבת בחקלאי ציפורן. כמו בשאר שוק התבלינים, הרגולציה האירופית צועדת לעבר <strong>Farm-to-Fork traceability</strong> מלא. בציפורן, שבה חקלאים קטנים במדגסקר ובקומורו מטפסים על עצים בודדים, זה אתגר לוגיסטי ייחודי. מערכות Blockchain נבחנות כפתרון.</p>
+    </div>
+    <h3>פארמה וקוסמטיקה</h3>
+    <p><strong>GEM Aromatics</strong> (הודו) הרחיבה בפברואר 2025 את כושר ייצור שמן ציפורן פרמצאוטי במסגרת תכנית PLI (Production Linked Incentive) הלאומית. <strong>Givaudan</strong> (שוויץ) הוסיפה ב-2023 תרכובות מבוססות ציפורן ל-<strong>18 בסיסי בושם</strong> חדשים למותגי יוקרה. <strong>Ultra International</strong> (הודו) פיתחה קו שמן ציפורן אורגני מוסמך, עם יותר מ-<strong>110 טון</strong> שנמכרו מראש לאירופה ולארה"ב בתחילת 2024. המגמה ברורה: ערך הציפורן כחומר גלם ביוכימי עולה על ערכה כתבלין.</p>
+    <p>מן הניצן הסגור, מן העץ הטרופי שמזיע שמן בגשם, מן האיים שנלחמו עליהם אימפריות. הציפורן היא לא תבלין של טעם; היא תבלין של עוצמה כימית. ריכוז אאוגנול של 90% בתבלין יחיד הוא תופעה שאין לה מקבילה בעולם הצמחים. היא לא מתבלת; היא חותכת. זה מה שניצן של 100 שנה עושה.</p>
+</section>
+
+<div class="ft">
+    ערך ידע מסחרי-מדעי · Blue Star International · 2026<br>
+    מבוסס על נתוני FAO, Tridge, Mordor Intelligence, ESA, ומקורות פתוחים<br>
+    <span style="font-size:11px;color:#AAA59A;">ביוכימיה: Cortés-Rojas et al. J Food Sci & Tech 2014 · Chaieb et al. Phytotherapy Research 2007 · שמן: Alma et al. BioResources 2007 · שוק: Berjé Inc. Global Market Update 2024 · Mordor Intelligence 2026 · בטיחות: EU Reg 2023/915 · RASFF 2020-2024 · רעילות: NCBI LiverTox Eugenol</span>
+</div>
+</main>
+
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · CLOVES</footer>
+
+<div class="marquee-container">
+    <div class="marquee-text">ציפורן · SYZYGIUM AROMATICUM · EUGENOL · MOLUCCAS · ZANZIBAR · ציפורן · SYZYGIUM AROMATICUM · EUGENOL · MOLUCCAS · ZANZIBAR · </div>
+</div>
+
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8894A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch');
+    const dots = document.querySelectorAll('.nav-dot');
+    let current = "";
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 300);
+});
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => {
+    dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+            obs.unobserve(e.target);
+        });
+    }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) {
+                        heroSlot.innerHTML = '';
+                        heroSlot.appendChild(makeMedia(heroSrc));
+                    }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0A0A0B; --text: #FAF7F0; --body: #D1CEC5;
+    --accent: #8B2020; --warm: #C4392F;
+    --card: rgba(20,20,22,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background-color: var(--bg); color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9;
+    overflow-x: hidden;
+    background-image: linear-gradient(rgba(196,57,47,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(196,57,47,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+body::before, body::after {
+    content:''; position:fixed; width:600px; height:600px; border-radius:50%;
+    filter:blur(120px); z-index:-2; opacity:0.15; pointer-events:none;
+}
+body::before { background:var(--warm); top:-100px; left:-100px; }
+body::after { background:#5A1818; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.back-btn {
+    position:absolute; top:40px; left:40px; z-index:10; display:flex; align-items:center; gap:8px;
+    color:var(--text); text-decoration:none; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px;
+    opacity:0.5; transition:0.3s;
+}
+.back-btn:hover { opacity:1; color:var(--warm); }
+#backToTop {
+    position:fixed; bottom:30px; left:30px; width:40px; height:40px;
+    background:var(--warm); color:#000; border:none; border-radius:50%;
+    cursor:pointer; font-size:18px; display:none; z-index:1000; transition:0.3s;
+}
+#backToTop:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(196,57,47,0.4); }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap {
+    max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden;
+    box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05);
+    background:#0A0A0B; display:flex; align-items:center; justify-content:center;
+}
+.hero-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.hero-img-placeholder { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.hero-img-placeholder span { color:rgba(255,255,255,0.15); font-size:12px; letter-spacing:3px; font-family:'Space Mono',monospace; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch {
+    background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px);
+    padding:50px; border-radius:var(--radius); margin-bottom:40px;
+    border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden;
+}
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; }
+.ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#E08070; font-style:italic; }
+strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(196,57,47,0.08); border-right:4px solid var(--warm); }
+.ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(90,30,20,0.2); border-right:4px solid var(--accent); }
+.ab-g .tg { color:#E08070; }
+.ab-r { background:rgba(184,50,50,0.1); border-right:4px solid #B83030; }
+.ab-r .tg { color:#E06060; }
+.ab-r p { color:#DDB0B0; }
+.vc { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:22px; margin:18px 0; }
+.vc .vn { font-family:'Frank Ruhl Libre',serif; font-size:21px; font-weight:700; color:var(--text); }
+.vc .vt { font-size:12px; color:var(--warm); font-weight:600; margin-bottom:10px; }
+.vc p { font-size:16px; line-height:1.75; margin-bottom:0; }
+.vc .vs { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.vc .vsi { background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:5px; font-size:12px; color:#A09080; }
+.vc .vsi strong { color:var(--text); }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(30,28,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A09080; margin-top:2px; }
+.ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.cb { background:rgba(20,20,22,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px; margin:28px 0; }
+.cb .ct { font-family:'Frank Ruhl Libre',serif; font-size:17px; font-weight:700; margin-bottom:14px; text-align:center; color:var(--text); }
+.pb-chart { margin:16px 0 8px; display:flex; flex-direction:column; gap:10px; }
+.pb-row { display:flex; align-items:center; gap:10px; }
+.pb-meta { display:flex; align-items:center; gap:6px; min-width:120px; justify-content:flex-end; }
+.pb-flag { font-size:18px; }
+.pb-name { font-size:13px; color:#A09080; }
+.pb-track { flex:1; background:rgba(255,255,255,0.08); height:18px; border-radius:9px; overflow:hidden; }
+.pb-fill { height:100%; width:0; border-radius:9px; transition:width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.pb-pct { font-family:'Frank Ruhl Libre',serif; font-size:14px; font-weight:700; color:var(--text); width:36px; text-align:left; }
+.pb-note { font-size:11px; color:#6B6058; opacity:.7; margin-top:10px; text-align:center; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; border-top:1px solid rgba(255,255,255,0.05); }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(196,57,47,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.03); animation:scrollText 40s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#6B6058; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(196,57,47,0.4); }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(20,20,22,0.85); border:1px solid rgba(196,57,47,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+.home-btn:hover { background:rgba(196,57,47,0.15); }
+@media (max-width:900px) {
+    .side-nav { display:none; }
+    .back-btn { top:20px; left:20px; }
+    .hero h1 { font-size:55px; }
+    .hero-img-wrap { height:300px; margin-bottom:-100px; }
+    .con { margin-top:150px; }
+    .ng { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+<title>צ'ילי · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="זנים ודירוג"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות ובקרת איכות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="פיזיולוגיה ובריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="טכנולוגיה עתידית"></div>
+</nav>
+
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">צ'ילי</h1>
+    <p class="deck" id="sync-desc">הנשק הביוכימי של הטבע. מנגנון הגנה של צמח שהפך להתמכרות אנושית גלובלית, תעשייה של 49 מיליארד דולר, וחומר גלם לפרמצבטיקה ולחימה.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <div class="hero-img-placeholder">
+            <span>CHILI · Capsicum spp.</span>
+            <span style="font-size:9px;opacity:0.5;">MEDIA SLOT · HERO</span>
+        </div>
+    </div>
+</section>
+
+<div class="marquee-container">
+    <div class="marquee-text">CAPSICUM · CAPSAICIN · SCOVILLE · GUNTUR · BIRD'S EYE · HABANERO · CHILI · CAPSICUM · CAPSAICIN · SCOVILLE · GUNTUR · BIRD'S EYE · HABANERO · CHILI · </div>
+</div>
+
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: כאב, עונג, ושני אלפי שנות הפצה</h2>
+    <p class="dc">לפני שהיה תבלין, הצ'ילי היה נשק. לפני שהיה נשק, הוא היה מערכת הגנה. הצמח פיתח את הקפסאיצין לא כדי שבני אדם ייהנו ממנו, אלא כדי שיונקים יפסיקו לאכול את פירותיו. ציפורים, שאין להן קולטני TRPV1, אוכלות את הפלפלים בשקט ומפיצות את הזרעים. יונקים, שהקפסאיצין שורף להם את הפה, מתרחקים. ואז הגיע Homo sapiens, היונק היחיד שהפך את הכאב הביוכימי הזה לתענוג מבוקש, וכל ההיסטוריה של התבלינים השתנתה.</p>
+    <p>הסוג <em>Capsicum</em> ממשפחת הסולניים (Solanaceae), קרוב משפחה של עגבנייה, חציל וטבק, מונה חמישה מינים מבוייתים: <strong>Capsicum annuum</strong> (הנפוץ ביותר: חלפיניו, סראנו, קיינה, פפריקה, אנאהיים), <strong>Capsicum chinense</strong> (הבנרו, קרולינה ריפר, סקוטש בונט, נאגה ג'ולוקיה), <strong>Capsicum frutescens</strong> (טבסקו, בירדס אי, פירי פירי), <strong>Capsicum baccatum</strong> (אג'י אמרילו, זנים דרום אמריקאים), ו-<strong>Capsicum pubescens</strong> (רוקוטו, מנצנו, עמיד לקור). לכל מין פרופיל קפסאיצינואידים ייחודי, מבנה פרי שונה, והתנהגות אגרונומית משלו.</p>
+    <p>הממצאים הארכאולוגיים המוקדמים ביותר: שרידי צ'ילי בני <strong>7,500 שנה</strong> מעמק טיהואקאן במקסיקו, ועדויות לביות מקבילות בפרו ובוליביה. הצ'ילי הוא אחד מששת הגידולים הראשונים שביית האדם באמריקה, יחד עם תירס, שעועית, דלעת, אבוקדו וקקאו. בשונה מהפלפל השחור, שנסע אלפי שנים לאורך נתיבי המשי, הצ'ילי ביצע את ההפצה הגלובלית המהירה ביותר בהיסטוריה של כל גידול חקלאי: תוך <strong>פחות מ-50 שנה</strong> מרגע שקולומבוס החזיר אותו לספרד ב-1493, הוא כבר גדל בהודו, בסין, בדרום מזרח אסיה, במזרח אפריקה ובאגן הים התיכון.</p>
+    <p>מדוע כה מהר? שלוש סיבות ביולוגיות. ראשית, הצ'ילי גדל כמעט בכל אקלים חם: טרופי, סאב-טרופי, ים תיכוני, אפילו ממוזג. שנית, הזרעים קטנים, קלים לשינוע, ונובטים בקלות. שלישית, הוא חד שנתי (או רב שנתי קצר), מניב פרי בתוך 60 ימים מהשתילה, ומספק תשואה גבוהה ביחס להשקעה. הפורטוגזים, שהובילו את ההפצה, לא עשו זאת מטעמי בוטניקה: הם חיפשו תחליף זול לפלפל השחור ההודי שמחירו היה אסטרונומי. הצ'ילי מילא את הפער בדיוק.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>הרופא הספרדי ניקולאס מונרדס תיעד ב-1571 את השימוש ברפואה האצטקית בצ'ילי לטיפול בכאב שיניים, חום, ובעיות עיכול. בו זמנית, ביצר הפורטוגזי קוברת דה אלבוקרקי השתמש בעשן צ'ילי ככלי נשק נגד ספינות אויב בקרב גואה ב-1510. מערכת הגנה של צמח, שהפכה בו זמנית לתרופה ולנשק.</p>
+    </div>
+    <p>בהודו, שאליה הגיע הצ'ילי דרך גואה הפורטוגזית בתחילת המאה ה-16, ההטמעה הייתה כה מהירה שתוך דורות אחדים מטבחים מקומיים אימצו אותו כאילו היה תמיד חלק מהתרבות. אזור <strong>Guntur</strong> שבאנדרה פראדש הפך בתוך 200 שנה למרכז המסחר הגדול בעולם לצ'ילי יבש, ובורסת הצ'ילי שלו, ה-Guntur Mirchi Yard, היא הבורסה הפיזית הגדולה ביותר למוצר תבלין יחיד על פני כדור הארץ. בסין, הצ'ילי חדר דרך מחוז Guizhou במאה ה-17 והפך למרכיב מרכזי במטבחי סצ'ואן, הונאן וגויז'ו, באזורים שהלחות הגבוהה שלהם יצרה אמונה עממית שאוכל חריף "מייבש" את הגוף מבפנים.</p>
+    <p>כיום, כ-<strong>38 מיליון טון</strong> פלפלים טריים ויבשים נסחרים בשנה ברחבי העולם, בשווי של כ-49 מיליארד דולר. הצ'ילי הוא התבלין הנצרך ביותר על פני כדור הארץ מבחינת כמות, הרבה לפני הפלפל השחור. מהכלי ההגנתי של צמח ביער הגשם של מקסיקו, לתעשייה גלובלית שנוגעת במזון, בפרמצבטיקה, בקוסמטיקה ובביטחון.</p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: פיזיולוגיית המתח, אקלים, קציר</h2>
+    <p class="dc">צמח הצ'ילי הוא פרדוקס אגרונומי: הוא גמיש מספיק לגדול בכמעט כל תנאי חום, אבל מייצר את ריכוז הקפסאיצין הגבוה ביותר דווקא תחת מתח (Stress). הלוגיקה הביולוגית ברורה: צמח שסובל מייצר יותר מולקולות הגנה. סוחר שמבין את האגרונומיה מבין למה אותו זן מאותו מקור יכול להשתנות ב-30% בחריפות בין עונה לעונה.</p>
+    <h3>דרישות אקלים</h3>
+    <p>טמפרטורה אידיאלית: <strong>20-30°C</strong>. מעל 35°C נצפית נשירת פרחים (flower drop) שמפחיתה תשואה ב-40-60%. מתחת ל-15°C הצמיחה נעצרת. כמות משקעים: <strong>600-1,200 מ"מ</strong> שנתיים, פחות מפלפל שחור. הצ'ילי רגיש לרוויית מים, במיוחד בשלב הפריחה. לחות יחסית: <strong>60-80%</strong>. לחות גבוהה מדי גורמת לפיתוח פטריות, במיוחד <em>Colletotrichum capsici</em> (Anthracnose), מחלת ה"כתם השחור" שיכולה לחסל 50% מהיבול.</p>
+    <p>קרקע: pH אידיאלי <strong>6.0-7.0</strong>, קרקע לומית עד לומית חרסיתית, ניקוז מצוין. הצ'ילי אינו סובל קרקעות חומציות מאוד (בניגוד לפלפל השחור). הדשנה: <strong>120-150 ק"ג חנקן, 60-80 ק"ג זרחן, 100-120 ק"ג אשלגן</strong> לדונם. עודף חנקן מגדיל מסת עלים על חשבון פרי, ומוריד ריכוז קפסאיצין. מחסור קל במים (Water Deficit Stress) בשלב הבשלת הפרי הוכח כמעודד ייצור קפסאיצין ב-20-40%, מנגנון שחקלאים מנוסים מנצלים באופן מודע.</p>
+    <h3>פנולוגיה ומחזור הגידול</h3>
+    <p>מזריעה להבשלה: <strong>90-150 ימים</strong> תלוי בזן. הפריחה מתחילה 45-60 ימים לאחר השתילה. כל צמח מייצר 100-400 פרחים, מהם 20-60% מתפתחים לפרי (שיעור ההפרייה תלוי בטמפרטורה ובחרקי אבקה). הצ'ילי הוא צמח מאביק עצמי (self-pollinating), אבל הכלאה צולבת על ידי דבורים ורוח מגיעה ל-5-30% תלוי במרחק בין זנים. זו הסיבה שבמטעים מסחריים שומרים על מרחק הפרדה של 200 מטר לפחות בין זנים שונים.</p>
+    <p>קטיף: הצ'ילי נקטף ירוק (לשימוש טרי, סלסות, קימצ'י), אדום בשל (לייבוש, לאבקה, לרטבים), או בכל שלב ביניים. ככל שהפרי נשאר יותר זמן על השיח, הוא צובר יותר סוכרים, פיגמנטים (קרוטנואידים), וקפסאיצינואידים, אבל רמת הקפסאיצין עצמה מגיעה לשיא <strong>רגע לפני ההבשלה המלאה</strong> ויורדת מעט לאחריה. חלון הקטיף האופטימלי לייצור אבקת צ'ילי עם חריפות וצבע מקסימליים: כאשר 70-80% מהפרי אדום, 20-30% עדיין בגוון כתום.</p>
+    <div class="ab ab-g">
+        <div class="tg">גזרת מחקר אגרונומית</div>
+        <p>מחקר של האוניברסיטה האגרונומית של Yucatan (2021) הראה שפלפלי הבנרו שגודלו תחת <strong>Deficit Irrigation</strong> (70% מצורכי ההשקיה) ייצרו ריכוז קפסאיצין גבוה ב-38% מאלו שהושקו במלוא. חיסכון במים וחריפות גבוהה יותר: אגרונומיה שמתאמת עם כלכלת הצ'ילי.</p>
+    </div>
+    <p>מחלות ומזיקים: מעבר ל-Anthracnose, שלושה איומים מרכזיים. <strong>וירוס CMV</strong> (Cucumber Mosaic Virus), המועבר על ידי כנימות ירוקות, גורם לעיוות עלים ולנשירת פרי. <strong>Phytophthora capsici</strong>, אותה פטריה שמכה בפלפל השחור, גורמת לרקבון שורשים בקרקעות רטובות מדי. <strong>זבוב הפרי</strong> (<em>Ceratitis capitata</em>) מטיל ביצים בתוך הפרי הבשל, ומחייב בדיקה קפדנית לפני ייצוא. הפתרון האגרונומי המתקדם ביותר: שילוב של זנים עמידים (Resistant Cultivars), הדברה ביולוגית (מלכודות פרומונים, טריכודרמה), וניהול השקיה מדויק שמונע רוויית קרקע.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: שלטון הקפסאיצין ומנגנון ה-TRPV1</h2>
+    <p class="dc">הקפסאיצין (<strong>C₁₈H₂₇NO₃</strong>, trans-8-methyl-N-vanillyl-6-nonenamide) הוא אלקלואיד חסר צבע, חסר ריח, ולא מסיס במים. הוא אחד המולקולות הפעילות ביותר שנמצאות במזון אנושי: ריכוז של <strong>1-5 מיקרומול</strong> בלבד מספיק לגירוי עצבי מדיד. אין מולקולת תבלין אחרת שפועלת ברזולוציה כה נמוכה.</p>
+    <h3>משפחת הקפסאיצינואידים</h3>
+    <p>הקפסאיצין אינו מולקולה בודדת אלא ראש משפחה. בפרי צ'ילי טיפוסי נמצאים לפחות שישה קפסאיצינואידים: <strong>קפסאיצין</strong> (69% מסך החריפות), <strong>דיהידרוקפסאיצין</strong> (22%), <strong>נורדיהידרוקפסאיצין</strong> (7%), <strong>הומוקפסאיצין</strong> ו-<strong>הומודיהידרוקפסאיצין</strong> (1% כל אחד). ההבדל ביניהם: אורך השרשרת ההידרופובית. קפסאיצין ודיהידרוקפסאיצין הם "חריפים" בצורה חדה ומיידית; נורדיהידרוקפסאיצין מעניק חריפות "מתגלגלת" ועמומה יותר. פרופיל היחסים בין הקפסאיצינואידים מגדיר את "אופי" החריפות של כל זן.</p>
+    <p>הסינתזה של קפסאיצינואידים מתרחשת אך ורק ב-<strong>Placenta</strong> של הפרי, הרקמה הלבנה שעליה מחוברים הזרעים. לא בזרעים עצמם כפי שנהוג לחשוב, ולא בדפנות הפרי. האנזים המפתח: <strong>Capsaicin Synthase</strong> (CS), שמחבר את Vanillylamine (מנתיב ה-Phenylpropanoid) עם חומצה שומנית מסועפת (מנתיב ה-Fatty Acid). גן <strong>Pun1</strong> שולט בסינתזת CS; מוטציה באותו גן היא שיצרה את הפפריקה המתוקה, צ'ילי ללא קפסאיצין.</p>
+    <h3>מנגנון ה-TRPV1: הקולטן שמרמה את המוח</h3>
+    <p>כשקפסאיצין נכנס לרקמת הפה, הוא נקשר לקולטן <strong>TRPV1</strong> (Transient Receptor Potential Vanilloid 1), תעלת יונים לא סלקטיבית על ממברנת תאי עצב חושיים (nociceptors). ה-TRPV1 מופעל בטבע על ידי טמפרטורות מעל <strong>43°C</strong>, כלומר: חום שגורם לכאב. הקפסאיצין "מרמה" את הקולטן, מפעיל אותו בטמפרטורת החדר, ומאלץ את העצב לשלוח אות "שריפה" למוח למרות שאין נזק רקמתי. בתגובה, המוח מפריש <strong>אנדורפינים</strong> ו-<strong>דופמין</strong> כדי לנטרל את ה"כאב". זו ההתמכרות: לא לטעם, אלא לתגובה הנוירוכימית.</p>
+    <p>הקפסאיצין ניגש לאתר הקישור ב-TRPV1 דרך מסלול ייחודי: הוא חודר קודם לממברנת השומנים של התא (lipophilic), ומשם נכנס ל-binding pocket שבין סגמנטים S3-S4 של החלבון. זו הסיבה שמים לא שוטפים חריפות: הקפסאיצין כבר בתוך הממברנה. שמן, חלב (קזאין), או אלכוהול, שמסיסים שומנים, כן מסוגלים למשוך אותו החוצה.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">16M</div><div class="nu">SHU</div><div class="nl">קפסאיצין טהור</div></div>
+        <div class="ni"><div class="nv">2.2M</div><div class="nu">SHU</div><div class="nl">Carolina Reaper</div></div>
+        <div class="ni"><div class="nv">100K</div><div class="nu">SHU</div><div class="nl">Bird's Eye סטנדרט</div></div>
+        <div class="ni"><div class="nv">8-12%</div><div class="nu">שומן</div><div class="nl">בפלפל יבש</div></div>
+        <div class="ni"><div class="nv">143mg</div><div class="nu">ויטמין C</div><div class="nl">ל-100g טרי</div></div>
+        <div class="ni"><div class="nv">0.1-2.5%</div><div class="nu">קפסאיצין</div><div class="nl">בפרי יבש לפי זן</div></div>
+    </div>
+    <h3>סולם סקוביל וה-HPLC</h3>
+    <p>סולם סקוביל (SHU, Scoville Heat Units) פותח ב-1912 על ידי הכימאי Wilbur Scoville באמצעות מדידה אורגנולפטית: מהילת תמצית פלפל במי סוכר עד שחמישה טועמים מאומנים לא מרגישים חריפות. השיטה סובייקטיבית, לא מדויקת, ועדיין משמשת למסחר. השיטה המודרנית: <strong>HPLC</strong> (High-Performance Liquid Chromatography) שמודדת ריכוז קפסאיצינואידים ישירות ב-ppm, ומומרת ל-SHU באמצעות מקדם המרה (1 ppm קפסאיצין = 15 SHU, בקירוב). HPLC מספקת תוצאה אובייקטיבית, חוזרת, ומדויקת לצורך מסחר בינלאומי ותעשייה פרמצבטית.</p>
+    <div class="ab ab-w">
+        <div class="tg">הממצא הביוכימי המפתיע</div>
+        <p>מחקר שפורסם ב-Molecular Medicine Reports (2024) הראה שלקפסאיצין יש פעילות ביולוגית <strong>בלתי תלויה ב-TRPV1</strong>: שינוי נזילות ממברנות תאיות, השפעה ישירה על מיטוכונדריה, והפחתת סטרס חמצוני. המשמעות: קפסאיצין אינו רק מולקולת "חריפות", הוא מודולטור תאי מרובה מטרות.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>זנים ודירוג: ההיררכיה המסחרית של החריפות</h2>
+    <p class="dc">עולם הצ'ילי המסחרי מחולק לשלוש קטגוריות ברורות: צ'ילי לצבע (color chili), צ'ילי לחריפות (pungent chili), וצ'ילי לטעם/ארומה (flavor chili). רוב הסוחרים מתמחים באחת מהשלוש. הפרמטרים המסחריים: ASTA Color, SHU/Capsaicin %, לחות, חומר זר, ומיקרוביולוגיה.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>זן מסחרי</th><th>מוצא עיקרי</th><th>SHU טיפוסי</th><th>ASTA Color</th><th>שימוש עיקרי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Teja S17</strong></td><td>הודו (אנדרה פראדש)</td><td>65,000-85,000</td><td>50-70</td><td>תעשייה, אבקה, אולאורזין</td></tr>
+            <tr><td><strong>S4 Sannam</strong></td><td>הודו (Guntur)</td><td>30,000-50,000</td><td>60-80</td><td>אבקה, רטבים, מרינדות</td></tr>
+            <tr><td><strong>Bydgi</strong></td><td>הודו (קרנאטקה)</td><td>15,000-30,000</td><td>100-140</td><td>צבע, פפריקה הודית</td></tr>
+            <tr><td><strong>334 S4</strong></td><td>הודו (Guntur)</td><td>15,000-30,000</td><td>100-140</td><td>ייצוא, מזון מעובד</td></tr>
+            <tr><td><strong>Bird's Eye (Piri Piri)</strong></td><td>אפריקה, ויאטנם, תאילנד</td><td>50,000-100,000</td><td>20-40</td><td>רטבים, שלם יבש, תעשייה</td></tr>
+            <tr><td><strong>Habanero</strong></td><td>מקסיקו, בליז</td><td>200,000-350,000</td><td>30-50</td><td>רטבים פרימיום, SHU גבוה</td></tr>
+            <tr><td><strong>Kashmiri</strong></td><td>הודו (J&K)</td><td>1,000-2,000</td><td>130-180</td><td>צבע, תנדורי, פפריקה יוקרה</td></tr>
+            <tr><td><strong>Guajillo</strong></td><td>מקסיקו</td><td>2,500-5,000</td><td>100-120</td><td>מולה, סלסות, ייבוש שלם</td></tr>
+            <tr><td><strong>Thai Dragon</strong></td><td>תאילנד, ויאטנם</td><td>50,000-80,000</td><td>25-40</td><td>סטיר פריי, רטבים אסייתיים</td></tr>
+            <tr><td><strong>Aji Amarillo</strong></td><td>פרו</td><td>30,000-50,000</td><td>40-60</td><td>פסטה, רטבים, מטבח אנדי</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>מינוחי הדירוג</h3>
+    <p>בשוק ההודי, הדומיננטי בצ'ילי יבש, הדירוג מתבסס על שלושה פרמטרים: <strong>עם גבעול / ללא גבעול</strong> (Stem / Stemless), <strong>דרגת ניקיון</strong> (Single, Double, Triple sorted), ו-<strong>ערך ASTA</strong>. דרגת "Teja S17 Stemless Triple Sorted" היא הגבוהה ביותר בשגרת ייצוא. פרמטר נוסף שמקצוענים בודקים: <strong>Wrinkle Pattern</strong>. צ'ילי עם קמטים עדינים ואחידים מעיד על ייבוש נכון; קמטים גסים ובלתי אחידים מעידים על בעיית לחות או ייבוש מהיר מדי.</p>
+    <div class="ab ab-g">
+        <div class="tg">שיקול מקצועי</div>
+        <p>"ASTA Color" ו-"SHU" הם שני פרמטרים שנוטים לנוע בכיוונים הפוכים: זנים עם ASTA גבוה (צבע עז) נוטים להיות עדינים בחריפות, וזנים עם SHU גבוה נוטים לצבע חיוור. הסוחר צריך לדעת מה הלקוח מחפש: צבע, חריפות, או שילוב ספציפי. Teja S17 הוא הפשרה הנפוצה ביותר.</p>
+    </div>
+    <h3>הזנים הקיצוניים: מירוץ שיאי סקוביל</h3>
+    <p>בשנים האחרונות התפתח ענף של הכלאות קיצוניות לשבירת שיאי SHU. <strong>Carolina Reaper</strong> (2.2 מיליון SHU, שיא גינס מ-2017) של Ed Currie מדרום קרוליינה. <strong>Pepper X</strong> (2.69 מיליון SHU, שיא 2023) של אותו מגדל. <strong>Naga Viper</strong>, <strong>Trinidad Scorpion Butch T</strong>, <strong>Komodo Dragon</strong>. זנים אלה אינם מסחריים במובן הקלאסי (אי אפשר למכור אבקה של 2 מיליון SHU לתעשיית מזון), אבל הם מניעים שוק רטבים פרימיום, תחרויות אכילה, ותעשיית תוכן דיגיטלי שמייצרת מיליוני צפיות.</p>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: ממטע לאבקה, סטריליזציה, ומיצוי</h2>
+    <p class="dc">בין פלפל אדום על שיח לבין אבקת צ'ילי בצנצנת, עובר תהליך הנדסי מורכב שכל שלב בו משפיע על צבע, חריפות, טעם, וסיכון בטיחותי. טחינת צ'ילי יבש היא אחת הפעולות המסוכנות ביותר בתעשיית התבלינים: אבק הצ'ילי הוא למעשה גז מדמיע טבעי.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">קטיף ומיון ראשוני</div>
+                <div class="proc-step-body">קטיף ידני עדיין שולט ב-85% מהייצור העולמי. בהודו ובסין, עובדים עונתיים קוטפים 15-30 ק"ג ביום. מיון ראשוני בשדה: הפרדת פלפלים ירוקים, פגומים, ונגועים. יחס טרי ליבש: <strong>4:1 עד 5:1</strong>, כלומר 4-5 ק"ג צ'ילי טרי מייצרים 1 ק"ג יבש.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">ייבוש</div>
+                <div class="proc-step-body">הורדת לחות מ-75-80% (טרי) ל-<strong>8-12%</strong> (מסחרי). שלוש שיטות: <strong>ייבוש שמש</strong> (5-15 ימים, מסורתי, 80% מהייצור ההודי, סיכון זיהום ואובדן צבע מ-UV), <strong>ייבוש מכני</strong> (תנורי אוויר חם 50-65°C, 18-30 שעות, אחיד אבל צורך אנרגיה), <strong>ייבוש היברידי</strong> (שמש + finishing מכני, איזון אופטימלי). צ'ילי שיובש נכון שומר על גמישות מסוימת ואינו הופך לפירורים במגע. צ'ילי מיובש יתר (מתחת ל-7%) שביר, מאבד צבע, ושמנים אתריים מתפוגגים.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">הסרת גבעול (De-stemming)</div>
+                <div class="proc-step-body">ניתוק הגבעול הירוק מהפרי. בשיטה ידנית, 10-15 ק"ג לשעה לעובד. מכני: מכונות de-stemming בקצב 500-1,000 ק"ג לשעה. גבעולים מהווים 5-8% ממשקל הפרי ומכילים קפסאיצין זניח, אבל מעלים את אחוז הסיבים ומורידים את ערך ASTA. ייצוא "Stemless" מקבל פרמיה של <strong>5-15%</strong> על מחיר "With Stem".</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">מיון אופטי</div>
+                <div class="proc-step-body">מצלמות בתדר גבוה מזהות צבע, גודל, ופגמים. מכונות Sortex או Bühler עוברות 2-5 טון לשעה ומוציאות פלפלים שנצבעו לצהוב/שחור, פלפלים עם כתמי עובש, חומר זר (אבנים, חרקים, שאריות גבעול). דיוק: <strong>99.5%</strong>+. לאחר מיון אופטי, ניקוי נוסף ב-gravity separator שמפריד לפי צפיפות.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">05</div>
+            <div>
+                <div class="proc-step-title">טחינה</div>
+                <div class="proc-step-body">שלב מסוכן. אבקת צ'ילי באוויר מגרה עיניים, ריאות, ועור. מפעלי טחינה דורשים מערכות אוורור סגורות (negative pressure), סינון HEPA, וציוד מגן אישי לעובדים. שיטות: <strong>Hammer Mill</strong> (נפוץ, טמפרטורה 35-50°C, אובדן צבע 10-20%), <strong>Pin Mill</strong> (טחינה עדינה יותר), <strong>Cryogenic Grinding</strong> (חנקן נוזלי, מינוס 196°C, שימור 95% של קרוטנואידים ושמן אתרי, עלות פי 5-8). גודל חלקיקים סטנדרטי: <strong>40-80 mesh</strong> (0.2-0.4 מ"מ). לייצור תעשייתי של רטבים ותמציות: 100-200 mesh.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">06</div>
+            <div>
+                <div class="proc-step-title">סטריליזציה ואריזה</div>
+                <div class="proc-step-body">צ'ילי יבש נוטה לצבור סלמונלה מהקרקע, ואפלטוקסינים מעובש שפיתח בתנאי לחות. סטריליזציה: <strong>Steam HTST</strong> (120-135°C, 15-60 שניות, ירידה של 10-15% בערך ASTA), <strong>EBI</strong> (אלקטרון קרן, מינימום השפעה על צבע), <strong>Irradiation</strong> (מותר בארה"ב, אסור ב-EU מעשית). אריזה: שקי PP עם בטנת PE, ואקום או אווירה מתוקנת (Modified Atmosphere, N₂) לשימור צבע. משקלים: 25 ק"ג, 50 ק"ג, Big Bags 500-1,000 ק"ג.</div>
+            </div>
+        </div>
+    </div>
+    <h3>אולאורזין צ'ילי: המיצוי התעשייתי</h3>
+    <p>אולאורזין (Oleoresin Capsicum, OC) הוא תמצית שומנית המכילה את כל הקפסאיצינואידים, הקרוטנואידים, והשמנים האתריים של הצ'ילי בריכוז גבוה. ייצור: מיצוי באמצעות ממיסים (Hexane, Ethanol, Acetone) או CO₂ על-קריטי. <strong>1 ק"ג אולאורזין = 25-40 ק"ג צ'ילי יבש</strong>. שימושים: תעשיית מזון (נוזל מדויק יותר מאבקה), ספריי הגנה עצמית (Pepper Spray, 2% OC), משחות כאב (0.025-0.075% קפסאיצין), וצביעה תעשייתית. שוק האולאורזין העולמי: כ-<strong>900 מיליון דולר</strong> בשנה. הודו מייצרת 60% מהכמות העולמית, Synthite Industries (קרלה) הוא היצרן הגדול ביותר.</p>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות: צבענים, אפלטוקסינים, שאריות</h2>
+    <p class="dc">צ'ילי טחון הוא אחד המוצרים המזוהמים והמזויפים ביותר בשרשרת המזון הבינלאומית. הסיבה פשוטה: לקוח משלם פרמיה על צבע אדום עז, ויש כמה דרכים זולות לזייף צבע. המלחמה בזיופים ובזיהומים היא החזית המרכזית של בקרת האיכות בתעשייה.</p>
+    <h3>צבעים סינתטיים: Sudan Dyes</h3>
+    <p><strong>Sudan Red</strong> (Sudan I, II, III, IV) הם צבעי אזו סינתטיים מסרטנים שמשמשים בתעשייה כימית (צביעת נעליים, דלקים) ואסורים לחלוטין במזון. הם מתווספים לצ'ילי טחון כדי "לשדרג" צבע חיוור לאדום בוהק. ב-2005, EU ביצע את ה-Sudan Dye Crisis הגדול: מאות מוצרי צ'ילי נמשכו מהמדפים לאחר שנמצאו Sudan I ו-Sudan IV בממצאי RASFF. מאז, בדיקת Sudan Dyes היא חובה בכל משלוח צ'ילי ל-EU. שיטת הגילוי: <strong>HPLC-MS/MS</strong>, גבול גילוי 0.5 ppb. עלות בדיקה: 50-100 דולר למדגם.</p>
+    <h3>שאריות חומרי הדברה (MRL)</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>חומר פעיל</th><th>MRL האיחוד האירופי</th><th>MRL ארה"ב (EPA)</th><th>סיכוי גילוי בצ'ילי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Chlorpyrifos</strong></td><td>0.01 mg/kg (LOD)</td><td>0.5 mg/kg</td><td>גבוה מאוד</td></tr>
+            <tr><td><strong>Profenofos</strong></td><td>0.01 mg/kg</td><td>0.1 mg/kg</td><td>גבוה</td></tr>
+            <tr><td><strong>Acetamiprid</strong></td><td>0.3 mg/kg</td><td>1.2 mg/kg</td><td>בינוני</td></tr>
+            <tr><td><strong>Carbendazim</strong></td><td>0.1 mg/kg</td><td>Not established</td><td>בינוני-גבוה</td></tr>
+            <tr><td><strong>Ethion</strong></td><td>0.1 mg/kg</td><td>2.0 mg/kg</td><td>נמוך</td></tr>
+            <tr><td><strong>Dithiocarbamates</strong></td><td>0.1 mg/kg</td><td>0.1 mg/kg</td><td>בינוני</td></tr>
+            <tr><td><strong>Monocrotophos</strong></td><td>0.01 mg/kg (LOD)</td><td>אסור</td><td>נמוך (אסור ברוב)</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>הצ'ילי, כגידול שדורש הדברה אינטנסיבית נגד כנימות ומזיקים, נמצא באופן עקבי ברשימת המוצרים עם שיעורי הדחייה הגבוהים ביותר ב-RASFF (Rapid Alert System for Food and Feed) של האיחוד האירופי. ב-2023, צ'ילי הודי היה המוצר השני בכמות הדחיות אחרי שומשום.</p>
+    <h3>אפלטוקסינים ומיקוטוקסינים</h3>
+    <p>צ'ילי יבש נמצא בסיכון <strong>גבוה</strong> לאפלטוקסינים, גבוה יותר מפלפל שחור. הסיבה: ייבוש שמש על הקרקע, תנאי אחסון לקויים באחסנות חקלאיות, ולחות סביבתית גבוהה באזורי הגידול בהודו. <strong>Aspergillus flavus</strong> ו-<strong>A. parasiticus</strong> מפתחים על פלפלים שלחותם עלתה מעל 14%. גבולות EU: <strong>Aflatoxin B1 ≤ 5 μg/kg, סה"כ ≤ 10 μg/kg</strong>. Ochratoxin A: <strong>≤ 15 μg/kg</strong> (תקנה חדשה מ-2023). FDA: סה"כ ≤ 20 ppb.</p>
+    <div class="ab ab-r">
+        <div class="tg">אזהרת בטיחות קריטית</div>
+        <p>ב-2003, ה-EU זיהה Sudan I בממצאי צ'ילי טחון מהודו ברמות של עד <strong>4,000 ppm</strong>, פי 8,000 מגבול הגילוי. למעלה מ-600 מוצרי מזון שהכילו את אותו צ'ילי נמשכו מהמדפים ב-18 מדינות. מאז, כל משלוח צ'ילי הודי ל-EU חייב לעבור בדיקות Sudan Dyes, Aflatoxins, ו-Pesticide Panel, לפני שחרור מנמל היעד. עלות ציות: 100-250 דולר למכולה.</p>
+    </div>
+    <h3>מהילות ותחליפים</h3>
+    <p>מעבר לצבעים סינתטיים, זיופים נפוצים בצ'ילי טחון: <strong>לבנים</strong> (chalk), <strong>אבקת אדמה</strong>, <strong>סובין</strong> (bran), <strong>אבקת עגבנייה</strong>, ואפילו <strong>אבקת לבנים אדומות</strong> (red brick powder). שיטות גילוי: מיקרוסקופיה לזיהוי חלקיקים זרים, Ash Test (אפר מעל 8% מעיד על זיהום מינרלי), Acid Insoluble Ash (מעל 1.5% מעיד על חול/לבנים), ובדיקת DNA-barcoding לאימות מין הצ'ילי עצמו. ספקים רציניים מספקים COA מלא: Sudan Dyes, Aflatoxins, Pesticide Residue (200+ חומרים), Heavy Metals (Pb, As, Cd, Hg), Microbiological Panel, ו-ASTA Color.</p>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה: שינוע של חומר מגרה</h2>
+    <p class="dc">צ'ילי מיובש הוא מוצר "נשימתי" וארומטי שמציב אתגרים לוגיסטיים ייחודיים: ריח חודר שמזהם מוצרים שכנים, אבק מגרה שמסכן צוותי פריקה, ונטייה חזקה לאבד צבע בחשיפה לחום ולאור. מכולה של צ'ילי דורשת תכנון שונה ממכולה של אגוזים או פלפל שחור.</p>
+    <h3>דינמיקה של מכולה</h3>
+    <p>מכולה 20 פיט (TEU): <strong>10-14 טון</strong> צ'ילי יבש שלם, או <strong>8-12 טון</strong> צ'ילי טחון (צפיפות נמוכה יותר). שקי PP סטנדרטיים של 25 ק"ג או 40 ק"ג (הודו: שקי יוטה של 40 ק"ג עדיין נפוצים, Guntur Yard סטנדרט). Big Bags: 500-1,000 ק"ג לתעשייה.</p>
+    <p>הסיכון המרכזי: <strong>אובדן צבע</strong>. ערך ASTA של צ'ילי יורד ב-15-25% בהובלה ימית ארוכה אם המכולה נחשפת לחום. קרוטנואידים (capsanthin, capsorubin), שאחראים לצבע האדום, מתחמצנים באור ובחום. לקוחות שמשלמים על ASTA 100 ומקבלים ASTA 80 בנמל היעד, דורשים פיצוי. פתרונות: ציפוי מכולה בשכבת thermal liner (סדין אלומיניום שמשקף חום), אחסון מכולות בנמל בצל (לא תמיד אפשרי), ושימוש ב-Silica Gel Desiccants (4-8 יחידות למכולה 20 פיט) נגד קונדנסציה.</p>
+    <div class="ab ab-w">
+        <div class="tg">פתרון לחות וצבע</div>
+        <p>אריזה כפולה (Double Bagging) עם שק PE פנימי סגור הרמטית ושק PP חיצוני מפחיתה חדירת לחות ב-60-70%. שקיות סיליקה ג'ל 500 גרם בתוך כל שק PE מספקות שכבת הגנה נוספת. עלות: 0.30-0.50 דולר לשק. ביטוח זול ביחס לסיכון של תביעת ASTA.</p>
+    </div>
+    <h3>נמלי מוצא עיקריים</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מדינת מוצא</th><th>נמל עיקרי</th><th>זמן שינוע לאירופה</th><th>הערות לוגיסטיות</th></tr></thead>
+        <tbody>
+            <tr><td><strong>הודו</strong></td><td>Krishnapatnam / Nhava Sheva</td><td>20-26 ימים</td><td>Guntur Yard → Krishnapatnam הקצר. ספינות ישירות</td></tr>
+            <tr><td><strong>סין</strong></td><td>Tianjin / Qingdao</td><td>28-34 ימים</td><td>ייצוא מחוזות Guizhou, Hunan, Sichuan</td></tr>
+            <tr><td><strong>תאילנד</strong></td><td>Bangkok (Laem Chabang)</td><td>24-30 ימים</td><td>ייצוא Bird's Eye, Thai Dragon</td></tr>
+            <tr><td><strong>ויאטנם</strong></td><td>HCMC (Ho Chi Minh City)</td><td>28-32 ימים</td><td>Bird's Eye, צ'ילי שלם וטחון</td></tr>
+            <tr><td><strong>מקסיקו</strong></td><td>Manzanillo / Veracruz</td><td>16-22 ימים (לאירופה)</td><td>יבוש שלם: Guajillo, Ancho, Chipotle</td></tr>
+            <tr><td><strong>ספרד</strong></td><td>Valencia</td><td>3-5 ימים (תוך EU)</td><td>פפריקה, Pimiento. מוצא EU, ללא בדיקות ייבוא</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>סיכון שקט: צ'ילי אבקה <strong>חודר דרך אריזות</strong>. בשינוע מעורב, מכולה עם צ'ילי טחון שנדלפה מזהמת בריח מוצרים סמוכים כמו תה, קפה, או אבקת חלב. סוחרים ותיקים דורשים מכולה ייעודית (dedicated container), לא שיתוף מכולה (LCL) לצ'ילי חריף. בנמלי יעד, צוותי פריקה לצ'ילי חריף חייבים לעבוד עם <strong>מסכות N95</strong>, משקפי מגן, וכפפות. פריקה ללא ציוד מגן של מכולת צ'ילי Teja S17 טחון דווחה כגורמת להפסקת עבודה של 2-4 שעות בנמל רוטרדם.</p>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות: המנוע המטבולי, כאב, וסרטן</h2>
+    <p class="dc">הקפסאיצין הוא אחד החומרים הטבעיים הנחקרים ביותר בעולם. לא בגלל הטעם שלו, אלא בגלל מנגנון הפעולה הייחודי שלו על TRPV1, שפותח דלתות לתרופות כאב, לטיפול במטבוליזם, ולמחקרי סרטן. הפער בין מחקר מעבדתי לאישור קליני עדיין גדול, אבל הכיוון ברור.</p>
+    <h3>תרמוגנזה ומטבוליזם</h3>
+    <p>קפסאיצין מפעיל <strong>Brown Adipose Tissue</strong> (BAT, רקמת שומן חומה) דרך TRPV1 ודרך מסלול β-adrenergic, מה שמגביר ייצור חום (thermogenesis) ושריפת קלוריות. מטא-אנליזה שפורסמה ב-Appetite (2014) מצאה שצריכת קפסאיצין מגבירה חילוף חומרים ב-<strong>50 קילוקלוריות ליום</strong> בממוצע. לא מספיק לדיאטה בפני עצמו, אבל משמעותי כמרכיב משלים. מנגנון משלים: קפסאיצין מפחית תיאבון דרך <strong>GLP-1</strong> (Glucagon-Like Peptide 1), אותו הורמון שתרופות Semaglutide (Ozempic) מטרגטות.</p>
+    <h3>משכך כאבים מקומי</h3>
+    <p>משחות קפסאיצין (0.025-0.075%) משמשות לטיפול ב-<strong>neuropathic pain</strong>: כאבי סוכרת, פוסט-הרפטי (שלבקת חוגרת), דלקת מפרקים. המנגנון: חשיפה ממושכת של TRPV1 לקפסאיצין גורמת ל-<strong>desensitization</strong>, ריקון מאגרי Substance P (פפטיד עצבי מעביר אותות כאב). התוצאה: העצב מפסיק לשדר כאב. מוצר <strong>Qutenza</strong> (8% קפסאיצין patch, Averitas Pharma) אושר על ידי FDA ו-EMA לטיפול בכאב נוירופתי, ומייצג את ההכרה הרגולטורית הגבוהה ביותר בקפסאיצין כתרופה.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">50 kcal</div><div class="nu">שריפת יתר יומית</div><div class="nl">מטא-אנליזה 2014</div></div>
+        <div class="ni"><div class="nv">8%</div><div class="nu">patch קפסאיצין</div><div class="nl">Qutenza (FDA)</div></div>
+        <div class="ni"><div class="nv">14%</div><div class="nu">הפחתת תמותה</div><div class="nl">צריכה יומית (BMJ 2015)</div></div>
+        <div class="ni"><div class="nv">43°C</div><div class="nu">סף הפעלת TRPV1</div><div class="nl">טמפרטורה פיזיולוגית</div></div>
+        <div class="ni"><div class="nv">GLP-1</div><div class="nu">הורמון שובע</div><div class="nl">מושפע מקפסאיצין</div></div>
+        <div class="ni"><div class="nv">BDNF</div><div class="nu">גורם נוירוטרופי</div><div class="nl">מוגבר בצריכת צ'ילי</div></div>
+    </div>
+    <h3>קפסאיצין וסרטן</h3>
+    <p>התמונה מורכבת ולא חד-משמעית. מחקרים <em>in vitro</em> הראו שקפסאיצין מעכב תאי סרטן מסוגים שונים: ערמונית, מעי גס, שד, ריאות. המנגנון המשוער: עיכוב <strong>NF-κB</strong> ו-<strong>STAT3</strong> (מסלולים פרו-דלקתיים שמקדמים צמיחת גידול). מצד שני, מחקרים אפידמיולוגיים מסין ומדרום אמריקה הצביעו על קשר סטטיסטי בין צריכה גבוהה מאוד של צ'ילי לעלייה בסיכון לסרטן הקיבה. הפער: הריכוזים שנדרשים לעיכוב סרטן <em>in vitro</em> (<strong>50-200 μM</strong>) גבוהים פי 10-100 מהריכוזים שמגיעים לרקמה בצריכה תזונתית רגילה. התחום פתוח למחקר.</p>
+    <div class="ab ab-r">
+        <div class="tg">אינטראקציה תרופתית</div>
+        <p>קפסאיצין מעכב חלקית את <strong>CYP1A2</strong> ו-<strong>CYP2E1</strong>, אנזימי ציטוכרום P450. אנשים שצורכים כמויות גדולות של צ'ילי ונוטלים תרופות שמפורקות על ידי אנזימים אלה (כולל Theophylline, Chlorzoxazone) עשויים לחוות שינוי ברמות התרופה בדם. ההשפעה קלינית בצריכה תזונתית רגילה: מזערית. בתוספי קפסאיצין מרוכזים: דורש התייעצות רפואית.</p>
+    </div>
+    <h3>מיתוס הכיב: הצ'ילי מגן על הקיבה</h3>
+    <p>בניגוד לאמונה הרווחת שחריף גורם לכיבי קיבה, מחקרים הראו את ההפך: קפסאיצין מגביר את זרימת הדם ברירית הקיבה, מעודד הפרשת ריר מגן, ומעכב את חיידק <strong>Helicobacter pylori</strong> שגורם לכיבים. מחקר אפידמיולוגי מסינגפור (1995) מצא שצריכת צ'ילי <strong>הפחיתה</strong> את שכיחות הכיב הפפטי. הגורם לכיב הוא H. pylori ו-NSAIDs, לא חריפות.</p>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק עולמי, מחירים, מגמות 2026</h2>
+    <p class="dc">שוק הצ'ילי העולמי (טרי + יבש) הגיע ב-2024 לשווי של כ-<strong>49 מיליארד דולר</strong> בנפח של 38 מיליון טון, עם תחזית ל-57 מיליארד דולר ו-42 מיליון טון עד 2035 (CAGR של 1.8% בערך ו-1.0% בנפח). מבנה שוק: סין שולטת בייצור ובצריכה, הודו שולטת בצ'ילי יבש ובאולאורזין, ומקסיקו מובילה בייצוא צ'ילי טרי.</p>
+    <div class="cb">
+        <div class="ct">חלוקת ייצור צ'ילי ופלפלים עולמי 2024 (% מסך הכמות)</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">סין</span></div><div class="pb-track"><div class="pb-fill" data-w="45" style="background:#C4392F"></div></div><span class="pb-pct">45%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇲🇽</span><span class="pb-name">מקסיקו</span></div><div class="pb-track"><div class="pb-fill" data-w="8" style="background:#8B2020"></div></div><span class="pb-pct">8%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇹🇷</span><span class="pb-name">טורקיה</span></div><div class="pb-track"><div class="pb-fill" data-w="8" style="background:#E08070"></div></div><span class="pb-pct">8%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇩</span><span class="pb-name">אינדונזיה</span></div><div class="pb-track"><div class="pb-fill" data-w="7" style="background:#A04040"></div></div><span class="pb-pct">7%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇳</span><span class="pb-name">הודו</span></div><div class="pb-track"><div class="pb-fill" data-w="6" style="background:#D06050"></div></div><span class="pb-pct">6%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="26" style="background:#DDD6CA"></div></div><span class="pb-pct">26%</span></div>
+        </div>
+        <div class="pb-note">נתונים: FAO 2024, IndexBox Global Market Report · סה"כ ייצור עולמי: ~38 מיליון טון (טרי + יבש)</div>
+    </div>
+    <p>הערה חשובה: הנתונים כוללים פלפלים טריים (ירוקים, אדומים) ופלפלים יבשים יחד. בשוק <strong>הצ'ילי היבש</strong> בלבד, הודו היא המייצרת הגדולה ביותר (48% מהייצור העולמי ב-2023), בנפח של כ-2.1 מיליון טון, ואחריה בנגלדש, תאילנד, סין ואתיופיה.</p>
+    <h3>דינמיקת מחיר: הודו, ה-benchmark של הצ'ילי היבש</h3>
+    <p>מחיר Teja S17 (Guntur, NCDEX benchmark): בשנת 2023 ירד ממחיר שיא של כ-<strong>247 רופי/ק"ג</strong> (כ-$3,000/טון) לכ-<strong>127 רופי/ק"ג</strong> (כ-$1,500/טון) בתחילת 2025, ירידה של כ-50% בעקבות יבול שיא בהודו ובסין. המחיר הנוכחי (Q1 2026): כ-<strong>140-200 רופי/ק"ג</strong> (כ-$1,700-2,400/טון), עם פיצול בין זנים (Bydgi Premium בפרמיה, Teja Standard בלחץ).</p>
+    <p>גורמי מחיר: ייצור עונתי בהודו (קציר עיקרי: פברואר-אפריל), ביקוש סיני (סין מייבאת 100,000+ טון צ'ילי יבש בשנה), תנאי מזג אוויר (El Niño/La Niña), ורמות מלאי ב-cold storage ב-Guntur ובחוביי. שלא כמו פלפל שחור שמחירו נקבע בעיקר ב-HCMC, מחיר הצ'ילי נקבע בעיקר ב-<strong>Guntur Mirchi Yard</strong> ובבורסת NCDEX.</p>
+    <div class="pull">
+        <p>הודו מייצרת 48% מהצ'ילי היבש בעולם, אבל גם צורכת 95% מייצורה בעצמה. רק 5% מגיע לייצוא. כל שנה שבה הביקוש הפנימי ההודי עולה (פסטיבלים, עונות שיא), היצע הייצוא יורד, והמחיר העולמי מזנק.</p>
+    </div>
+    <h3>מגמות 2025-2026</h3>
+    <p>שלוש מגמות מגדירות. ראשית, <strong>Traceability</strong>: קמעונאים אירופיים ואמריקאים דורשים מעקב מלא מהמטע לצנצנת. תקן <strong>FSSC 22000</strong> הפך לדרישת סף בייצוא צ'ילי ל-EU. שנית, <strong>פרמיאליזציה</strong>: צ'ילי עם GI (Piment d'Espelette, Kampot Chili, Kashmiri Chili) מקבלים פרמיה של 3-10 פעמים מצ'ילי commodity. שלישית, <strong>שוק תוספי תזונה</strong>: תוספי קפסאיצין לירידה במשקל, למטבוליזם, ולכאב מפרקים צומחים ב-12-15% שנתיים, מונעים על ידי מגמת "natural remedies" ומחקרי TRPV1.</p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית: ננוקפסאיצין, מיצוי ירוק, וחקלאות דיוק</h2>
+    <p class="dc">הצ'ילי של 2026 כבר אינו רק תבלין או חומר גלם לרטבים. הוא מולקולה פרמצבטית בהתהוות, חומר גלם לננוטכנולוגיה, ונושא מחקר בביוטכנולוגיה חקלאית. המרחק בין גרגר אדום יבש על שק יוטה ב-Guntur לבין ננוחלקיק קפסאיצין במעבדת Drug Delivery הוא קצר מתמיד.</p>
+    <h3>מיצוי CO₂ על-קריטי</h3>
+    <p>השיטה המסורתית למיצוי אולאורזין משתמשת בממיסים אורגניים (Hexane, Ethanol) שמשאירים שאריות. מיצוי <strong>CO₂ על-קריטי</strong> (SFE): CO₂ בלחץ 200-400 Bar ובטמפרטורה 40-60°C הופך למצב "על-קריטי" שמתנהג גם כנוזל וגם כגז, וממיס את הקפסאיצינואידים והקרוטנואידים ביעילות. התוצאה: תמצית נקייה ב-100% משאריות ממיס, עם פרופיל ביוכימי קרוב יותר לפרי המקורי. עלות: גבוהה פי 3-5 ממיצוי ממיסים. שוק יעד: פרמצבטיקה, קוסמטיקה, תוספי תזונה פרימיום.</p>
+    <h3>ננואנקפסולציה של קפסאיצין</h3>
+    <p>אחד האתגרים של קפסאיצין פרמצבטי: הוא מגרה רקמות ואינו מסיס במים. <strong>Nanoencapsulation</strong> בחלקיקי <strong>PLGA</strong> (Poly Lactic-co-Glycolic Acid), <strong>Chitosan</strong>, או <strong>Lipid Nanoparticles</strong> פותרת שתי בעיות: מונעת גירוי רקמתי ומאפשרת שחרור מבוקר. חלקיקים בגודל 50-300 ננומטר משפרים ביו-זמינות ב-<strong>300-600%</strong> בהשוואה לקפסאיצין חופשי. מחקר מאוניברסיטת Tongji (2023) הדגים ננוקפסולות קפסאיצין שהפחיתו כאב נוירופתי בעכברים ב-72% לאורך 96 שעות ממתן יחיד. שוק Drug Delivery של תרכובות טבעיות: צפוי להגיע ל-15 מיליארד דולר עד 2028.</p>
+    <h3>חקלאות דיוק וביוטכנולוגיה</h3>
+    <p>טכנולוגיית <strong>CRISPR-Cas9</strong> מאפשרת עריכה גנטית מדויקת של גנום ה-Capsicum. יעדים: עמידות ל-Phytophthora ול-CMV, העלאת ריכוז קפסאיצין ללא פגיעה בתשואה, והגדלת תכולת ויטמין C ונוגדי חמצון. מחקרי GWAS (Genome-Wide Association Studies) זיהו את הגנים <strong>CaSBP13</strong> ו-<strong>CaDR1</strong> כמפתחות לעמידות למתח. הכלאות חדשות שמשלבות עמידות של Capsicum chinense עם תשואה של Capsicum annuum נמצאות בשלבי פיתוח בהודו ובדרום קוריאה.</p>
+    <div class="ab ab-w">
+        <div class="tg">יישום תעשייתי מתפתח</div>
+        <p>חברת <strong>INNOPEP</strong> (קוריאה) הגישה בקשת פטנט לשימוש בננוקפסאיצין כחומר משמר טבעי בבשר ובעוף, מחליף ניטריטים סינתטיים. המנגנון: קפסאיצין בריכוז 50-100 ppm מעכב Listeria monocytogenes ו-Salmonella typhimurium, ללא שינוי בטעם המוצר הסופי בזכות האנקפסולציה.</p>
+    </div>
+    <h3>Pepper Spray: מהמטבח לביטחון</h3>
+    <p>שוק <strong>Oleoresin Capsicum לביטחון</strong> (Pepper Spray, OC Gas) מוערך ב-<strong>400 מיליון דולר</strong> בשנה. ריכוז סטנדרטי: <strong>2% OC</strong> (כ-1.3 מיליון SHU). שימושים: הגנה עצמית, משטרה, כליאה. ארה"ב, שבה Pepper Spray חוקי ב-50 מדינות, היא השוק הגדול ביותר. הקפסאיצין לייצור Pepper Spray מגיע כמעט כולו מאולאורזין הודי, מה שיוצר קשר בלתי צפוי בין חקלאים באנדרה פראדש לתעשיית הביטחון האמריקאית.</p>
+    <p>מהפרי הירוק ביער הגשם, דרך הבורסה ב-Guntur, דרך מעבדת HPLC ופס ייצור של ננוחלקיקים, הצ'ילי עושה מסע שמועט מוצרים חקלאיים עושים: מתבלין פרימיטיבי לפלטפורמה ביוטכנולוגית. מה שלא השתנה: המולקולה עדיין שורפת, הגוף עדיין מגיב באנדורפינים, והאדם עדיין חוזר לעוד.</p>
+</section>
+
+<div class="ft">
+    ערך ידע מסחרי-מדעי · Blue Star International · 2026<br>
+    מבוסס על נתוני FAO, ASTA, NCDEX, IndexBox, Spice Board India, ומקורות פתוחים<br>
+    <span style="font-size:11px;color:#AAA59A;">ביוכימיה: Caterina et al. Nature 1997 · Zhang et al. Mol Med Rep 2024 · נתוני ייצור: FAO/FAOSTAT 2024 · IndexBox Global Chili Report 2025 · לוגיסטיקה ובקרת איכות: RASFF EU Notifications 2020-2025 · ASTA Cleanliness Specifications · Spice Board India Export Data</span>
+</div>
+</main>
+
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · CHILI</footer>
+
+<div class="marquee-container">
+    <div class="marquee-text">צ'ילי · CAPSICUM · CAPSAICIN · SCOVILLE · GUNTUR · BIRD'S EYE · HABANERO · צ'ילי · CAPSICUM · CAPSAICIN · SCOVILLE · GUNTUR · BIRD'S EYE · HABANERO · </div>
+</div>
+
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4392F" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch');
+    const dots = document.querySelectorAll('.nav-dot');
+    let current = "";
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 300);
+});
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => {
+    dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+            obs.unobserve(e.target);
+        });
+    }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) {
+                        heroSlot.innerHTML = '';
+                        heroSlot.appendChild(makeMedia(heroSrc));
+                    }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>
