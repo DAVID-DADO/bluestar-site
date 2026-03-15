@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0A08;--text:#FAF8F0;--body:#D0C8B8;--accent:#7A5A20;--warm:#C09030;--card:rgba(20,18,12,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;background-image:linear-gradient(rgba(192,144,48,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(192,144,48,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}body::after{background:#3A2808;bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);position:relative;}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.05);background:#0B0A08;display:flex;align-items:center;justify-content:center;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px;}
+em{color:#D0A848;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(192,144,48,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(60,40,10,0.2);border-right:4px solid var(--accent);}.ab-g .tg{color:#D0A848;}
+.ab-r{background:rgba(184,50,50,0.1);border-right:4px solid #B83030;}.ab-r .tg{color:#E06060;}.ab-r p{color:#DDB0B0;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(20,18,12,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:13px;color:#A09070;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.cb{background:rgba(20,18,12,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;margin:28px 0;}
+.cb .ct{font-family:'Frank Ruhl Libre',serif;font-size:17px;font-weight:700;margin-bottom:14px;text-align:center;color:var(--text);}
+.pb-chart{margin:16px 0 8px;display:flex;flex-direction:column;gap:10px;}
+.pb-row{display:flex;align-items:center;gap:10px;}
+.pb-meta{display:flex;align-items:center;gap:6px;min-width:140px;justify-content:flex-end;}
+.pb-flag{font-size:18px;}.pb-name{font-size:13px;color:#A09070;}
+.pb-track{flex:1;background:rgba(255,255,255,0.08);height:18px;border-radius:9px;overflow:hidden;}
+.pb-fill{height:100%;width:0;border-radius:9px;transition:width 1.2s cubic-bezier(0.22,1,0.36,1);}
+.pb-pct{font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:700;color:var(--text);width:36px;text-align:left;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}
+.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,0.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(192,144,48,0.2);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.proc-steps{display:flex;flex-direction:column;gap:20px;margin:24px 0;}
+.proc-step{display:flex;gap:20px;align-items:flex-start;}
+.proc-step-num{min-width:36px;height:36px;border-radius:50%;background:var(--warm);color:#000;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.proc-step-title{font-family:'Frank Ruhl Libre',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.proc-step-body{font-size:16px;color:var(--body);line-height:1.75;}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.ft{text-align:center;padding:44px 24px;font-size:13px;color:#706040;border-top:1px solid rgba(255,255,255,0.06);margin-top:36px;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.ch ol li::marker{color:var(--warm);font-family:'Space Mono',monospace;font-size:12px;font-weight:700;}.ch ul li::marker{color:var(--warm);}
+.back-to-top{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;z-index:1000;transition:0.3s;opacity:0;pointer-events:none;}
+.back-to-top.visible{opacity:1;pointer-events:auto;}
+.home-btn{position:fixed;bottom:30px;right:30px;display:flex;align-items:center;gap:8px;background:rgba(20,18,12,0.85);border:1px solid rgba(192,144,48,0.3);border-radius:24px;padding:8px 16px;text-decoration:none;color:var(--warm);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;z-index:1000;transition:0.3s;}
+@media(max-width:900px){.side-nav{display:none;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+<title>בוטן · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1"></div>
+    <div class="nav-dot" data-target="ch2"></div>
+    <div class="nav-dot" data-target="ch3"></div>
+    <div class="nav-dot" data-target="ch4"></div>
+    <div class="nav-dot" data-target="ch5"></div>
+    <div class="nav-dot" data-target="ch6"></div>
+    <div class="nav-dot" data-target="ch7"></div>
+    <div class="nav-dot" data-target="ch8"></div>
+    <div class="nav-dot" data-target="ch9"></div>
+    <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · NUTS ARCHIVE</div>
+    <h1 id="sync-title">בּוֹטֶן</h1>
+    <p class="deck" id="sync-desc">האגוז שאינו אגוז. קטנית שהחליטה לגדול מתחת לאדמה, כבשה את אמריקה הדרומית, ושינתה את הכימיה התזונתית של כל יבשת. 42 מיליון טון לשנה, מחיר נמוך שמסתיר שוק של 50 מיליארד דולר.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <img src="../images/Bowl_overflowing_with_peanuts_f5f4603cbf.jpeg" alt="peanut" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+</section>
+<div class="marquee-container">
+    <div class="marquee-text">בוטן · ARACHIS HYPOGAEA · OLEIC ACID · PEANUT · RESVERATROL · GROUNDNUT · בוטן · ARACHIS HYPOGAEA · OLEIC ACID · PEANUT · RESVERATROL · GROUNDNUT · </div>
+</div>
+<main class="con">
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: זהות, שם, ומסע ממרכז אמריקה לכל שולחן</h2>
+    <p class="dc">לפני שהיה חמאה, הבוטן היה רסק אינקה. לפני שהיה רסק, הוא גדל בר בצ'אקו הבוליביאני, במישורי צפון ארגנטינה. ולפני שגילו אותו הספרדים, הוא הזין תרבויות כמו Valdivia ו-Nazca בדרום אמריקה לפחות <strong>3,500 שנה</strong>. הבוטן הגיע לאפריקה עם סוחרי עבדים הפורטוגזים במאה ה-16, לסין עם מיסיונרים ספרדים ב-1530, ולצפון אמריקה עם ספינות העבדות שחצו האוקיינוס האטלנטי. כל אחת מן הנסיעות הללו הייתה טרגדיה אנושית. כל אחת מהן זרעה בוטנים ביבשת חדשה.</p>
+    <p>השם העברי <strong>בּוֹטֶן</strong> מגיע מהארמית, ומופיע בתנ"ך (בראשית מג:11) בהקשר של פיסטוק, לא של בוטן כפי שאנחנו מכירים. הבוטן כפי שאנחנו מכירים (<em>Arachis hypogaea</em>) לא הגיע לארץ ישראל לפני המאה ה-17. השם הלטיני <em>hypogaea</em> מ-<em>hypo</em> (מתחת) ו-<em>gaea</em> (אדמה): "גדל תחת האדמה". בניגוד לכל שאר הקטניות, הבוטן מפתח מצ'מר (פרח מופרה) שצונח לאדמה ומתפתח לפרי תת-קרקעי. תהליך ייחודי שנקרא <strong>geocarpy</strong>.</p>
+    <p>הרגע הדרמטי: <strong>1890</strong>, ד"ר ג'ון הארווי קלוג, מנהל סנטוריום בבטל-קריק מישיגן, מפתח "peanut paste" כמזון לחולים שלא יכולים ללעוס. הוא לא ידע שהוא ממציא תעשייה. ב-<strong>1904</strong>, בתערוכת St. Louis World's Fair, חמאת בוטנים נמכרת לראשונה לציבור הרחב. ב-<strong>1922</strong>, Joseph Rosefield מפתח תהליך הידרוגנציה חלקית שמאריך חיי מדף ומקנה את המרקם הקרמי שאנחנו מכירים. <em>חמאת בוטנים נולדה כמזון לחולים ומתה כחמאה.</em></p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>ג'ורג' וושינגטון קרוור, חוקר אפרו-אמריקני מ-Tuskegee Institute, פרסם ב-<strong>1916</strong> חוברת: "How to Grow the Peanut and 105 Ways of Preparing it for Human Consumption". ב-1925 הגיע ל-<strong>300 שימושים</strong> לבוטן, מדיו עד פלסטיק. הוא לא המציא חמאת בוטנים (שקדמה לו), אבל הוא שינה את התפיסה של הבוטן מ"מזון עניים" ל"גידול אסטרטגי" עבור ה-Deep South.</p>
+    </div>
+</section>
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: הצמח, ה-Geocarpy, והגידול</h2>
+    <p class="dc"><em>Arachis hypogaea</em> הוא קטנית חד-שנתית עם מנגנון פרייה ייחודי: לאחר הפריית הפרח עלה-אדמה, נוצר "peg" (מצ'מר) שצונח לאדמה ומתפתח לתרמיל הבוטן מתחת לפני הקרקע בעומק של 5-10 ס"מ. מנגנון זה מחייב אדמה רכה ורפויה (לא חרסיתית), ניקוז מצוין, ועומק עיבוד אדמה של לפחות 20-25 ס"מ. גדלי עצמו של הצמח מעל פני הקרקע: <strong>30-50 ס"מ</strong> בלבד.</p>
+    <h3>שני הסוגים הבוטניים המרכזיים</h3>
+    <p><strong>Virginia type</strong>: גרעינים גדולים, 2 לתרמיל, אורך 18-22 מ"מ. לשוק הקמעונאי (cocktail peanuts, in-shell). <strong>Runner type</strong>: גרעינים בינוניים, 2-3 לתרמיל. <strong>80%</strong> מהיצור האמריקאי. חמאת בוטנים בעיקר. <strong>Spanish type</strong>: גרעינים קטנים, עטיפה אדמדמה. שמן בעיקר, גם ממתקים. <strong>Valencia type</strong>: 3-5 גרעינים לתרמיל, מתוק, נדיר.</p>
+    <p>אקלים: <strong>אקלים טרופי-תת-טרופי</strong>, <strong>500-1,000 מ"מ גשם</strong>, <strong>עונת גידול 120-150 יום</strong>. מדינות מייצרות: <strong>סין</strong> (35-40%), <strong>הודו</strong> (15-20%), <strong>ניגריה</strong> (10%), <strong>ארה"ב</strong> (8%), <strong>סודן</strong> (5%).</p>
+    <div class="ab ab-g">
+        <div class="tg">גזרת מחקר</div>
+        <p>זן <strong>Tifrunner</strong> (USDA/University of Georgia, 2003) הוא הזן הדומיננטי בייצור האמריקאי עם עמידות גבוהה ל-TSWV (Tomato Spotted Wilt Virus), הנגיף שהרס יבולים בשנות ה-90. תפוקה: <strong>2.5-3.0 טון לדונם</strong>. אחוז שמן גבוה: <strong>48-52%</strong>.</p>
+    </div>
+</section>
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: חומצה אולאית, רסברטרול, ואלרגן Ara h 2</h2>
+    <p class="dc">הבוטן הוא ביוכימית בין שני עולמות: אגוז (עשיר בשמן) וקטנית (עשיר בחלבון). הרכב ייחודי שנותן 567 קלוריות ל-100 גרם עם <strong>25% חלבון</strong>, <strong>49% שומן</strong>, ו-<strong>16% פחמימות</strong>. שלושה רכיבים מייחדים אותו ביוכימית.</p>
+    <h3>חומצה אולאית: אותה שומן כמו זית</h3>
+    <p><strong>חומצה אולאית (Oleic acid)</strong> מהווה <strong>46-72%</strong> מחומצות השומן בבוטן (תלוי בזן). בזנים High-Oleic (שפותחו ב-1990s): עד 80% אולאית. אחד משמנים הצמחיים הגבוהים ב-MUFA. פרופיל שמן בוטן High-Oleic דומה לשמן זית ועולה על שמן canola בהתנגדות לחמצון.</p>
+    <h3>Resveratrol: האנטי-אוקסידנט הפתעה</h3>
+    <p><strong>Resveratrol</strong>, פוליפנול שמזוהה עם יין אדום, נמצא בבוטן (0.01-0.26 mg/100g) ובמיוחד בקליפת הבוטן הוורודה (<strong>0.4-1.0 mg/100g</strong>). הבוטן הוא אחד ממקורות ה-Resveratrol הצמחיים הלא-יקרים.</p>
+    <div class="ab ab-r">
+        <div class="tg">אלרגן: Ara h 2</div>
+        <p><strong>Ara h 2</strong> הוא החלבון האלרגני המרכזי בבוטן, 2S albumin, עמיד לחום ולעיכול. אלרגיה לבוטנים משפיעה על <strong>1-2% מהאוכלוסייה המערבית</strong> ועלולה לגרום לאנפילקסיס. זו אחת מאלרגיות המזון החמורות ביותר. FDA, EU, ו-WHO מחייבים תיוג ברור. בישול אינו מנטרל את האלרגן: Ara h 2 עמיד ל-120°C+ ל-30 דקות.</p>
+    </div>
+    <p>ערכים תזונתיים: <strong>567 קלוריות ל-100g, 49g שומן, 25g חלבון, 16g פחמימות, 9g סיבים</strong>. עשיר במגנזיום (<strong>168 מ"ג</strong>), ניאצין (<strong>12 מ"ג, 75% יומי</strong>), ויטמין E (<strong>8.3 מ"ג</strong>), אשלגן (<strong>705 מ"ג</strong>).</p>
+</section>
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: פרמטרים ושפת הסוחרים</h2>
+    <p class="dc">שוק הבוטן המסחרי מתחלק לשלושה: <strong>Edible grades</strong> (למאכל), <strong>Oil stock</strong> (לשמן), ו<strong>Seed grade</strong> (לזריעה). הפרמטרים שמדברים: גודל, לחות, אפלטוקסין, חלקות פנים, ואחוז שמן לדרגת Oil stock.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>דרגה</th><th>גודל</th><th>לחות מקס'</th><th>אפלטוקסין</th><th>שימוש</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Extra Large Virginia</strong></td><td>18-22 מ"מ</td><td>9%</td><td>≤4 ppb</td><td>קמעונאות פרמיום</td></tr>
+            <tr><td><strong>Large Runner</strong></td><td>55/64 inch</td><td>9%</td><td>≤4 ppb</td><td>חמאת בוטנים</td></tr>
+            <tr><td><strong>Spanish Grade</strong></td><td>קטן</td><td>10%</td><td>≤4 ppb</td><td>שמן, ממתקים</td></tr>
+            <tr><td><strong>Oil Stock</strong></td><td>כל גודל</td><td>11%</td><td>≤20 ppb</td><td>שמן בוטנים</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">High-Oleic Peanut: פרמיום חדש</div>
+        <p>זנים High-Oleic (Florida-07, Tifguard HO) מכילים <strong>78-80% חומצה אולאית</strong> לעומת 46-52% בסטנדרט. חיי מדף ארוכים ב-<strong>2.5-3 פעמים</strong>. מחיר פרמיום: <strong>5-10%</strong> מעל ממוצע. ה-FDA מאפשר health claim: "High-oleic peanuts may reduce risk of coronary heart disease". שוק growing ב-8% לשנה.</p>
+    </div>
+</section>
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהאדמה לחמאה</h2>
+    <p class="dc">הבוטן עובר מסלול עיבוד ארוך יחסית: קציר, ייבוש, קלייה, קילוף, מיון, ולבסוף הפיכה לאחד מעשרות מוצרים. כל שלב משפיע על הפרופיל הארומטי הסופי. קלייה היא הצומת שמגדיר את הטעם.</p>
+    <div class="proc-steps">
+        <div class="proc-step"><div class="proc-step-num">01</div><div><div class="proc-step-title">קציר ו-Curing</div><div class="proc-step-body">קציר ב-combine harvester שמוציא תרמילים מהאדמה. Curing: ייבוש תרמילים על עצי הצמח ב-windrows ל-<strong>12-14% לחות</strong> תוך 3-4 ימים (גורם אחידות טעם). לאחר: ייבוש מכני ל-<strong>7-8%</strong>.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">02</div><div><div class="proc-step-title">ניקוי ומיון</div><div class="proc-step-body">הסרת תרמילים פגומים, אבנים, עלים. מיון לפי גודל ב-graders. מיון אופטי למיצוי גרעינים שחורים/מקומטים. אחוז פגמים לשוק קמעונאי Grade A: פחות מ-1%.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">03</div><div><div class="proc-step-title">קלייה: לב העיבוד</div><div class="proc-step-body">קלייה יבשה: <strong>160-180°C ל-25-40 דקות</strong> בתנורי Rotary. תגובת מיילארד יוצרת מאות תרכובות טעם. Light Roast (160°C): טעם עדין. Medium (170°C): מאוזן. Dark (180°C): חזק ומריר קלות. כל מפעל חמאת בוטנים שומר על "קלייה בית" סודית.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">04</div><div><div class="proc-step-title">הפקת שמן</div><div class="proc-step-body">שמן בוטנים Cold-press: <strong>42-48%</strong> תפוקה. שמן מסורתי ("Expelled"): <strong>46-52%</strong> תפוקה. מחיר שמן בוטנים Cold-press פרמיום: <strong>4-8 דולר לק"ג</strong>. שמן מסורתי: <strong>1.5-3 דולר לק"ג</strong>. שוק שמן בוטנים: <strong>3.2 מיליארד דולר</strong> ב-2024.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">05</div><div><div class="proc-step-title">חמאת בוטנים</div><div class="proc-step-body">טחינה + מייצבים (hydrogenated oil או mono/diglycerides) + מלח + סוכר. Natural Peanut Butter: בוטן + מלח בלבד. 90% מהחמאה = Runner grade. ייצור עולמי: <strong>2.2 מיליון טון ב-2024</strong>. שוק ארה"ב לבד: <strong>800,000 טון</strong>.</div></div></div>
+    </div>
+</section>
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות</h2>
+    <p class="dc">הבוטן הוא אחד המוצרים עם הרגולציה הקשיחה ביותר בתעשיית המזון, בשל שני סיכונים מרכזיים: <strong>אפלטוקסין</strong> ו<strong>אלרגיה</strong>. שניהם עם פוטנציאל הרג, שניהם עם פרוטוקולים מחמירים.</p>
+    <div class="ab ab-r">
+        <div class="tg">אפלטוקסין: הסיכון הכלכלי הגדול</div>
+        <p><em>Aspergillus flavus</em> ו-<em>A. parasiticus</em> גדלים על בוטנים לחים ומייצרים Aflatoxin B1, הקרצינוגן הטבעי הרעיל ביותר הידוע. תנאי פגיעות: לחות מעל 9%, חום מעל 25°C, נזק מכני. ה-EU: <strong>Aflatoxin B1 ≤ 2 ppb</strong> למאכל ישיר. ארה"ב (FDA): <strong>≤ 20 ppb</strong>. ב-2020, דחיות אפלטוקסין הן <strong>35-40%</strong> מכל דחיות RASFF לאגוזים ובוטנים.</p>
+    </div>
+    <p>מיקרוביולוגיה: <strong>TPC ≤ 10⁵ CFU/g</strong>, <strong>Salmonella: Absent/25g</strong>, <strong>E. coli ≤ 10 CFU/g</strong>. Heavy metals: <strong>Pb ≤ 0.1, Cd ≤ 0.1 mg/kg</strong>. Pesticides: <strong>Chlorpyrifos ≤ 0.01 mg/kg</strong> EU. COA תקני: aflatoxin (HPLC), pesticide panel 200+, microbiological, heavy metals, moisture, size distribution.</p>
+</section>
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה וניהול שרשרת האספקה</h2>
+    <p class="dc">בוטן הוא מוצר שרגיש לחות ולחמצן. תנאי אחסון לקויים = אפלטוקסין. שינוע לא נכון = לחות, עובש, הפסד כלכלי. שרשרת האספקה של בוטן דורשת בקרת לחות בכל נקודה.</p>
+    <div class="cb">
+        <div class="ct">חלוקת ייצור בוטן עולמי 2024</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">סין</span></div><div class="pb-track"><div class="pb-fill" data-w="37" style="background:#7A5A20"></div></div><span class="pb-pct">37%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇳</span><span class="pb-name">הודו</span></div><div class="pb-track"><div class="pb-fill" data-w="18" style="background:#C09030"></div></div><span class="pb-pct">18%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇳🇬</span><span class="pb-name">ניגריה</span></div><div class="pb-track"><div class="pb-fill" data-w="10" style="background:#A07828"></div></div><span class="pb-pct">10%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇺🇸</span><span class="pb-name">ארה"ב</span></div><div class="pb-track"><div class="pb-fill" data-w="8" style="background:#906020"></div></div><span class="pb-pct">8%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="27" style="background:#504010"></div></div><span class="pb-pct">27%</span></div>
+        </div>
+        <div class="pb-note">מקור: FAO FAOSTAT 2024, USDA PSD</div>
+    </div>
+    <p>אחסון: <strong>RH מתחת ל-65%, טמפרטורה 15-25°C</strong>. שינוע: Dry containers עם Desiccant (Dri-Box). בוטנים In-shell: <strong>24 חודש</strong> חיי מדף בתנאים טובים. Shelled (קלוף): <strong>12-18 חודש</strong>. קלוי: <strong>3-6 חודש</strong> (חמצון מהיר). <em>הבוטן זול מכל אגוז, אבל עלות הכישלון לוגיסטי שלו הכי גבוהה.</em></p>
+</section>
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות</h2>
+    <p class="dc">הבוטן הוא אחד מנושאי מחקר ה-cardiovascular הפעיל ביותר בתזונה. חמישה מחקרי cohort גדולים בארה"ב ובאירופה מצאו קורלציה שלילית עקבית בין צריכת בוטנים לבין אירועים קרדיווסקולריים. הקשר חזק ואחיד יחסית.</p>
+    <h3>לב וכלי דם</h3>
+    <p>The Nurses' Health Study ו-Health Professionals Follow-up Study (Harvard, 160,000 משתתפים, מעקב 14 שנה) מצאו שצריכה של בוטנים ≥5 פעמים בשבוע הפחיתה סיכון ל-CAD ב-<strong>35%</strong> לעומת ללא בוטנים. Framingham Heart Study: צריכת 2 כפות חמאת בוטנים ≥5 פעמים/שבוע: <strong>21%</strong> הפחתת סיכון ל-diabetes סוג 2 בנשים. מנגנון: חומצה אולאית מוריד LDL, Resveratrol מעכב agergstion טסיות.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">35%</div><div class="nu">הפחתת CAD</div><div class="nl">Nurses Health Study</div></div>
+        <div class="ni"><div class="nv">25g</div><div class="nu">חלבון ל-100g</div><div class="nl">גבוה לאגוז</div></div>
+        <div class="ni"><div class="nv">80%</div><div class="nu">Oleic acid</div><div class="nl">בזן High-Oleic</div></div>
+        <div class="ni"><div class="nv">42M</div><div class="nu">טון לשנה</div><div class="nl">ייצור עולמי</div></div>
+        <div class="ni"><div class="nv">12 mg</div><div class="nu">ניאצין ל-100g</div><div class="nl">75% צריכה יומית</div></div>
+        <div class="ni"><div class="nv">$50B</div><div class="nu">שוק עולמי</div><div class="nl">כולל מוצרי בוטן</div></div>
+    </div>
+    <p>אלרגיה לבוטנים: <strong>1-2% מהאוכלוסייה המערבית</strong>. גדלה: ב-2010 אחוז האלרגיה היה 0.6%. מחקר LEAP (Learning Early About Peanut Allergy, King's College London, 2015) הוכיח שחשיפה מוקדמת לבוטנים (4-11 חודשים) הפחיתה אלרגיה ב-81% לעומת הימנעות. שינוי פרדיגמה שהוביל לשינוי הנחיות AAP ב-2017.</p>
+</section>
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק עולמי ומחירים</h2>
+    <p class="dc">שוק הבוטן העולמי: <strong>42-45 מיליון טון לשנה</strong> (in-shell), שווי <strong>50-65 מיליארד דולר</strong> כולל כל מוצרי הבוטן. הגדול ביותר בנפח בין כל האגוזים והקטניות הנמכרות כאגוז. סין שולטת בייצור, אבל ארה"ב שולטת בחמאת הבוטנים עם <strong>55% מהשוק העולמי</strong>.</p>
+    <div class="ab ab-w">
+        <div class="tg">מחירים 2024</div>
+        <p>בוטן Runner In-shell FOB Virginia: <strong>700-950 דולר לטון</strong>. Shelled Runner Grade A: <strong>1,100-1,500 דולר לטון</strong>. High-Oleic Shelled: <strong>1,300-1,800 דולר לטון</strong>. שמן בוטנים Cold-press: <strong>3,500-5,000 דולר לטון</strong>. חמאת בוטנים Commodity: <strong>1,800-2,500 דולר לטון</strong>.</p>
+    </div>
+    <p>שחקנים מובילים: <strong>Golden Peanut & Tree Nuts</strong> (Archer Daniels Midland subsidiary, ארה"ב), <strong>Olam International</strong>, <strong>Jif</strong> (J.M. Smucker), <strong>Skippy</strong> (Hormel Foods). בישראל: שוק בוטנים קלויים מקומי עם מספר יבואנים בינוניים. <em>אגוז שהגיע לכל יבשת על גב עבדות, ריפוי וסחר, מוכר היום בכל פינת רחוב בכל עיר בעולם.</em></p>
+</section>
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית ומגמות 2030</h2>
+    <p class="dc">שוק הבוטן ניצב בפני שתי מגמות מנוגדות: <strong>גידול בביקוש לחלבון צמחי זול</strong> (בוטן הוא הזול בין מקורות חלבון פרמיום), מול <strong>עלייה באחוז האלרגיות</strong> שמגבילה שווקים. מי שיפתור את בעיית האלרגיה יפתח שוק של מיליארדים.</p>
+    <h3>Peanut Protein Isolate</h3>
+    <p>לאחר הפקת שמן, ה-peanut cake מכיל <strong>47-50% חלבון</strong>. חברות כ-<strong>Bega Proteins</strong> (אוסטרליה) ו-<strong>Prinova</strong> (ארה"ב) מפתחות peanut protein isolate ל-90%+ לשוק ה-plant-based protein. מחיר: <strong>4-7 דולר לק"ג</strong>, תחרותי מאוד לעומת חלבון אפונה (6-9 דולר) וסויה (3-5 דולר).</p>
+    <h3>בוטנים ללא אלרגן</h3>
+    <p>USDA Agricultural Research Service עובד על גידול בוטנים עם Ara h 2 מופחת דרך עריכת גנים. פרויקט CRISPR (2021-2024) הצליח להפחית Ara h 2 ב-<strong>80%</strong> בתנאי מעבדה. אתגר: FDA approval לבוטן GMO. שוק פוטנציאלי: <strong>3 מיליארד דולר</strong> בשוק ה-allergy-free products.</p>
+    <div class="ab ab-g">
+        <div class="tg">מגמה: Regenerative Peanut Farming</div>
+        <p>הבוטן כקטנית מקבע חנקן (<strong>50-100 ק"ג N/דונם לשנה</strong>). בסבב גידולים עם תירס, הוא מחליף 30-40% מהדשן הסינתטי. פרויקטי "Regenerative Agriculture" בצ'אקו הבוליביאני ובדרום ג'ורג'יה מציגים הפחתת פליטות CO₂ ב-<strong>200-400 ק"ג לדונם</strong> לשנה בסבב עם בוטן. <em>הקטנית שהפכה לסמל קפיטליזם אמריקאי היא גם כלי אקולוגי.</em></p>
+    </div>
+    <div class="ft"><span style="font-size:11px;color:#806840;">אגרונומיה: USDA Peanut Variety Development · ביוכימיה: Wan et al., Food Chemistry 2011 · בריאות: Nurses' Health Study, Harvard TH Chan · LEAP Trial, NEJM 2015 · כלכלה: FAO FAOSTAT 2024, USDA PSD Peanuts · RASFF EU 2020-2024</span></div>
+</section>
+</main>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · PEANUT · בוטן</footer>
+<div class="marquee-container"><div class="marquee-text">בוטן · ARACHIS HYPOGAEA · OLEIC ACID · PEANUT · RESVERATROL · GROUNDNUT · בוטן · ARACHIS HYPOGAEA · OLEIC ACID · PEANUT · RESVERATROL · GROUNDNUT · </div></div>
+<button class="back-to-top" id="btt">↑</button>
+<a href="../index.html" class="home-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C09030" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>ספרייה</span></a>
+<script>
+window.onscroll=()=>{const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progress-bar').style.width=(window.scrollY/h*100)+'%';const s=document.querySelectorAll('.ch'),d=document.querySelectorAll('.nav-dot');let c="";s.forEach(x=>{if(pageYOffset>=x.offsetTop-200)c=x.id;});d.forEach(x=>{x.classList.remove('active');if(x.dataset.target===c)x.classList.add('active');});};
+const btt=document.getElementById('btt');window.addEventListener('scroll',()=>btt.classList.toggle('visible',window.scrollY>300));btt.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot=>dot.onclick=()=>document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'}));
+if(window.IntersectionObserver){const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(!x.isIntersecting)return;x.target.querySelectorAll('.pb-fill').forEach(b=>{b.style.width=b.dataset.w+'%';});obs.unobserve(x.target);});},{threshold:0.3});document.querySelectorAll('.pb-chart').forEach(el=>obs.observe(el));}
+(function(){const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('active');}),{threshold:0,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.ch').forEach(c=>{c.classList.add('reveal');obs.observe(c);});function sync(){const r=indexedDB.open('StarkOS_DB',1);r.onsuccess=e=>{const db=e.target.result;try{const pid=window.location.pathname.split('/').pop().replace('.html',''),s=db.transaction('archive','readonly').objectStore('archive'),g=s.get(pid);g.onsuccess=()=>{const d=g.result;if(!d)return;function m(s){const v=s.startsWith('data:video'),el=document.createElement(v?'video':'img');el.src=s;el.style.cssText='width:100%;height:100%;object-fit:cover;';if(v){el.autoplay=el.muted=el.loop=true;el.setAttribute('playsinline','');}return el;}const h1=document.getElementById('sync-title');if(h1&&d.name)h1.innerText=d.name;const dk=document.getElementById('sync-desc');if(dk&&d.desc)dk.innerText=d.desc;const src=d.media1||d.media,sl=document.getElementById('slot-product-hero');if(sl&&src){sl.innerHTML='';sl.appendChild(m(src));}};}catch(e){}};};window.addEventListener('load',sync);}());
+
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

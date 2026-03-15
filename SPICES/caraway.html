@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0B0A08; --text: #FAF8F0; --body: #D0CABC;
+    --accent: #6A5A2A; --warm: #B09040;
+    --card: rgba(20,18,12,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background-color: var(--bg); color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9;
+    overflow-x: hidden;
+    background-image: linear-gradient(rgba(176,144,64,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(176,144,64,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+body::before, body::after { content:''; position:fixed; width:600px; height:600px; border-radius:50%; filter:blur(120px); z-index:-2; opacity:0.15; pointer-events:none; }
+body::before { background:var(--warm); top:-100px; left:-100px; }
+body::after { background:#3A2A08; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap { max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05); background:#0B0A08; display:flex; align-items:center; justify-content:center; }
+.hero-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch { background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px); padding:50px; border-radius:var(--radius); margin-bottom:40px; border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden; }
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; } .ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#C8A860; font-style:italic; } strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(176,144,64,0.08); border-right:4px solid var(--warm); } .ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(60,50,20,0.2); border-right:4px solid var(--accent); } .ab-g .tg { color:#C8A860; }
+.ab-r { background:rgba(184,50,50,0.1); border-right:4px solid #B83030; } .ab-r .tg { color:#E06060; } .ab-r p { color:#DDB0B0; }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(20,18,12,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A09070; margin-top:2px; } .ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(176,144,64,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.03); animation:scrollText 40s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#706040; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { transform:scale(1.1); }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(20,18,12,0.85); border:1px solid rgba(176,144,64,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+.home-btn:hover { background:rgba(176,144,64,0.15); }
+@media (max-width:900px) { .side-nav { display:none; } .hero h1 { font-size:55px; } .hero-img-wrap { height:300px; margin-bottom:-100px; } .con { margin-top:150px; } .ng { grid-template-columns:repeat(2,1fr); } }
+</style>
+<title>קימל · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="בריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="עתיד"></div>
+</nav>
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">קִימֶל</h1>
+    <p class="deck" id="sync-desc">הזרע שאפה צפון אירופה. שלושת אלפי שנות נוכחות בממצאים ארכאולוגיים, כימיה של קארוון ולימונן, ומעמד שאין לו מתחרה בלחם הסגור, הגולאש ההונגרי, ומשקאות ה-Aquavit הסקנדינבי.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <img src="../images/Hyperrealistic_luxury_spice_hero_image_a_very_smal_0b46416fad.jpeg" alt="caraway" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    </div>
+</section>
+<div class="marquee-container">
+    <div class="marquee-text">קימל · CARUM CARVI · CARVONE · CARAWAY · LIMONENE · AQUAVIT · RYE BREAD · קימל · CARUM CARVI · CARVONE · CARAWAY · LIMONENE · AQUAVIT · RYE BREAD · </div>
+</div>
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: זהות, שם, ואלפי שנות נוכחות</h2>
+    <p class="dc">לפני שהיה תבלין, הקימל היה מזון. לפני שהיה מזון, הוא היה תרופה. ולפני שהיה תרופה, זרעיו נמצאו בממצאים ארכאולוגיים בני יותר מ-5,000 שנה, מהנאוליתי המאוחר של אירופה המרכזית. שום תבלין אחר שמשמש כיום בבישול אירופאי יומיומי אינו מתועד כל כך עמוק בהיסטוריית היבשת. הקימל הוא התבלין הארכאי של צפון אירופה, ולא התואר הזה עומד לעמוד בסתירה.</p>
+    <p>השם העברי <strong>קִימֶל</strong> מגיע מהגרמנית <em>Kümmel</em>, שמקורה בלטינית <em>cuminum</em>, כינוי שנגזר ממקור סמיטי (השווה לכמון, <em>kammon</em> בעברית). אבל כאן הבלבול מתחיל: באנגלית "caraway" ו"cumin" הם שני צמחים שונים לחלוטין. בגרמנית "Kümmel" הוא הקימל, ו"Kreuzkümmel" הוא הכמון. הבלבול בין הסמיטים הקדמונים, שנסחרו בשמות דומים, עיצב אטימולוגיה מבלבלת שנמשכת עד היום. כשסוחר גרמני אומר "Kümmel" הוא מתכוון לקימל, לא לכמון.</p>
+    <p>המוצא הגנטי: <em>Carum carvi</em> ממשפחת Apiaceae, צמח דו-שנתי. מוצא גנטי: אסיה המערבית ואירופה המרכזית, כנראה אזורי ההרים של מרכז-מזרח אירופה. הממצא הארכאולוגי הקדום ביותר: <strong>אתר Çatalhöyük</strong> בטורקיה (7500-5700 לפנה"ס) ואתרים נאוליתיים במרכז אירופה. ב-<strong>1550 לפנה"ס</strong>, הפפירוס המצרי Ebers מזכיר "caraway" בין הצמחים הרפואיים.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>ב-<strong>795 לספירה</strong>, קרל הגדול כלל את הקימל ברשימת הצמחים החובה לגידול ב-<em>Capitulare de Villis</em>. בימי הביניים, הקימל שימש לא רק כתבלין אלא כ<strong>מטבע מקובל</strong> באזורים מסוימים של גרמניה ואוסטריה. מי שלא היה לו מזומן שילם בקימל, תבלין ששוויו היה קבוע ומוכר לכולם.</p>
+    </div>
+    <p>ב-<strong>המאה ה-16</strong>, התפשטות לחם השיפון הכהה בצפון אירופה הפכה את הקימל לתבלין הלאומי בפועל של גרמניה, פולין, ואוסטריה. ללא קימל, לחם השיפון הכהה הוא כבד ועיכולי. עם קימל, הוא נעים, מרענן, ועוזר לפרק את הגלוטן הכבד. הביוכימיה עובדת: קארוון מעודד הפרשת מיצי עיכול. <em>לחם שיפון וקימל הם לא אסתטיקה, הם כימיה.</em></p>
+    <p>הסקנדינביה אימצה את הקימל אל תוך ה-Aquavit, המשקה הלאומי של נורווגיה, שוודיה ודנמרק. Aquavit מהמילה הלטינית <em>aqua vitae</em>, מי חיים, מוטעם בקימל ושמיר. הזרע הקטן הפך לחתימה ארומטית של תרבות שלמה.</p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: הצמח, האקלים, ואמנות הגידול</h2>
+    <p class="dc"><em>Carum carvi</em> הוא צמח דו-שנתי: שנה ראשונה, עלים ופקעת; שנה שנייה, גבעול פריחה, פרחים לבנים בתפרחת מטריה, וזרעים. גובה: <strong>30-80 ס"מ</strong>. הזרע, שנקרא טכנית "פרי", הוא schizocarp המתחלק לשני "mecarps" סגלגלים-מעוקלים, ירוקים-חומים, באורך 3-6 מ"מ. הריח האופייני מגיע מרכיבי השמן האתרי שנמצאים בשלפוחיות שמן בדופן הפרי.</p>
+    <h3>אקלים ואדמה</h3>
+    <p>הקימל אוהב <strong>אקלים קר ומתון</strong>: גבהים של 600-2,000 מטר, טמפרטורות קיץ של <strong>15-22°C</strong>, חורף עם כפור קל (<strong>עד מינוס 15°C</strong> לאחר הרגלה). זהו צמח של אוסטריה, הולנד, גרמניה, פינלנד, ופולין. לא ים-תיכוני. לא טרופי. pH אדמה: <strong>6.0-7.5</strong>. אדמות לומיות עמוקות עם ניקוז טוב, עשירות בחומוס.</p>
+    <p>הגידול הגדול ביותר בעולם: <strong>הולנד</strong> (25-30% מהיצוא העולמי), בעיקר בפרוינינגן ופריסלנד, שם האקלים ים-לח אידיאלי. <strong>מצרים</strong> פיתחה גידול קימל בצפון הדלתא עם השקיה ומאפשרת תפוקות גדולות. <strong>פינלנד ופולין</strong> מספקות קימל פרמיום לשוק אירופאי.</p>
+    <div class="ab ab-g">
+        <div class="tg">גזרת מחקר</div>
+        <p>מחקר הולנדי (Wageningen University, 2021) פיתח זן חדש <strong>Bleija</strong> עם תפוקה של <strong>1.8 טון לדונם</strong>, לעומת ממוצע של 1.0-1.3 טון בזנים המסחריים. הזן פחות נוטה ל"נשירת זרעים" (shattering) בקצירה מאוחרת, מה שמפחית אובדן ייצור ב-20-25%.</p>
+    </div>
+    <p>האתגר המרכזי בגידול קימל: <strong>מחזור דו-שנתי</strong>. חקלאי שנוטע קימל מחכה שנתיים לקציר. כלכלית, פירושו קשירת שטח ומשאבים לתקופה ארוכה. בהולנד, מחזור הגידול המקובל: שנה ראשונה קימל + שנה שנייה תבואה. גם גזר ותפוחי-אדמה הם יבולים שנראים לפני קימל. בסוף שנה שנייה, שיא הפיצול: 10% מהשדה ייאסף בשבוע הנכון, אחרת הזרעים נושרים.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: קארוון, לימונן, וכימיה של הלחם</h2>
+    <p class="dc">הקימל הוא צמח של שתי מולקולות: <strong>D-Carvone</strong> ו-<strong>Limonene</strong>. ביחד הן מהוות <strong>85-95%</strong> מהשמן האתרי, אחד מהשמנים האתריים ה"נקיים" ביותר מבחינת ריכוז מרכיבים עיקריים בין כל התבלינים. זה לא מקרה: הקימל פיתח, אבולוציונית, שני רכיבים אנטי-עכבישיים חזקים שמגינים על הזרע. הטעם האנושי שאנחנו אוהבים הוא תוצאת לוואי של הגנה אבולוציונית.</p>
+    <h3>D-Carvone: המולקולה הראשית</h3>
+    <p><strong>D-Carvone</strong> (R-(+)-Carvone, C₁₀H₁₄O) מהווה <strong>50-65%</strong> מהשמן האתרי. היא מונוטרפן קטון עם ריח אופייני של קימל. פרט מרתק: L-Carvone, האנטיומר הספקולרי שלה (תמונת ראי), מריחה כמו <strong>נענע</strong>. אותה נוסחה מולקולרית (C₁₀H₁₄O), רק סידור מרחבי הפוך, וריח שונה לחלוטין. זהו אחד הדגמות הטובות ביותר לחשיבות כירליות ברפואה ובכימיה: אנזימי הריח שלנו מבחינים בין שתי הגרסאות.</p>
+    <p><strong>Limonene</strong> (D-Limonene, C₁₀H₁₆) מהווה <strong>20-35%</strong> מהשמן. נותן ניחוח ציטרוסי קל שמאזן את הקארוון. D-Limonene נמצא גם בקליפות הדרים, בעצי רוזמרין ובמחטי אורן. שילוב הקארוון עם הלימונן יוצר את הניחוח ה"ירוק-מעוגל" האופייני שאיש לא מתבלבל בזיהויו.</p>
+    <div class="ab ab-w">
+        <div class="tg">ממצא ביוכימי</div>
+        <p>D-Carvone הוא <strong>מעכב נביטה טבעי</strong>. ריכוז של 100-200 ppm מעכב נביטה של תפוחי-אדמה לאחר קציר ב-90%. תעשיית תפוחי-האדמה האירופאית משתמשת בו כחלופה לכימיקלים סינתטיים. ייצור של 50-60 טון D-Carvone לשנה בהולנד, מיצוי מזרעי קימל, מגיע לאחסן תפוחי-אדמה. ניחוח הקימל ומניעת נביטה: אותה מולקולה.</p>
+    </div>
+    <p>ערכים תזונתיים של זרעי קימל: <strong>333 קלוריות ל-100 גרם</strong>, <strong>38 גרם פחמימות</strong>, <strong>17 גרם חלבון</strong>, <strong>14 גרם שומן</strong>. עשיר בסידן (<strong>689 מ"ג ל-100 גרם</strong>), ברזל (<strong>16.2 מ"ג</strong>), מגנזיום (<strong>258 מ"ג</strong>), וויטמין A (<strong>363 IU</strong>). שמן אתרי: <strong>3-7% ממשקל יבש</strong>, גבוה יחסית לתבלינים.</p>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: פרמטרים ושפת הסוחרים</h2>
+    <p class="dc">שוק הקימל המסחרי פשוט יחסית בפרמטריו: <strong>תכולת שמן אתרי</strong> ו<strong>אחוז ה-carvone</strong> הם שני המדדים שמדברים. ספק שמציג COA עם % שמן אתרי בלבד, ללא ניתוח GC-MS לשיעור carvone, מוכר מידע חלקי. לתעשיית הקנפקציה, המשקאות, ותוספי התזונה, שיעור ה-carvone הוא הערך המוסף האמיתי.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Grade A</th><th>Grade B</th><th>Grade C (תעשייה)</th></tr></thead>
+        <tbody>
+            <tr><td><strong>שמן אתרי מינ'</strong></td><td>3.0%</td><td>2.5%</td><td>2.0%</td></tr>
+            <tr><td><strong>Carvone מינ'</strong></td><td>55%</td><td>50%</td><td>45%</td></tr>
+            <tr><td><strong>לחות מקס'</strong></td><td>10%</td><td>12%</td><td>13%</td></tr>
+            <tr><td><strong>חומר זר</strong></td><td>0.5%</td><td>1.0%</td><td>2.0%</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>מוצאים גיאוגרפיים</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מוצא</th><th>מאפיין</th><th>שמן אתרי</th><th>שימוש עיקרי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>הולנד</strong></td><td>גדול, אחיד, ניחוח עז</td><td>4.5-6.0%</td><td>Aquavit, לחם, תעשייה</td></tr>
+            <tr><td><strong>מצרים</strong></td><td>קטן-בינוני, כהה, זול</td><td>3.0-4.5%</td><td>תעשיית מזון, ייצוא</td></tr>
+            <tr><td><strong>פינלנד</strong></td><td>קטן, ניחוח עדין</td><td>4.0-5.5%</td><td>קמעונאות פרמיום</td></tr>
+            <tr><td><strong>פולין</strong></td><td>בינוני, ניחוח מאוזן</td><td>3.5-5.0%</td><td>מזון, קמעונאות</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">שיקול מקצועי</div>
+        <p>קימל הולנדי נמכר ב-<strong>1,400-2,200 דולר לטון</strong> FOB Rotterdam. קימל מצרי: <strong>700-1,100 דולר לטון</strong>. הפרש של כ-100% נובע לא רק מאיכות שמן אתרי, אלא גם ממוניטין מוצא. לחם שיפון גרמני פרמיום ורוב מאפיות הגורמה של אירופה דורשים קימל הולנדי או פיני. קמעונאות מסה רוכשת מצרי.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהשדה לשק ולזיקוק</h2>
+    <p class="dc">קצירת קימל היא אחת הפעולות הדורשות תזמון מדויק ביותר בתעשיית התבלינים. חלון הקצירה האידיאלי: <strong>5-10 ימים בלבד</strong>. לפני: זרעים לא בשלים, שמן אתרי נמוך. אחרי: נשירה ספונטנית, אובדן 20-40% מהיבול. בהולנד, חקלאים בוחרים לאסוף בשלות של <strong>60-70%</strong> מהזרעים, לחתוך, ולאפשר בשלות גמורה ב-swath על הקרקע לפני דיש.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">קצירה ב-Swathing</div>
+                <div class="proc-step-body">החקלאי חותך את הגבעולים ב-60-70% בשלות ומניח אותם ב-windrows (שורות על הקרקע). הגבעולים ממשיכים להעביר חומרים לזרעים עוד 7-10 ימים. תוצאה: בשלות אחידה יותר, אובדן נשירה נמוך ב-30-40% לעומת קצירה ישירה.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">דיש</div>
+                <div class="proc-step-body">Combine harvester עם ראש pickup שאוסף מה-windrows ומדיש. הגדרות: cylinder speed נמוך (350-450 RPM) כדי למנוע שבירת זרעים. זרעים שבורים = שחרור שמן אתרי מיידי = ריח חזק בשדה, אבל אובדן ערך. אחוז זרעים שבורים מקסימלי: 1% ב-Grade A.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">ייבוש</div>
+                <div class="proc-step-body">הקימל ההולנדי נקצר באוגוסט-ספטמבר, עת לחות גבוהה. ייבוש בלתי נמנע: Batch dryers ב-<strong>40-45°C</strong>, לחות מ-20-25% ל-10-12% תוך 8-12 שעות. מעל 50°C: אדוי קארוון ואובדן שמן אתרי. ייבוש חיצוני (אוורור טבעי): אפשרי בשנים יבשות, מועדף.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">ניקוי, מיון, אריזה</div>
+                <div class="proc-step-body">מיון ב-Air screen cleaners, סרבול אופטי לזרעים פגומים. אריזה: שקי PP 25/50 ק"ג לקמעונאות. Big Bags 500 ק"ג לתעשייה. שמן אתרי: Steam Distillation מזרעים גרוסים, תפוקה 3.5-5.5%. מחיר שמן קארוון: <strong>20-35 דולר לק"ג</strong>, ייצרני Aquavit הם הקונים הגדולים.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות</h2>
+    <p class="dc">קימל ממוצא אירופאי (הולנד, פינלנד, פולין) מציג פרופיל בטיחות טוב יחסית, עם אחוז נמוך של דחיות RASFF. קימל מצרי נמצא לעיתים תכופות יותר ברשימות דחיות, בעיקר בשל שאריות חומרי הדברה. הבדל שמשקף את פערי הרגולציה החקלאית בין ייצור אירופאי לייצור צפון-אפריקאי.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>חומר פעיל</th><th>MRL EU (mg/kg)</th><th>שכיחות</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Chlorpyrifos</strong></td><td>0.01 (LOD)</td><td>בינונית (מצרי)</td></tr>
+            <tr><td><strong>Dithiocarbamates</strong></td><td>0.1</td><td>בינונית</td></tr>
+            <tr><td><strong>Trifloxystrobin</strong></td><td>0.05</td><td>נמוכה</td></tr>
+            <tr><td><strong>Pirimiphos-methyl</strong></td><td>0.05</td><td>נמוכה (אחסון)</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>מיקרוביולוגיה: <strong>TPC ≤ 10⁵ CFU/g</strong>, <strong>Salmonella: Absent/25g</strong>, <strong>E. coli ≤ 10 CFU/g</strong>, <strong>Yeast & Mould ≤ 10³ CFU/g</strong>. אפלטוקסין: <strong>B1 ≤ 5 μg/kg</strong>. קימל אירופאי עם אחסון יבש מציג בדרך כלל TPC נמוך מ-10⁴, ללא סטריליזציה. COA תקני לשוק EU: pesticide panel 150+ חומרים, heavy metals, mycotoxins.</p>
+    <div class="ab ab-w">
+        <div class="tg">D-Carvone: בטיחות שימוש</div>
+        <p>D-Carvone נמצאת ב-GRAS (Generally Recognized As Safe) של ה-FDA בכמויות קולינריות. בשמן אתרי טהור, ND50 בבעלי חיים: 1,640 mg/kg. לשימוש ישיר בעור: מדלל נדרש, שיעור של 4% מקסימום לפי IFRA. אין אינדיקציה לגנוטוקסיות בניגוד לאסטרגול בשומר.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה וניהול שרשרת האספקה</h2>
+    <p class="dc">קימל הולנדי הוא מוצר ייחודי לוגיסטית: הוא מיוצר באירופה ונצרך בעיקר באירופה. זו אחת הסיבות שמחירו יציב יחסית לתבלינים מאסיה. לא מושפע מפיצוח תעלת סואץ, לא מושפע ממשבר נמלים אסייתיים. מוגבל בעיקר ממזג האוויר בהולנד ובפינלנד ומהמחזור הדו-שנתי.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מוצא</th><th>נמל יצוא</th><th>זמן לשוק מרכזי</th><th>הערות</th></tr></thead>
+        <tbody>
+            <tr><td><strong>הולנד</strong></td><td>Rotterdam / Amsterdam</td><td>2-5 ימים (אירופה)</td><td>Dry container, Road freight לגרמניה/אוסטריה</td></tr>
+            <tr><td><strong>מצרים</strong></td><td>Alexandria</td><td>10-14 ימים לאירופה</td><td>Dry container, פחות מועדף לפרמיום</td></tr>
+            <tr><td><strong>פינלנד</strong></td><td>Helsinki / Turku</td><td>3-7 ימים</td><td>נפחים קטנים, שוק נישה</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>אחסון: טמפרטורת חדר, <strong>RH מתחת ל-65%</strong>. חיי מדף: זרעים שלמים <strong>24 חודש</strong>. אבקה <strong>12 חודש</strong>. שמן אתרי <strong>24 חודש</strong> בחושך. נקודה לוגיסטית: קימל הולנדי בשוק האמריקאי מגיע לרוב דרך Antwerp כ-transshipment port. Incoterms: FOB Rotterdam, CIF New York/Los Angeles. <em>תבלין שנסחר בתוך יבשת אחת במשך אלפי שנים לא צריך להתאמץ כדי לנסוע חצי כדור ארץ.</em></p>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות</h2>
+    <p class="dc">קימל הוא אחד מהתבלינים עם הספרות המחקרית הסולידית ביותר על מערכת העיכול. לא בשל מחקרים קליניים רבים, אלא בשל ביוכימיה שמובנת היטב: D-Carvone ו-Limonene הם מרפי שריר חלק מוכחים, עם מנגנון ברור ומחקר in vitro ו-in vivo מוצק.</p>
+    <h3>מערכת עיכול</h3>
+    <p>D-Carvone מעכב את פעילות <strong>אנזים acetylcholinesterase</strong> בדופן המעי, מה שמפחית התכווצויות ספסטיות. מחקר גרמני (Madisch et al., 2004) על 96 חולי dyspepsia (אי-נוחות עיכולית פונקציונלית) מצא שתמצית קימל+שמן נענע הפחיתה כאבי בטן ב-<strong>40%</strong> לאחר 4 שבועות. שילוב זה הפך למרכיב ב-Enteroplant, תרופה גרמנית מוכרת לעיכול.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">50-65%</div><div class="nu">D-Carvone</div><div class="nl">בשמן אתרי Grade A</div></div>
+        <div class="ni"><div class="nv">689</div><div class="nu">mg סידן ל-100g</div><div class="nl">גבוה מאוד</div></div>
+        <div class="ni"><div class="nv">40%</div><div class="nu">הפחתת dyspepsia</div><div class="nl">מחקר RCT 2004</div></div>
+        <div class="ni"><div class="nv">3-7%</div><div class="nu">שמן אתרי</div><div class="nl">ממשקל יבש</div></div>
+        <div class="ni"><div class="nv">16.2</div><div class="nu">mg ברזל ל-100g</div><div class="nl">90% צריכה יומית</div></div>
+        <div class="ni"><div class="nv">5,000+</div><div class="nu">שנות שימוש</div><div class="nl">תיעוד ארכאולוגי</div></div>
+    </div>
+    <p>מניעת נביטה: D-Carvone מעכב נביטה של זרעים ופקעות. יישום: ריסוס תפוחי-אדמה מאוחסנים. אנטי-מיקרוביאלי: MIC של D-Carvone כנגד <em>Candida albicans</em>: 0.4 mg/ml. כנגד <em>E. coli</em>: 0.8 mg/ml. פוטנציאל כחומר משמר טבעי במזון עדיין נחקר.</p>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק עולמי ומחירים</h2>
+    <p class="dc">שוק הקימל העולמי קטן יחסית לתבלינים גדולים: <strong>30,000-40,000 טון לשנה</strong>, שווי של כ-<strong>60-80 מיליון דולר</strong>. זה שוק נישה, אבל נישה עם נאמנות צרכנית גבוהה: לחם שיפון גרמני ו-Aquavit סקנדינבי לא מחליפים את הקימל בשום תחליף.</p>
+    <div class="ab ab-w">
+        <div class="tg">מבנה שוק</div>
+        <p>הולנד מייצרת <strong>12,000-15,000 טון לשנה</strong> ומייצאת כ-70% ממנו, בעיקר לגרמניה, אוסטריה ומדינות סקנדינביה. מצרים מייצרת <strong>10,000-12,000 טון</strong>, מייצאת לתעשיית מזון ולמדינות ה-MENA. פינלנד: <strong>4,000-5,000 טון</strong>, שוק פרמיום מקומי ויצוא קטן. ביקוש יציב, מחיר יחסית קבוע. CAGR של שוק הקימל: <strong>2-3%</strong> בלבד, אחד מה-CAGR הנמוכים בתבלינים.</p>
+    </div>
+    <p>תנודות מחיר: מחיר קימל הולנדי נייד בין <strong>1,400 ל-2,200 דולר לטון</strong> בהתאם ליבול. שנות גשם קיצי בהולנד = ייבוש לקוי = שמן אתרי נמוך = מחיר נמוך. שנות יובש = ניצול מרבי = מחיר גבוה. הפיות: שוק הקימל קטן מספיק שאירוע מזג אוויר מקומי בפרוינינגן יכול להזיז את המחיר הגלובלי ב-30%. <em>כשכל הייצור בידיים של מדינה אחת, כל שדה חשוב.</em></p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית ומגמות 2030</h2>
+    <p class="dc">שוק הקימל קטן ויציב, אבל שניים מגמות עשויות לשנות את פניו: <strong>ביקוש גדל לשמן קארוון</strong> מתעשיית השמירה הטבעית (חקלאות אורגנית, אחסון תפוחי-אדמה), ו<strong>מגמת אוכל אירופאי מסורתי</strong> שמחזירה לחם שיפון וגולאש לאופנה.</p>
+    <h3>שמן קארוון בחקלאות אורגנית</h3>
+    <p>ה-EU מחמיר מדי שנה את הגבלות ה-pesticide בייצור תפוחי-אדמה. D-Carvone כחומר מניעת נביטה טבעי ומוסמך אורגנית, תחת השם המסחרי <strong>Talent</strong> (Luxan B.V., הולנד), מגדיל את שוק הביקוש. שוק D-Carvone לחקלאות אורגנית: <strong>50-70 טון שמן לשנה</strong> (2024) עם CAGR של 12-15%. ייצור מתרחב בהתאם.</p>
+    <h3>תעשיית Aquavit וביקוש פרמיום</h3>
+    <p>Aquavit חווה תחייה עולמית: מייצאים נורווגיים, שוודים ודנים מגדילים ייצוא ב-8% לשנה (2019-2024). כל בקבוק Aquavit מכיל 2-5 גרם קימל. גידול בתעשייה = גידול בביקוש לקימל הולנדי פרמיום. חברות Aquavit גדולות כמו Linie ו-Aquavit Nordic חותמות על חוזים שנתיים עם גידולים בפרוינינגן.</p>
+    <div class="ab ab-g">
+        <div class="tg">מגמה: לחם שיפון גלובלי</div>
+        <p>בגרמניה, צריכת לחם שיפון עלתה ב-<strong>18%</strong> בין 2019-2024. מגמות sourdough ו-artisan bread בצפון אמריקה ואסיה הכניסו לחם שיפון-קימל לשווקים חדשים. Trader Joe's ו-Whole Foods בארה"ב הכניסו לחם שיפון-קימל לקטגוריית "specialty bread". ביקוש חדש מקמעונאות אמריקאית = זרז לגידול הכמויות מהולנד.</p>
+    </div>
+    <p>שינויי אקלים: קיץ חם ולח יותר בהולנד עלול להגביר מחלות פטרייתיות בגידולי קימל. מחקר Wageningen 2023 מעריך שעד 2040, ייתכן צורך להעביר 15-20% מגידולי הקימל מפרוינינגן לאזורים גבוהים יותר של צפון גרמניה. שינוי שדורש עשרות שנים. <em>תבלין שהיה כאן 5,000 שנה לפני ה-EU ימשיך להיות כאן אחרי שהאקלים ישתנה.</em></p>
+    <div class="ft">
+        <span style="font-size:11px;color:#807050;">אגרונומיה: Wageningen University Caraway Research 2021-2023 · ביוכימיה: Baser et al., Natural Product Communications · בריאות: Madisch et al., Arzneimittelforschung 2004 · כלכלה: ITC Trade Map 2024 · FAOSTAT · חקלאות אורגנית: Luxan BV Technical Data Sheet Talent · RASFF EU 2020-2024</span>
+    </div>
+</section>
+
+</main>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · CARAWAY · קימל</footer>
+<div class="marquee-container">
+    <div class="marquee-text">קימל · CARUM CARVI · CARVONE · CARAWAY · LIMONENE · AQUAVIT · RYE BREAD · קימל · CARUM CARVI · CARVONE · CARAWAY · LIMONENE · AQUAVIT · RYE BREAD · </div>
+</div>
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B09040" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch'); const dots = document.querySelectorAll('.nav-dot');
+    let current = ""; sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => { btt.classList.toggle('visible', window.scrollY > 300); });
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => { dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'}); });
+(function() {
+    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.ch').forEach(card => { card.classList.add('reveal'); observer.observe(card); });
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB'; const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => { const db = e.target.result; try { const store = db.transaction('archive', 'readonly').objectStore('archive'); const getRequest = store.get(productId); getRequest.onsuccess = () => { const data = getRequest.result; if (!data) return; function makeMedia(src) { const isVid = src.startsWith('data:video'); const el = document.createElement(isVid ? 'video' : 'img'); el.src = src; el.style.cssText = 'width:100%;height:100%;object-fit:cover;'; if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); } return el; } const heroH1 = document.getElementById('sync-title'); if (heroH1 && data.name) heroH1.innerText = data.name; const heroDeck = document.getElementById('sync-desc'); if (heroDeck && data.desc) heroDeck.innerText = data.desc; const heroSrc = data.media1 || data.media; const heroSlot = document.getElementById('slot-product-hero'); if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); } }; } catch(err) {} }; }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

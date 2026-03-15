@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0A0B09; --text: #FAF8F0; --body: #CCCABC;
+    --accent: #6A6A20; --warm: #A8A830;
+    --card: rgba(18,20,12,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background-color: var(--bg); color: var(--body); font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9; overflow-x: hidden; background-image: linear-gradient(rgba(168,168,48,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(168,168,48,0.03) 1px, transparent 1px); background-size: 30px 30px; }
+body::before, body::after { content:''; position:fixed; width:600px; height:600px; border-radius:50%; filter:blur(120px); z-index:-2; opacity:0.15; pointer-events:none; }
+body::before { background:var(--warm); top:-100px; left:-100px; }
+body::after { background:#3A3A08; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap { max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05); background:#0A0B09; display:flex; align-items:center; justify-content:center; }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch { background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px); padding:50px; border-radius:var(--radius); margin-bottom:40px; border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden; }
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; } .ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#C8C860; font-style:italic; } strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(168,168,48,0.08); border-right:4px solid var(--warm); } .ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(60,60,20,0.2); border-right:4px solid var(--accent); } .ab-g .tg { color:#C8C860; }
+.ab-r { background:rgba(184,50,50,0.1); border-right:4px solid #B83030; } .ab-r .tg { color:#E06060; } .ab-r p { color:#DDB0B0; }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(18,20,12,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A0A070; margin-top:2px; } .ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(168,168,48,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.03); animation:scrollText 40s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#707050; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(18,20,12,0.85); border:1px solid rgba(168,168,48,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+@media (max-width:900px) { .side-nav { display:none; } .hero h1 { font-size:55px; } .hero-img-wrap { height:300px; margin-bottom:-100px; } .con { margin-top:150px; } .ng { grid-template-columns:repeat(2,1fr); } }
+</style>
+<title>חילבה · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="בריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="עתיד"></div>
+</nav>
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">חִילְבָּה</h1>
+    <p class="deck" id="sync-desc">הזרע שריפא מצרים והתקדש בהלכה. ארבעת אלפי שנות רפואה, ביוכימיה של Diosgenin ו-4-Hydroxyisoleucine, ותרכובות שמדענים ממשיכים לגלות בהן שימושים חדשים בכל שנה.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <img src="../images/A_small_elegant_ceramic_bowl_overflowing_with_coar_b8ac304e8b.jpeg" alt="fenugreek" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    </div>
+</section>
+<div class="marquee-container">
+    <div class="marquee-text">חילבה · TRIGONELLA · DIOSGENIN · FENUGREEK · 4-HYDROXYISOLEUCINE · METHI · חילבה · TRIGONELLA · DIOSGENIN · FENUGREEK · 4-HYDROXYISOLEUCINE · METHI · </div>
+</div>
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: זהות, שם, וארבעת אלפי שנות נוכחות</h2>
+    <p class="dc">לפני שהיה תבלין, החילבה היה תרופה. לפני שהיה תרופה, הוא היה מזון בהמות. ולפני שהיה מזון בהמות, כבר גדל בר בחבל כרמל, בגליל, ובמישורי מרכז אסיה, בלי שאדם הכיר את מה שטמון בו. שמו הלטיני <em>Trigonella foenum-graecum</em>, "תלתן יווני-עשב שחת", מספר את הסיפור: הרומאים גידלו אותו כמזון לבהמות, ובאותה נשימה ידעו שהוא מרפא. כתובת מצרית מ-<strong>1500 לפנה"ס</strong> מציינת חילבה כרכיב בפורמולה לטיפול בכוויות. ב<strong>פפירוס Ebers</strong>, הוא מוזכר 22 פעמים.</p>
+    <p>השם העברי <strong>חִילְבָּה</strong> מגיע מהערבית <em>ḥilba</em>, ועולה בהלכה כתבלין מיוחד: הגמרא (שבת ד.) אוסרת על אכילת חילבה ביום כיפור בגלל שסופגת ריח גוף. כמה תבלינים זכו לאיסור הלכתי ייחודי כזה. השם האנגלי <em>Fenugreek</em> מגיע מה-Faenum Graecum הלטיני. בהינדי: <strong>Methi</strong>, השם שרוב הסוחרים הבינלאומיים מכירים.</p>
+    <p>הגאוגרפיה ההיסטורית מפתיעה: החילבה גדל בר מישראל ועד הודו, אבל המרכז הקולינרי שלו הוא הודו (Methi), אתיופיה (Abish), ומרוקו (Helba). שלוש תרבויות שונות לחלוטין, כולן אימצו אותו כמרכיב יסוד. <strong>ב-1838</strong>, כאשר הכימאי הצרפתי Bussy בודד לראשונה את הטריגונלין מזרעי החילבה, הוא לא ידע שהמולקולה הזאת תהפוך לעניין למאות מחקרים.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>ב-<strong>1961</strong>, כימאים בחברת Ciba-Geigy (שוויץ) בודדים את <strong>Diosgenin</strong> מחילבה בכמויות מספיקות לייצור תעשייתי. Diosgenin הוא חומר גלם לסינתזה של הורמוני מין סטרואידיים, כולל פרוגסטרון ואסטרוגן. עד 1980, חלק ניכר מגלולות למניעת הריון בעולם הכילו הורמונים שמקורם בחילבה. הרוקחות לא ידעה שהיא מעבדת עשב שחת.</p>
+    </div>
+    <p>הרגע הדרמטי ביותר בהיסטוריה של החילבה: <strong>2003</strong>, ניו-יורק. מערכת הכבאים מקבלת עשרות קריאות על "ריח מייפל" מסתורי בכל רחבי מנהטן. אזרחים חושבים לדליפת גז. חוקרים מגלים: מפעל עיבוד תמציות חילבה בניו-ג'רזי. Sotolone, תרכובת שמן החילבה שניחוחה מייפל, חצה את ההדסון. <em>לא דליפת גז, לא אסון: רק חילבה שריח שלו חזק מדי לנשוא אבל לא מסוכן לשאוף.</em></p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: הצמח, האקלים, הגידול</h2>
+    <p class="dc"><em>Trigonella foenum-graecum</em> הוא קטנית חד-שנתית ממשפחת Fabaceae, גובה <strong>20-80 ס"מ</strong>, עם גבעולים ישרים וענפים. עלים תלתניים. הפרח לבן-צהבהב. הפרי: תרמיל ארוך וצר, <strong>10-15 ס"מ</strong>, המכיל 10-20 זרעים מלבניים-מעוגלים, צהובים-חומים, אורך 3-5 מ"מ. כקטנית, הצמח מקבע חנקן בקרקע דרך חיידקי שורש, מה שהופך אותו ליבול "ידידותי" בסבב גידולים.</p>
+    <h3>אקלים ואדמה</h3>
+    <p>החילבה אוהב <strong>אקלים חצי-יבש עד ים-תיכוני</strong>: גשמים מינימליים (400-700 מ"מ), קיץ חם, חורף מתון. עמיד לחום יחסית (<strong>עד 40°C</strong>), רגיש לקפאות חזקות. pH אדמה: <strong>6.0-7.5</strong>. אדמות חוליות-לומיות עם ניקוז טוב. <strong>הודו</strong> מייצרת <strong>70-80%</strong> מהיצוא העולמי, בעיקר ב-Rajasthan ו-Gujarat. <strong>מצרים, אתיופיה, מרוקו</strong>: 15-20% ביחד.</p>
+    <div class="ab ab-g">
+        <div class="tg">גזרת מחקר</div>
+        <p>זן <strong>Rajasthan Methi RMt-1</strong>, שפותח ב-2020 על ידי Maharana Pratap University of Agriculture, מניב <strong>1.8 טון זרעים לדונם</strong>, לעומת 1.0-1.2 טון בזנים מסורתיים. עמיד לעובש אבקה (<em>Erysiphe polygoni</em>) שהוא האיום העיקרי בגידול חילבה. אימוץ בשדות ראג'סטן: כ-30% משטחי הגידול החדשים.</p>
+    </div>
+    <p>עונת גידול: שתילה בהודו <strong>אוקטובר-נובמבר</strong>, קצירה <strong>פברואר-מרץ</strong>. מחזור קצר של 90-120 יום. בגלל מחזור קצר זה, הודו יכולה לגדל חילבה כיבול חורפי לאחר אורז קיצי. גם בישראל מגדלים חילבה בחורף. העלים: הם "Methi leaves" שמשמשים בבישול הודי, ונאספים לפני הבשלת הזרעים.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: Diosgenin, 4-HI, ו-Sotolone</h2>
+    <p class="dc">החילבה הוא אחד הצמחים הביוכימית מורכבים ביותר בין התבלינים. לא בגלל שמן אתרי דומיננטי אחד כמו שומר, אלא בגלל שלושה מסלולים ביוכימיים שונים לחלוטין שפועלים בו-זמנית: <strong>סטרואידים צמחיים</strong>, <strong>חומצות אמינו ייחודיות</strong>, ו<strong>לקטונים ארומטיים</strong>. כל אחד מהם הפך לנושא מחקר עצמאי.</p>
+    <h3>Diosgenin: הסטרואיד הצמחי</h3>
+    <p><strong>Diosgenin</strong> (C₂₇H₄₂O₃), ספונין סטרואידי, מהווה <strong>0.5-1.5%</strong> ממשקל הזרע היבש. הוא precursor לסינתזת הורמוני מין: ממנו ניתן לסנתז פרוגסטרון, אסטרוגן, טסטוסטרון, ודהידרואפיאנדרוסטרון (DHEA). עד השנים 1970-1980, חלק מהייצור העולמי של אמצעי מניעה הורמונליים הסתמך על Diosgenin מחילבה כחומר גלם.</p>
+    <h3>4-Hydroxyisoleucine: חומצת האמינו הייחודית</h3>
+    <p><strong>4-Hydroxyisoleucine</strong> (4-HI) היא חומצת אמינו נדירה שנמצאת כמעט אך ורק בחילבה. ריכוזה: <strong>0.5-0.8% ממשקל יבש</strong>. היא גורמת לשחרור אינסולין מתאי בטא של הלבלב ומגדילה רגישות לאינסולין ברקמות. מנגנון זה הוא הבסיס הביוכימי לשימוש המסורתי של חילבה בסוכרת. <strong>Sotolone</strong> (3-Hydroxy-4,5-dimethyl-2(5H)-furanone): הריח הייחודי. מהווה <strong>0.001-0.01%</strong> בלבד, אבל סף ריח נמוך מאוד (0.001 ppb) הופך אותו לדומיננטי ארומטית.</p>
+    <div class="ab ab-w">
+        <div class="tg">ממצא ביוכימי מעניין</div>
+        <p>Sotolone מופיע גם בסירופ מייפל, בגבינות כחולות מיושנות, ובבוטבול. ריח "מייפל" שנשים בהריון מריחות לאחר צריכת חילבה הוא Sotolone שמופרש בנשיפה ובזיעה. ריח ייחודי בשתן של תינוקות שאמהותיהם צרכו חילבה להגברת הנקה הוביל לאבחונים שגויים כ"מחלת שתן מייפל" (MSUD) בבתי חולים.</p>
+    </div>
+    <p>סיבים גלקטומנן: <strong>45-60%</strong> ממשקל הזרע הוא גלקטומנן, פולימר פחמימתי המהווה את הרוב הגדול של ה-endosperm. גלקטומנן הוא סיב מסיס בעל תכונות ריאולוגיות (ג'ל): בתמיסת מים הוא מסמיך. בתעשיית המזון הוא ידוע כ-<strong>E417 (Guar Gum)</strong>, אם כי Guar הוא צמח שונה. גלקטומנן מחילבה משמש בתעשיית הקוסמטיקה ובמוצרי שיער.</p>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: תקנים ושפת הסוחרים</h2>
+    <p class="dc">שוק החילבה פועל בשתי שפות: <strong>זרעים שלמים</strong> לתבלין קולינרי ו<strong>אבקת עשב</strong> (Methi Powder) לשוק ההודי. בשוק הפרמצבטי ותוספי התזונה: <strong>Diosgenin %</strong> ו-<strong>4-HI %</strong> הם הפרמטרים שמדברים ושמהם נגזר המחיר. ספק שאינו מציג ניתוח ל-Diosgenin ו-4-HI לשוק הפרמצבטי מוכר מוצר גולמי.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Grade A</th><th>Grade B</th><th>Grade C</th></tr></thead>
+        <tbody>
+            <tr><td><strong>לחות מקס'</strong></td><td>9%</td><td>11%</td><td>13%</td></tr>
+            <tr><td><strong>Diosgenin מינ'</strong></td><td>0.8%</td><td>0.5%</td><td>לא נמדד</td></tr>
+            <tr><td><strong>חומר זר</strong></td><td>0.5%</td><td>1.0%</td><td>2.0%</td></tr>
+            <tr><td><strong>זרעים פגועים</strong></td><td>1.0%</td><td>3.0%</td><td>5.0%</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">שיקול מקצועי</div>
+        <p>חילבה ל"Diosgenin extraction" נמכר ב-<strong>400-700 דולר לטון</strong>. חילבה לתבלין קולינרי: <strong>800-1,400 דולר לטון</strong>. תמצית 4-Hydroxyisoleucine מסטנדרטת ל-20-40%: <strong>80-150 דולר לק"ג</strong>. אותו זרע, שלושה שווקים שונים לחלוטין. הספק שיודע לפלח נכון מקבל פרמיה.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהתרמיל לשוק</h2>
+    <p class="dc">עיבוד חילבה הוא פשוט יחסית, אבל מחולק לשלושה מסלולים שונים שמתפצלים אחרי שלב הניקוי הראשוני: תבלין גולמי, אבקה לשוק קולינרי, ותמצית פרמצבטית. ההחלטה על הנתיב מתקבלת לפי בדיקות Diosgenin ו-4-HI מהאצווה.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">קצירה וקלינג</div>
+                <div class="proc-step-body">הצמח נקצר ב-combine harvester כאשר 80% מהתרמילים יבשים וחומים. לאחר דיש: ניקוי ב-air screen cleaners. לחות זרע לאחר קציר: 12-18%. ייבוש שמש 2-3 ימים ל-9-11%.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">קלייה קלה (De-bittering)</div>
+                <div class="proc-step-body">זרעים גולמיים מרים בגלל הגלקטומנן. קלייה קלה ב-<strong>120-140°C ל-5-8 דקות</strong> מפחיתה מרירות ב-40-60% ומשחררת sotolone ומייצרת את הניחוח האופייני. קלייה מוגזמת הורסת 4-HI ו-Diosgenin. שוק הפרמצבטיקה דורש זרעים לא-קלויים.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">טחינה לאבקה</div>
+                <div class="proc-step-body">Hammer mills לאבקה של 60-80 mesh. הזרעים קשים מאוד (14,000 psi crush strength), הטחינה יוצרת חום מקומי שיכול לפגוע ב-4-HI. מפעלים פרמצבטיים משתמשים ב-cryo-grinding (טחינה בקור נוזלי) שמשמרת ביו-אקטיבי.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">מיצוי תמציות פרמצבטיות</div>
+                <div class="proc-step-body">שלב ייחודי לשוק הפרמצבטי: מיצוי אתנולי (70% EtOH) ל-4-HI, ריכוז ב-evaporator, ייבוש spray-dry. מיצוי מימי ל-galactomannans לתעשיית הקוסמטיקה. עלות מיצוי 4-HI ל-40% standardization: <strong>60-80 דולר לק"ג חומר גלם</strong>, תפוקה <strong>50-100 גרם ל-ק"ג זרע</strong>.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות</h2>
+    <p class="dc">חילבה מציג פרופיל בטיחות GRAS (Generally Recognized as Safe) בארה"ב לשימוש קולינרי, אבל בריכוזים גבוהים (תוספי תזונה) קיימים אינטראקציות תרופתיות שמחייבות זהירות.</p>
+    <div class="ab ab-r">
+        <div class="tg">אזהרה: נשים בהריון</div>
+        <p>החילבה גורם להתכווצויות רחם כשנלקח בכמויות גדולות. ה-Diosgenin מדמה פעילות פרוגסטרון. שימוש מסורתי להשראת לידה קיים בכמה תרבויות. ה-FDA וה-EFSA ממליצים על הגבלת שימוש בתוספי חילבה בהריון. שימוש קולינרי רגיל: בטוח.</p>
+    </div>
+    <p>MRL ובטיחות: <strong>Chlorpyrifos ≤ 0.01 mg/kg</strong> (EU), <strong>Dithiocarbamates ≤ 0.1 mg/kg</strong>. חילבה הודי Grade A מציג בדרך כלל פרופיל pesticide נקי. מיקרוביולוגיה: <strong>TPC ≤ 10⁵ CFU/g</strong>, <strong>Salmonella: Absent/25g</strong>, <strong>Aflatoxin B1 ≤ 5 μg/kg</strong>. אינטראקציה תרופתית: 4-HI עשוי לחזק תרופות סוכרת ולגרום להיפוגליקמיה. לקוחות פרמצבטיים דורשים COA עם ניתוח מלא.</p>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה וניהול שרשרת האספקה</h2>
+    <p class="dc">חילבה הוא מוצר יבש ויציב יחסית, אבל עם שני אתגרים לוגיסטיים ייחודיים: <strong>ריח חזק</strong> שחודר לאריזות נאותות, ו<strong>ספיגת לחות</strong> מהירה שמשפיעה על Diosgenin. מוצרי החילבה הפרמצבטיים דורשים גם אריזה nitrogen-flushed.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מוצא</th><th>נמל</th><th>זמן לאירופה</th><th>הערות</th></tr></thead>
+        <tbody>
+            <tr><td><strong>הודו (Rajasthan)</strong></td><td>Nhava Sheva / Kandla</td><td>20-25 ימים</td><td>Dry container, אריזת PE כפולה</td></tr>
+            <tr><td><strong>מצרים</strong></td><td>Alexandria</td><td>10-14 ימים</td><td>כמויות קטנות, שוק EU</td></tr>
+            <tr><td><strong>אתיופיה</strong></td><td>Djibouti</td><td>22-28 ימים</td><td>זן ייחודי, ניחוח שונה</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>אחסון: <strong>RH מתחת ל-60%</strong>, טמפרטורת חדר. תמציות פרמצבטיות: <strong>2-8°C</strong>. חיי מדף: זרעים שלמים <strong>24 חודש</strong>. אבקה <strong>12-18 חודש</strong>. תמצית 4-HI: <strong>24 חודש</strong> בקירור. <em>זרע שנרשם בפפירוס מ-1500 לפנה"ס ממשיך לנסוע ממרכז הודו לבתי מרקחת אירופאיים, תוך 25 יום, בתנאים שאחד המשלחים הפרעוניים לא יכול היה לדמיין.</em></p>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות</h2>
+    <p class="dc">החילבה הוא אחד הצמחים הנחקרים ביותר בתחום המטבוליזם: מעל <strong>2,500 מחקרים מדעיים</strong> פורסמו עליו בשלושים שנה האחרונות. הספרות מקיפה סוכרת, כולסטרול, הנקה, כוח שרירים, ועוד. הבסיס הביוכימי המוצק (4-HI ו-Diosgenin) נותן אמינות לחלק מהממצאים.</p>
+    <h3>סוכרת וגלוקוז</h3>
+    <p>מטא-אנליזה של 10 RCTs (Neelakantan et al., Nutrition Journal 2014) מצאה שתוסף חילבה הפחית <strong>סוכר צום ב-21.5 mg/dL</strong> ו-HbA1c ב-<strong>1.13%</strong> בחולי סוכרת סוג 2. מנגנון: 4-HI מגביר הפרשת אינסולין, גלקטומנן מאט ספיגת גלוקוז. שניהם פועלים בו-זמנית.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">1.13%</div><div class="nu">ירידה HbA1c</div><div class="nl">מטא-אנליזה 10 RCTs</div></div>
+        <div class="ni"><div class="nv">0.5-1.5%</div><div class="nu">Diosgenin</div><div class="nl">ממשקל יבש</div></div>
+        <div class="ni"><div class="nv">45-60%</div><div class="nu">גלקטומנן</div><div class="nl">ממשקל הזרע</div></div>
+        <div class="ni"><div class="nv">22</div><div class="nu">הזכרות בפפירוס Ebers</div><div class="nl">1500 לפנה"ס</div></div>
+        <div class="ni"><div class="nv">21.5</div><div class="nu">mg/dL ירידה גלוקוז</div><div class="nl">סוכר צום</div></div>
+        <div class="ni"><div class="nv">2,500+</div><div class="nu">מחקרים מדעיים</div><div class="nl">30 שנה אחרונות</div></div>
+    </div>
+    <p>הנקה: שימוש מסורתי בחילבה להגברת הנקה (galactagogue) נפוץ בהודו, מרוקו, ואתיופיה. מחקר קטן (Turkyılmaz et al., 2011) מצא עלייה של 20% בנפח חלב. המנגנון אינו ברור לחלוטין. ה-WHO לא ממליץ אבל אינו אוסר. כוח שרירים: מחקר RCT (Wankhede et al., 2016) על 60 גברים בריאים מצא שתוסף חילבה (500 מ"ג/יום, 8 שבועות) שיפר כוח לחיצת יד ב-8% לעומת פלסבו.</p>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק עולמי ומחירים</h2>
+    <p class="dc">שוק החילבה העולמי מורכב ממשתנה אחד שאף תבלין אחר לא מכיל: <strong>שלושה שווקים בו-זמניים לאותו מוצר</strong>. שוק התבלין הקולינרי, שוק תוספי התזונה, ושוק חומרי הגלם הפרמצבטיים. כל שוק עם מחיר שונה, קונים שונים, ומפרט שונה.</p>
+    <div class="ab ab-w">
+        <div class="tg">מבנה שוק 2024</div>
+        <p>שוק הזרעים הגולמיים: <strong>80,000-100,000 טון לשנה</strong>, שווי <strong>80-140 מיליון דולר</strong>. שוק תמציות 4-HI: <strong>150-200 טון לשנה</strong>, שווי <strong>15-30 מיליון דולר</strong>. שוק Diosgenin: <strong>50-80 טון לשנה</strong>, שווי <strong>5-15 מיליון דולר</strong>. הודו שולטת בכל שלושת השווקים.</p>
+    </div>
+    <p>מחירים: חילבה זרעים שלמים Grade A FOB Nhava Sheva: <strong>900-1,400 דולר לטון</strong>. אבקה 80 mesh: <strong>1,200-1,800 דולר לטון</strong>. תמצית 4-HI 40%: <strong>80-150 דולר לק"ג</strong>. שחקנים מובילים: <strong>Arjuna Natural</strong> (Kerala), <strong>Natural Remedies</strong> (Bangalore), <strong>Nexira</strong> (צרפת, מייבא ומעבד). CAGR שוק תוספי תזונה חילבה: <strong>7.2% (2020-2024)</strong>. <em>אותו זרע שהיה מזון בהמות ברומא הוא היום חומר גלם לתעשיית הביוטק.</em></p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית ומגמות 2030</h2>
+    <p class="dc">החילבה עומד בפני מגמה דרמטית: <strong>מעבר ממרכיב לתרופה</strong>. ניסויי Phase II ו-III על 4-HI לטיפול בסוכרת ועל Diosgenin לטיפול ב-PCOS (תסמונת שחלות פוליציסטיות) מתקדמים. אם יאושרו, הביקוש יזנק ב-300-500%.</p>
+    <h3>פיתוחים פרמצבטיים</h3>
+    <p>חברת <strong>Indena S.p.A.</strong> (איטליה) מפתחת פטנט על תמצית 4-HI מסטנדרטת בצורת נאנו-אנקפסולציה לספיגה משופרת. ה-bioavailability של 4-HI בגוף נמוכה: כ-20-30% מהמינון נספג. נאנו-אנקפסולציה עשויה להגיע ל-70-80%, מה שיאפשר מינון נמוך יותר ויעילות גבוהה יותר.</p>
+    <h3>חקלאות מדויקת</h3>
+    <p>ניסויים ב-AI-based crop monitoring לחילבה בראג'סטן (AgriBot India, 2023) מאפשרים זיהוי מוקדם של עובש אבקה ב-drone imaging וטיפול מדויק. עלות: 15-20 דולר לדונם לעונה. תמורה: הפחתת אובדן יבול ב-25-35%. CAGR של שוק ניטור חכם לחילבה: 35% לשנה (נישה קטנה אבל צומחת).</p>
+    <div class="ab ab-g">
+        <div class="tg">מגמה: חילבה בקיימות תעשייתית</div>
+        <p>Galactomannans מחילבה מחליפים קרבוקסי-מתיל-צלולוז (CMC) סינתטי ב-textile sizing ובדפוס טקסטיל אורגני. <strong>Archroma</strong> ו-<strong>Dystar</strong> (שוויץ/גרמניה) מפתחות שימושים בתעשיית הצביעה. שוק ה-bio-based sizing agents: <strong>12 מיליון דולר ב-2024</strong>, CAGR של 18%.</p>
+    </div>
+    <p>שינויי אקלים: החילבה ב-Rajasthan חשוף לגלי חום גדלים בפברואר-מרץ, עונת הפריחה הקריטית. מחקר ICAR 2022 מראה שחשיפה ל-38°C+ בפריחה מפחיתה ייצור זרע ב-30-40%. זני חילבה heat-tolerant בפיתוח, אבל זמן ליישום שדה: 5-8 שנים. <em>זרע שרפא את מצרים אחרי ארבעת אלפי שנה עדיין לא שכח להפתיע.</em></p>
+    <div class="ft">
+        <span style="font-size:11px;color:#808050;">אגרונומיה: ICAR Fenugreek Research, Maharana Pratap University 2020 · ביוכימיה: Neerja Jain, Phytochemistry 2012 · בריאות: Neelakantan et al., Nutrition Journal 2014 · Wankhede et al., JISSN 2016 · כלכלה: ITC Trade Map 2024 · Arjuna Natural Annual Report · RASFF EU 2020-2024</span>
+    </div>
+</section>
+
+</main>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · FENUGREEK · חילבה</footer>
+<div class="marquee-container">
+    <div class="marquee-text">חילבה · TRIGONELLA · DIOSGENIN · FENUGREEK · 4-HYDROXYISOLEUCINE · METHI · חילבה · TRIGONELLA · DIOSGENIN · FENUGREEK · 4-HYDROXYISOLEUCINE · METHI · </div>
+</div>
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A8A830" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+<script>
+window.onscroll = () => { const h = document.documentElement.scrollHeight - document.documentElement.clientHeight; document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%'; const sections = document.querySelectorAll('.ch'); const dots = document.querySelectorAll('.nav-dot'); let current = ""; sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; }); dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); }); };
+const btt = document.getElementById('btt'); window.addEventListener('scroll', () => { btt.classList.toggle('visible', window.scrollY > 300); }); btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => { dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'}); });
+(function() { const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0, rootMargin: '0px 0px -50px 0px' }); document.querySelectorAll('.ch').forEach(card => { card.classList.add('reveal'); observer.observe(card); }); function syncProductPage() { const dbName = 'StarkOS_DB'; const productId = window.location.pathname.split('/').pop().replace('.html', ''); const request = indexedDB.open(dbName, 1); request.onsuccess = (e) => { const db = e.target.result; try { const store = db.transaction('archive', 'readonly').objectStore('archive'); const getRequest = store.get(productId); getRequest.onsuccess = () => { const data = getRequest.result; if (!data) return; function makeMedia(src) { const isVid = src.startsWith('data:video'); const el = document.createElement(isVid ? 'video' : 'img'); el.src = src; el.style.cssText = 'width:100%;height:100%;object-fit:cover;'; if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); } return el; } const heroH1 = document.getElementById('sync-title'); if (heroH1 && data.name) heroH1.innerText = data.name; const heroDeck = document.getElementById('sync-desc'); if (heroDeck && data.desc) heroDeck.innerText = data.desc; const heroSrc = data.media1 || data.media; const heroSlot = document.getElementById('slot-product-hero'); if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); } }; } catch(err) {} }; } window.addEventListener('load', syncProductPage); })();
+</script>
+</body>
+</html>

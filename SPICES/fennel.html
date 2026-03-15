@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0A0B0A; --text: #FAF8F0; --body: #C8D0C0;
+    --accent: #4A6A3A; --warm: #7AAA5A;
+    --card: rgba(18,22,16,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background-color: var(--bg); color: var(--body);
+    font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9;
+    overflow-x: hidden;
+    background-image: linear-gradient(rgba(122,170,90,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(122,170,90,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+body::before, body::after {
+    content:''; position:fixed; width:600px; height:600px; border-radius:50%;
+    filter:blur(120px); z-index:-2; opacity:0.15; pointer-events:none;
+}
+body::before { background:var(--warm); top:-100px; left:-100px; }
+body::after { background:#2A4A1A; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap { max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05); background:#0A0B0A; display:flex; align-items:center; justify-content:center; }
+.hero-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch { background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px); padding:50px; border-radius:var(--radius); margin-bottom:40px; border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden; }
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; } .ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#A8C888; font-style:italic; } strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(122,170,90,0.08); border-right:4px solid var(--warm); } .ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(40,70,30,0.2); border-right:4px solid var(--accent); } .ab-g .tg { color:#A8C888; }
+.ab-r { background:rgba(184,50,50,0.1); border-right:4px solid #B83030; } .ab-r .tg { color:#E06060; } .ab-r p { color:#DDB0B0; }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(18,22,16,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#889880; margin-top:2px; } .ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(122,170,90,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.proc-steps { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+.proc-step { display:flex; gap:20px; align-items:flex-start; }
+.proc-step-num { min-width:36px; height:36px; border-radius:50%; background:var(--warm); color:#000; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.proc-step-title { font-family:'Frank Ruhl Libre',serif; font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.proc-step-body { font-size:16px; color:var(--body); line-height:1.75; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.03); animation:scrollText 40s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#607050; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(122,170,90,0.4); }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(18,22,16,0.85); border:1px solid rgba(122,170,90,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+.home-btn:hover { background:rgba(122,170,90,0.15); }
+@media (max-width:900px) { .side-nav { display:none; } .hero h1 { font-size:55px; } .hero-img-wrap { height:300px; margin-bottom:-100px; } .con { margin-top:150px; } .ng { grid-template-columns:repeat(2,1fr); } }
+</style>
+<title>שומר · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות ובקרת איכות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="פיזיולוגיה ובריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="טכנולוגיה עתידית"></div>
+</nav>
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">שׁוּמָר</h1>
+    <p class="deck" id="sync-desc">מהירקות שגדלו בגנים של רומא הקיסרית ועד לבקבוקי אניס שמוזגים בכפרי פרובנס. ביוכימיה של אנתול, שורשים בני אלפי שנים, ושוק עולמי שמגדל ב-6% בשנה.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <img src="../images/A_small_elegant_ceramic_bowl_overflowing_with_fres_d65777bb9d.jpeg" alt="fennel" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    </div>
+</section>
+<div class="marquee-container">
+    <div class="marquee-text">שומר · FOENICULUM VULGARE · ANETHOLE · FENNEL · TRANS-ANETHOLE · MEDITERRANEAN · שומר · FOENICULUM VULGARE · ANETHOLE · FENNEL · TRANS-ANETHOLE · MEDITERRANEAN · </div>
+</div>
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: זהות, שם, ואלפי שנות נוכחות</h2>
+    <p class="dc">לפני שהיה תבלין, השומר היה רפואה. לפני שהיה רפואה, הוא היה מזון. ולפני שהיה מזון, הוא גדל בר על מצוקי אגן הים התיכון, בלי שאף ציביליזציה עדיין הבינה את הפוטנציאל הגלום בכל חלק ממנו: הזרעים, הגבעול, הפקעת, העלים, ואפילו השורש. שלושת אלפי שנה לאחר מכן, השומר הוא אחד מהצמחים הנדירים שנכנס לכל מטבח בעולם בצורות שונות, ואחד הצמחים שסופר לו תפקיד בכל תרבות שנגעה בו.</p>
+    <p>השם העברי <strong>שׁוּמָר</strong> מקורו עתיק, מופיע בתלמוד ובמשנה בהקשרי תיבול ורפואה. השם הלטיני <em>Foeniculum vulgare</em> מגיע מ-<em>foenum</em>, שחת, כינוי לצמח עשבוני גדול. ה-<em>vulgare</em> מסגיר: "מצוי", "נפוץ", הצמח שגדל בכל מקום לאורך חוף הים התיכון ושאין בו כמעט שום דבר יוצא דופן במראה, אבל הכל יוצא דופן בניחוח. משפחה בוטנית: <strong>Apiaceae</strong>, אותה משפחה של כוסברה, כמון, פטרוזיליה, גזר ושמיר, אחת המשפחות הבוטניות הגדולות ביותר בשימוש קולינרי.</p>
+    <p>הממצאים ההיסטוריים מתחילים ביוון הקדומה. המיתוס היווני מספר שפרומתיאוס הסתיר את אש האלים בגבעול שומר חלול כשגנב אותה מהאולימפוס לבני האדם. בחרות גבעול שומר יבש, כשהוא נדלק בקצה ושורף לאט, שמר על גחלת חיה שעות ארוכות. לא אגדה בלבד: ניסוי פרקטי שיוחס לו משמעות אלוהית. <strong>מאראתון</strong>, שם הקרב הגדול של 490 לפנה"ס שנתן שם לריצה לאורכי כל הזמן, פירושו בדיוק "מקום השומר". האזור נקרא כך כי שדות שומר בר כיסו אותו. הגיבורים היוונים רצו, ניצחו, ומתו, על שדה שומר.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>הפיזיציאן הרומאי <strong>פליניוס הזקן</strong> כתב ב"Naturalis Historia" (77 לספירה) שנחשים, לאחר שינה חורפית, שפשפו עיניהם בשומר כדי לחדד ראייתם. מסורת זו הפכה לאמונה רפואית שנמשכה אלף שנה: שומר לחיזוק הראייה. כיום ידוע ש-trans-anethole מרכיב השומר יש לו השפעה אנטי-דלקתית, אבל לא על הראייה. פליניוס טעה. אבל הוא תיעד.</p>
+    </div>
+    <p>ב-<strong>812 לספירה</strong>, הכריז קרל הגדול (שארלמן) במסמך הקיסרי <em>Capitulare de Villis</em> על רשימת צמחים שחייבים לגדול בכל חווה קיסרית באימפריה הפרנקית. השומר נמצא ברשימה, לצד רוזמרין, מרווה, ושמיר. מי שלא גידל אותו, הפר צו קיסרי. מסמך זה הוא אחד המקורות הראשונים להוראות גידול חקלאי שיטתי באירופה, ושומר היה בו.</p>
+    <p>הסחר העולמי: שומר הגיע להודו דרך סוחרים ערבים לפני אלף שנה לפחות ושם פיצל לשני כיוונים: גידול ספציפי לזרעים (הודו הפכה למייצאת הגדולה ביותר בעולם) ושימוש קולינרי עמוק שמשלב שומר בכורי masala. בסין הוא הגיע בנתיב דרך אסיה המרכזית ושם נקרא שם שקשור לאניס כוכב בגלל הדמיון הארומטי. <em>השומר הוא הוכחה שצמח יכול לנסוע אלפי קילומטרים, לעבור ידיים ותרבויות, ולהישאר מזוהה.</em></p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: הצמח, האקלים, ואמנות הגידול</h2>
+    <p class="dc"><em>Foeniculum vulgare</em> הוא צמח רב-שנתי (או דו-שנתי בגידול מסחרי) ממשפחת Apiaceae, מגיע לגובה של <strong>1.5-2.5 מטר</strong>, עם גבעול חלול, עלים מנוצים דקים מאוד שנראים כמו חוטים ירוקים, ופרחים צהובים קטנים בתפרחת מטריה (umbel). הגבעול כחלחל-ירוק ומכוסה שכבת שעווה. הפקעת, שהיא למעשה בסיסי עלים מנופחים, היא החלק שמוכר בירקנייה. הזרעים הם החלק שמוכר כתבלין. שני מוצרים שונים מאותו צמח, עם שיקולי גידול שונים.</p>
+    <h3>שני הגזרים הבוטניים המרכזיים</h3>
+    <p><strong>שומר מתוק</strong> (<em>Foeniculum vulgare</em> var. <em>azoricum</em>): הגזר המגדל לפקעת, המוכר כ"שומר פירנצאי" או "שומר איטלקי". פקעות גדולות, עגולות, לבנות-ירוקות. מגיע ממדינות ים תיכוניות בעיקר. זהו הירק.</p>
+    <p><strong>שומר תבלין</strong> (<em>Foeniculum vulgare</em> var. <em>vulgare</em>): הגזר המגדל לזרעים ולשמן אתרי. פקעת קטנה ולא אכילה, ייצור זרעים גבוה. הודו, מצרים, סין, וספרד הם המייצאים הגדולים. זהו התבלין המסחרי.</p>
+    <h3>דרישות אקלים ואדמה</h3>
+    <p>השומר אוהב שמש מלאה ואקלים ים-תיכוני: <strong>קיץ חם ויבש, חורף מתון ולח</strong>. טמפרטורת גידול אידיאלית: <strong>15-20°C</strong>. עמיד לכפור קל (עד מינוס 5°C) אבל לא לקפאות ממושכות. כמות משקעים: <strong>600-1,200 מ"מ לשנה</strong>, עם אפשרות להשקיה. pH אדמה: <strong>6.5-7.5</strong>, מעדיף אדמות גירניות קלות, עמוקות, ניקוז טוב.</p>
+    <div class="ab ab-g">
+        <div class="tg">גזרת מחקר אגרונומית</div>
+        <p>מחקר של ICAR (המכון ההודי למחקר חקלאי) מ-2022 הראה שהזן <strong>Hisar Sonal</strong>, שפותח בגוג'ראט, מניב <strong>2.1 טון זרעים לדונם</strong>, לעומת ממוצע של 1.2-1.5 טון בזנים המסחריים הרגילים. הזן עמיד לחיידק <em>Xanthomonas campestris</em>, אחת ממחלות הבקטריה העיקריות בשומר הודי.</p>
+    </div>
+    <p>עונת גידול בהודו: שתילה אוקטובר-נובמבר (לאחר המונסון), קצירה מרץ-אפריל. בישראל ובאגן הים התיכון: שתילה ספטמבר-אוקטובר, קצירה מאי-יוני. הגידול מזרעים ישירות בשדה, ריווח של 40-50 ס"מ בין שורות. שנה ראשונה: צמח קטן שמייצר פקעת ועלים. שנה שנייה ואילך: גבעול פריחה וזרעים.</p>
+    <p>בעיה חקלאית ייחודית לשומר: <strong>אחלייה עצמית</strong>. השומר הוא אחד הצמחים המעטים שמפריעים לעצמם כשגדלים בצפיפות, ועוד יותר מפריעים לגידולים הסמוכים. חקלאים בהודו וספרד שומרים ריווח של <strong>500 מטר לפחות</strong> בין שדות שומר לבין שדות כמון וכוסברה, כדי למנוע הכלאות בלתי רצויות שמשנות את פרופיל השמן האתרי.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: האנתול ועולם הטרפנים הירוקים</h2>
+    <p class="dc">השומר הוא צמח של מולקולה אחת דומיננטית: <strong>trans-anethole</strong>. כשאתה מריח שומר, אניס, אניס כוכב, ואפילו אבסינת, אתה מריח וריאציות של אותה משפחה מולקולרית. trans-anethole הוא פנילפרופנואיד, תרכובת ארומטית שנוצרת ממסלול חומצה שיקימית בצמח. ריכוזו בשמן האתרי של זרעי שומר: <strong>50-85%</strong>, תלוי בזן ובמוצא גיאוגרפי. זה לא תבלין עם ביוכימיה מורכבת, זה תבלין שבנה זהות שלמה על מולקולה אחת.</p>
+    <h3>trans-Anethole: הפיזיקה של הריח</h3>
+    <p>trans-anethole (C₁₀H₁₂O) הוא אתר פנילי, מסיס בשמן ובאלכוהול, כמעט לא מסיס במים. הוא הסיבה לתופעת "החלבון": כאשר מוסיפים מים לאניס, פסטיס, או אוזו, השתייה מלבינה. trans-anethole מסיס באלכוהול מתמוסס במים ויוצר אמולסיה מיקרוסקופית שמפזרת אור. זה לא כימיה מסובכת, זה פיזיקה פשוטה, אבל הוא הפך לאחד הסימנים הארגנולפטיים (תחושתיים) המזוהים ביותר בשתייה האלכוהולית.</p>
+    <p>מרכיבים נוספים בשמן האתרי של שומר: <strong>Fenchone</strong> (2-12%), מונוטרפן קטון שנותן את "נגיסת הקמפור" המרירה שמבדילת שומר ממתוק מאניס; <strong>Limonene</strong> (1-5%), ציטרוסי; <strong>alpha-Pinene</strong> (1-3%), ניחוח אורן; <strong>Estragole</strong> (מתיל-כוויקול), 0.5-7%, הנמצא גם בבזיליקום ובתמרהינד. יחס trans-anethole לfenchone הוא ה"חתימה" הגיאוגרפית: שומר הודי מציג יחס גבוה (80:5), שומר מצרי בינוני (70:12), שומר ספרדי נמוך יחסית (60:15).</p>
+    <div class="ab ab-w">
+        <div class="tg">ממצא ביוכימי</div>
+        <p>מחקר שפורסם ב-Journal of Agricultural and Food Chemistry (2020) זיהה ב-שומר <strong>Dillapiole</strong>, תרכובת נדירה שמופיעה גם בשמיר ובפטרוזיליה. Dillapiole נחקר כעת כ-synergist (מגביר פעולה) לחומרי הדברה ביולוגיים, כיוון שהוא מעכב אנזימי ניקוי רעלים בחרקים. ייצרניות הדברה אורגנית מביטות בו.</p>
+    </div>
+    <h3>ביוכימיה של הפקעת לעומת הזרע</h3>
+    <p>פקעת שומר טרייה מכילה <strong>0.1-0.3% שמן אתרי</strong>, פחות ממחצית מהזרע. אבל הפקעת עשירה בויטמין C (<strong>12 מ"ג ל-100 גרם</strong>), אשלגן (<strong>414 מ"ג</strong>), ופולאט (<strong>27 מיקרוגרם</strong>). הזרע: עשיר בסידן (<strong>1,196 מ"ג ל-100 גרם</strong>, גבוה יוצא דופן), ברזל (<strong>18.5 מ"ג</strong>), ומגנזיום (<strong>385 מ"ג</strong>). שני חלקי הצמח הם למעשה שני מוצרי תזונה שונים לחלוטין, שקורה להם לגדול באותו צמח.</p>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: תקנים, פרמטרים, ושפת הסוחרים</h2>
+    <p class="dc">שוק הזרעים המסחרי של שומר פועל בשתי שפות: שפת ASTA (האמריקאית) ושפת ESA (האירופאית), עם תקני ISO 7928 ספציפיים לשומר. הפרמטר הראשון שמדבר בכל עסקה: <strong>תכולת שמן אתרי</strong>, מה שמשקף הן את עוצמת הטעם והן את ה-value לתעשיית השמנים האתריים. ספק שלא מציג COA עם % שמן אתרי הוא ספק שלא בוגר מספיק לשוק.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Grade A</th><th>Grade B</th><th>Grade C (תעשייה)</th></tr></thead>
+        <tbody>
+            <tr><td><strong>שמן אתרי מינ'</strong></td><td>2.0 ml/100g</td><td>1.5 ml/100g</td><td>1.0 ml/100g</td></tr>
+            <tr><td><strong>לחות מקס'</strong></td><td>10%</td><td>12%</td><td>14%</td></tr>
+            <tr><td><strong>trans-Anethole מינ'</strong></td><td>70%</td><td>60%</td><td>50%</td></tr>
+            <tr><td><strong>חומר זר מקס'</strong></td><td>0.5%</td><td>1.0%</td><td>2.0%</td></tr>
+            <tr><td><strong>זרעים פגועים מקס'</strong></td><td>2.0%</td><td>4.0%</td><td>7.0%</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>מוצאים גיאוגרפיים עיקריים</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מוצא</th><th>מאפיין ארומטי</th><th>trans-Anethole</th><th>שימוש עיקרי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>הודו (גוג'ראט, ראג'סטן)</strong></td><td>עז, מתוק, נקי</td><td>75-85%</td><td>תבלין, שמן אתרי, ייצוא מסחרי</td></tr>
+            <tr><td><strong>מצרים</strong></td><td>עז, מעט עשני</td><td>65-75%</td><td>תעשיית משקאות, תרופות</td></tr>
+            <tr><td><strong>ספרד</strong></td><td>עדין, ציטרוסי</td><td>60-70%</td><td>קמעונאות אירופה</td></tr>
+            <tr><td><strong>סין</strong></td><td>חזק, פחות עדין</td><td>55-70%</td><td>תעשייה, אבקה</td></tr>
+            <tr><td><strong>ישראל</strong></td><td>פרחוני, ים-תיכוני</td><td>70-80%</td><td>מקומי, נישה</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">שיקול מקצועי</div>
+        <p>"Sweet Fennel Oil" ו-"Bitter Fennel Oil" הם שני מוצרי שמן שונים בשוק הפרפומריה והתרופות. Sweet: trans-anethole דומיננטי, fenchone נמוך. Bitter: fenchone גבוה יותר. מחיר: Sweet Fennel Oil נמכר ב-<strong>25-40 דולר לק"ג</strong> לתעשיית מזון ומשקאות. Bitter Fennel Oil: <strong>15-25 דולר לק"ג</strong>, פחות ביקוש. ספק שמוכר "שמן שומר" ללא ציון Sweet/Bitter מוכר מידע חלקי.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהשדה לשק היצוא</h2>
+    <p class="dc">עיבוד זרעי שומר הוא תהליך יחסית פשוט, אבל כל שלב בו משפיע ישירות על תכולת השמן האתרי הסופית. הזרע בשלב הגולמי מכיל <strong>12-18% לחות</strong>. המטרה: <strong>8-10% לחות</strong> לאחסון בטוח. ירידת לחות מתחת ל-8%: שבירות גוברת. מעל 10%: סכנת עובש ואובדן שמן אתרי.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">קצירה</div>
+                <div class="proc-step-body">קצירה כאשר 70-80% מהתפרחות הפכו לחומות-זהובות. שומר קל לאיסוף מכני: combine harvester עם ראש קצירה מותאם. הבעיה: הזרעים שבים להישיר בין גבעולים. קצירה מוקדמת מדי: זרעים ירוקים עם anethole נמוך. מאוחרת מדי: נשירה טבעית ואובדן יבול.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">דיש והפרדה</div>
+                <div class="proc-step-body">הגבעולים הקצורים עוברים דיש (threshing) להפרדת הזרעים. בהודו: דיש מכני ב-cylinder threshers ב-400-600 RPM. לאחר הדיש: ניקוי ב-air screen cleaners שמפרידים זרעים מגבעולים, אבק, ואבנים קטנות. יעילות ניקוי תקנית: פחות מ-0.5% חומר זר.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">ייבוש</div>
+                <div class="proc-step-body">ייבוש שמש: 2-4 ימים על משטחי בד בשדה, תחת שמש ישירה. מתאים לאקלים יבש (ראג'סטן, גוג'ראט). ייבוש מכני: Rotary dryers ב-<strong>40-50°C</strong>, לא מעל 55°C כדי לא לאדות את השמן האתרי. ייבוש שמש מניב עוצמת שמן אתרי גבוהה יותר. ייבוש מכני: אחיד ומהיר יותר. רוב הייצוא ההודי: שמש ראשון, גמר מכני.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">מיון ואריזה</div>
+                <div class="proc-step-body">מיון אופטי: מצלמות GigaVision מזהות זרעים שחורים (מחלת Ramularia), ירוקים (לא בשלים), ומסכי חרקים. אחוז זרעים פגומים מקובל: פחות מ-2% ל-Grade A. אריזה בשקי PP של 25/50 ק"ג, Big Bags של 500-1,000 ק"ג לתעשייה. אחסון: טמפרטורת חדר, לחות מתחת ל-65%, הרחק מאור ישיר.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">05</div>
+            <div>
+                <div class="proc-step-title">זיקוק שמן אתרי</div>
+                <div class="proc-step-body">Steam Distillation: זרעים גרוסים קלות (לא טחונים) מוכנסים לסיר זיקוק עם קיטור. תפוקה: <strong>1.5-2.5%</strong> שמן לגרם זרע. Supercritical CO2 Extraction: תפוקה <strong>3-4%</strong>, איכות גבוהה יותר, מחיר גבוה יותר. שמן Steam Distillation: <strong>20-35 דולר לק"ג</strong>. שמן CO2: <strong>40-70 דולר לק"ג</strong>.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות: רגולציה, סיכונים, פרוטוקולים</h2>
+    <p class="dc">שומר נמצא ברשימת דחיות RASFF של האיחוד האירופי בעיקר בשל שאריות חומרי הדברה, אפלטוקסין, ונוכחות <em>Salmonella</em>. מ-2019 עד 2024, ממוצע של 15-25 התראות RASFF לשנה על שומר ומוצריו. רוב ההתראות: שומר הודי ומצרי.</p>
+    <h3>MRL ופרמטרים קריטיים</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>חומר פעיל</th><th>MRL EU (mg/kg)</th><th>MRL ארה"ב</th><th>שכיחות</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Chlorpyrifos</strong></td><td>0.01 (LOD)</td><td>0.5</td><td>גבוהה</td></tr>
+            <tr><td><strong>Cypermethrin</strong></td><td>0.05</td><td>0.5</td><td>בינונית</td></tr>
+            <tr><td><strong>Dithiocarbamates</strong></td><td>0.1</td><td>0.1</td><td>בינונית</td></tr>
+            <tr><td><strong>Chlorpyrifos-methyl</strong></td><td>0.01</td><td>0.1</td><td>בינונית</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-r">
+        <div class="tg">אזהרה: Estragole</div>
+        <p>שמן שומר מכיל <strong>Estragole</strong> (methyl chavicol) ברמות של 0.5-7%. ה-EFSA (הסמכות האירופאית לבטיחות מזון) הגדיר Estragole כתרכובת "potentially genotoxic carcinogen" בבעלי חיים במינונים גבוהים. הכמויות בתבלין רגיל אינן מדאיגות. אבל שמן שומר בריכוז גבוה לשימוש ישיר, ובמיוחד לנשים בהריון ותינוקות, דורש ייעוץ רפואי. ה-EU הגביל שמן שומר בתוספי תזונה.</p>
+    </div>
+    <p>מיקרוביולוגיה נדרשת: <strong>TPC ≤ 10⁵ CFU/g</strong> (מסוטרל), <strong>Salmonella: Absent/25g</strong>, <strong>E. coli ≤ 10 CFU/g</strong>, <strong>Yeast & Mould ≤ 10³ CFU/g</strong>. אפלטוקסין: <strong>B1 ≤ 5 μg/kg, סה"כ ≤ 10 μg/kg</strong>. OCH-A: <strong>≤ 15 μg/kg</strong>. Heavy metals: <strong>Pb ≤ 0.3, Cd ≤ 0.2, As ≤ 0.1 mg/kg</strong>.</p>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה: שרשרת אספקה וניהול שינוע</h2>
+    <p class="dc">שומר הוא מוצר יבש עם לחות נמוכה ולכן שינועו פשוט יחסית, אבל פגיע לשני סיכונים לוגיסטיים: <strong>ספיגת לחות</strong> שגורמת לעובש ואובדן שמן אתרי, ו<strong>ספיגת ריחות</strong> מגורמים חיצוניים. מכולה שהכילה בעבר כימיקלים, דלק, או אפילו קפה, תשפיע על ארומת השומר.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מוצא</th><th>נמל יצוא</th><th>זמן לאירופה</th><th>הערות</th></tr></thead>
+        <tbody>
+            <tr><td><strong>הודו</strong></td><td>Nhava Sheva / Kandla</td><td>20-25 ימים</td><td>עיקר הנפח, dry containers</td></tr>
+            <tr><td><strong>מצרים</strong></td><td>Alexandria / Port Said</td><td>10-14 ימים</td><td>שינוע קצר, עדיף לאירופה</td></tr>
+            <tr><td><strong>ספרד</strong></td><td>Valencia / Barcelona</td><td>3-7 ימים (ברים)</td><td>אפשרי בהובלה יבשתית</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>אחסון: טמפרטורת חדר, <strong>RH מתחת ל-65%</strong>, אחסון בנפרד מתבלינים חזקים (כמון, פלפל שחור, כוסברה). חיי מדף: זרעים שלמים <strong>24-36 חודש</strong>. אבקה: <strong>12-18 חודש</strong>. שמן אתרי: <strong>24 חודש</strong> בחושך בטמפרטורה קרירה. Incoterms נפוצים: FOB Nhava Sheva/Alexandria, CIF Rotterdam.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודה לוגיסטית</div>
+        <p>שומר הודי מגיע ב-Big Bags של <strong>500 ק"ג</strong> יותר ויותר, לעומת שקי 25/50 ק"ג מסורתיים. המעבר ל-Big Bags חוסך בעלויות אריזה, טיפול ידני ונזק מנשיאה. עלות Big Bag לעומת שקים: חיסכון של כ-<strong>8-12 דולר לטון</strong> בעלויות אריזה ומנוף. לקוחות תעשייתיים גדולים מעדיפים Big Bags. קמעונאים קטנים דורשים שקים.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות: פעילות ביולוגית ומחקר קליני</h2>
+    <p class="dc">שומר הוא אחד הצמחים הרפואיים הוותיקים ביותר, ועם הבסיס המדעי המוצק יחסית בין צמחים רפואיים. trans-anethole, הרכיב הדומיננטי, מראה פעילות ביולוגית מתועדת במספר מסלולים: אנטי-ספסמודי, פיטו-אסטרוגני, ואנטי-מיקרוביאלי. אבל המרחק בין "in vitro" ל"in vivo" הוא תמיד רלוונטי.</p>
+    <h3>עיכול ומערכת עצבים מעיים</h3>
+    <p>trans-Anethole הוא <strong>מרפה שריר חלק</strong> של מערכת העיכול. מחקר RCT (Alexandrovich et al., 2003) מצא שתה שומר הפחית סימפטומי קוליק בתינוקות ב-65% לעומת פלסבו. זו אחת הסיבות לפופולריות תה השומר לתינוקות. מנגנון: עיכוב התכווצויות ספסטיות במעיים. בבוגרים: מחקר איטלקי (2012) מצא שתמצית שומר שיפרה מדדי IBS (תסמונת מעי רגיז) ב-30% לאחר 4 שבועות.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">1,196</div><div class="nu">mg סידן ל-100g</div><div class="nl">זרעים יבשים</div></div>
+        <div class="ni"><div class="nv">18.5</div><div class="nu">mg ברזל ל-100g</div><div class="nl">גבוה מאוד</div></div>
+        <div class="ni"><div class="nv">70-85%</div><div class="nu">trans-anethole</div><div class="nl">בשמן Grade A</div></div>
+        <div class="ni"><div class="nv">65%</div><div class="nu">הפחתת קוליק</div><div class="nl">מחקר RCT 2003</div></div>
+        <div class="ni"><div class="nv">385</div><div class="nu">mg מגנזיום</div><div class="nl">ל-100g זרעים</div></div>
+        <div class="ni"><div class="nv">1.8%</div><div class="nu">שמן אתרי</div><div class="nl">ממוצע זרע יבש</div></div>
+    </div>
+    <p>פיטו-אסטרוגנים: trans-anethole מציג פעילות אסטרוגנית חלשה, מה שהוביל לשימוש מסורתי בשומר להגברת הנקה ולהקלת תסמיני מנופאוזה. המחקר הקליני מוגבל. מחקר ב-120 נשים לאחר גיל המעבר (Bokaie et al., 2016) מצא שתמצית שומר הפחיתה hot flashes ב-45% לעומת 25% בפלסבו. ממצאים מעניינים, אבל לא מספיקים לקביעת קו טיפולי.</p>
+    <div class="ab ab-g">
+        <div class="tg">מחקר: אנטי-מיקרוביאלי</div>
+        <p>מחקר מ-2021 (Food Control Journal) מצא שמיצוי אתנולי של שומר עיכב <em>Listeria monocytogenes</em> ו-<em>Staphylococcus aureus</em> בריכוז MIC של <strong>0.5-1.0 mg/ml</strong>. trans-Anethole פגע בממברנות התאיות החיידקיות. פוטנציאל כחומר משמר טבעי לתעשיית המזון, אבל טרם בשימוש מסחרי רחב.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק עולמי, מחירים, ומגמות</h2>
+    <p class="dc">שוק זרעי השומר העולמי ב-2024: כ-<strong>320,000 טון</strong> לשנה, שווי של <strong>1.1-1.4 מיליארד דולר</strong>. שוק שמן השומר האתרי: כ-<strong>85 מיליון דולר</strong> בנפרד. הודו שולטת ב-<strong>60-65%</strong> מהיצוא הגלובלי של זרעים, עם מרכז הגידול בגוג'ראט וראג'סטן. מצרים שניה ב-15-20%.</p>
+    <div class="ab ab-w">
+        <div class="tg">מחזוריות מחיר</div>
+        <p>מחיר שומר הודי FOB Nhava Sheva נע בין <strong>700 דולר לטון</strong> (שנות עודף) ל-<strong>1,800 דולר לטון</strong> (שנות יובש). ב-2021-2022, כפירת גשמים בראג'סטן גרמה לעלייה של 140% במחיר בתוך שישה חודשים. תנודתיות זו מעודדת קוני ייצוא לשמור מלאי של 6-12 חודשים, מה שמוסיף לחץ על הלוגיסטיקה.</p>
+    </div>
+    <h3>שחקנים ומבנה שוק</h3>
+    <p>הודו: <strong>Gujarat Fennel Seed</strong> (Unjha market) הוא הבורסה העיקרית לשומר בהודו ובעולם. מחיר ה-Unjha הוא נקודת הייחוס לכל עסקאות שומר הודי. שחקנים מובילים: <strong>Synthite Industries</strong>, <strong>Kancor Ingredients</strong>, <strong>Plant Lipids</strong> הן הספקיות המסחריות הגדולות. ייבואנים באירופה: <strong>Fuchs Gewürze</strong> (גרמניה), <strong>Euroma</strong> (הולנד). ביקוש גדל: 6% CAGR (2019-2024) בשל מגמת מסעדנות ים-תיכונית ובריאות. <em>שומר הוא תבלין שצומח בשנות הבריאות, ולא מאיים לצנוח בהן.</em></p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית: חדשנות ומגמות 2030</h2>
+    <p class="dc">שוק השומר ניצב בפני שניים מגמות מרכזיות לקראת 2030: <strong>גידול בביקוש לשמן אתרי</strong> מתעשיית הפרפומריה והמזון הפונקציונלי, ו<strong>ייסוף מוצר</strong> ממוצר גולמי לתמציות ומיצויים מסוגים שונים. הצמח עצמו לא ישתנה, אבל אופי המסחר בו כן.</p>
+    <h3>ביוטכנולוגיה ושיפור זנים</h3>
+    <p>מחקר גנומי של <em>Foeniculum vulgare</em> מתקדם בהודו ובאיטליה לפיתוח זנים עם תכולת trans-anethole גבוהה יותר וfenchone נמוך יותר. ניסויי CRISPR לאופטימיזציה של biosynthesis trans-anethole פורסמו ב-2023 (Plant Cell Reports). אתגר: חקלאי ראג'סטן מגדלים זנים מסורתיים שנבחרו לאורך עשרות שנים. אימוץ זן חדש לוקח 5-10 שנים.</p>
+    <h3>תעשיית השמן האתרי</h3>
+    <p>שוק שמן שומר אתרי צומח ב-<strong>8% לשנה</strong> (2019-2024). נהגים: תעשיית פרפומריה שמחפשת "green-herbal" notes טבעיים, תעשיית לכסניות ומשקאות (אניס ליקר, פסטיס, אוזו, סמבוקה), ומגמת ארומתרפיה. Supercritical CO2 extraction תופס נתח שוק גדל על חשבון Steam Distillation, בשל ריכוז trans-anethole גבוה יותר ואחוז Estragole נמוך יותר.</p>
+    <div class="ab ab-g">
+        <div class="tg">מגמה: שומר פונקציונלי</div>
+        <p>תוספי תזונה המכילים תמצית שומר צמחו ב-<strong>22% בשנה</strong> (2020-2024) בשוק האמריקאי. הייחסות: עיכול, הנקה, ו"בריאות אישה". חברות כמו <strong>Nature's Way</strong> ו-<strong>Gaia Herbs</strong> משיקות תמציות שומר ממוצא אורגני מוסמך. הפרמיה על "Organic Certified Fennel" מול קונוונציונלי: <strong>40-70%</strong>.</p>
+    </div>
+    <p>שינויי אקלים: אזורי הגידול בגוג'ראט וראג'סטן רגישים לגשמים לא סדירים. מחקרי FAO מ-2023 מעריכים שעד 2040 שונות המשקעים תגדל ב-25-30%, מה שיגביר את מחזוריות המחיר. מגדלים מתחילים לאמץ שיטות שמירת מים (mulching, drip irrigation) שלא היו נפוצות קודם לכן. <em>בשוק שבו מחיר יכול להכפיל את עצמו בחצי שנה, ניהול סיכוני אקלים הוא עסק, לא אקולוגיה.</em></p>
+    <div class="ft">
+        <span style="font-size:11px;color:#7A8A70;">אגרונומיה: ICAR Spices Research 2022 · Unjha APMC Market Data · ביוכימיה: Faudale et al., Natural Product Communications 2008 · בריאות: Alexandrovich et al., Alternative Therapies 2003 · Bokaie et al., Menopause 2016 · EFSA Estragole Opinion 2001 · כלכלה: ITC Trade Map 2024 · FAO FAOSTAT · RASFF EU 2020-2024</span>
+    </div>
+</section>
+
+</main>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · FENNEL · שומר</footer>
+<div class="marquee-container">
+    <div class="marquee-text">שומר · FOENICULUM VULGARE · ANETHOLE · FENNEL · TRANS-ANETHOLE · MEDITERRANEAN · שומר · FOENICULUM VULGARE · ANETHOLE · FENNEL · TRANS-ANETHOLE · MEDITERRANEAN · </div>
+</div>
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7AAA5A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch');
+    const dots = document.querySelectorAll('.nav-dot');
+    let current = "";
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => { btt.classList.toggle('visible', window.scrollY > 300); });
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => {
+    dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'});
+});
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+            obs.unobserve(e.target);
+        });
+    }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.ch').forEach(card => { card.classList.add('reveal'); observer.observe(card); });
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src; el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #0B0808; --text: #FAF0F0; --body: #D0BCBC;
+    --accent: #7A2A2A; --warm: #C04040;
+    --card: rgba(22,14,14,0.4); --radius: 20px;
+    --shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background-color: var(--bg); color: var(--body); font-family: 'Noto Sans Hebrew', sans-serif; font-size: 18px; line-height: 1.9; overflow-x: hidden; background-image: linear-gradient(rgba(192,64,64,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(192,64,64,0.03) 1px, transparent 1px); background-size: 30px 30px; }
+body::before, body::after { content:''; position:fixed; width:600px; height:600px; border-radius:50%; filter:blur(120px); z-index:-2; opacity:0.15; pointer-events:none; }
+body::before { background:var(--warm); top:-100px; left:-100px; }
+body::after { background:#4A1010; bottom:20%; right:-150px; }
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--warm); width:0; z-index:1000; }
+.side-nav { position:fixed; top:50%; right:30px; transform:translateY(-50%); z-index:100; display:flex; flex-direction:column; gap:12px; }
+.nav-dot { width:10px; height:10px; border:1px solid var(--warm); border-radius:50%; opacity:0.3; cursor:pointer; transition:0.3s; }
+.nav-dot.active { opacity:1; transform:scale(1.4); background:var(--warm); }
+.hero { padding:100px 40px 160px; text-align:center; color:var(--text); position:relative; }
+.hero-k { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--warm); margin-bottom:20px; text-transform:uppercase; font-family:'Space Mono',monospace; }
+.hero h1 { font-family:'Frank Ruhl Libre',serif; font-size:90px; font-weight:900; line-height:0.8; margin-bottom:25px; letter-spacing:-2px; }
+.hero .deck { font-size:20px; opacity:0.8; max-width:650px; margin:0 auto 40px; font-weight:300; }
+.hero-img-wrap { max-width:900px; margin:0 auto -220px; height:500px; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.05); background:#0B0808; display:flex; align-items:center; justify-content:center; }
+.hero-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.con { max-width:800px; margin:280px auto 100px; padding:0 24px; position:relative; z-index:5; }
+.ch { background:var(--card); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px); padding:50px; border-radius:var(--radius); margin-bottom:40px; border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden; }
+.ch::before, .ch::after { content:'+'; position:absolute; font-family:'Space Mono',monospace; color:var(--warm); font-size:14px; opacity:0.4; }
+.ch::before { top:15px; left:15px; } .ch::after { bottom:15px; right:15px; }
+.ch h2 { font-family:'Frank Ruhl Libre',serif; font-size:38px; margin-bottom:25px; color:var(--text); border-right:5px solid var(--warm); padding-right:20px; line-height:1.1; }
+.ch h3 { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:700; color:var(--text); margin:36px 0 14px; padding-right:14px; border-right:3px solid var(--warm); }
+.ch p { margin-bottom:18px; color:var(--body); }
+.cl { font-size:10px; font-weight:700; color:var(--warm); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:block; font-family:'Space Mono',monospace; }
+.dc::first-letter { font-family:'Frank Ruhl Libre',serif; font-size:2.8em; font-weight:900; color:var(--warm); line-height:1; float:right; margin-left:8px; }
+em { color:#D88080; font-style:italic; } strong { color:var(--text); }
+.ab { padding:20px 24px; margin:28px 0; border-radius:0 8px 8px 0; }
+.ab .tg { font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px; }
+.ab p { margin:0; font-size:16px; line-height:1.75; }
+.ab-w { background:rgba(192,64,64,0.08); border-right:4px solid var(--warm); } .ab-w .tg { color:var(--warm); }
+.ab-g { background:rgba(80,20,20,0.2); border-right:4px solid var(--accent); } .ab-g .tg { color:#D88080; }
+.ab-r { background:rgba(184,50,50,0.1); border-right:4px solid #B83030; } .ab-r .tg { color:#E06060; } .ab-r p { color:#DDB0B0; }
+.ng { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:24px 0; }
+.ni { background:rgba(22,14,14,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px; text-align:center; }
+.ni .nv { font-family:'Frank Ruhl Libre',serif; font-size:26px; font-weight:700; color:var(--text); }
+.ni .nu { font-size:13px; color:#A08080; margin-top:2px; } .ni .nl { font-size:11px; color:var(--warm); margin-top:3px; font-weight:600; }
+.gt { width:100%; border-collapse:collapse; margin:25px 0; font-size:15px; }
+.gt th { background:rgba(0,0,0,0.5); color:var(--text); padding:14px; text-align:right; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.gt td { padding:14px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--body); }
+.gt tr:nth-child(even) { background:rgba(255,255,255,0.02); }
+.pull { margin:40px 0; padding:45px; background:rgba(0,0,0,0.4); border-radius:var(--radius); text-align:center; border:1px solid rgba(192,64,64,0.2); }
+.pull p { font-family:'Frank Ruhl Libre',serif; font-size:22px; font-weight:500; color:var(--body); line-height:1.55; margin:0; font-style:italic; }
+.cb { background:rgba(22,14,14,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px; margin:28px 0; }
+.cb .ct { font-family:'Frank Ruhl Libre',serif; font-size:17px; font-weight:700; margin-bottom:14px; text-align:center; color:var(--text); }
+.pb-chart { margin:16px 0 8px; display:flex; flex-direction:column; gap:10px; }
+.pb-row { display:flex; align-items:center; gap:10px; }
+.pb-meta { display:flex; align-items:center; gap:6px; min-width:140px; justify-content:flex-end; }
+.pb-flag { font-size:18px; } .pb-name { font-size:13px; color:#A08080; }
+.pb-track { flex:1; background:rgba(255,255,255,0.08); height:18px; border-radius:9px; overflow:hidden; }
+.pb-fill { height:100%; width:0; border-radius:9px; transition:width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.pb-pct { font-family:'Frank Ruhl Libre',serif; font-size:14px; font-weight:700; color:var(--text); width:36px; text-align:left; }
+.reveal { opacity:0; transform:translateY(50px); transition:all 0.8s cubic-bezier(0.2,1,0.2,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.marquee-container { position:fixed; bottom:-3vh; left:0; width:100vw; overflow:hidden; z-index:-1; pointer-events:none; }
+.marquee-text { font-family:'Playfair Display',serif; font-size:15vw; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.03); animation:scrollText 40s linear infinite; }
+@keyframes scrollText { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.ft { text-align:center; padding:44px 24px; font-size:13px; color:#705050; border-top:1px solid rgba(255,255,255,0.06); margin-top:36px; }
+.inner-ft { background:rgba(0,0,0,0.8); color:var(--text); padding:60px 20px; text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; opacity:0.6; border-top:1px solid rgba(255,255,255,0.05); }
+.ch ol, .ch ul { padding-right:24px; margin:16px 0 18px; }
+.ch li { margin-bottom:10px; color:var(--body); line-height:1.8; }
+.ch ol li::marker { color:var(--warm); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; }
+.ch ul li::marker { color:var(--warm); }
+.back-to-top { position:fixed; bottom:30px; left:30px; width:40px; height:40px; background:var(--warm); color:#000; border:none; border-radius:50%; cursor:pointer; font-size:18px; z-index:1000; transition:0.3s; opacity:0; pointer-events:none; }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.home-btn { position:fixed; bottom:30px; right:30px; display:flex; align-items:center; gap:8px; background:rgba(22,14,14,0.85); border:1px solid rgba(192,64,64,0.3); border-radius:24px; padding:8px 16px; text-decoration:none; color:var(--warm); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; z-index:1000; transition:0.3s; }
+@media (max-width:900px) { .side-nav { display:none; } .hero h1 { font-size:55px; } .hero-img-wrap { height:300px; margin-bottom:-100px; } .con { margin-top:150px; } .ng { grid-template-columns:repeat(2,1fr); } }
+</style>
+<title>סומק · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="בריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="עתיד"></div>
+</nav>
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SPICE ARCHIVE</div>
+    <h1 id="sync-title">סוּמַק</h1>
+    <p class="deck" id="sync-desc">התבלין האדום-חמוץ שהיה לימון לפני שלימון הגיע לאירופה. אלפי שנות שימוש רפואי וקולינרי, ביוכימיה של חומצות פוליפנוליות, ומרכיב עיקרי בתבלין Za'atar שמשנה את שוקי הגורמה העולמיים.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+        <img src="../images/Ceramic_bowl_filled_with_sumac_cfd3cce68c.jpeg" alt="sumac" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    </div>
+</section>
+<div class="marquee-container">
+    <div class="marquee-text">סומק · RHUS CORIARIA · GALLIC ACID · SUMAC · ZA'ATAR · MALIC ACID · LEVANT · סומק · RHUS CORIARIA · GALLIC ACID · SUMAC · ZA'ATAR · MALIC ACID · LEVANT · </div>
+</div>
+<main class="con">
+
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: הלימון של העולם העתיק</h2>
+    <p class="dc">לפני שהלימון הגיע לאירופה, לפני שהחומץ הפך מסחרי, לפני שהטארטר נמכר בשקיות, היה הסומק. שיח שגדל על מדרונות סלעיים בכל רחבי אגן הים התיכון ומרחבי המזרח התיכון, שפריו היבש הקנה חמיצות יבשה ומורכבת לכל מטבח שהכיר אותו. לא בגלל שגידלו אותו. בגלל שהוא שם, ותמיד היה.</p>
+    <p>השם הבוטני <em>Rhus coriaria</em> נגזר מהלטינית: <em>Rhus</em> מהיוונית <em>rhous</em>, שם הצמח בעת העתיקה, ו-<em>coriaria</em> מ-<em>corium</em> (עור), כיוון שהעצה והקליפה שימשו לעיבוד עורות (tanning) לאורך אלפי שנים. אך בישול הסומק מקדים את תעשיית הטאנין: ממצאים ארכיאולוגיים ממזרח הים התיכון מתארכים שימוש קולינרי לכ-<strong>3,000 שנה לפנה"ס</strong>.</p>
+    <p>השם הערבי <strong>سماق</strong> (sumaq) הוא שורש השם בכל שפות האזור: בעברית "סומק", בפרסית "سماق", בטורקית "sumak". הצמח מוזכר בכתבים רפואיים של Dioscorides (המאה הראשונה לספירה) כחומר קירור ולטיפול בשלשול. מה שמעניין: אי אפשר לדעת אם Dioscorides קדם לשימוש הקולינרי, או אם הרפואה פשוט תיעדה מה שהמטבח כבר ידע.</p>
+    <div class="ab ab-w">
+        <div class="tg">לפני הלימון</div>
+        <p>הלימון הגיע לאגן הים התיכון בעקבות המסחר הערבי בסביבות המאה ה-10-11 לספירה. עד אז, החמיצות ביוונית, הרומאית, ובמטבח הביזנטי הגיעה מ: ורד בר, חומץ, ולרוב, סומק. הביטוי היווני "שתי אצבעות סומק" מופיע ב-40+ מתכונים מהמאות 5-10 לספירה. זה לא תחנה בדרך לחמיצות מודרנית, זה היה החמיצות.</p>
+    </div>
+    <p>הצמח עצמו: שיח נשיר הגדל ל-3-5 מטר, בעל ניגודיות עונות בולטת: בסתיו העלים מאדימים לצבעי אש, ואשכולות הפרי הבורדו-כהה מתבלטים על הסלע הסביב. הוא גדל ב-Turkey, Israel, Lebanon, Syria, Iran, Greece, Italy ועוד. <em>Rhus coriaria</em> הוא צמח שכל ים תיכוני הכיר, גם מי שלא ידע את שמו. הוא חלק מהנוף.</p>
+</section>
+
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: שיח שגדל לבד, ונקטף בידיים</h2>
+    <p class="dc">הסומק המסחרי הוא בין הגידולים עם שיעור הגידול הבר הגבוה ביותר בשוק התבלינים. מרבית הסומק שנסחר עולמית נאסף מאוכלוסיות בר-חצי בר, לא מפרדסים מסחריים מסודרים. הצמח גדל ללא השקיה, ללא דשן, ועם מינימום טיפול על מדרונות אבן גיר ושיש שאינם מתאימים לגידול אחר. זה לא גידול קולני, זה גידול בר שנאסף בעונה.</p>
+    <h3>הצמח ומחזור חייו</h3>
+    <p><em>Rhus coriaria</em> הוא שיח דו-ביתי (dioecious): צמחים זכריים ונקביים נפרדים. רק הנקביים מניבים אשכולות פרי. צמח בר מניב פרי לראשונה בגיל <strong>3-5 שנים</strong>. האשכולות גדלים בקיץ ומבשילים בסוף קיץ-סתיו: תחילה ירוקים, ואז בורדו כהה. עלי הצמח מכילים טאנינים גם הם, ומשמשים לתעשיית העור גם כיום בטורקיה ובאיראן.</p>
+    <p>עונת האסיף: <strong>ספטמבר-אוקטובר</strong> בטורקיה ובלבנון. איסוף ידני של האשכולות, עם גבעולים. תנובה ממוצעת לשיח בר: <strong>3-7 ק"ג אשכולות</strong> לעונה. יחס המרה לאבקה יבשה: <strong>4:1</strong> (4 ק"ג טרי = 1 ק"ג יבש). תנובה מסחרית לדונם: <strong>80-150 ק"ג אבקה</strong> בשנה טובה. נמוך בהשוואה לתבלינים מגודלים, אבל עלות הגידול כמעט אפסית.</p>
+    <div class="ab ab-g">
+        <div class="tg">גידול מסחרי מבוקר: ניסיון טורקי</div>
+        <p>מאז 2010, מחקרי Atatürk Research Institute מנסים לפתח גידול מסחרי מבוקר של <em>Rhus coriaria</em> בדרום-מזרח טורקיה (Gaziantep, Şanlıurfa). האתגר: הדו-ביתיות מחייבת 30-40% צמחים זכריים לצרכי האבקה. פרויקט הגנטיקה לפיתוח זנים הרמפרודיטים נמצא ב-Phase II. אם יצליח, פוטנציאל הגדלת תפוקה ב-60% לדונם.</p>
+    </div>
+    <p>מינים קרובים שאינם מאכילים: משפחת Anacardiaceae כוללת מינים כ-<em>Rhus vernix</em> (Poison Sumac, צפון אמריקה) המכיל Urushiol ומסוכן למגע. הם אינם דומים ויזואלית ל-<em>Rhus coriaria</em>, אבל ה-FDA מדגיש שאיסוף בר בצפון אמריקה ללא הכשרה מסוכן. הסומק המסחרי שנמכר בסופרמרקטים ובחנויות הוא <em>Rhus coriaria</em> בלבד.</p>
+</section>
+
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: חומצה גלית, טאנינים, ו-ORAC 312,400</h2>
+    <p class="dc">הסומק הוא אחד הצמחים עם ערך ORAC גבוה ביותר שנמדד: <strong>312,400 μmol TE ל-100 גרם</strong>, גבוה פי 300 מאוכמניות. אבל ה-ORAC הוא נתון שיווקי לרוב, מה שחשוב יותר הוא הרכב הפוליפנולים הספציפי ומנגנון הפעולה שלו. בסומק, הרכיב הפעיל העיקרי הוא חומצה גלית (Gallic acid) ונגזרות שלה, קבוצה שנחקרת אינטנסיבית ב-15 שנים האחרונות.</p>
+    <h3>חומצה גלית: המולקולה הראשית</h3>
+    <p><strong>Gallic acid</strong> (C7H6O5, 3,4,5-trihydroxybenzoic acid) היא חומצה פנולית נוגדת חמצון חזקה. בסומק: <strong>1-5%</strong> ממשקל יבש, תלוי במקור ועונת האסיף. היא פועלת כנוגד חמצון ישיר (radical scavenging), מעכבת אנזימים שמפרקים פחמימות, ומראה פעילות אנטי-בקטריאלית בבדיקות in vitro. הנגזרות העיקריות בסומק: <em>methyl gallate</em>, <em>gallotannins</em> (תנינים פוליגאלויים), ו-<em>ellagic acid</em>.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">312,400</div><div class="nu">ORAC μmol TE/100g</div><div class="nl">מהגבוהים בטבע</div></div>
+        <div class="ni"><div class="nv">1-5%</div><div class="nu">חומצה גלית</div><div class="nl">ממשקל יבש</div></div>
+        <div class="ni"><div class="nv">38 mg</div><div class="nu">ברזל / 100g</div><div class="nl">211% DV</div></div>
+        <div class="ni"><div class="nv">1,083 mg</div><div class="nu">סידן / 100g</div><div class="nl">גבוה מאוד</div></div>
+        <div class="ni"><div class="nv">104 mg</div><div class="nu">ויטמין C / 100g</div><div class="nl">116% DV</div></div>
+        <div class="ni"><div class="nv">279</div><div class="nu">קלוריות / 100g</div><div class="nl">תבלין מרוכז</div></div>
+    </div>
+    <h3>תרכובות נוספות</h3>
+    <p><strong>Anthocyanins:</strong> אחראים לצבע הבורדו-אדום, בריכוז של <strong>0.5-1.2%</strong>. הצבע הוא אינדיקטור ישיר לתכולת אנתוציאנין: סומק שחום-כהה איבד ריכוז גבוה. <strong>Quercetin ו-Kaempferol:</strong> פלבנואידים בריכוז נמוך אך פעיל. <strong>Malic acid:</strong> חומצת התפוח שאחראית לחלק מהחמיצות, ביחד עם חומצה טרטרית ולימונית. טעם הסומק הוא <em>symphony</em> של חומצות, לא חמיצות חד-ממדית.</p>
+    <div class="ab ab-w">
+        <div class="tg">יציבות תרמית</div>
+        <p>חומצה גלית יציבה יחסית לחום: מחקר של Ghasemzadeh et al. (2015) מצא שחימום ל-100°C ל-30 דקות מוריד תכולת חומצה גלית ב-<strong>22% בלבד</strong>, בעוד שאנתוציאנינים מאבדים 60-70% בתנאים דומים. בפועל: סומק שמוסיפים בסוף הבישול שומר יותר ביוכימיה. בסומק שמוסיפים בתחילת הבישול, הצבע נדהה אך חלק מהפוליפנולים שורד. שתי הגישות תקינות, מטרות שונות.</p>
+    </div>
+</section>
+
+    <p>הרכב תזונתי של 100 גרם סומק טחון: <strong>279 קלוריות, 36g פחמימות, 15g שומן, 14g חלבון</strong>. עשיר בסידן (<strong>1,083 מ"ג</strong>), ברזל (<strong>38 מ"ג</strong>, 211% מהצריכה היומית), ויטמין C (<strong>104 מ"ג</strong>). הברזל הגבוה מציין שסומק הוא לא רק תבלין אלא מקור מינרלים בצריכה מסורתית גבוהה.</p>
+</section>
+
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: פרמטרים ושפת הסוחרים</h2>
+    <p class="dc">שוק הסומק המסחרי פשוט יחסית בפרמטריו. אין תקן ISO ייחודי לסומק, אבל שוק הייצוא הטורקי פועל לפי תקן <strong>TS 2263</strong> שמגדיר דרישות לחות, צבע, וזיהומים. הפרמטר הראשון: <strong>צבע</strong>. סומק איכותי הוא אדום-בורדו עמוק, אחיד. סומק שהתיישן או נחשף לאור הופך לחום-כהה ומאבד פעילות ביולוגית. העין המקצועית מזהה את ההבדל תוך שניות.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Grade A</th><th>Grade B</th><th>Grade C</th></tr></thead>
+        <tbody>
+            <tr><td><strong>לחות מקס'</strong></td><td>10%</td><td>12%</td><td>14%</td></tr>
+            <tr><td><strong>חומצה גלית מינ'</strong></td><td>1.5%</td><td>1.0%</td><td>0.5%</td></tr>
+            <tr><td><strong>צבע</strong></td><td>אדום-בורדו עמוק</td><td>אדום-חום</td><td>חום</td></tr>
+            <tr><td><strong>חומר זר מקס'</strong></td><td>0.5%</td><td>1.0%</td><td>2.0%</td></tr>
+            <tr><td><strong>גרינולציה</strong></td><td>80-120 mesh</td><td>60-80 mesh</td><td>גסה</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <h3>מוצאים גיאוגרפיים</h3>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מוצא</th><th>מאפיין</th><th>חומצה גלית</th><th>שימוש עיקרי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>טורקיה (Gaziantep)</strong></td><td>אדום עמוק, חמוץ-עז</td><td>1.5-2.5%</td><td>Za'atar, קמעונאות פרמיום</td></tr>
+            <tr><td><strong>איראן</strong></td><td>כהה יותר, טאנין גבוה</td><td>1.2-2.0%</td><td>תעשייה, יצוא</td></tr>
+            <tr><td><strong>סוריה/לבנון</strong></td><td>פרחוני, עדין</td><td>1.0-1.8%</td><td>מסורת מקומית, נישה</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">שיקול מקצועי</div>
+        <p>סומק טורקי Grade A נמכר ב-<strong>2,500-4,000 דולר לטון</strong> FOB Mersin. סומק איראני: <strong>1,500-2,500 דולר לטון</strong>, אבל ייצוא מאיראן מוגבל בשל סנקציות. בפועל, רוב הסומק שמגיע לשוק האמריקאי והאירופי הוא טורקי. "סומק ממוצא לא ידוע" בשוק הוא לרוב טורקי בתצורה נחותה.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהאשכול לאבקה</h2>
+    <p class="dc">עיבוד סומק הוא מסלול קצר יחסית, אבל כל שלב בו משפיע על הצבע, החומציות, ותכולת הטאנינים הסופית. המעבר מפרי טרי לאבקה מסחרית כולל הורדת לחות מ-<strong>60-70%</strong> ל-<strong>8-12%</strong>, תוך שמירה מרבית על הצבע האדום ועל חומצת הגלי.</p>
+    <div class="proc-steps">
+        <div class="proc-step">
+            <div class="proc-step-num">01</div>
+            <div>
+                <div class="proc-step-title">איסוף וקלינג ראשוני</div>
+                <div class="proc-step-body">אשכולות הפרי נאספים ידנית, עם גבעולים. שלב ראשון: הסרת גבעולים ועלים. עבודה ידנית בטורקיה: 30-50 ק"ג ליום לעובד. בסוף יום: הפרי נרחץ במים קרים להסרת אבק ושאריות שדה.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">02</div>
+            <div>
+                <div class="proc-step-title">ייבוש</div>
+                <div class="proc-step-body">ייבוש שמש מסורתי: 3-7 ימים על משטחים, הפיכה יומית. מעל 40°C ישיר: הצבע נהפך לחום. ייבוש מכני ב-<strong>35-40°C</strong> ל-8-12 שעות: אחיד, מהיר, שומר צבע טוב יותר. Grade A מיובש בתנאים מבוקרים. Grade B ומטה: שמש בלבד.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">03</div>
+            <div>
+                <div class="proc-step-title">טחינה ומיון גרנולציה</div>
+                <div class="proc-step-body">טחינה ב-Hammer mills לאבקה של 80-100 mesh (קמעונאות) או 40-60 mesh (תעשייה גסה). הגרעינים (זרעים) מופרדים מהבשר החיצוני לפי דרישת הלקוח: "Sumac Powder" כולל הכל, "Sumac Bran" הוא הבשר בלבד עם פחות גרעינים ויותר צבע.</div>
+            </div>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">04</div>
+            <div>
+                <div class="proc-step-title">אריזה ואחסון</div>
+                <div class="proc-step-body">שקי PE מוגנים מאור, 25 ק"ג. Big Bags 500 ק"ג לתעשייה. <strong>קריטי: הגנה מאור</strong>. סומק שנחשף לאור UV מאבד צבע תוך שבועות. מחסן מוסמך: טמפרטורת חדר, חשיכה מלאה, RH מתחת ל-60%. חיי מדף: <strong>18-24 חודש</strong> בתנאים אידיאליים.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות</h2>
+    <p class="dc">סומק הוא תבלין עם פרופיל בטיחות יחסית טוב: גדל ברובו בר ובחצי-בר, עם מגע נמוך בחומרי הדברה. אבל הסיכונים שכן קיימים הם ייחודיים: <strong>זיהומים בצמחים קרובים</strong> ממשפחת Anacardiaceae הרעילים, ו<strong>מיקוטוקסינים</strong> ממחסנים לחים.</p>
+    <div class="ab ab-r">
+        <div class="tg">אזהרה: Poison Sumac</div>
+        <p><em>Rhus vernix</em> (Poison Sumac), מין אמריקאי קרוב, מכיל <strong>Urushiol</strong>, אותו חומר שבקיסוס הרעיל. מגע גורם לפריחה חמורה. הצמח אינו נסחר תעשייתית, אבל איסוף בר לא מקצועי בצפון אמריקה עלול להוביל לבלבול. <em>Rhus coriaria</em> האכיל, שנמכר כתבלין, אינו רעיל. אבל יש לוודא מוצא.</p>
+    </div>
+    <p>MRL ובטיחות: <strong>Chlorpyrifos ≤ 0.01 mg/kg</strong> (EU), <strong>Dithiocarbamates ≤ 0.1 mg/kg</strong>. בפועל, גידול הסומק הטורקי משתמש מעט מאוד בחומרי הדברה בשל עמידות הצמח הטבעית. מיקרוביולוגיה: <strong>TPC ≤ 10⁵ CFU/g</strong>, <strong>Salmonella: Absent/25g</strong>, <strong>Aflatoxin B1 ≤ 5 μg/kg</strong>. Heavy metals: <strong>Pb ≤ 0.3, Cd ≤ 0.2 mg/kg</strong>.</p>
+    <div class="ab ab-w">
+        <div class="tg">זיהוי מינים ב-DNA</div>
+        <p>בדיקת DNA barcoding לזיהוי <em>Rhus coriaria</em> לעומת מינים קרובים הופכת סטנדרט בשוקי הפרמיום. עלות: 80-150 דולר לדגימה. מבטיחה שהסומק שמגיע מוצא נכון ואינו מדולל בחומרים אחרים. ספק שמסרב לבדיקה זו לשוק EU מוכר ביטחון חלקי.</p>
+    </div>
+</section>
+
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה וניהול שרשרת האספקה</h2>
+    <p class="dc">סומק טורקי הוא מוצר לוגיסטי פשוט: יבש, עמיד, לא דורש קירור. המרחק מ-Mersin (נמל הייצוא הטורקי) לרוטרדם הוא כ-4,500 ק"מ בדרך הים, עם זמן שינוע של <strong>12-16 יום</strong>. הבעיה הלוגיסטית העיקרית: <strong>הגנה מאור</strong> בשרשרת האספקה.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מוצא</th><th>נמל</th><th>זמן לאירופה</th><th>הערות</th></tr></thead>
+        <tbody>
+            <tr><td><strong>טורקיה</strong></td><td>Mersin / İskenderun</td><td>12-16 ימים</td><td>Dry container, אריזה אטומה לאור</td></tr>
+            <tr><td><strong>איראן</strong></td><td>Bandar Abbas</td><td>18-25 ימים</td><td>מוגבל בשל סנקציות, דרך UAE לרוב</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>אחסון: טמפרטורת חדר, <strong>RH מתחת ל-60%</strong>, חשיכה מלאה. חיי מדף: <strong>18-24 חודש</strong> לאבקה. Incoterms: FOB Mersin, CIF Rotterdam. מחיר: <strong>2,500-4,000 דולר לטון</strong> FOB Grade A. <em>תבלין שגדל על מדרונות סלע ועמד בפני מאות שנות מסחר ים-תיכוני יכול לעמוד בפני 14 ימי שינוע ים.</em></p>
+</section>
+
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות</h2>
+    <p class="dc">הסומק הוא אחד התבלינים עם הפוטנציאל הטיפולי המחקרי הגבוה ביותר שעדיין לא הוכח בניסויים קליניים גדולים. חומצה גלית, הרכיב הפעיל העיקרי, מראה in vitro פעילות מרשימה נגד סוכרת, דלקת וסרטן. הפער בין המעבדה לקליניקה גדול, אבל הבסיס מנגנוני ברור.</p>
+    <h3>סוכרת ועמידות לאינסולין</h3>
+    <p>חומצה גלית מעכבת <strong>alpha-glucosidase</strong> ו-<strong>alpha-amylase</strong>, שני אנזימים שמפרקים פחמימות לגלוקוז. עיכובם מאט ספיגת גלוקוז ממעיים. מחקר RCT (Moosavian et al., 2018) על 40 חולי סוכרת סוג 2 מצא שתוסף סומק (3 גרם ליום) הוריד המוגלובין מסוכרר (HbA1c) ב-<strong>0.3%</strong> ב-3 חודשים, לעומת עלייה בפלסבו. קטן אבל משמעותי.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">312,400</div><div class="nu">ORAC μmol TE/100g</div><div class="nl">בין הגבוהים ביותר</div></div>
+        <div class="ni"><div class="nv">38 mg</div><div class="nu">ברזל ל-100g</div><div class="nl">211% צריכה יומית</div></div>
+        <div class="ni"><div class="nv">1-5%</div><div class="nu">חומצה גלית</div><div class="nl">ממשקל יבש</div></div>
+        <div class="ni"><div class="nv">0.3%</div><div class="nu">ירידה HbA1c</div><div class="nl">מחקר RCT 2018</div></div>
+        <div class="ni"><div class="nv">1,083 mg</div><div class="nu">סידן ל-100g</div><div class="nl">גבוה מאוד</div></div>
+        <div class="ni"><div class="nv">11%</div><div class="nu">CAGR זעתר</div><div class="nl">ביקוש 2019-2024</div></div>
+    </div>
+    <p>אנטי-דלקתי: חומצה גלית מעכבת NF-κB, גורם שעתוק מרכזי בתהליכים דלקתיים. מחקר in vitro מראה עיכוב של ציטוקינים פרו-דלקתיים (IL-6, TNF-α). בבעלי חיים: מחקר עכברים 2021 מצא הפחתת דלקת כרונית ב-45% בקבוצה שקיבלה תמצית סומק. ניסוי קליני גדול אינו קיים עדיין.</p>
+</section>
+
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק עולמי ומחירים</h2>
+    <p class="dc">שוק הסומק העולמי קטן אבל גדל מהר: <strong>15,000-20,000 טון לשנה</strong>, שווי של כ-<strong>50-80 מיליון דולר</strong>. הנהג הגדול ביותר של הצמיחה האחרונה: מגמת המטבח המזרח-תיכוני בשוקי המערב, ובפרט פופולריות הזעתר. מאפיות ומסעדות שאימצו זעתר בעשור האחרון הגדילו ביקוש לסומק ב-<strong>40-60%</strong> בשוקי ארה"ב ואירופה המערבית.</p>
+    <div class="cb">
+        <div class="ct">חלוקת ייצור סומק עולמי 2024</div>
+        <div class="pb-chart">
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇹🇷</span><span class="pb-name">טורקיה</span></div><div class="pb-track"><div class="pb-fill" data-w="65" style="background:#7A2A2A"></div></div><span class="pb-pct">65%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇷</span><span class="pb-name">איראן</span></div><div class="pb-track"><div class="pb-fill" data-w="20" style="background:#C04040"></div></div><span class="pb-pct">20%</span></div>
+            <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="15" style="background:#8A4040"></div></div><span class="pb-pct">15%</span></div>
+        </div>
+        <div class="pb-note">מקור: ITC Trade Map, Turkish Exporters Assembly 2024</div>
+    </div>
+    <p>שחקנים מובילים: בטורקיה, חברות כ-<strong>Arifoğlu</strong> ו-<strong>Bağdat Baharat</strong> שולטות בייצוא. ייבואנים אירופאיים: <strong>Euroma</strong> (הולנד), <strong>Fuchs</strong> (גרמניה). שוק הזעתר: חברות כ-<strong>Ziyad Brothers</strong> (ארה"ב) ו-<strong>Al Wadi</strong> (לבנון) קונות סומק בנפחים גדולים לתערובות. <em>הסומק רכב על גב הזעתר לשוקי גורמה ניו-יורקיים, ולא ירד ממנו.</em></p>
+</section>
+
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית ומגמות 2030</h2>
+    <p class="dc">שוק הסומק ניצב בצומת מעניינת: <strong>ביקוש גדל</strong> מהמטבח הגלובלי, <strong>מחקר רפואי פעיל</strong> שעשוי להפוך אותו למרכיב פונקציונלי מוכר, ו<strong>אתגרי ייצור</strong> מגידול בר שאינו מתרחב בקלות.</p>
+    <h3>מחקר פרמצבטי</h3>
+    <p>חומצה גלית נחקרת בשני מסלולים קליניים עיקריים: תוסף לניהול סוכרת סוג 2 (Moosavian group, Iran, phase II), ומעכב גדילת תאים סרטניים במעי הגס (University of Ankara, 2023). שתי הקבוצות פרסמו תוצאות מבטיחות ב-2024. אם ניסויי phase III יצליחו, סומק עשוי לעבור מתבלין לתוסף מוסמך, מה שיגדיל ביקוש ב-200-400%.</p>
+    <h3>גידול מסחרי מבוקר</h3>
+    <p>הניסיון הטורקי לעבור מאיסוף בר לגידול מסחרי מבוקר מתקדם לאט. המגבלה: הדו-ביתיות מחייבת שמירה על 30-40% צמחים זכריים בשטח שלא מניב פרי, מה שמוריד רווחיות. פרויקט גנטי של Atatürk Research Institute מנסה לפתח שתי בעל נטייה להרמפרודיטיות. אם יצליח, תפוקה לדונם עשויה לגדול ב-60-80%.</p>
+    <div class="ab ab-g">
+        <div class="tg">מגמה: צביעה טבעית</div>
+        <p>תעשיית הצביעה הטבעית לטקסטיל, שגדלה ב-<strong>18% לשנה</strong> (2020-2024) בשל מגמת קיימות, מזהה סומק כמקור טאנין צביעה אדום-חום. חברות אופנה סקנדינביות כ-<strong>Filippa K</strong> ו-<strong>Acne Studios</strong> ניסו סומק כגורם mordant טבעי לצביעת בד. שוק נישה, אבל פרמיום גבוה.</p>
+    </div>
+    <p>שינויי אקלים: הסומק עמיד לבצורת, אבל עלייה בטמפרטורות הקיץ בטורקיה (2-3°C עד 2050 לפי IPCC) עשויה לפגוע בהבשלה אחידה של אשכולות. מחקר אנקרה 2022 מראה שחום קיצי מעל 38°C במשך 10+ ימים גורם לירידה של 20-30% בתכולת חומצה גלית. מדינות כ-<strong>אתיופיה ומרוקו</strong> מתחילות לבדוק גידול סומק בגבהים מתאימים. <em>תבלין שגדל על מדרונות סלע אלפי שנים לא ייעלם בקלות, אבל יצטרך להתאמץ יותר.</em></p>
+    <div class="ft">
+        <span style="font-size:11px;color:#807060;">אגרונומיה: Atatürk Bahçe Kültürleri Araştırma Enstitüsü 2019 · ביוכימיה: Phytochemistry 2022, Rhuscoriarin · בריאות: Moosavian et al., Phytomedicine 2018 · כלכלה: ITC Trade Map 2024, Turkish Exporters Assembly · RASFF EU 2020-2024 · FAO FAOSTAT</span>
+    </div>
+</section>
+
+</main>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · SUMAC · סומק</footer>
+<div class="marquee-container">
+    <div class="marquee-text">סומק · RHUS CORIARIA · GALLIC ACID · SUMAC · ZA'ATAR · MALIC ACID · LEVANT · סומק · RHUS CORIARIA · GALLIC ACID · SUMAC · ZA'ATAR · MALIC ACID · LEVANT · </div>
+</div>
+<button class="back-to-top" id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C04040" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+<script>
+window.onscroll = () => {
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+    const sections = document.querySelectorAll('.ch'); const dots = document.querySelectorAll('.nav-dot');
+    let current = ""; sections.forEach(s => { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+    dots.forEach(d => { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => { btt.classList.toggle('visible', window.scrollY > 300); });
+btt.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot => { dot.onclick = () => document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'}); });
+if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (!e.isIntersecting) return; e.target.querySelectorAll('.pb-fill').forEach(b => { b.style.width = b.dataset.w + '%'; }); obs.unobserve(e.target); }); }, {threshold: 0.3});
+    document.querySelectorAll('.pb-chart').forEach(el => obs.observe(el));
+}
+(function() {
+    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.ch').forEach(card => { card.classList.add('reveal'); observer.observe(card); });
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB'; const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => { const db = e.target.result; try { const store = db.transaction('archive', 'readonly').objectStore('archive'); const getRequest = store.get(productId); getRequest.onsuccess = () => { const data = getRequest.result; if (!data) return; function makeMedia(src) { const isVid = src.startsWith('data:video'); const el = document.createElement(isVid ? 'video' : 'img'); el.src = src; el.style.cssText = 'width:100%;height:100%;object-fit:cover;'; if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); } return el; } const heroH1 = document.getElementById('sync-title'); if (heroH1 && data.name) heroH1.innerText = data.name; const heroDeck = document.getElementById('sync-desc'); if (heroDeck && data.desc) heroDeck.innerText = data.desc; const heroSrc = data.media1 || data.media; const heroSlot = document.getElementById('slot-product-hero'); if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); } }; } catch(err) {} }; }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>
