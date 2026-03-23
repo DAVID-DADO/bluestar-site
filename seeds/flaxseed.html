@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090B;--text:#F8F6FF;--body:#C0BCD0;--accent:#4A3A7A;--warm:#7A60B0;--card:rgba(14,12,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;background-image:linear-gradient(rgba(122,96,176,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(122,96,176,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}
+body::after{background:#1A0A3A;bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);position:relative;}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.05);background:#09090B;display:flex;align-items:center;justify-content:center;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px;}
+em{color:#A090D0;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(122,96,176,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(40,30,80,0.2);border-right:4px solid var(--accent);}.ab-g .tg{color:#A090D0;}
+.ab-r{background:rgba(184,50,50,0.1);border-right:4px solid #B83030;}.ab-r .tg{color:#E06060;}.ab-r p{color:#DDB0B0;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(14,12,22,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:13px;color:#8878A8;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}
+.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,0.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(122,96,176,0.2);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.proc-steps{display:flex;flex-direction:column;gap:20px;margin:24px 0;}
+.proc-step{display:flex;gap:20px;align-items:flex-start;}
+.proc-step-num{min-width:36px;height:36px;border-radius:50%;background:var(--warm);color:#000;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.proc-step-title{font-family:'Frank Ruhl Libre',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.proc-step-body{font-size:16px;color:var(--body);line-height:1.75;}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.ft{text-align:center;padding:44px 24px;font-size:13px;color:#605878;border-top:1px solid rgba(255,255,255,0.06);margin-top:36px;}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.ch ol li::marker{color:var(--warm);font-family:'Space Mono',monospace;font-size:12px;font-weight:700;}.ch ul li::marker{color:var(--warm);}
+.back-to-top{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;z-index:1000;transition:0.3s;opacity:0;pointer-events:none;}
+.back-to-top.visible{opacity:1;pointer-events:auto;}
+.home-btn{position:fixed;bottom:30px;right:30px;display:flex;align-items:center;gap:8px;background:rgba(14,12,22,0.85);border:1px solid rgba(122,96,176,0.3);border-radius:24px;padding:8px 16px;text-decoration:none;color:var(--warm);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;z-index:1000;transition:0.3s;}
+@media(max-width:900px){.side-nav{display:none;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+<title>פשתן · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1" title="אונטולוגיה"></div>
+    <div class="nav-dot" data-target="ch2" title="אגרונומיה"></div>
+    <div class="nav-dot" data-target="ch3" title="ביוכימיה"></div>
+    <div class="nav-dot" data-target="ch4" title="דירוג ואיכות"></div>
+    <div class="nav-dot" data-target="ch5" title="עיבוד"></div>
+    <div class="nav-dot" data-target="ch6" title="בטיחות"></div>
+    <div class="nav-dot" data-target="ch7" title="לוגיסטיקה"></div>
+    <div class="nav-dot" data-target="ch8" title="בריאות"></div>
+    <div class="nav-dot" data-target="ch9" title="כלכלה"></div>
+    <div class="nav-dot" data-target="ch10" title="עתיד"></div>
+</nav>
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SEEDS ARCHIVE</div>
+    <h1 id="sync-title">פִּשְׁתָּן</h1>
+    <p class="deck" id="sync-desc">הצמח שהלביש את מצרים ומזין את המאה ה-21. עשרת אלפי שנות גידול, ביוכימיה של ALA ולינאן, ואחד הזרעים הבודדים שהרפואה המודרנית מכירה בהם כ"superfood" עם ביסוס קליני.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+          <img src="../images/Bowl_overflowing_with_flaxseeds_f7358730c5.jpeg" alt="flaxseed" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+</section>
+<div class="marquee-container">
+    <div class="marquee-text">פשתן · LINUM USITATISSIMUM · ALA · FLAXSEED · LIGNAN · OMEGA-3 · פשתן · LINUM USITATISSIMUM · ALA · FLAXSEED · LIGNAN · OMEGA-3 · </div>
+</div>
+<main class="con">
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: זהות, שם, ועשרת אלפי שנות שימוש כפול</h2>
+    <p class="dc">לפני שהיה מזון, הפשתן היה בד. לפני שהיה בד, הוא היה חבל. ולפני שהיה חבל, גדל בר במישורי מזרח אפגניסטן ובבקעת ירדן, בלי שאדם הבין שהוא מחזיק בידיו את הצמח הרב-שימושי ביותר שיגדל בהיסטוריה. עשרת אלפי שנות שימוש כפול: הסיב לבד, הזרע למזון ולשמן. אין צמח אחר שסיפק לבד לכהנים מצרים, ארגה את הסדינים של פרעה, ובמאה ה-21 הוא מרכיב בשייק בוקר של ריצה.</p>
+    <p>השם העברי <strong>פִּשְׁתָּה</strong> (פשתן ביחיד) מופיע בתנ"ך עשרים פעם: ב"שמות" כאחד מעשר המכות (כפור שהשמיד את פשתת מצרים), ובמגילת רות כמקום שבו בועז מדיש. השם הלטיני <em>Linum usitatissimum</em> מדבר בעצמו: <em>usitatissimum</em> פירושו "הנפוץ ביותר". משפחה בוטנית: <strong>Linaceae</strong>. המוצא הגנטי: אזור "הסהר הפורה" שבין ירדן לסוריה ולעיראק. ממצאים ארכאולוגיים: זרעי פשתן טחונים מ-<strong>30,000 שנה לפנה"ס</strong> בדרום ג'ורג'יה הקווקזית.</p>
+    <p>ב-<strong>3000 לפנה"ס</strong>, פשתן הוא הסיב הטקסטילי הדומיננטי בעולם הידוע: מצרים, בבל, הודו. ב-<strong>500 לפנה"ס</strong>, קרל הגדול מחייב גידולו בכל פרובינציה. ב-<strong>1641</strong>, פשתן גרמי-אירי מגיע לניו אינגלנד עם המתיישבים הראשונים וממנו תיפתח תעשיית הטקסטיל האמריקאית. ב-<strong>1990</strong>, מחקר קנדי מגלה שגרעיני פשתן מכילים יותר Omega-3 מכל מקור צמחי אחר.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>ב-<strong>1747</strong>, כאשר ג'יימס לינד מנסה לרפא צפדינה בספינות הצי הבריטי, הוא משווה בין שישה טיפולים. הפשתן (Linseed oil + lime water) הוא אחד הששה. הוא לא עובד, אבל הניסוי הוא אחד הניסויים הקליניים הראשונים בהיסטוריה הרפואית. הפשתן נכשל, אבל תרם לשיטת המחקר שתוכיח בסוף את ה-Omega-3 שלו. <em>גרעין שהיה שם לפני הרפואה המודרנית ועדיין נחקר אחריה.</em></p>
+    </div>
+</section>
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: הצמח, האקלים, הגידול</h2>
+    <p class="dc"><em>Linum usitatissimum</em> הוא צמח חד-שנתי, גובה <strong>60-120 ס"מ</strong>, עם גבעול ישר ועלים צרים. הפרחים כחולים-סגולים, קטנים ויפים. הפרי: קפסולה עגלגלת המכילה <strong>5-10 זרעים</strong> שטוחים-אובלים, חום-זהובים או חום-כהים. שני סוגי גידול: לסיב (צמחים גבוהים וצפופים) ולזרע (צמחים מרווחים יותר עם פרי גדול יותר). הגידול המסחרי לזרע שונה בצפיפות ובניהול מהגידול לסיב.</p>
+    <h3>אקלים ואדמה</h3>
+    <p>פשתן אוהב <strong>אקלים מתון קריר</strong>: טמפרטורת גידול <strong>7-25°C</strong>, עם טמפרטורות קרירות בהבשלה לשמירה על תכולת שמן. כמות גשמים: <strong>400-750 מ"מ</strong>. עמיד לכפור קל. pH אדמה: <strong>6.0-7.0</strong>. מדינות מייצרות גדולות: <strong>קנדה</strong> (35-40% מהיצוא העולמי), <strong>קזחסטן</strong> (15%), <strong>רוסיה</strong> (12%), <strong>סין</strong> (10%). קנדה, הסאסקצ'ואן ומניטובה, היא מרכז הפשתן העולמי.</p>
+    <div class="ab ab-g">
+        <div class="tg">גזרת מחקר</div>
+        <p>זן <strong>CDC Bethune</strong>, שפותח ב-Agriculture Canada (2002), הוא הזן הנפוץ ביותר בסאסקצ'ואן עם תפוקה של <strong>1.8-2.2 טון לדונם</strong> ותכולת ALA של <strong>57-60%</strong> מהשמן, גבוה מהממוצע. עמיד לעובש pasmo (<em>Septoria linicola</em>), המחלה הפטרייתית העיקרית.</p>
+    </div>
+    <p>עונת גידול בקנדה: שתילה <strong>מאי</strong>, קצירה <strong>אוגוסט-ספטמבר</strong>. קציר מוקדם: לחות גבוהה, שמן ALA נמוך. קציר מאוחר: סיכון נשירה. חלון קציר: 10-14 יום בלבד. בישראל מגדלים פשתן בחורף (נובמבר-אפריל) בעיקר לסיב. הזרע הישראלי נפח קטן, שוק מקומי.</p>
+</section>
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: ALA, לינאן, ומוסיליג</h2>
+    <p class="dc">פשתן מחזיק שלושה רכיבים ביוכימיים פעילים שכל אחד מהם הוא נושא מחקר עצמאי: <strong>חומצה אלפא-לינולנית (ALA)</strong>, אומגה-3 צמחי; <strong>לינאן</strong>, פיטואסטרוגן; ו<strong>מוסיליג</strong>, סיב מסיס. שלושתם פועלים דרך מנגנונים שונים, ויחד הם מה שהפך פשתן ל"superfood" המוכר ביותר בשוק תוספי התזונה.</p>
+    <h3>ALA: אומגה-3 צמחי</h3>
+    <p><strong>Alpha-Linolenic Acid (ALA)</strong> מהווה <strong>55-65%</strong> מחומצות השומן בשמן הפשתן, הריכוז הגבוה ביותר בכל שמן צמחי מסחרי. ALA הוא omega-3 חיוני שהגוף אינו מסנתז. הגוף יכול להמיר ALA ל-EPA ו-DHA, אבל ביעילות נמוכה (5-10% בלבד). לכן פשתן הוא תוספת טובה לתזונה צמחית, אבל לא תחליף מלא לשמן דגים.</p>
+    <h3>לינאן: פיטואסטרוגן</h3>
+    <p><strong>Secoisolariciresinol diglucoside (SDG)</strong>, הלינאן העיקרי בפשתן, מהווה <strong>0.7-1.5% ממשקל יבש</strong>. פשתן מכיל יותר לינאן מכל מזון אחר, פי 75-800 ממזונות כמו שומשום, דגנים וקטניות. בגוף, SDG מומר לאנטרולקטון ואנטרודיול, פיטואסטרוגנים שמחקים אסטרוגן חלש. לינאן נחקר נגד סרטן שד ופרוסטטה.</p>
+    <div class="ab ab-w">
+        <div class="tg">ממצא ביוכימי</div>
+        <p>שמן פשתן מכיל יחס omega-6 לomega-3 של <strong>1:4</strong> לטובת omega-3, הפוך לרוב השמנים הצמחיים (שיחס שלהם 10:1 ומעלה). הדיאטה המערבית הממוצעת מכילה יחס 15-20:1 לטובת omega-6. שמן פשתן הוא אחת הדרכים היעילות לתיקון חוסר האיזון הזה אצל אנשים שאינם אוכלים דגים.</p>
+    </div>
+    <p><strong>מוסיליג</strong>: השכבה החיצונית של הזרע מכילה <strong>6-8% מוסיליג</strong>, פולימר פחמימתי מסיס בחם ובקר. מוסיליג מפחית את מהירות ספיגת הסוכרים, מוריד כולסטרול, ומשמש כסיב מסיס. הוא גם מה שגורם לזרעים להיצמד כאשר מוסיפים מים, תכונה שמשמשת ב-vegan baking כ"ביצה פשתן". ערכים תזונתיים: <strong>534 קלוריות ל-100g, 42g שומן, 29g סיבים, 18g חלבון</strong>.</p>
+</section>
+<div class="media-slot-inline" style="width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,0.06);"><img src="../images/Professional_food_photography_45degree_angle_minim_29541886e7.jpeg" alt="זרעי פשתן צהובים ושחורים" style="width:100%;height:100%;object-fit:cover;"></div>
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: פרמטרים ושפת הסוחרים</h2>
+    <p class="dc">שוק הפשתן מתחלק לשלושה מסלולים: <strong>זרעים שלמים</strong> (brown flaxseed או golden flaxseed), <strong>זרעים טחונים</strong> (ground/milled flax), ו<strong>שמן פשתן</strong> (flaxseed oil / linseed oil). הפרמטר המרכזי: <strong>תכולת ALA בשמן</strong>. בשוק המזון הפונקציונלי, <strong>SDG %</strong> (לינאן) הוא פרמטר נוסף בעל ערך.</p>
+
+<div class="cb">
+  <div class="ct">ייצור פשתן עולמי לפי מדינה</div>
+  <div class="pb-chart">
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇦</span><span class="pb-name">קנדה</span></div><div class="pb-track"><div class="pb-fill" data-w="38" style="background:#3D4A6E"></div></div><span class="pb-pct">38%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇰🇿</span><span class="pb-name">קזחסטן</span></div><div class="pb-track"><div class="pb-fill" data-w="15" style="background:#5A6A9A"></div></div><span class="pb-pct">15%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇷🇺</span><span class="pb-name">רוסיה</span></div><div class="pb-track"><div class="pb-fill" data-w="13" style="background:#7A8AB8"></div></div><span class="pb-pct">13%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">סין</span></div><div class="pb-track"><div class="pb-fill" data-w="12" style="background:#9AAAD4"></div></div><span class="pb-pct">12%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇺🇸</span><span class="pb-name">ארה"ב</span></div><div class="pb-track"><div class="pb-fill" data-w="8" style="background:#BACCEE"></div></div><span class="pb-pct">8%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="14" style="background:#DDD6CA"></div></div><span class="pb-pct">14%</span></div>
+  </div>
+  <div class="pb-note">FAO 2024 · ~3M טון/שנה · קנדה מובילה ביצוא ובאיכות ALA</div>
+</div>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Grade A</th><th>Grade B</th><th>שמן אתרי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>לחות מקס'</strong></td><td>9%</td><td>10%</td><td>0.1%</td></tr>
+            <tr><td><strong>שמן מינ'</strong></td><td>40%</td><td>38%</td><td>ALA 55%+</td></tr>
+            <tr><td><strong>חומר זר</strong></td><td>0.5%</td><td>1.0%</td><td>,</td></tr>
+            <tr><td><strong>זרעים פגומים</strong></td><td>2%</td><td>5%</td><td>,</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">Brown vs. Golden Flaxseed</div>
+        <p><strong>Brown flaxseed</strong> (חום): הנפוץ ביותר, זרמים מסחריים גדולים מקנדה. <strong>Golden flaxseed</strong> (זהוב): כמה זנים ספציפיים, טעם עדין יותר, מחיר <strong>20-40% גבוה יותר</strong> בשוק הקמעונאי. מבחינה תזונתית: <strong>הבדל זניח</strong>. ההבדל הוא אסתטי ושיווקי. Golden מתאים למוצרי מאפה בצבע בהיר בלי לשנות את צבע המוצר.</p>
+    </div>
+</section>
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהשדה לשמן</h2>
+    <p class="dc">הפשתן הוא אחד מהגרעינים שבהם שלב העיבוד משפיע ביותר על הערך התזונתי הסופי. הזרע השלם הוא לא-זמין ביולוגית ברובו: עטיפת הזרע קשה מדי לעיכול ורוב ה-ALA ו-SDG עוברים ללא ספיגה. הטחינה משחררת את הרכיבים. אבל שמן ALA רגיש לחימצון מאוד: זרע טחון שנשמר לא נכון מחמצן תוך ימים ומאבד ערך.</p>
+    <div class="proc-steps">
+        <div class="proc-step"><div class="proc-step-num">01</div><div><div class="proc-step-title">קציר וניקוי</div><div class="proc-step-body">קציר ב-combine harvester כאשר <strong>75-90%</strong> מהקפסולות חומות-בשלות. ניקוי ב-air screen: הפרדת קפסולות, גבעולים, וזרעים קלים. לחות לאחר קציר: 12-16%. ייבוש ל-<strong>8-9%</strong> לאחסון בטוח.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">02</div><div><div class="proc-step-title">טחינה (Milled Flax)</div><div class="proc-step-body">Cold-milled flax: טחינה ב-hammer mills או roller mills בלי חימום לשמירת ALA. <strong>אחסון קריטי</strong>: טחון מחמצן מהר. מוצרי flax meal מסחריים: <strong>nitrogen-flushed packaging</strong>, תאריך תפוגה 6-12 חודש. לאחר פתיחה: קירור ושימוש תוך 90 יום.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">03</div><div><div class="proc-step-title">הפקת שמן</div><div class="proc-step-body">Cold-press extraction: לחץ מכני בלבד, <strong>40-50°C מקסימום</strong>. תפוקה: 35-42% שמן מהזרע. שמן Cold-press מכיל ALA מלא (55-65%). Solvent extraction: Hexane, תפוקה 42-48%, אבל ALA יציב פחות. שמן פשתן למאכל = Cold-press. שמן פשתן לתעשיית צבעים (linseed oil) = Solvent.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">04</div><div><div class="proc-step-title">מיצוי SDG לתוספי תזונה</div><div class="proc-step-body">מיצוי SDG (לינאן): אתנול-מים (70:30), ריכוז ב-evaporator, ייבוש spray-dry. תמצית SDG 20-40%: <strong>100-200 דולר לק"ג</strong>. שוק תוספי הלינאן גדל ב-9% לשנה (2019-2024), מונע על ידי מחקר סרטן שד.</div></div></div>
+    </div>
+</section>
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות</h2>
+    <p class="dc">פשתן מציג שני סיכוני בטיחות ייחודיים שאינם נפוצים בגרעינים אחרים: <strong>ציאנוגלוקוזידים</strong> (Cyanogenic glycosides) ו<strong>חמצון מהיר</strong> של ALA. שניהם ניהיליים בכמויות קולינריות רגילות, אבל רלוונטיים לתוספי תזונה בריכוז גבוה.</p>
+    <div class="ab ab-r">
+        <div class="tg">ציאנוגלוקוזידים: הקשר</div>
+        <p>פשתן מכיל <strong>Linustatin ו-Neolinustatin</strong>, ציאנוגלוקוזידים שמשתחרר מהם HCN (ציאניד מימני) בעיכול. כמות ב-100g פשתן גולמי: <strong>50-150 mg HCN equivalents</strong>. ה-WHO קובע: צריכה יומית בטוחה <strong>0.5-3.5 mg/kg משקל גוף</strong>. בכמויות תזונתיות (1-3 כפות = 10-30g), הסיכון אפסי. צריכה של 1+ ק"ג ביום: בעייתית. בישול ואפייה מפרקים ציאנוגלוקוזידים.</p>
+    </div>
+    <p>MRL: פשתן קנדי Grade A מציג פרופיל pesticide נקי יחסית. <strong>Chlorpyrifos ≤ 0.01 mg/kg</strong> EU. מיקרוביולוגיה: <strong>TPC ≤ 10⁵ CFU/g</strong>, <strong>Salmonella: Absent/25g</strong>. אפלטוקסין: <strong>B1 ≤ 5 μg/kg</strong>. שמן פשתן: peroxide value מקסימלי <strong>5 meq/kg</strong> ל-cold-press איכותי. מעל 10 meq/kg: שמן מחומצן ואינו ראוי למכירה.</p>
+</section>
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה וניהול שרשרת האספקה</h2>
+    <p class="dc">פשתן מקנדה הוא מוצר יבש ויציב לשינוע בזרעים שלמים. האתגר הלוגיסטי מתחיל ברגע שהגרעין נטחן: <strong>shelf life מקוצר בחדות</strong>. מוצרי ground flax ושמן פשתן דורשים קירור, אחסון nitrogen, ושרשרת קור.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מוצר</th><th>אחסון</th><th>חיי מדף</th><th>הערות</th></tr></thead>
+        <tbody>
+            <tr><td><strong>זרעים שלמים</strong></td><td>טמפרטורת חדר, יבש</td><td>12-24 חודש</td><td>אחסון ב-silos קנדיים עד יצוא</td></tr>
+            <tr><td><strong>Ground flax</strong></td><td>N₂ flush, מקורר</td><td>6-12 חודש</td><td>תאריך תפוגה קצר, קירור לאחר פתיחה</td></tr>
+            <tr><td><strong>שמן cold-press</strong></td><td>2-8°C, חושך</td><td>6-12 חודש</td><td>מחמצן עם אור וחום</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>שינוע: זרעים שלמים מקנדה ב-bulk containers ל-Vancouver Port, משם ל-Rotterdam ב-<strong>25-30 יום</strong>. מחיר: <strong>600-900 דולר לטון</strong> זרעים. שמן: ב-flexi-tanks (24,000 ליטר למכולה) עם nitrogen blanket. <em>הגרעין שעצר את בניינו של עולם הטקסטיל נוסע בשלוה מהקנדי prairies לבריאות אירופאית.</em></p>
+</section>
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות</h2>
+    <p class="dc">פשתן הוא אחד הגרעינים עם הספרות הקלינית הגדולה ביותר. מעל <strong>4,000 מחקרים</strong> פורסמו בעשרים שנה האחרונות. שלושת הרכיבים (ALA, SDG, מוסיליג) פועלים בסינרגיה שקשה לשחזר בתוסף יחיד.</p>
+    <h3>לב וכלי דם</h3>
+    <p>מטא-אנליזה (Pan et al., Journal of Nutrition 2009, 28 RCTs) מצאה שתוסף ALA מפשתן הפחית <strong>כולסטרול LDL ב-4.7 mg/dL</strong> ו-total cholesterol ב-5.5 mg/dL. מנגנון: ALA מתחרה על אותם נתיבים מטבוליים כמו omega-6 ומפחית ייצור פרוסטגלנדינים דלקתיים.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">55-65%</div><div class="nu">ALA בשמן</div><div class="nl">גבוה מכל שמן</div></div>
+        <div class="ni"><div class="nv">800x</div><div class="nu">יותר לינאן</div><div class="nl">ממזונות אחרים</div></div>
+        <div class="ni"><div class="nv">29g</div><div class="nu">סיבים ל-100g</div><div class="nl">גבוה מאוד</div></div>
+        <div class="ni"><div class="nv">4.7</div><div class="nu">mg/dL ירידה LDL</div><div class="nl">מטא-אנליזה 2009</div></div>
+        <div class="ni"><div class="nv">9%</div><div class="nu">CAGR שוק לינאן</div><div class="nl">2019-2024</div></div>
+        <div class="ni"><div class="nv">10,000</div><div class="nu">שנות גידול</div><div class="nl">ממצא ג'ורג'יה</div></div>
+    </div>
+    <p>לינאן וסרטן שד: מחקר פרוספקטיבי קנדי (Flower et al., 2014) על 1,122 נשים אחרי אבחון סרטן שד מצא קורלציה שלילית בין רמות אנטרולקטון בדם (מדד לצריכת לינאן) לבין תמותה. לא RCT, אבל ממצאים עקביים עם כמה מחקרי אוכלוסייה.</p>
+</section>
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק עולמי ומחירים</h2>
+    <p class="dc">שוק הפשתן העולמי: <strong>3.5-4.0 מיליון טון לשנה</strong>, שווי של כ-<strong>2.5-3.5 מיליארד דולר</strong>. מחולק: ~60% לתעשיית שמן טכני (לצבעים, ורניש, linoleum), ~25% למזון ותוספי תזונה, ~15% לתעשיית הסיבים.</p>
+    <div class="ab ab-w">
+        <div class="tg">מחיר ותנודות</div>
+        <p>מחיר פשתן קנדי FOB Vancouver: <strong>550-900 דולר לטון</strong>. תנודות נגרמות מיבול הפריירי (גשמים קיצים בסאסקצ'ואן ומניטובה), ביקוש מסין לתעשיית צבעים, ומגמות תוספי תזונה. שנת 2021-2022: עלייה ל-900 דולר בשל בצורת קנדית ועלייה בביקוש omega-3 בעת COVID.</p>
+    </div>
+    <p>שחקנים מרכזיים: <strong>Viterra</strong> ו-<strong>Richardson International</strong> (קנדה) שולטות באיסוף ויצוא. <strong>Natunola Health</strong> (קנדה), <strong>Omega Protein</strong> (ארה"ב), ו-<strong>Bioriginal</strong> (קנדה) בשמן פרמיום. שוק ground flax: <strong>CAGR 7.5%</strong> (2019-2024). שוק SDG: <strong>CAGR 9%</strong>. <em>הצמח שהלביש פרעה מכניס היום כסף לקנדה.</em></p>
+</section>
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית ומגמות 2030</h2>
+    <p class="dc">פשתן עומד בפני מגמה: <strong>ביקוש גדל למזון פונקציונלי</strong> שמגביר צריכה לתוספי תזונה ולבייקינג בריאותי, מול <strong>תחרות מהדגים וממיקרואלגות</strong> שמספקים EPA ו-DHA ישירות ולא דרך המרה לא יעילה של ALA.</p>
+    <h3>שיפור ה-Bioavailability</h3>
+    <p>מחקרים ב-University of Manitoba (2022) בודקים micro-encapsulation של שמן פשתן ב-cyclodextrin לשמירה על יציבות ALA ולהגברת ספיגה. מוצרי flax oil microencapsulated כבר בשוק (Equazen, UK), נמכרים ב-<strong>פי 3-4 ממחיר שמן רגיל</strong>.</p>
+    <div class="ab ab-g">
+        <div class="tg">מגמה: Flax Protein</div>
+        <p>לאחר הפקת שמן, ה-flax cake (שאריות) מכיל <strong>33-38% חלבון</strong>. חברות כ-<strong>Natunola</strong> ו-<strong>Burcon NutraScience</strong> מפתחות מיצוי חלבון פשתן לשוק ה-plant-based protein. מחיר חלבון פשתן מבודד (90%+): <strong>8-15 דולר לק"ג</strong>, תחרותי עם חלבון אפונה. שוק צמיחה של 20% לשנה.</p>
+    </div>
+    <p>שינויי אקלים: הפריירי הקנדי חווה עלייה בשכיחות בצורות קיצים. מחקר Agriculture Canada מ-2023 מפתח זנים heat-tolerant ל-פשתן, עם ניצן פריחה שמאוחר ב-10-14 יום כדי להימנע מחום מאי. הגנום של <em>Linum usitatissimum</em> פוענח ב-2012, ופיתוח זנים מדויק נגיש. <em>זרע שהיה שם לפני הכתב האנושי ימשיך להיות שם אחרי השינוי האקלימי, כי הוא למד להסתגל הרבה לפני שאנחנו המצאנו את המילה.</em></p>
+    <div class="ft"><span style="font-size:11px;color:#706088;">אגרונומיה: Agriculture Canada, CDC Bethune Variety · ביוכימיה: Pan et al., J Nutrition 2009 · Flower et al., BMC Cancer 2014 · כלכלה: ITC Trade Map 2024, Viterra Annual Report · בטיחות: WHO Food Additives Series · RASFF EU 2020-2024</span></div>
+</section>
+</main>
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · FLAXSEED · פשתן</footer>
+<div class="marquee-container"><div class="marquee-text">פשתן · LINUM USITATISSIMUM · ALA · FLAXSEED · LIGNAN · OMEGA-3 · פשתן · LINUM USITATISSIMUM · ALA · FLAXSEED · LIGNAN · OMEGA-3 · </div></div>
+<button class="back-to-top" id="btt">↑</button>
+<a href="../index.html" class="home-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7A60B0" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>ספרייה</span></a>
+<script>
+window.onscroll=()=>{const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progress-bar').style.width=(window.scrollY/h*100)+'%';const s=document.querySelectorAll('.ch'),d=document.querySelectorAll('.nav-dot');let c="";s.forEach(x=>{if(pageYOffset>=x.offsetTop-200)c=x.id;});d.forEach(x=>{x.classList.remove('active');if(x.dataset.target===c)x.classList.add('active');});};
+const btt=document.getElementById('btt');window.addEventListener('scroll',()=>btt.classList.toggle('visible',window.scrollY>300));btt.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot=>dot.onclick=()=>document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'}));
+(function(){const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('active');}),{threshold:0,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.ch').forEach(c=>{c.classList.add('reveal');obs.observe(c);});function sync(){const db='StarkOS_DB',pid=window.location.pathname.split('/').pop().replace('.html',''),r=indexedDB.open(db,1);r.onsuccess=e=>{const db=e.target.result;try{const s=db.transaction('archive','readonly').objectStore('archive'),g=s.get(pid);g.onsuccess=()=>{const d=g.result;if(!d)return;function m(s){const v=s.startsWith('data:video'),el=document.createElement(v?'video':'img');el.src=s;el.style.cssText='width:100%;height:100%;object-fit:cover;';if(v){el.autoplay=el.muted=el.loop=true;el.setAttribute('playsinline','');}return el;}const h1=document.getElementById('sync-title');if(h1&&d.name)h1.innerText=d.name;const dk=document.getElementById('sync-desc');if(dk&&d.desc)dk.innerText=d.desc;const src=d.media1||d.media,sl=document.getElementById('slot-product-hero');if(sl&&src){sl.innerHTML='';sl.appendChild(m(src));}};}catch(e){}};};window.addEventListener('load',sync);}());
+
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

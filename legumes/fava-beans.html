@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פול · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0B;--text:#FAF7F0;--body:#D1CEC5;--accent:#405030;--warm:#708050;
+  --card:rgba(20,20,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;position:relative;
+  background-image:linear-gradient(rgba(112,128,80,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(112,128,80,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}body::after{background:var(--accent);bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.back-btn{position:absolute;top:40px;left:40px;z-index:10;display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;opacity:0.5;transition:0.3s;}
+.back-btn:hover{opacity:1;color:var(--warm);}
+#backToTop{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;display:none;z-index:1000;}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);position:relative;}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#000;border:1px solid rgba(255,255,255,0.05);}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px;}
+em{color:#A8C880;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(112,128,80,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(64,80,48,0.2);border-right:4px solid var(--accent);}.ab-g .tg{color:#A8C880;}
+.ab-r{background:rgba(184,50,50,0.1);border-right:4px solid #B83030;}.ab-r .tg{color:#E06060;}.ab-r p{color:#DDB0B0;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:13px;color:#A09080;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}
+.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,0.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(112,128,80,0.2);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.vc{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:22px;margin:18px 0;}
+.vc .vn{font-family:'Frank Ruhl Libre',serif;font-size:21px;font-weight:700;color:var(--text);}
+.vc .vt{font-size:12px;color:var(--warm);font-weight:600;margin-bottom:10px;}
+.vc p{font-size:16px;line-height:1.75;margin-bottom:0;color:var(--body);}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}
+.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}
+.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.ch ul li::marker{color:var(--warm);}
+@media(max-width:900px){.side-nav{display:none;}.back-btn{top:20px;left:20px;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="marquee-container">
+  <div class="marquee-text">פול · FAVA BEANS · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · פול · FAVA BEANS · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · </div>
+</div>
+<div id="progress-bar"></div>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div>
+  <div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div>
+  <div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div>
+  <div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div>
+  <div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div>
+  <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+  <a href="../index.html" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    ספרייה
+  </a>
+  <div class="hero-k">ערך ידע חקלאי · Blue Star International</div>
+  <h1 id="sync-title">פול</h1>
+  <p class="deck" id="sync-desc">הקטנית הקדומה ביותר בים-תיכון. מהפרעונים שאכלו אותה ועד פול מדמס שמאכיל מיליארד מצרים בארוחת בוקר. 6,000 שנה של פשטות מזינה, עם אזהרה גנטית אחת קטנה.</p>
+  <div class="hero-img-wrap">
+    <img src="../images/Bowl_overflowing_with_fava_beans_2e44ca8b33.jpeg" alt="fava-beans" loading="lazy">
+  </div>
+</section>
+<main class="con">
+
+<!-- CH1 -->
+<div class="ch reveal" id="ch1">
+<span class="cl">פרק ראשון</span>
+<h2>6,000 שנה בים-תיכון: הפרעונים, הפיתגוראים ואריסטו</h2>
+<p class="dc">שרידי פול (<em>Vicia faba</em>) נמצאו בחפירות ארכיאולוגיות בכל רחבי הים-תיכון, מהממצאים הקדומים ביותר: 6,000 לפנה"ס בישראל ובסוריה. מצרים הפרעונית גידלה פול בהיקף עצום לאורך עמק הנילוס. הפולים נמצאו בקברי פרעונים, שהוכנסו כצידה לדרך לעולם הבא. ומה שמפתיע: הם שרדו 3,000 שנה ועדיין ניתן היה לנבטם.</p>
+<p>הפיתגוראים, בני מאה 6 לפנה"ס, אסרו אכילת פול בהחלטיות מוחלטת. הסיבות שונות: יש שטוענים שפיתגורס חשש מהרעילות (G6PD), יש שמייחסים לאמונה שנשמות המתים מתגלגלות לפולים, ויש שמציינים שהמילה היוונית לפול, <em>kyamos</em>, דומה למילה לאשכים. אריסטו, שהגיח 200 שנה מאוחר יותר, פשוט כתב שפול מזיק לחלומות.</p>
+<p>ברומא, לעומת זאת, פול היה מזון פופולרי. הרומאים הכינו ממנו מחית שנקראת <em>fabaciae</em>. למשפחת פאביוס הגדולה, אחת השושלות הרומיות היוקרתיות, היה שם משפחה שמגיע מ-<em>faba</em>, פול. גם קיקרו (Cicer = חומוס) וגם פאביוס קיבלו שמות ממשפחות שגידלו קטניות.</p>
+<div class="ab ab-w"><div class="tg">הייחוד הבוטני</div><p>הפול הוא הקטנית היחידה ממשפחת <em>Vicia</em>, בעוד שעועית, חומוס ועדשים שייכים למשפחות אחרות. זה גידול עונת הקור: גדל בחורף ובאביב, ולא בקיץ כמו שאר הקטניות. לכן בים-תיכון הוא מוקדם לכולם, מגיע לשוק מאפריל ומהווה את הסיגנל הראשון לאביב בשווקים הערביים.</p></div>
+</div>
+
+<!-- CH2 -->
+<div class="ch reveal" id="ch2">
+<span class="cl">פרק שני</span>
+<h2>תזונה, פאביזם, ו-L-Dopa: הקטנית שיש להזהר ממנה</h2>
+<p class="dc">פול הוא אחת הקטניות המזינות ביותר, עם ריכוז חלבון גבוה, ברזל נדיב וחומצה פולית בכמות יוצאת דופן. אבל הוא גם הקטנית היחידה שיש לה התוויית נגד רפואית לאוכלוסייה שלמה. אנשים עם מחסור ב-G6PD (Glucose-6-phosphate dehydrogenase) חייבים להימנע לחלוטין מפול, שכן הוא מעורר בהם משבר המוליטי שעלול להיות מסכן חיים.</p>
+
+<div class="ng">
+  <div class="ni"><div class="nv">26g</div><div class="nu">חלבון</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">58g</div><div class="nu">פחמימות</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">25g</div><div class="nu">סיבים</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">6.7mg</div><div class="nu">ברזל</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">423mcg</div><div class="nu">חומצה פולית</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">341</div><div class="nu">קלוריות</div><div class="nl">ל-100g יבש</div></div>
+</div>
+
+<div class="ab ab-r"><div class="tg">פאביזם: G6PD ופול</div><p>מחסור ב-G6PD הוא הפגם האנזימטי הנפוץ ביותר בעולם, 400 מיליון אנשים. שכיח מאוד באפריקה, בסרדיניה, בעיראק ובאיראן. קרוי "פאביזם" על שם הפול. אכילת פול גורמת לשבירת כדוריות דם אדומות, עם תסמינים: חיוורון, עייפות, צהבת, וצבע כהה בשתן. במקרים חמורים: אשפוז ועירויי דם. אם לא יודעים אם יש לך G6PD, אל תאכל פול גולמי לפני בדיקת דם.</p></div>
+
+<h3>L-Dopa: הסגולה הנסתרת</h3>
+<p>פול מכיל <em>L-3,4-dihydroxyphenylalanine</em>, הידוע כ-L-Dopa, תרכובת שהיא גם התרופה העיקרית לטיפול במחלת פרקינסון. מחקרים מצאו שאכילת פול מעלה רמות דופמין במוח. כמות ה-L-Dopa בפול (0.5-2.5% ממשקל יבש) נמוכה מהמנה הטיפולית, אבל הספיקה להראות שיפור קל בתסמינים אצל חולי פרקינסון. אין להחליף תרופות במזון, אבל זה פרק מעניין בביוכימיה של מה שאנחנו אוכלים.</p>
+</div>
+
+<!-- CH3 -->
+<div class="ch reveal" id="ch3">
+<span class="cl">פרק שלישי</span>
+<h2>עיבוד: טרי, יבש, קלוף, מפוצל, קפוא</h2>
+<p class="dc">פול מגיע לשוק בחמישה מצבים שונים, וכל אחד מהם מתאים לשימוש אחר. ההחלטה הגדולה היא קליפה: עם קליפה חיצונית קשה (כשהפול בתוך התרמיל), עם קליפה פנימית ירוקה-אפורה שעוטפת כל גרגר, או ללא שתיהן. כל שכבה שמסירים משנה את הטעם, את המרקם ואת זמן הבישול.</p>
+
+<table class="gt">
+  <thead><tr><th>צורה</th><th>מצב</th><th>זמן הכנה</th><th>שימוש</th></tr></thead>
+  <tbody>
+    <tr><td>פול טרי בתרמיל</td><td>פרש, עונתי</td><td>פתיחה + 5-8 דק'</td><td>איטלקי גולמי עם פקורינו</td></tr>
+    <tr><td>פול טרי קלוף</td><td>גרגר ירוק</td><td>3-5 דקות</td><td>סלטים, ריזוטו, פסטה</td></tr>
+    <tr><td>פול קפוא</td><td>מולבן ומוקפא</td><td>2-3 דקות</td><td>מהיר, שומר ערך תזונתי</td></tr>
+    <tr><td>פול יבש שלם</td><td>עם קליפה</td><td>השרייה 12 שעות + 60-90 דק'</td><td>מרקים כבדים, תבשילים</td></tr>
+    <tr><td>פול יבש קלוף מפוצל</td><td>ללא קליפה, חצוי</td><td>30-40 דקות, ללא השרייה</td><td>פול מדמס, דאל, ממרח</td></tr>
+  </tbody>
+</table>
+
+<h3>מדוע שתי קליפות?</h3>
+<p>לפול יש קליפה חיצונית קשה (תרמיל) וקליפה פנימית אפורה-ירוקה שעוטפת כל גרגר. הקליפה הפנימית מכילה את עיקר ה-vicine ו-convicine, הרכיבים שמסכנים את חולי G6PD. הסרתה מורידה את הסיכון ומשפרת את הטעם. גרסה מקולפת ומפוצלת (Split Fava) מוכרת ביותר לשוק הערבי: היא הבסיס לפול מדמס.</p>
+
+<div class="ab ab-g"><div class="tg">אחסון פול יבש</div><p>פול יבש: 2-3 שנים בתנאים נכונים. יבשה, קור, אטום. הבעיה: לאחר שנה ארוכה קליפת הפול מתקשה עוד יותר, וזמן הבישול עולה בחדות. מומלץ לכתוב תאריך על שקית הפול. פול קלוף יבש נשמר טוב יותר: קליפה פחות = הגנה פחות, אבל גם בישול מהיר יותר לאחר אחסון.</p></div>
+</div>
+
+<!-- CH4 -->
+<div class="ch reveal" id="ch4">
+<span class="cl">פרק רביעי</span>
+<h2>פול מדמס, מחלות ובישול: הפול בתרבויות</h2>
+<p class="dc">פול מדמס הוא כנראה המאכל ששרד הכי הרבה זמן ללא שינוי. מתכון ממצרים מלפני 3,000 שנה, עם שום ולימון, זהה כמעט בדיוק לזה שמוגש היום בקהיר, בבגדד ובביירות. אין מאכל אחר בעולם שיכול לדרוש רצף כה ארוך של הכנה ואכילה רצופה.</p>
+
+<div class="vc">
+  <div class="vn">Ful Medames, מצרים</div>
+  <div class="vt">ארוחת הבוקר הלאומית של מצרים, 100 מיליון איש</div>
+  <p>פול קלוף מפוצל, מבושל עד לרסק קרמי, מוגש חם עם שמן זית, מיץ לימון, שום כתוש, כמון ופטרוזיליה. הגרסה הרחובית: בסיר גדול שמבשל כל הלילה, מוגש בקערה עם ביצה קשה ולחם עגול. מסעדות בקהיר פותחות בשלוש לפנות בוקר. פחות מ-5 שקלים לארוחה שלמה.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Bissara, מרוקו ומצרים</div>
+  <div class="vt">מרק או ממרח פול ירוק כתוש</div>
+  <p>פול מבושל עם שום, כמון ושמן זית, נטחן לממרח עבה. בגרסת מרוקו: מוגש עם שמן זית ופאפריקה חריפה, אוכלים עם לחם. בגרסת מצרים: מרוקק יותר, כמרק. מאכל חורף שעממי, זול ומחמם. פופולרי בשווקי מראקש בעונה הקרה.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Macco di Fave, סיציליה ודרום איטליה</div>
+  <div class="vt">מחית פול עם שמן זית ועשבי תיבול</div>
+  <p>פול יבש מבושל עם בצל ושמן זית עד לריסוק מלא, מוגש עם שבבי שומר גולמי. מנה עתיקה שמוכרת מהמטבח היווני-רומי. בסיציליה מוסיפים עגבניות שרי טריות ופאן גרטוגרטו (לחם מגורד). ביום ה-19 במרץ, חג סן ג'וזפה, Macco di Fave הוא המנה המסורתית.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Habas con Jamón, ספרד</div>
+  <div class="vt">פול עם ג'מון איברי, מנת טאפאס קלאסית</div>
+  <p>פול ירוק טרי מוקפץ עם שמן זית, שום ופרוסות דקות של ג'מון סרנו. מנת אביב קלאסית באנדלוסיה ובקטלוניה. המתכון פשוט: שלוש דקות בשמן, הג'מון נכנס רק בסוף כדי לא להתייבש. הניגוד בין מרירות עדינה של הפול למליחות הג'מון הוא הסיבה שהמנה קיימת.</p>
+</div>
+
+<div class="pull"><p>פול מדמס שרד 3,000 שנה ללא שינוי מהותי. שום, לימון, שמן זית. אין עוד מאכל בעולם שיכול לדרוש רצף כה ארוך של אותה הכנה.</p></div>
+</div>
+
+<div class="media-slot-inline" style="width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,0.06);"><img src="../images/Bowl_overflowing_with_fava_beans_2e44ca8b33.jpeg" alt="פול" style="width:100%;height:100%;object-fit:cover;"></div>
+
+<!-- CH5 -->
+<div class="ch reveal" id="ch5">
+<span class="cl">פרק חמישי</span>
+<h2>שוק גלובלי: סין, מצרים, אתיופיה ושוק הגידול</h2>
+<p class="dc">ייצור הפול העולמי הגיע ל-4.7 מיליון טון בשנה, עם שלוש מדינות שמובילות: סין (38%), אתיופיה (16%) ומצרים (11%). הביקוש הגדול ביותר מגיע מהעולם הערבי, שבו פול מדמס הוא ארוחת בוקר יומיומית. אירופה קונה בעיקר פול ירוק טרי וקפוא לשוק הגורמה.</p>
+
+<table class="gt">
+  <thead><tr><th>מדינה</th><th>ייצור שנתי</th><th>תפקיד</th></tr></thead>
+  <tbody>
+    <tr><td>סין</td><td>1.8 מיליון טון</td><td>ייצרנית מובילה, בעיקר צריכה פנימית</td></tr>
+    <tr><td>אתיופיה</td><td>750,000 טון</td><td>ייצרנית + יצואנית למזרח התיכון</td></tr>
+    <tr><td>מצרים</td><td>520,000 טון</td><td>ייצרנית + מייבאת לשוק המקומי הגדול</td></tr>
+    <tr><td>אוסטרליה</td><td>380,000 טון</td><td>יצואנית מובילה לשוק הערבי</td></tr>
+    <tr><td>צרפת</td><td>120,000 טון</td><td>פרמיום לשוק אירופאי</td></tr>
+    <tr><td>ישראל</td><td>15,000 טון</td><td>גידול מקומי עונתי + ייבוא</td></tr>
+  </tbody>
+</table>
+
+<h3>ישראל: שוק הפול המקומי</h3>
+<p>ישראל גידלה פול מאות שנים. הפול הירוק הטרי מגיע לשווקים מאפריל ומציין את האביב. פול קלוף מפוצל מיובא בעיקר מאוסטרליה ומאתיופיה לשוק הערבי-ישראלי ולמסעדות מזרח-תיכוניות. מחיר: $500-700 לטון לפול מפוצל קנדי-אוסטרלי. פול ירוק טרי: $800-1,200 לטון תלוי עונה.</p>
+
+<div class="ab ab-w"><div class="tg">Blue Star</div><p>Blue Star מספקת פול קלוף מפוצל יבש מאוסטרליה לשוק הישראלי. מינימום הזמנה: 20 טון. אריזה: שקים של 50 ק"ג. זמן אספקה: 35-45 יום CNF אשדוד. מתאים לשוק הקמעונאי ולתעשיית המזון (מרקים, פול מדמס ארוז).</p></div>
+</div>
+
+</main>
+<div class="ch reveal" id="ch6"><span class="cl">פרק שישי</span><h2>גיאוגרפיה: מדינות מייצרות וגרף ייצור</h2>
+<p class="dc">פול גדל בעיקר באזורי ים-תיכון וצפון-מזרח אפריקה. סין היא המייצאת הגדולה ביותר, אבל איכות הפול האוסטרלי נחשבת לטובה יותר לשוק המערבי.</p>
+<div style="background:rgba(20,20,22,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;margin:28px 0;">
+<div style="font-family:'Frank Ruhl Libre',serif;font-size:17px;font-weight:700;margin-bottom:14px;text-align:center;color:var(--text);">ייצור פול עולמי לפי מדינה 2024</div>
+<div class="pb-chart" style="margin:16px 0;">
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">סין</span></div><div class="pb-track"><div class="pb-fill" style="width:38%;background:#708050;"></div></div><span class="pb-pct">38%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇪🇹</span><span class="pb-name">אתיופיה</span></div><div class="pb-track"><div class="pb-fill" style="width:16%;background:#90A060;"></div></div><span class="pb-pct">16%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇪🇬</span><span class="pb-name">מצרים</span></div><div class="pb-track"><div class="pb-fill" style="width:11%;background:#A0B070;"></div></div><span class="pb-pct">11%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇦🇺</span><span class="pb-name">אוסטרליה</span></div><div class="pb-track"><div class="pb-fill" style="width:10%;background:#B0C080;"></div></div><span class="pb-pct">10%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">שאר העולם</span></div><div class="pb-track"><div class="pb-fill" style="width:25%;background:#505040;"></div></div><span class="pb-pct">25%</span></div>
+</div>
+<div style="font-size:11px;color:#6B6058;opacity:.7;margin-top:10px;text-align:center;">FAO 2024 · ~4.7 מיליון טון/שנה</div>
+</div></div>
+
+<div class="ch reveal" id="ch7"><span class="cl">פרק שביעי</span><h2>פאביזם: הסיכון הגנטי בפירוט</h2>
+<p>מחסור ב-G6PD הוא הפגם האנזימטי הנפוץ ביותר בעולם: 400 מיליון אנשים. בישראל: אשכנזים 0.5%, ספרדים 5-10%, יוצאי צפון-אפריקה 10-25%, ערבים 8-20%. הגן נמצא על כרומוזום X, ולכן גברים נפגעים חמור יותר.</p>
+<p>מנגנון הנזק: הפול מכיל vicine ו-convicine. בגוף הם מתפרקים לתרכובות שמייצרות רדיקלים חופשיים. בחסר G6PD, הרדיקלים פוגעים בממברנת כדורית דם אדומה וגורמים לשבירה המוליטית.</p>
+<div class="ab ab-r"><div class="tg">בדיקה לפני אכילה</div><p>אם לא בדקת G6PD: שאל רופא, במיוחד אם אתה ממוצא ים-תיכוני, ספרדי, אפריקאי או מזרח תיכוני. הבדיקה: ספירת דם + פעילות אנזים G6PD. פשוטה וזולה. שווה לדעת לפני שמוסיפים פול לתפריט.</p></div>
+<table class="gt"><thead><tr><th>קבוצה אתנית</th><th>שכיחות G6PD</th></tr></thead><tbody>
+<tr><td>אשכנזים</td><td>0.5%</td></tr>
+<tr><td>ספרדים</td><td>5-10%</td></tr>
+<tr><td>יוצאי צפון-אפריקה</td><td>10-25%</td></tr>
+<tr><td>ערבים</td><td>8-20%</td></tr>
+<tr><td>יוצאי אפריקה שחורה</td><td>10-20%</td></tr>
+</tbody></table></div>
+
+<div class="ch reveal" id="ch8"><span class="cl">פרק שמיני</span><h2>שוק הפול הישראלי</h2>
+<p>ישראל גידלה פול מסורתית מאות שנים. כיום: כ-15,000 טון גידול מקומי בשנה, בעיקר בגליל ובעמק הירדן. פול טרי בשוק מאפריל הוא סיגנל חזק לאביב.</p>
+<table class="gt"><thead><tr><th>מוצר</th><th>מחיר ישראלי</th><th>עונה</th></tr></thead><tbody>
+<tr><td>פול ירוק טרי</td><td>₪8-15 לק"ג</td><td>אפריל-מאי</td></tr>
+<tr><td>פול יבש שלם</td><td>₪8-14 לק"ג</td><td>כל השנה</td></tr>
+<tr><td>פול קלוף מפוצל</td><td>₪12-18 לק"ג</td><td>כל השנה</td></tr>
+</tbody></table>
+<div class="ab ab-w"><div class="tg">Blue Star</div><p>Blue Star מספקת פול קלוף מפוצל יבש מאוסטרליה. מינימום: 20 טון. מחיר $500-700/טון CNF ישראל. מתאים לשוק הקמעונאי ולתעשיית מרקים ופול מדמס.</p></div></div>
+
+<div class="ch reveal" id="ch9"><span class="cl">פרק תשיעי</span><h2>בריאות: L-Dopa, ברזל וחומצה פולית</h2>
+<div class="ng"><div class="ni"><div class="nv">26g</div><div class="nu">חלבון</div><div class="nl">ל-100g יבש</div></div><div class="ni"><div class="nv">6.7mg</div><div class="nu">ברזל</div><div class="nl">37% RDI</div></div><div class="ni"><div class="nv">423mcg</div><div class="nu">חומצה פולית</div><div class="nl">106% RDI</div></div><div class="ni"><div class="nv">25g</div><div class="nu">סיבים</div><div class="nl">ל-100g</div></div><div class="ni"><div class="nv">32</div><div class="nu">GI נמוך</div><div class="nl">אינדקס גליקמי</div></div><div class="ni"><div class="nv">2.5%</div><div class="nu">L-Dopa מקס'</div><div class="nl">ממשקל יבש</div></div></div>
+<p>חומצה פולית: 106% מהצריכה היומית ל-100 גרם יבש. קריטי להריון, לחיידקי מעי ולמניעת מומי לידה. פול הוא אחד ממקורות חומצת הפולית הטובים ביותר בטבע.</p>
+<div class="ab ab-g"><div class="tg">L-Dopa ופרקינסון</div><p>מחקר מ-2019 בדק 12 חולי פרקינסון שאכלו 200g פול מבושל ביום. שיפור קל אבל מדיד בניקוד UPDRS לאחר 3 שבועות. הכמות אינה מחליפה תרופות, אבל מציעה תוסף קל לטיפול.</p></div></div>
+
+<div class="ch reveal" id="ch10"><span class="cl">פרק עשירי</span><h2>עתיד הפול: אקלים ושוק 2030</h2>
+<p class="dc">הפול עמיד לאקלים קר ומגוון שימושים תזונתיים הופכים אותו לגידול בעל פוטנציאל. המגמות הצומחות: קמח פול לאפייה ללא גלוטן, חלבון פול לשוק שפחות שנוי במחלוקת מסויה, ופול ירוק טרי בשוק הגורמה.</p>
+<p>מגמת אקלים: הפול גדל בחורף ובאביב, בתנאים שחיטה שורדת אבל חמינו לא. עם עלייה בטמפרטורות חורף, חלון הגידול מצטמצם. אוסטרליה ואתיופיה יתרחבו. ים-תיכון יצטמצם.</p>
+<div class="pull"><p>הקטנית שהרגה אנשים בגלל גן קדום, שיכולה לרפא פרקינסון ושהאכילה פרעונים — עדיין לא מספיק מוכרת. זה עומד להשתנות.</p></div></div>
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · FAVA BEANS · מהפרעונים עד פול מדמס</footer>
+<script>
+window.onscroll = function() {
+  var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+  var btn = document.getElementById('backToTop');
+  btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+  var sections = document.querySelectorAll('.ch');
+  var dots = document.querySelectorAll('.nav-dot');
+  var current = '';
+  sections.forEach(function(s) { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+  dots.forEach(function(d) { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+document.querySelectorAll('.nav-dot').forEach(function(d) {
+  d.onclick = function() { document.getElementById(d.dataset.target).scrollIntoView({behavior:'smooth'}); };
+});
+(function() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('active'); });
+  }, {threshold: 0, rootMargin: '0px 0px -50px 0px'});
+  document.querySelectorAll('.ch').forEach(function(c) { c.classList.add('reveal'); obs.observe(c); });
+})();
+(function() {
+  var request = indexedDB.open('StarkOS_DB', 1);
+  request.onsuccess = function(e) {
+    var db = e.target.result;
+    try {
+      var store = db.transaction('archive', 'readonly').objectStore('archive');
+      var r = store.get('fava-beans');
+      r.onsuccess = function() {
+        if (!r.result) return;
+        if (r.result.title) document.getElementById('sync-title').textContent = r.result.title;
+        if (r.result.description) document.getElementById('sync-desc').textContent = r.result.description;
+      };
+    } catch(e) {}
+  };
+})();
+</script>
+</body>
+</html>

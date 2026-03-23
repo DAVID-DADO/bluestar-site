@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>סויה · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0B;--text:#FAF7F0;--body:#D1CEC5;--accent:#606030;--warm:#A0A060;
+  --card:rgba(20,20,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;position:relative;
+  background-image:linear-gradient(rgba(160,160,96,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(160,160,96,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}body::after{background:var(--accent);bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.back-btn{position:absolute;top:40px;left:40px;z-index:10;display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;opacity:0.5;transition:0.3s;}
+.back-btn:hover{opacity:1;color:var(--warm);}
+#backToTop{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;display:none;z-index:1000;}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);position:relative;}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#000;border:1px solid rgba(255,255,255,0.05);}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px;}
+em{color:#D0D090;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(160,160,96,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(96,96,48,0.2);border-right:4px solid var(--accent);}.ab-g .tg{color:#D0D090;}
+.ab-r{background:rgba(184,50,50,0.1);border-right:4px solid #B83030;}.ab-r .tg{color:#E06060;}.ab-r p{color:#DDB0B0;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:13px;color:#A09080;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}
+.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,0.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(160,160,96,0.2);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.vc{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:22px;margin:18px 0;}
+.vc .vn{font-family:'Frank Ruhl Libre',serif;font-size:21px;font-weight:700;color:var(--text);}
+.vc .vt{font-size:12px;color:var(--warm);font-weight:600;margin-bottom:10px;}
+.vc p{font-size:16px;line-height:1.75;margin-bottom:0;color:var(--body);}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}
+.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}
+.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.ch ul li::marker{color:var(--warm);}
+@media(max-width:900px){.side-nav{display:none;}.back-btn{top:20px;left:20px;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="marquee-container">
+  <div class="marquee-text">סויה · SOY · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · סויה · SOY · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · </div>
+</div>
+<div id="progress-bar"></div>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div>
+  <div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div>
+  <div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div>
+  <div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div>
+  <div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div>
+  <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+  <a href="../index.html" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    ספרייה
+  </a>
+  <div class="hero-k">ערך ידע חקלאי · Blue Star International</div>
+  <h1 id="sync-title">סויה</h1>
+  <p class="deck" id="sync-desc">הגידול שמאכיל את בעלי-החיים שמאכילים את העולם. ממנצ'וריה לברזיל, מטופו יפני לבשר תחליפי, מ-$15 מיליארד יצוא שנתי לשדות שבלעו את יערות האמזונס.</p>
+  <div class="hero-img-wrap">
+    <img src="../images/Bowl_overflowing_with_soy_beans_32a79a9579.jpeg" alt="soy" loading="lazy">
+  </div>
+</section>
+<main class="con">
+
+<!-- CH1 -->
+<div class="ch reveal" id="ch1">
+<span class="cl">פרק ראשון</span>
+<h2>ממנצ'וריה לברזיל: 3,000 שנה ו-340 מיליון טון</h2>
+<p class="dc">ב-2023, ברזיל וארצות הברית ייצרו יחד 210 מיליון טון סויה, מחצית מהייצור העולמי של 400 מיליון טון. אבל הסויה (<em>Glycine max</em>) לא מגיעה מהאמריקות. מוצאה ממנצ'וריה הסינית, שם תורבתה לפני כ-3,000 שנה מגרסתה הבר, <em>Glycine soja</em>. הסינים הכירו בה כ"אחת מחמשת הגידולים הקדושים", יחד עם אורז, חיטה, שעורה ודוחן.</p>
+<p>לאירופה הסויה הגיעה ב-1712 עם הבוטנאי אנגלברט קמפר, שהביא זרעים מיפן. לאמריקה הגיעה ב-1765 על ידי סמואל בוון, קפטן ים שייבא זרעים מסין לג'ורג'יה. אבל הסויה נשארה גידול שולי באמריקה עד שנות ה-1920, כשמשרד החקלאות האמריקאי התחיל לקדם אותה כגידול לשיפור קרקע וכחלפון לשמן ייבוא.</p>
+<p>ב-1941, ממש כשיפן תקפה את פרל הארבור, ייצאה ארה"ב כ-5 מיליון טון סויה. ב-2023, ייצאה 50 מיליון. ברזיל, שהחלה לגדל סויה בכמות בשנות ה-70 בעידוד ממשל צבאי שרצה לייצא דולרים, קפצה ל-163 מיליון טון ב-2023, יותר מארה"ב לראשונה בהיסטוריה.</p>
+<div class="ab ab-w"><div class="tg">הנתון המפתיע</div><p>75% מהסויה העולמית משמשת כמספוא לחיות. כ-20% לשמן צמחי. ורק 5-6% נאכלת ישירות כטופו, טמפה, מיסו ומוצרי סויה אחרים. כשאתם אוכלים עוף, ביצה, בשר בקר או חזיר, אתם בעצם אוכלים סויה בעקיפין. החיה ממירה 3-8 ק"ג סויה לק"ג בשר, תלוי בסוג.</p></div>
+</div>
+
+<!-- CH2 -->
+<div class="ch reveal" id="ch2">
+<span class="cl">פרק שני</span>
+<h2>חלבון שלם, אומגה-3 ופיטואסטרוגנים: תזונה ומחלוקות</h2>
+<p class="dc">סויה היא הקטנית העשירה ביותר בחלבון: 36-40% ממשקל יבש, לעומת 20-25% בשעועית ועדשים. יותר מזה, הסויה היא הגידול הצמחי היחיד שמכיל חלבון שלם עם כל תשעת חומצות האמינו החיוניות בפרופורציה מספקת. מבחינת חלבון, היא שקולה תזונתית למוצרי חלב ובשר.</p>
+
+<div class="ng">
+  <div class="ni"><div class="nv">36g</div><div class="nu">חלבון</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">20g</div><div class="nu">שומן</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">30g</div><div class="nu">פחמימות</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">9g</div><div class="nu">סיבים</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">8.8mg</div><div class="nu">ברזל</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">446</div><div class="nu">קלוריות</div><div class="nl">ל-100g יבש</div></div>
+</div>
+
+<h3>פיטואסטרוגנים: הוויכוח שנמשך</h3>
+<p>סויה מכילה <em>איזופלבונים</em>, תרכובות שמתנהגות כמו אסטרוגן חלש בגוף. יש שטוענים שהן מסרטנות או משבשות הורמונים. יש שטוענים שהן מגינות מסרטן שד ומסרטן ערמונית. האמת: עשרות שנים של מחקר לא מצאו נזק ברור אצל אדם בצריכה רגילה. יפן ומדינות מזרח-אסיה עם צריכה גבוהה מאוד לא מראות שיעורי סרטן גבוהים יותר. הסיכון, אם קיים, הוא אצל אנשים עם סרטן שד הורמוני-תלוי שכבר חולים, שם ההמלצות שונות.</p>
+
+<div class="ab ab-g"><div class="tg">אומגה-3 בסויה</div><p>שמן סויה מכיל חומצה אלפא-לינולנית (ALA), מבשר של אומגה-3. הגוף ממיר אותה לEPA ו-DHA ביעילות נמוכה (5-15%). לא תחליף לדגים או אצות, אבל תרומה. לציטין סויה, הנגזר הנפוץ ביותר, משמש כאמולגטור בשוקולד, ממרחים ותוספי תזונה.</p></div>
+</div>
+
+<!-- CH3 -->
+<div class="ch reveal" id="ch3">
+<span class="cl">פרק שלישי</span>
+<h2>מהגרגר לכל: טופו, טמפה, מיסו, SPI ושמן</h2>
+<p class="dc">שרשרת עיבוד הסויה היא אחת המורכבות והשלמות ביותר בעולם הצומח. כמעט כל חלק בגרגר מנוצל: החלבון לטופו ו-SPI, השמן לבישול ולאינדוסטריה, הסיבים למספוא, ה-okara לדגני בוקר, ולציטין לתעשיית המזון. שיעור ניצול: קרוב ל-100%.</p>
+
+<div class="vc">
+  <div class="vn">טופו · Tofu</div>
+  <div class="vt">חלב סויה מוגבש עם מלחי מגנזיום או סידן</div>
+  <p>חלב סויה (סויה טחונה ומסוננת) מגובש בעזרת <em>nigari</em> (מגנזיום כלורי) או גבס (סולפאט סידן). המוצר: גוש לבן שמשתנה בצפיפות לפי כמות הנוזל שנסחטת. סילקן (רך מאוד), קשה, קשה מאוד, מעושן, מוחמץ. יפן, סין וקוריאה פיתחו מאות גרסות. מקור 3,000 שנה שתועד לראשונה בסין בתקופת Han.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">טמפה · Tempeh</div>
+  <div class="vt">סויה מותססת עם עובש Rhizopus · מוצא אינדונזי</div>
+  <p>סויה שלמה מבושלת ומותססת במשך 24-48 שעות עם עובש Rhizopus oligosporus. העובש יוצר רשת לבנה שמחזיקה את הגרגרים יחד. תהליך הסתה: פירוק חלבון לחומצות אמינו, פיתוח ויטמין B12 (נדיר בצמחים), וטעם אגוזי-פטרייתי ייחודי. מקובל במאה ה-19 בגאווה, אינדונזיה. כיום כוכב של תזונת health.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">מיסו · Miso</div>
+  <div class="vt">משחת סויה מותססת, עמוד שדרה יפני</div>
+  <p>סויה מבושלת טחונה ומותססת עם מלח וקוג'י (עובש Aspergillus oryzae), בחביות עץ, לתקופה של שלושה חודשים עד שלוש שנים. מיסו לבן (Shiro): מתוק ועדין, 3 חודשים. מיסו אדום (Aka): עז ומלוח, שנה ומעלה. מרק המיסו, הממרח, הגלאז לדגים, כולם נשענים על ההתסה העמוקה.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">SPI · Soy Protein Isolate</div>
+  <div class="vt">90% חלבון טהור, בסיס לבשר תחליפי</div>
+  <p>הפקה אינדוסטריאלית: טחינה, הסרת שמן בהקסן, הפרדה אלקלינית (pH 9-11), שיקוע חומצי (pH 4.5), ייבוש בספריי. התוצאה: אבקה לבנה, 90% חלבון, ניטרלית בטעם. הבסיס ל-Beyond Meat, Impossible Burger (שמשתמש בסויה), חלבוני ספורט, חלב סויה, מוצרי בריאות. שוק ה-SPI: $7 מיליארד ב-2023.</p>
+</div>
+
+<div class="ab ab-w"><div class="tg">שמן סויה</div><p>20% מהגרגר הוא שמן. שמן סויה הוא שמן הבישול הנפוץ ביותר בארה"ב ובסין. נקודת עשן: 234 מעלות. מתאים לטיגון עמוק. מרגרינה: הידרוגנציה של שמן סויה. ביודיזל: דלק מחודש מסויה. תעשיית שמן הסויה: $50 מיליארד שנתי.</p></div>
+</div>
+
+<!-- CH4 -->
+<div class="ch reveal" id="ch4">
+<span class="cl">פרק רביעי</span>
+<h2>GMO, יערות הגשם ומלחמת הסויה</h2>
+<p class="dc">ב-1996 הביאה Monsanto לשוק את Roundup Ready Soybean, זן סויה שעמיד לקוטל עשבים גליפוסאט. האיכר יכול לרסס את כל השדה, להרוג כל עשב, אבל הסויה שורדת. ב-2024, 94% מהסויה האמריקאית ו-96% מהסויה הברזילאית הן GMO. מספר שמסמן אחת הרבולוציות החקלאיות המהירות בהיסטוריה, ואחד הוויכוחות הלוהטים ביותר.</p>
+
+<h3>הוויכוח</h3>
+<p>בעד GMO: תשואות גבוהות יותר ב-9-12%, פחות קוטל עשבים בסה"כ (כי יש ריסוס אחד מדויק ולא כמה), עלויות נמוכות לחקלאי, פחות ריסוס ידני. נגד: ריכוז בידי תאגידים (Bayer שקנה Monsanto, BASF, Corteva), עמידות של עשבים לגליפוסאט, חשש מהשפעות על בריאות לא מובנות לחלוטין, ואיבוד שליטת החקלאי על הזרע שלו.</p>
+
+<div class="ab ab-r"><div class="tg">יערות הגשם</div><p>בין 1985 ל-2023, ברזיל כרתה כ-780,000 קמ"ר יערות גשם. חלק מסובסד לשדות סויה, חלק לרעיית בקר שאוכלת סויה. הקשר בין המבורגר ויער הגשם הוא ריאלי. Soy Moratorium (2006): הסכם תעשייתי שלא לקנות סויה מאדמות שנקרחו אחרי 2008. עובד חלקית. מנגנון שאריים: חוות בקר שנפתחו ביישומי קרחת, לאחר מכן הפכו לשדות סויה "לגיטימיים".</p></div>
+
+<h3>Non-GMO: שוק הנישה הגדל</h3>
+<p>ישראל, אירופה ויפן מייבאות Non-GMO בעיקר. מחיר פרמיה: $30-80 לטון מעל GMO, תלוי שוק ועונה. קנדה ממשיכה לגדל Non-GMO בנפח משמעותי. אוקראינה הייתה ספקית Non-GMO חשובה לפני 2022. ישראל קונה בעיקר Non-GMO לשוקי הטופו, מוצרי הבריאות ולצרכנים שמודעים לנושא.</p>
+
+<div class="pull"><p>75% מהסויה מאכילה בעלי-חיים. כשאוכלים המבורגר, אוכלים בעצם 6-8 ק"ג סויה בצורה עקיפה. הסויה הוסתרה בתוך הבשר ונשכחה שם.</p></div>
+</div>
+
+<div class="media-slot-inline" style="width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,0.06);"><img src="../images/Bowl_overflowing_with_soy_beans_32a79a9579.jpeg" alt="סויה" style="width:100%;height:100%;object-fit:cover;"></div>
+
+<!-- CH5 -->
+<div class="ch reveal" id="ch5">
+<span class="cl">פרק חמישי</span>
+<h2>שוק $160 מיליארד: ברזיל מובילה, סין צורכת, ישראל מייבאת Non-GMO</h2>
+<p class="dc">שוק הסויה הגלובלי הוא הגדול ביותר מבין כל הקטניות ברמה נומינלית: $160 מיליארד שנתי כשמחשבים את כל שרשרת הערך, מהגרגר ועד SPI ושמן. ייצוא הסויה של ברזיל לבדו: $46 מיליארד ב-2023. ברזיל העקפה את ארה"ב כיצואנית מספר 1 ב-2012, ומאז לא הסתכלה אחורה.</p>
+
+<table class="gt">
+  <thead><tr><th>מדינה</th><th>ייצור שנתי</th><th>תפקיד</th><th>מגמה</th></tr></thead>
+  <tbody>
+    <tr><td>ברזיל</td><td>163 מיליון טון</td><td>יצרנית מספר 1</td><td>ממשיכה לגדול</td></tr>
+    <tr><td>ארה"ב</td><td>113 מיליון טון</td><td>יצרנית מספר 2</td><td>יציב</td></tr>
+    <tr><td>ארגנטינה</td><td>50 מיליון טון</td><td>יצרנית מספר 3</td><td>תנודות גשם</td></tr>
+    <tr><td>סין</td><td>20 מיליון טון</td><td>צרכנית ענקית + מייבאת</td><td>גדלה</td></tr>
+    <tr><td>קנדה</td><td>6 מיליון טון</td><td>Non-GMO פרמיום</td><td>ביקוש גדל</td></tr>
+  </tbody>
+</table>
+
+<h3>סין: הלקוח הגדול ביותר</h3>
+<p>סין מייבאת כ-100 מיליון טון סויה שנתי, יותר מ-60% מהסחר הגלובלי. מייבאת בעיקר מברזיל ומארה"ב. השוק הזה הפך את הסויה לנשק גיאופוליטי: בסכסוך הסחר 2018-2019, סין הטילה מכסים על סויה אמריקאית ועברה לברזיל, וברזיל ייצאה יותר. כשהסכם הסחר נחתם, היא חזרה לאמריקה. ברזיל למדה שמגוון שווקים הוא הגנה.</p>
+
+<div class="ab ab-w"><div class="tg">Blue Star וסויה</div><p>Blue Star מספקת סויה Non-GMO לשוק הישראלי, בעיקר לתעשיית הטופו, מוצרי הבריאות וחלב הסויה. מקור: קנדה ואוקראינה (Non-GMO). מחיר: $450-580 לטון תלוי עונה ומקור. פרמיית Non-GMO: $40-70 מעל CBOT. מינימום: 25 טון. גרגרים שלמים וקמח סויה לפי דרישה.</p></div>
+
+<p>מגמות 2024-2030: <em>חלב סויה</em> עם נתח 35% בשוק חלב צמחי העולמי, מוביל על פני שיבולת, אפונה ושקד. <em>SPI בבשר תחליפי</em> גדל 28% שנתי. <em>Soy-free Non-GMO</em> נישה חדשה לצרכנים שרוצים להימנע מסויה לחלוטין. <em>Precision fermentation</em>: חלבון סויה שמיוצר בביורקטורים בלי לגדל סויה, עשוי לשנות את השוק.</p>
+</div>
+
+</main>
+<div class="ch reveal" id="ch6"><span class="cl">פרק שישי</span><h2>גיאוגרפיה: ברזיל לקחה את הכתר</h2>
+<div style="background:rgba(20,20,22,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;margin:28px 0;">
+<div style="font-family:'Frank Ruhl Libre',serif;font-size:17px;font-weight:700;margin-bottom:14px;text-align:center;color:var(--text);">ייצור סויה עולמי לפי מדינה 2024</div>
+<div class="pb-chart" style="margin:16px 0;">
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇧🇷</span><span class="pb-name">ברזיל</span></div><div class="pb-track"><div class="pb-fill" style="width:39%;background:#A0A060;"></div></div><span class="pb-pct">39%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇺🇸</span><span class="pb-name">ארה"ב</span></div><div class="pb-track"><div class="pb-fill" style="width:28%;background:#C0C080;"></div></div><span class="pb-pct">28%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇦🇷</span><span class="pb-name">ארגנטינה</span></div><div class="pb-track"><div class="pb-fill" style="width:12%;background:#D0D090;"></div></div><span class="pb-pct">12%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">סין</span></div><div class="pb-track"><div class="pb-fill" style="width:5%;background:#E0E0A0;"></div></div><span class="pb-pct">5%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">שאר</span></div><div class="pb-track"><div class="pb-fill" style="width:16%;background:#606050;"></div></div><span class="pb-pct">16%</span></div>
+</div>
+<div style="font-size:11px;color:#6B6058;opacity:.7;margin-top:10px;text-align:center;">USDA FAS 2024 · ~420 מיליון טון/שנה</div>
+</div>
+<p>ברזיל עברה את ארה"ב כיצרנית מספר 1 ב-2012, ומאז הפער גדל. Mato Grosso, Paraná ו-Goiás — שלושת המדינות הברזילאיות שמאכילות את העולם. הסויה הברזילאית נוסעת ב-200-300 קמ' מהשדה לנמל, לפעמים יותר — תשתיות לוגיסטיות הן האתגר הגדול ביותר.</p></div>
+
+<div class="ch reveal" id="ch7"><span class="cl">פרק שביעי</span><h2>בטיחות: GMO, pesticides ואלרגיה</h2>
+<p>סויה היא אחד משמונת האלרגנים הגדולים. אלרגיה לסויה: 0.4% מהאוכלוסייה הכללית, 6-8% מתינוקות (רובם מחלימים עד גיל 3). תסמינים: פריחה, אורטיקריה, בחילות, ובמקרים קשים אנפילקסיס.</p>
+<table class="gt"><thead><tr><th>פרמטר</th><th>סטנדרט EU</th><th>ישראל</th></tr></thead><tbody>
+<tr><td>Glyphosate</td><td>≤ 20 mg/kg</td><td>≤ 20 mg/kg</td></tr>
+<tr><td>Aflatoxin B1</td><td>≤ 2 ppb</td><td>≤ 5 ppb</td></tr>
+<tr><td>לחות</td><td>≤ 14%</td><td>≤ 14%</td></tr>
+<tr><td>GMO תיוג EU</td><td>חובה מעל 0.9%</td><td>חובה מעל 1%</td></tr>
+</tbody></table>
+<div class="ab ab-w"><div class="tg">Non-GMO ישראל</div><p>ישראל מייבאת Non-GMO בעיקר לתעשיית הטופו, חלב הסויה ומוצרי הבריאות. מקור: קנדה ואוקראינה. פרמיה: $40-70 לטון מעל GMO. בדיקה: PCR test ל-Roundup Ready gene. COA מחויב לכל משלוח.</p></div></div>
+
+<div class="ch reveal" id="ch8"><span class="cl">פרק שמיני</span><h2>אמזון ועתיד הסויה: הפרדוקס</h2>
+<p class="dc">הסויה היא פרדוקס: מצד אחד, מקור חלבון יעיל שמאכיל מיליארדים. מצד שני, הייצור שלה הוא אחד הגורמים המרכזיים להכחדת יערות הגשם. Soy Moratorium (2006) הפחית ייצור על אדמות חדשות שנקרחו, אבל שיטת "Land Laundering" — כרית שטחים לרעייה, מוכר לחקלאי סויה "לגיטימי" — ממשיכה.</p>
+<div class="ng"><div class="ni"><div class="nv">420M</div><div class="nu">טון/שנה</div><div class="nl">ייצור עולמי</div></div><div class="ni"><div class="nv">75%</div><div class="nu">מספוא לחיות</div><div class="nl">מהסויה העולמית</div></div><div class="ni"><div class="nv">$46B</div><div class="nu">ייצוא ברזיל</div><div class="nl">2023</div></div><div class="ni"><div class="nv">780K</div><div class="nu">קמ"ר</div><div class="nl">יערות שנקרחו 1985-2023</div></div><div class="ni"><div class="nv">94%</div><div class="nu">GMO ארה"ב</div><div class="nl">מהגידול</div></div><div class="ni"><div class="nv">$160B</div><div class="nu">שוק כולל</div><div class="nl">כולל מוצרים</div></div></div></div>
+
+<div class="ch reveal" id="ch9"><span class="cl">פרק תשיעי</span><h2>עתיד: Precision Fermentation ו-Lab Soy</h2>
+<p class="dc">הטכנולוגיה שעלולה לשנות הכל: Precision Fermentation — ייצור חלבון סויה בביורקטורים של שמרים מהונדסים, ללא שדה, ללא אמזון, ללא GMO. חברות כ-Perfect Day (חלב) ו-Every Company (ביצה) כבר עשו זאת עם חלבוני חלב. חלבון סויה מבורקט: 2027-2030 בייצור מסחרי.</p>
+<p>עד שהטכנולוגיה מתבגרת: ביקוש לסויה ימשיך לגדל ב-3-4% שנתי, מונע על ידי ביקוש לבשר בסין ובדרום-מזרח אסיה, ובמקביל ביקוש לחלבון צמחי ישיר (טופו, SPI) גדל ב-8-12% שנתי.</p></div>
+
+<div class="ch reveal" id="ch10"><span class="cl">פרק עשירי</span><h2>סויה בישראל: שוק Non-GMO מגוון</h2>
+<p>ישראל מייבאת כ-200,000 טון סויה שנתי, בעיקר כמספוא לתעשיית העופות ולדגים. שוק הטופו, חלב הסויה ומוצרי הבריאות: 8,000-12,000 טון Non-GMO שנתי ממקורות קנדה ואוקראינה.</p>
+<table class="gt"><thead><tr><th>מוצר</th><th>מחיר</th><th>מקור</th></tr></thead><tbody>
+<tr><td>סויה GMO מספוא</td><td>$360-450/טון</td><td>ברזיל, ארה"ב</td></tr>
+<tr><td>סויה Non-GMO</td><td>$450-580/טון</td><td>קנדה, אוקראינה</td></tr>
+<tr><td>SPI (90% חלבון)</td><td>$2,500-4,000/טון</td><td>קנדה, סין</td></tr>
+</tbody></table>
+<div class="ab ab-w"><div class="tg">Blue Star</div><p>Blue Star מספקת סויה Non-GMO לתעשיית הטופו, חלב הסויה ומוצרי הבריאות. מינימום: 25 טון. CNF ישראל. COA: PCR Non-GMO, aflatoxin, pesticides, לחות.</p></div>
+<div class="pull"><p>75% מהסויה מאכילה בעלי-חיים. כשאוכלים המבורגר, אוכלים בעצם 6-8 ק"ג סויה בצורה עקיפה. הסויה הוסתרה בתוך הבשר ונשכחה שם.</p></div></div>
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · SOY · ממנצ'וריה לברזיל ל-Beyond Meat</footer>
+<script>
+window.onscroll = function() {
+  var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+  var btn = document.getElementById('backToTop');
+  btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+  var sections = document.querySelectorAll('.ch');
+  var dots = document.querySelectorAll('.nav-dot');
+  var current = '';
+  sections.forEach(function(s) { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+  dots.forEach(function(d) { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+document.querySelectorAll('.nav-dot').forEach(function(d) {
+  d.onclick = function() { document.getElementById(d.dataset.target).scrollIntoView({behavior:'smooth'}); };
+});
+(function() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('active'); });
+  }, {threshold: 0, rootMargin: '0px 0px -50px 0px'});
+  document.querySelectorAll('.ch').forEach(function(c) { c.classList.add('reveal'); obs.observe(c); });
+})();
+(function() {
+  var request = indexedDB.open('StarkOS_DB', 1);
+  request.onsuccess = function(e) {
+    var db = e.target.result;
+    try {
+      var store = db.transaction('archive', 'readonly').objectStore('archive');
+      var r = store.get('soy');
+      r.onsuccess = function() {
+        if (!r.result) return;
+        if (r.result.title) document.getElementById('sync-title').textContent = r.result.title;
+        if (r.result.description) document.getElementById('sync-desc').textContent = r.result.description;
+      };
+    } catch(e) {}
+  };
+})();
+</script>
+</body>
+</html>

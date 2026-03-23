@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0808;--text:#FAF0F0;--body:#D0B8B8;--accent:#8A2020;--warm:#C44040;--card:rgba(22,12,12,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;background-image:linear-gradient(rgba(196,64,64,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(196,64,64,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}body::after{background:#4A1010;bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.05);background:#0B0808;display:flex;align-items:center;justify-content:center;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px;}
+em{color:#D87878;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(196,64,64,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(80,20,20,0.2);border-right:4px solid var(--accent);}.ab-g .tg{color:#D87878;}
+.ab-r{background:rgba(184,50,50,0.1);border-right:4px solid #B83030;}.ab-r .tg{color:#E06060;}.ab-r p{color:#DDB0B0;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(22,12,12,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:13px;color:#A08080;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}
+.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,0.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(196,64,64,0.2);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.ft{text-align:center;padding:44px 24px;font-size:13px;color:#705050;border-top:1px solid rgba(255,255,255,0.06);margin-top:36px;}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.ch ol li::marker{color:var(--warm);}.ch ul li::marker{color:var(--warm);}
+.back-to-top{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;z-index:1000;transition:0.3s;opacity:0;pointer-events:none;}
+.back-to-top.visible{opacity:1;pointer-events:auto;}
+.home-btn{position:fixed;bottom:30px;right:30px;display:flex;align-items:center;gap:8px;background:rgba(22,12,12,0.85);border:1px solid rgba(196,64,64,0.3);border-radius:24px;padding:8px 16px;text-decoration:none;color:var(--warm);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;z-index:1000;transition:0.3s;}
+@media(max-width:900px){.side-nav{display:none;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+<title>גוג'י ברי · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1"></div>
+    <div class="nav-dot" data-target="ch2"></div>
+    <div class="nav-dot" data-target="ch3"></div>
+    <div class="nav-dot" data-target="ch4"></div>
+    <div class="nav-dot" data-target="ch5"></div>
+    <div class="nav-dot" data-target="ch6"></div>
+    <div class="nav-dot" data-target="ch7"></div>
+    <div class="nav-dot" data-target="ch8"></div>
+    <div class="nav-dot" data-target="ch9"></div>
+    <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · FRUITS ARCHIVE</div>
+    <h1 id="sync-title">גּוֹג'י</h1>
+    <p class="deck" id="sync-desc">הפרי האדום שהבטיח אריכות ימים לקיסרים סינים. שתי אלפי שנות רפואה מסורתית, ביוכימיה של Zeaxanthin ופוליסכרידים ייחודיים, ושוק שגדל על גב הסיפור ולא רק על גב הנתונים.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+          <img src="../images/Dark_bowl_overflowing_goji_berries_8153f60c6e.jpeg" alt="goji" loading="lazy">
+        </div>
+</section>
+<div class="marquee-container">
+    <div class="marquee-text">גוג'י · LYCIUM BARBARUM · ZEAXANTHIN · GOJI BERRY · LBP · WOLFBERRY · גוג'י · LYCIUM BARBARUM · ZEAXANTHIN · GOJI BERRY · LBP · WOLFBERRY · </div>
+</div>
+<main class="con">
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: זהות, שם, ואגדת הנזיר הסיני</h2>
+    <p class="dc">לפני שהיה "superfood", גוג'י היה תרופה. לפני שהיה תרופה, הוא גדל בר בעמקי נינגשיה ושאנשי שבצפון-מרכז סין, פרי אדום קטן שרועים ונזירים ידעו לאסוף. הסיפור המפורסם: נזיר בשם Li Qing Yuen, שחי לכאורה עד גיל 256 (1677-1933), ייחס את אריכות ימיו לאכילה יומיומית של גוג'י. הסיפור הוא אגדה. הגיל הוא בדאי. אבל הוא ביטא משהו שתרבות שלמה האמינה בו: הפרי האדום הקטן עושה משהו לגוף.</p>
+    <p>השם "גוג'י" מגיע מהפינין הסיני <strong>枸杞 (gǒuqǐ)</strong>. בסין נקרא "Wolfberry" (<strong>狼莓</strong>). השם הלטיני <em>Lycium barbarum</em>: <em>Lycium</em> מהיוונית, אזור בלוקיה (טורקיה), שם גדל מין קרוב. <em>barbarum</em> פירושו "זר/ברברי", כפי שהרומאים כינו כל מה שמחוץ לספירתם. משפחה בוטנית: <strong>Solanaceae</strong>, אותה משפחה של עגבנייה, פלפל, תפוח-אדמה ותמרהינד. הפרי האדום, הצורה, הביוכימיה, הכל מסביר את הקרבה.</p>
+    <p>ב-<strong>2004</strong>, גוג'י ברי "מתגלה" לשוק המערבי כאשר חברת Earth Fresco מארה"ב מתחילה לשווק אותו עם טענות מוגזמות (ORAC גבוה ב-"מעל 10 פעמים לכל פרי אחר"). ב-<strong>2006</strong>, FDA שולחת אזהרה לחברות גוג'י על טענות בריאות לא מוסמכות. ב-<strong>2007</strong>, Oprah Winfrey מציגה גוג'י בתוכניתה. ב-2007-2008: שוק הגוג'י בארה"ב מוכפל תוך 18 חודש. <em>הפרי האדום לא השתנה. הנרטיב שלו השתנה את המחיר.</em></p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>ה-Tang Bencao (659 לספירה), הפרמקופאה הרפואית הרשמית הראשונה בסין שהוצאה בצו קיסרי, מציין גוג'י כ-<strong>תרופה לעיניים וכבד</strong> על בסיס רפואה אמפירית של מאות שנים. 1,365 שנה לאחר מכן, מחקר מ-2019 מוצא שZeaxanthin בגוג'י מפחית ניוון מקולרי. האמפיריה הייתה לפני המדע.</p>
+    </div>
+</section>
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: הצמח, האקלים, הגידול</h2>
+    <p class="dc"><em>Lycium barbarum</em> הוא שיח רב-שנתי, גובה <strong>1-3 מטר</strong>, עם ענפים ארוכים ומשתלשלים. הפרחים: ורודים-סגולים, קטנים. הפרי: berry אדום-כתום, אובלי, <strong>1-2 ס"מ</strong>, מכיל 2-20 זרעים. שיח בריא מניב פרי מ-<strong>שנה שנייה</strong> ויכול לחיות ולהניב עד <strong>20-30 שנה</strong>. עלים ירוקים כבדי-מרקם שגם הם נאכלים ונסחרים (Goji Leaf Tea).</p>
+    <h3>אקלים ואדמה</h3>
+    <p>גוג'י עמיד לתנאים קשים: <strong>טמפרטורה -26°C עד 38°C</strong>. עמיד לבצורת, אך פרייה אופטימלית ב-<strong>400-600 מ"מ גשם</strong>. pH אדמה: <strong>7.0-8.5</strong>, אוהב אדמות בסיסיות גירניות. מדינות מייצרות: <strong>סין</strong> (95%+), בעיקר Ningxia Hui Autonomous Region ו-Qinghai. Ningxia מוגנת כ-GI (Geographical Indication) לגוג'י, כמו Kampot Pepper.</p>
+    <div class="ab ab-g">
+        <div class="tg">גזרת מחקר</div>
+        <p>זן <strong>Ningxia No.1</strong> (פותח ב-Ningxia Academy of Agriculture, 2010) מניב <strong>400-600 ק"ג פרי טרי לדונם</strong>, לעומת 250-350 בזנים מסורתיים. תכולת Zeaxanthin: <strong>140-180 mg/100g</strong> בפרי טרי, גבוהה ב-20% מהממוצע. הזן רגיש יותר לגשם כבד, אבל תחת אירוח מבוקר: פרמיום ברור.</p>
+    </div>
+    <p>קצירה: <strong>יוני-ספטמבר</strong> בנינגשיה, שלושה עד ארבעה מחזורי קציר בעונה. קציר ידני: <strong>15-20 ק"ג ביום לפועל</strong>. הפרי עדין ומועד לאדמום/ריקבון תוך 48 שעות מקציר. ייבוש מיידי: <strong>65-70°C ל-48 שעות</strong>. יחס המרה: 5 ק"ג טרי = 1 ק"ג יבש.</p>
+</section>
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: Zeaxanthin, LBP, ובטא-קרוטן</h2>
+    <p class="dc">גוג'י הוא פרי עם שלושה רכיבים פעילים עיקריים שכל אחד מהם עומד לבדו: <strong>Zeaxanthin</strong>, קרוטנואיד עיני; <strong>LBP (Lycium Barbarum Polysaccharides)</strong>, פוליסכרידים ייחודיים; ו<strong>בטא-קרוטן</strong>, מקדים ויטמין A. שלושתם ריכוזם בגוג'י יוצאי דופן ביחס לפירות אחרים.</p>
+    <h3>Zeaxanthin: קרוטנואיד עיני</h3>
+    <p><strong>Zeaxanthin</strong> (C₄₀H₅₆O₂) מהווה <strong>56-77%</strong> מסך הקרוטנואידים בגוג'י יבש, ריכוז של <strong>100-200 mg/100g</strong>. זהו הריכוז הגבוה ביותר בכל מזון מוכר. Zeaxanthin הוא פיגמנט צהוב-כתום שמצטבר ב-Macula Lutea של הרשתית ומגן מפני נזק UV ו-Blue light. לצד Lutein, הוא האחראי הביוכימי למניעת AMD (Age-related Macular Degeneration).</p>
+    <h3>LBP: Polysaccharides ייחודיים</h3>
+    <p><strong>Lycium Barbarum Polysaccharides (LBP)</strong>, פולימרים של סוכרים ייחודיים ל-Lycium, מהווים <strong>5-8%</strong> ממשקל יבש. LBP מראים in vitro פעילות נוירופרוטקטיבית, אימונו-מגרה, ואנטי-אפופטוטית. הם המרכיב שמוכר ביותר בפרמקופאה הסינית ואחד מהנושאים הנחקרים ביותר.</p>
+    <div class="ab ab-w">
+        <div class="tg">ממצא ביוכימי</div>
+        <p>מחקר שפורסם ב-Nutrients (2021) זיהה בגוג'י <strong>Betaine</strong> (Betaine anhydrous, 0.6-0.9%) שנמצא גם בסלק ובתרד. Betaine פועל כ-methyl donor בתהליך הומוציסטאין-מתיונין, המשפיע על בריאות לב וכלי דם ועל פונקציית כבד. צירוף Betaine ו-Zeaxanthin בפרי אחד יוצר פרופיל פרמקולוגי שאינו שכיח.</p>
+    </div>
+    <p>ערכים תזונתיים ל-100g גוג'י יבש: <strong>349 קלוריות, 68g פחמימות, 14g חלבון, 0.4g שומן, 13g סיבים</strong>. עשיר בברזל (<strong>6.8 מ"ג, 38% יומי</strong>), ויטמין C (<strong>48 מ"ג</strong>), קלציום (<strong>190 מ"ג</strong>).</p>
+</section>
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: פרמטרים ושפת הסוחרים</h2>
+    <p class="dc">שוק הגוג'י פועל בשתי שפות: <strong>גוג'י יבש קמעונאי</strong> (פרי שלם, אדום, מתוק) ו<strong>תמצית LBP</strong> לתוספי תזונה. הפרמטר הראשון לקמעונאי: <strong>גודל ואחידות צבע</strong>. לתוספי תזונה: <strong>LBP % ו-Zeaxanthin mg/100g</strong>.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Grade A</th><th>Grade B</th><th>תמצית LBP</th></tr></thead>
+        <tbody>
+            <tr><td><strong>גודל</strong></td><td>260-380 פרי/100g</td><td>380-500/100g</td><td>,</td></tr>
+            <tr><td><strong>לחות מקס'</strong></td><td>13%</td><td>15%</td><td>5%</td></tr>
+            <tr><td><strong>LBP מינ'</strong></td><td>לא נמדד</td><td>,</td><td>18%</td></tr>
+            <tr><td><strong>Zeaxanthin מינ'</strong></td><td>100 mg/100g</td><td>70 mg/100g</td><td>,</td></tr>
+            <tr><td><strong>SO₂ מקס'</strong></td><td>50 mg/kg</td><td>50 mg/kg</td><td>,</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-r">
+        <div class="tg">אזהרת SO₂: גוג'י מולבן</div>
+        <p>גוג'י טרי שמיובש לאחר ריסוס ב-<strong>גופרית דו-חמצנית (SO₂)</strong> מקבל צבע כתום-אדום בהיר יפה, ולא מחשיך. גוג'י "טבעי" מחשיך לחום-כהה בייבוש. גוג'י בצבע אדום בהיר מאוד שנמכר במחיר נמוך: סימן אדום. EU מגביל SO₂ ל-<strong>50 mg/kg</strong> לגוג'י מיובש. ייצרנים לא-מוסמכים ב-Qinghai ידועים בריכוזי SO₂ גבוהים כ-200-500 mg/kg.</p>
+    </div>
+</section>
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: ייבוש, SO₂, ומיצוי</h2>
+    <p class="dc">גוג'י הוא פרי עדין שחיי המדף שלו טרי הם 48-72 שעות בלבד. מייד לאחר קציר, ייבוש מיידי הוא הכרחי. שתי שיטות: <strong>ייבוש טבעי-שמש</strong> (4-7 ימים, הפרי מחשיך לחום-בורדו) ו<strong>ייבוש מכני עם SO₂</strong> (48 שעות, פרי אדום-כתום).</p>
+    <div class="proc-steps">
+        <div class="proc-step"><div class="proc-step-num">01</div><div><div class="proc-step-title">קציר וניקוי</div><div class="proc-step-body">קציר ידני. ניקוי: הסרת עלים, גבעולים, פרי פגום. שטיפה עדינה. <strong>אסור לשטוף בלחץ</strong>: פרי פורץ ומשחיר.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">02</div><div><div class="proc-step-title">ייבוש</div><div class="proc-step-body">Tunnel dryers: <strong>65-70°C ל-48 שעות</strong>. לחות מ-80% ל-13%. מעל 75°C: Zeaxanthin מאבד 15-25%. ייבוש שמש: ניחוח עשיר יותר, צבע כהה יותר, ללא SO₂.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">03</div><div><div class="proc-step-title">מיון ואריזה</div><div class="proc-step-body">מיון אופטי: הפרדה לפי גודל ואחידות צבע. Grade A: 260-380 פרי/100g, צבע אחיד. אריזה: שקי PE מוגני לחות, קופסאות קרטון מרובדות. <strong>אחסון: 15-20°C, RH מתחת ל-50%</strong>. חיי מדף: <strong>18-24 חודש</strong>.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">04</div><div><div class="proc-step-title">מיצוי LBP</div><div class="proc-step-body">מיצוי מימי חם (80°C) → ריכוז → spray-dry. תמצית LBP 18%: <strong>50-80 דולר לק"ג</strong>. LBP 40%: <strong>100-180 דולר לק"ג</strong>. שוק תוספי LBP גדל ב-14% לשנה (2020-2024).</div></div></div>
+    </div>
+</section>
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות</h2>
+    <p class="dc">גוג'י מציג שלושה סיכוני בטיחות עיקריים: SO₂, pesticides, ואינטראקציה תרופתית ספציפית. שלושתם מתועדים ברגולציה האירופאית.</p>
+    <div class="ab ab-r">
+        <div class="tg">אינטראקציה תרופתית: Warfarin</div>
+        <p>גוג'י מכיל <strong>Betaine</strong> שעשוי להגביר פעילות <strong>Warfarin</strong> (קומדין) ולהגדיל INR. שלושה case reports פורסמו ב-2008-2011 על חולים שגוג'י הגביר את anticoagulation שלהם. מינוי הסיכון: מינון גבוה (מעל 30g ליום) בשילוב עם warfarin. לחולים על warfarin: לדווח לרופא.</p>
+    </div>
+    <p>MRL EU: <strong>Chlorpyrifos ≤ 0.01 mg/kg</strong>. גוג'י סיני מופיע ב-RASFF בגין pesticides ב-<strong>12-18 אירועים לשנה</strong> (ממוצע 2019-2024). SO₂: EU מחייב תיוג כאשר ≥ 10 mg/kg. מיקרוביולוגיה: <strong>TPC ≤ 10⁵ CFU/g</strong>, <strong>Salmonella: Absent/25g</strong>, <strong>Aflatoxin B1 ≤ 5 μg/kg</strong>. COA תקני: SO₂, pesticide panel, microbiological, heavy metals, Zeaxanthin mg/100g (HPLC).</p>
+</section>
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה וניהול שרשרת האספקה</h2>
+    <p class="dc">גוג'י הוא מוצר יחסית יציב לשינוע כשיבש, אבל עם שני אתגרים: <strong>ספיגת לחות</strong> שגורמת לגוש (caking) ולעובש, ו<strong>נזק מכני</strong> שגורם לדמם צבע ואיבוד מראה.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מוצא</th><th>נמל</th><th>זמן לאירופה</th><th>הערות</th></tr></thead>
+        <tbody>
+            <tr><td><strong>נינגשיה, סין</strong></td><td>Tianjin / Shanghai</td><td>28-35 ימים</td><td>Dry container, אריזה כפולה נגד לחות</td></tr>
+            <tr><td><strong>צ'ינגהאי, סין</strong></td><td>Shanghai</td><td>28-35 ימים</td><td>לרוב Grade B-C, מחיר נמוך</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>אחסון: <strong>15-20°C, RH מתחת ל-50%</strong>. חיי מדף: <strong>18-24 חודש</strong>. גוג'י שנחשף ל-RH מעל 60%: גוש (caking) תוך שבועות. שינוע בקיץ בלא cooling: סיכון ריאלי. Incoterms: FOB Shanghai, CIF Rotterdam. מחיר: Grade A Ningxia <strong>8,000-14,000 דולר לטון</strong>. Grade B: <strong>4,000-7,000 דולר לטון</strong>. <em>הפרי האדום שנסע מנינגשיה לניו-יורק על גב סיפור הנזיר בן ה-256.</em></p>
+</section>
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות</h2>
+    <p class="dc">מעל <strong>1,500 מחקרים</strong> פורסמו על <em>Lycium barbarum</em> בעשרים שנה האחרונות. רובם ממוסד מחקר סיני ורובם in vitro. מחקרים קליניים באנשים: כ-60. הממצאים המוצקים ביותר: עיניים.</p>
+    <h3>Zeaxanthin ובריאות עיניים</h3>
+    <p>מחקר RCT (Cheng et al., British Journal of Nutrition 2019, 150 קשישים) מצא שצריכת גוג'י (15g/יום, 90 יום) הגדילה את צפיפות הפיגמנט המקולרי (MPOD) ב-<strong>25%</strong> לעומת ירידה קלה בפלסבו. MPOD הוא מדד ישיר לעמידות מול AMD. AMD משפיעה על <strong>196 מיליון אנשים ב-2020</strong> ועד 288 מיליון ב-2040.</p>
+
+    <div class="cb">
+      <div class="ct">ייצור גוג'י עולמי לפי מדינה ואזור</div>
+      <div class="pb-chart">
+        <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">נינגשיה, סין</span></div><div class="pb-track"><div class="pb-fill" data-w="65" style="background:#8A2020"></div></div><span class="pb-pct">65%</span></div>
+        <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">צ'ינגהאי, סין</span></div><div class="pb-track"><div class="pb-fill" data-w="22" style="background:#C44040"></div></div><span class="pb-pct">22%</span></div>
+        <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">גנסו + שאנשי</span></div><div class="pb-track"><div class="pb-fill" data-w="8" style="background:#D87878"></div></div><span class="pb-pct">8%</span></div>
+        <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים (EU, מרוקו)</span></div><div class="pb-track"><div class="pb-fill" data-w="5" style="background:#DDD6CA"></div></div><span class="pb-pct">5%</span></div>
+      </div>
+      <div class="pb-note">FAO / ITC 2024 · ~140,000 טון/שנה · נינגשיה מוגנת כ-GI (Geographical Indication)</div>
+    </div>
+    <div class="ng">
+        <div class="ni"><div class="nv">100-200</div><div class="nu">mg Zeaxanthin/100g</div><div class="nl">הריכוז הגבוה בעולם</div></div>
+        <div class="ni"><div class="nv">25%</div><div class="nu">עלייה ב-MPOD</div><div class="nl">מחקר RCT 2019</div></div>
+        <div class="ni"><div class="nv">5-8%</div><div class="nu">LBP</div><div class="nl">ממשקל יבש</div></div>
+        <div class="ni"><div class="nv">1,300</div><div class="nu">שנות תיעוד רפואי</div><div class="nl">Tang Bencao 659 לספירה</div></div>
+        <div class="ni"><div class="nv">14%</div><div class="nu">CAGR שוק LBP</div><div class="nl">2020-2024</div></div>
+        <div class="ni"><div class="nv">349</div><div class="nu">קלוריות/100g</div><div class="nl">יבש</div></div>
+    </div>
+    <p>LBP ומערכת חיסון: מחקרים in vitro מראים הגברת פעילות NK cells ו-T cells. מחקר ב-67 קשישים (He et al., 2011) מצא שתוסף LBP שיפר ספיגת חיסון לשפעת ב-<strong>42%</strong> לעומת פלסבו. מחקר קטן, אך עקבי עם כמה מחקרים נוספים.</p>
+</section>
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק עולמי ומחירים</h2>
+    <p class="dc">שוק הגוג'י היבש העולמי: <strong>120,000-150,000 טון לשנה</strong>, שווי <strong>800 מיליון עד 1.2 מיליארד דולר</strong>. שוק תמציות LBP ומוצרי גוג'י מעובדים: <strong>300-400 מיליון דולר נוסף</strong>. הנהג הגדול: "superfood premium" שאפשר לגבות עליו פרמיה של 600-1,000% ממחיר raw material.</p>
+    <div class="ab ab-w">
+        <div class="tg">שוק ישראל</div>
+        <p>ישראל היא אחת הצרכניות הגבוהות לנפש של גוג'י מחוץ לסין. שוק הבריאות הישראלי אימץ גוג'י מוקדם (2006-2008). יבואן מוביל: <strong>Natures Plus Israel</strong> ו-<strong>Super-Pharm</strong>. מחיר קמעונאי: <strong>60-120 שקל ל-250g</strong>. מחיר סיטוני: <strong>15-25 שקל ל-100g</strong>. מרווח קמעונאי: <strong>200-400%</strong>.</p>
+    </div>
+    <p>שחקנים מובילים: <strong>Ningxia Wolfberry Group</strong> (הגדולה בסין), <strong>Zhongning County Wolfberry Cooperative</strong> (GI-certified Ningxia). ייבואנים מערביים: <strong>Navitas Organics</strong> (ארה"ב), <strong>Raw Health</strong> (בריטניה). CAGR שוק גוג'י עולמי: <strong>9% (2019-2024)</strong>. <em>שוק שנבנה על סיפור הנזיר צריך לספר סיפורים טובים יותר, כי המדע מתחיל לבדוק אותם.</em></p>
+</section>
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית ומגמות 2030</h2>
+    <p class="dc">שוק הגוג'י עומד בפני בחינה: <strong>מחקר קליני גדל</strong> יוכיח או יפרוך טענות. <strong>גידול מחוץ לסין</strong> מתחיל בקנה מידה קטן. <strong>מיצוי Zeaxanthin</strong> מגוג'י לתוסף ממוקד צומח.</p>
+    <h3>Zeaxanthin Supplement Market</h3>
+    <p>שוק Zeaxanthin לתוסף עיניים: <strong>180 מיליון דולר ב-2024</strong>, CAGR של 11%. רוב ה-Zeaxanthin המסחרי מגיע מ-Marigold (<em>Tagetes erecta</em>), לא מגוג'י. אבל Zeaxanthin מגוג'י נחשב ב-bioavailability גבוה יותר בשל המטריצה הפרי הטבעית. מחיר Zeaxanthin מגוג'י: <strong>500-800 דולר לק"ג (10% purity)</strong>.</p>
+    <div class="ab ab-g">
+        <div class="tg">מגמה: גוג'י מחוץ לסין</div>
+        <p>ניסויי גידול בקנה מידה קטן מתנהלים ב-<strong>ניו מקסיקו, ספרד, ומרוקו</strong>. Climate Requirements של גוג'י (חם, יבש, אדמות בסיסיות) מתאים לאזורי ים-תיכון. תפוקות ראשוניות: <strong>250-400 ק"ג/דונם</strong>, נמוכות מנינגשיה (400-600 ק"ג) אבל עם יתרון לוגיסטי לשוק EU.</p>
+    </div>
+    <p>שינויי אקלים: Ningxia חשופה ליובש גדל. מחקר Chinese Academy of Sciences מ-2022 מראה שנהר Yellow River (מקור ההשקיה העיקרי) צפוי להפחית ספיקה ב-15-25% עד 2040. גוג'י עמיד לבצורת יחסית, אבל גידול מסחרי עם תפוקות גבוהות מחייב השקיה. <em>הפרי שנסע מהמדרון הסיני לכל מדף בריאות בעולם יצטרך ללמוד לחיות עם פחות מים.</em></p>
+    <div class="ft"><span style="font-size:11px;color:#705050;">אגרונומיה: Ningxia Academy of Agriculture, Wolfberry Research Institute · ביוכימיה: Bucheli et al., J Agricultural Food Chemistry 2011 · בריאות: Cheng et al., British Journal of Nutrition 2019 · He et al., Vaccine 2011 · כלכלה: Grand View Research Goji Berry Market 2024 · ITC Trade Map · RASFF EU 2020-2024</span></div>
+</section>
+</main>
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · GOJI BERRY · גוג'י</footer>
+<div class="marquee-container"><div class="marquee-text">גוג'י · LYCIUM BARBARUM · ZEAXANTHIN · GOJI BERRY · LBP · WOLFBERRY · גוג'י · LYCIUM BARBARUM · ZEAXANTHIN · GOJI BERRY · LBP · WOLFBERRY · </div></div>
+<button class="back-to-top" id="btt">↑</button>
+<a href="../index.html" class="home-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C44040" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>ספרייה</span></a>
+<script>
+window.onscroll=()=>{const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progress-bar').style.width=(window.scrollY/h*100)+'%';const s=document.querySelectorAll('.ch'),d=document.querySelectorAll('.nav-dot');let c="";s.forEach(x=>{if(pageYOffset>=x.offsetTop-200)c=x.id;});d.forEach(x=>{x.classList.remove('active');if(x.dataset.target===c)x.classList.add('active');});};
+const btt=document.getElementById('btt');window.addEventListener('scroll',()=>btt.classList.toggle('visible',window.scrollY>300));btt.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot=>dot.onclick=()=>document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'}));
+if(window.IntersectionObserver){const pbObs=new IntersectionObserver(e=>{e.forEach(x=>{if(!x.isIntersecting)return;x.target.querySelectorAll('.pb-fill').forEach(b=>{b.style.width=b.dataset.w+'%';});pbObs.unobserve(x.target);});},{threshold:0.3});document.querySelectorAll('.pb-chart').forEach(el=>pbObs.observe(el));}
+(function(){const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('active');}),{threshold:0,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.ch').forEach(c=>{c.classList.add('reveal');obs.observe(c);});function sync(){const r=indexedDB.open('StarkOS_DB',1);r.onsuccess=e=>{const db=e.target.result;try{const pid=window.location.pathname.split('/').pop().replace('.html',''),s=db.transaction('archive','readonly').objectStore('archive'),g=s.get(pid);g.onsuccess=()=>{const d=g.result;if(!d)return;function m(s){const v=s.startsWith('data:video'),el=document.createElement(v?'video':'img');el.src=s;el.style.cssText='width:100%;height:100%;object-fit:cover;';if(v){el.autoplay=el.muted=el.loop=true;el.setAttribute('playsinline','');}return el;}const h1=document.getElementById('sync-title');if(h1&&d.name)h1.innerText=d.name;const dk=document.getElementById('sync-desc');if(dk&&d.desc)dk.innerText=d.desc;const src=d.media1||d.media,sl=document.getElementById('slot-product-hero');if(sl&&src){sl.innerHTML='';sl.appendChild(m(src));}};}catch(e){}};};window.addEventListener('load',sync);}());
+
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

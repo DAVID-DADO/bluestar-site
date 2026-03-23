@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>כוסמת · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0B;--text:#FAF7F0;--body:#D1CEC5;--accent:#8A7A30;--warm:#B8A840;--card:rgba(20,20,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;background-image:linear-gradient(rgba(100,100,100,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(100,100,100,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}body::after{background:var(--accent);bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.05);background:#0A0A0B;}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px;}
+em{color:#C4B878;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(184,168,64,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(138,122,48,0.15);border-right:4px solid var(--accent);}.ab-g .tg{color:#D4C060;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(20,20,22,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:13px;color:#A09080;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}
+.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,0.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(184,168,64,0.2);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.vc{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:22px;margin:18px 0;}
+.vc .vn{font-family:'Frank Ruhl Libre',serif;font-size:21px;font-weight:700;color:var(--text);}
+.vc .vt{font-size:12px;color:var(--warm);font-weight:600;margin-bottom:10px;}
+.vc p{font-size:16px;line-height:1.75;margin-bottom:0;color:var(--body);}
+.pb-chart{margin:16px 0 8px;display:flex;flex-direction:column;gap:10px;}
+.pb-row{display:flex;align-items:center;gap:10px;}
+.pb-meta{display:flex;align-items:center;gap:6px;min-width:160px;justify-content:flex-end;}
+.pb-flag{font-size:18px;}.pb-name{font-size:13px;color:#A09080;}
+.pb-track{flex:1;background:rgba(255,255,255,0.08);height:18px;border-radius:9px;overflow:hidden;}
+.pb-fill{height:100%;border-radius:9px;transition:width 1.2s cubic-bezier(0.22,1,0.36,1);}
+.pb-pct{font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:700;color:var(--text);width:36px;text-align:left;}
+.pb-note{font-size:11px;color:#6B6058;opacity:.7;margin-top:10px;text-align:center;}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}
+.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.ch ul li::marker{color:var(--warm);}
+.back-to-top{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;z-index:1000;transition:0.3s;opacity:0;pointer-events:none;}
+.back-to-top.visible{opacity:1;pointer-events:auto;}
+.home-btn{position:fixed;bottom:30px;right:30px;display:flex;align-items:center;gap:8px;background:rgba(20,20,22,0.85);border:1px solid rgba(184,168,64,0.3);border-radius:24px;padding:8px 16px;text-decoration:none;color:var(--warm);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;z-index:1000;}
+@media(max-width:900px){.side-nav{display:none;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="marquee-container"><div class="marquee-text">כוסמת · BUCKWHEAT · BLUE STAR · BUCKWHEAT · כוסמת · BUCKWHEAT · BLUE STAR · BUCKWHEAT · כוסמת · BUCKWHEAT · BLUE STAR · BUCKWHEAT · </div></div>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div>
+  <div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div>
+  <div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div>
+  <div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div>
+  <div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div>
+  <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+  <a href="../index.html" style="position:absolute;top:40px;left:40px;color:var(--text);text-decoration:none;opacity:0.5;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;">← ספרייה</a>
+  <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES</div>
+  <h1 id="sync-title">כוסמת</h1>
+  <p class="deck" id="sync-desc">פסאודו-דגן ללא גלוטן ממרכז אסיה. מ-Kasha הרוסי ועד אטריות סובה יפניות, דרך שדות ירוקים שמלבלבים בשלושה שבועות.</p>
+  <div class="hero-img-wrap">
+    <img src="../images/Bowl_overflowing_with_quinoa_8f3c809090.jpeg" alt="buckwheat" loading="lazy">
+  </div>
+</section>
+<main class="con">
+
+<!-- CH1 -->
+<section class="ch reveal" id="ch1">
+<span class="cl">פרק ראשון</span>
+<h2>פסאודו-דגן: לא חיטה ולא דגן</h2>
+<p class="dc">כוסמת (<em>Fagopyrum esculentum</em>) אינה קרובת משפחה של חיטה, שיבולת שועל, אורז או כל דגן אחר. היא קטגוריה בפני עצמה — <em>פסאודו-דגן</em>, צמח פורח ממשפחת הקשנית (Polygonaceae), קרובת משפחה של חומצה ועוגנית. הגרגרים שלה, שנראים כמו דגן, הם בעצם פרי קטן בצורת משולש שלושה-צלעות.</p>
+<p>המוצא: מרכז אסיה, כנראה מחבל יונן שבדרום-מערב סין או מהמדרונות הדרומיים של ההימלייה. משם התפשטה כוסמת לכל הכיוונים: לתוך יפן, לסיביריה ורוסיה, ולאירופה דרך דרכי השיירות הסינית-רוסית. שמה הרוסי, <em>грека</em> (Greka), פירושו "של יוון" — אירוניה, כי היא הגיעה לרוסיה דרך יוון ביזנטינית, לא מיוון עצמה.</p>
+<p>בתרבות הרוסית, Kasha — כוסמת קלויה מבושלת — היא מזון לאומי עמוק. ביפן, <em>soba</em> (蕎麦) פירושו המילולי "כוסמת". מן האיכר הסיבירי ועד מסעדות הסושי ביוקוהמה, אותה צמחית קטנה שחצה את ההרים לפני 4,000 שנה.</p>
+<div class="ab ab-w"><div class="tg">ללא גלוטן מבדיקה</div><p>כוסמת נטולת גלוטן לחלוטין, אם כי לפעמים מעובדת במפעלים המטפלים גם בחיטה. לסובלים מצליאק, חשוב לבדוק אישור ייעודי ללא-גלוטן על האריזה.</p></div>
+</section>
+
+<!-- CH2 -->
+<section class="ch reveal" id="ch2">
+<span class="cl">פרק שני</span>
+<h2>ירוקה מול קלויה: שתי אישיות שונות לחלוטין</h2>
+<p class="dc">הפלא של כוסמת הוא שלשני הטיפולים השונים שלה יש טעם שונה לחלוטין. כוסמת <em>ירוקה</em> (raw) היא הגרגר הלא-מעובד, בצבע ירוק-בהיר. טעם עדין, מעט אגוזי, מתאים להנבטה ולטחינה לקמח עדין. כוסמת <em>קלויה</em> (Kasha), בצבע חום-בורדו, עברה קלייה בחום גבוה שמשנה את הפרופיל הכימי לחלוטין ומייצרת טעם עמוק, מעושן, ואגוזי-מורכב.</p>
+<div class="ng">
+  <div class="ni"><div class="nv">13g</div><div class="nu">חלבון</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">71g</div><div class="nu">פחמימות</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">10g</div><div class="nu">סיבים</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">2.2mg</div><div class="nu">ברזל</div><div class="nl">ל-100g</div></div>
+  <div class="ni"><div class="nv">343</div><div class="nu">קלוריות</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">65</div><div class="nu">GI נמוך</div><div class="nl">אינדקס גליקמי</div></div>
+</div>
+<p>חלבון כוסמת איכותי יחסית לחלבון ממקור צמחי: הוא מכיל את כל חומצות האמינו החיוניות, כולל ליזין — חומצה שנעדרת מרוב הדגנים. זה הופך אותה לתוספת חשובה לתזונה צמחית.</p>
+<h3>רוטין — הפלבונואיד הסודי</h3>
+<p>כוסמת מכילה ריכוז גבוה של <em>רוטין</em>, פלבונואיד בעל תכונות נוגדות דלקת ומחזקות נימי דם. מחקרים מצביעים על השפעה חיובית בהורדת לחץ דם ובחיזוק קפילריות. כוסמת ירוקה מכילה יותר רוטין מהקלויה, כי הקלייה מפרקת חלק מהפלבונואידים.</p>
+</section>
+
+<!-- CH3 -->
+<section class="ch reveal" id="ch3">
+<span class="cl">פרק שלישי</span>
+<h2>גיאוגרפיה: רוסיה, סין ויפן</h2>
+<p class="dc">כוסמת גדלה היטב בתנאים שרוב דגנים לא שורדים: קרקע חומצית וירודה, טמפרטורות קרות, וגשמים בלתי סדירים. זה הופך אותה לגידול אסטרטגי באזורים כמו סיביריה, הרי פולין, ומחוזות ההרים בסין. היא גם מגיעה לבשלות תוך 70-90 יום בלבד — הדגן המהיר בעולם.</p>
+
+<div class="pb-chart">
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇷🇺</span><span class="pb-name">רוסיה</span></div><div class="pb-track"><div class="pb-fill" style="width:40%;background:var(--warm);"></div></div><span class="pb-pct">40%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">סין</span></div><div class="pb-track"><div class="pb-fill" style="width:28%;background:var(--accent);"></div></div><span class="pb-pct">28%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇺🇦</span><span class="pb-name">אוקראינה</span></div><div class="pb-track"><div class="pb-fill" style="width:16%;background:#6A8A30;"></div></div><span class="pb-pct">16%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇵🇱</span><span class="pb-name">פולין</span></div><div class="pb-track"><div class="pb-fill" style="width:8%;background:#8A8A30;"></div></div><span class="pb-pct">8%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">שאר העולם</span></div><div class="pb-track"><div class="pb-fill" style="width:8%;background:#606050;"></div></div><span class="pb-pct">8%</span></div>
+  <div class="pb-note">FAO 2023 · ייצור עולמי ~4.5 מיליון טון</div>
+</div>
+
+<div class="ab ab-g"><div class="tg">מדיניות רוסית</div><p>לאחר פלישת רוסיה לאוקראינה, ייצוא כוסמת מרוסיה נפגע בסנקציות. מחירים עלו ב-40% בשנתיים האחרונות. ספקים אירופיים פנו לפולין וקנדה כחלופה.</p></div>
+</section>
+
+<!-- CH4 -->
+<section class="ch reveal" id="ch4">
+<span class="cl">פרק רביעי</span>
+<h2>Kasha: המאכל הלאומי הרוסי</h2>
+<p class="dc">אם יש מאכל שמגדיר את המטבח הרוסי יותר מכל דבר אחר, זה Kasha. לא בורשט, לא פירוג'י — כוסמת קלויה. כל ילד רוסי גדל עם הריח הספציפי של כוסמת קלויה שמתבשלת על כיריים, עם חמאה ולפעמים בצל. הוא מאכל ילדות, נוחות, וזיכרון.</p>
+<div class="vc">
+  <div class="vn">Kasha קלאסית, רוסיה</div>
+  <div class="vt">פשוט, שובע, מנחם</div>
+  <p>כוסמת קלויה מבושלת ביחס 1:2 עם מים עד לספיגה מלאה. מסיימים עם חמאה ומלח. הגרסות: עם בצל מטוגן, עם פטריות, עם גריבנס (שומן אווז). מוגש כתוספת לבשר, לביצה, או בלבד כארוחת בוקר. בצבא הסובייטי Kasha הייתה המנה הסטנדרטית שלוש פעמים ביום.</p>
+</div>
+<div class="vc">
+  <div class="vn">Soba, יפן</div>
+  <div class="vt">אטריות ביד, אמנות בפני עצמה</div>
+  <p>אטריות סובה עשויות מקמח כוסמת (לפעמים עם תוספת קמח חיטה). ניתן לאכול קרות (Zaru Soba) עם ציר דאשי ל-dipping, או חמות (Kake Soba) במרק. בטוקיו יש אמני סובה שמקדישים חיים שלמים לטחינת הקמח הנכון ולרידוד האטריות. Nihachi Soba — 80% כוסמת, 20% חיטה — נחשב הפרמיום.</p>
+</div>
+<div class="vc">
+  <div class="vn">Galettes de Sarrasin, בריטני, צרפת</div>
+  <div class="vt">קריפ מלוח על בסיס כוסמת</div>
+  <p>בבריטני, צרפת, כוסמת נקראת <em>sarrasin</em> (מוריסקי). Galette היא קריפ מלוח מקמח כוסמת, המוגשת ממולאת בגבינה, ביצה, ורדיף. הגלטה הייתה מאכל האיכרים של בריטני לפני שהתפשטה לקפה פריזאי יוקרתי. היום זה מאכל tourist, אבל עם שורשים אמיתיים.</p>
+</div>
+<div class="pull"><p>מרוסיה ליפן, מפולין לצרפת. צמח אחד שלא ידע גבולות, שמוצאו ממרכז אסיה וסיים כאמנות בכל יבשת.</p></div>
+</section>
+
+<div class="media-slot-inline" style="width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,0.06);"><img src="../images/Bowl_overflowing_with_wheat_0de27319f6.jpeg" alt="כוסמת קלויה" style="width:100%;height:100%;object-fit:cover;"></div>
+
+<!-- CH5 -->
+<section class="ch reveal" id="ch5">
+<span class="cl">פרק חמישי</span>
+<h2>עיבוד: מגרגר לקמח, מירוק לקלוי</h2>
+<p class="dc">עיבוד כוסמת מתחיל בקצירת הגרגרים, שבניגוד לחיטה, גדלים בצורת משולש קטן עם קליפה קשה שחייבים להסיר. קילוף (hulling) גורם לאובדן חלקי של שכבת הסובין. גרגר מקולף הוא הגרגר הירוק — מוכן לבישול, לטחינה, או לקלייה.</p>
+<h3>שלבי עיבוד</h3>
+<ul>
+  <li><strong>קציר:</strong> 70-90 יום מזריעה. קצירה ידנית או מכנית לפי גודל השדה</li>
+  <li><strong>ייבוש:</strong> לחות ל-14% לפני אחסון. קריטי: מעל 16% = התפתחות עובש מהירה</li>
+  <li><strong>קילוף:</strong> הסרת הקליפה הקשה. מפיק גרגר ירוק-בהיר</li>
+  <li><strong>קלייה:</strong> 150-180 מעלות ל-15-20 דקות. הופך ירוק לחום-קלוי (Kasha)</li>
+  <li><strong>טחינה:</strong> לקמח דק (Light) או בינוני (Medium) לצורכי אפייה</li>
+</ul>
+<div class="ab ab-w"><div class="tg">קמח כוסמת</div><p>קמח כוסמת מלא מכיל את הסובין והנבט. לבן יותר = פחות סיבים וטעם עמוק. שחור יותר = יותר תזונה וטעם חזק. לגלטות צרפתיות ולסובה יפנית: קמח בינוני. לפנקייקים: קמח קל.</p></div>
+</section>
+
+<!-- CH6 -->
+<section class="ch reveal" id="ch6">
+<span class="cl">פרק שישי</span>
+<h2>כוסמת מונבטת: הסופר-פוד הנסתר</h2>
+<p class="dc">הנבטה של כוסמת ירוקה היא תופעה שקמה לתחייה בשוק הבריאות. גרגר מונבט (sprouted buckwheat) מכיל ריכוז גבוה פי 2-3 של נוגדי חמצון, ורמות רוטין גבוהות בהרבה מהגרגר הרגיל. תהליך ההנבטה מפרק אנטי-נוטריינטים (חומצה פיטית) שמפריעים לספיגת מינרלים.</p>
+<p>כוסמת מונבטת בת 2-3 ימים מוכנה לאכילה. ניתן לאכול אותה כמות שהיא בסלטים, לייבש ולטחון לקמח מונבט, או להוסיף לגרנולה. תעשיית ה-Raw Food אימצה אותה כבסיס לחטיפים ה"חי" — קמח מונבט שעבר ייבוש בטמפרטורה נמוכה (מתחת ל-42 מעלות) כדי לשמר אנזימים.</p>
+<div class="ab ab-g"><div class="tg">אחסון כוסמת</div><p>ירוקה לא מקולפת: שנה ומעלה. ירוקה מקולפת: 6-8 חודשים. קלויה (Kasha): 4-6 חודשים. קמח: 3-4 חודשים. ריח נפטה = שמנים מחמצנים — לא לאכול.</p></div>
+</section>
+
+<!-- CH7 -->
+<section class="ch reveal" id="ch7">
+<span class="cl">פרק שביעי</span>
+<h2>תזונה ובריאות: מחקר קליני</h2>
+<p class="dc">כוסמת נחקרת יחסית ביסודיות בהשוואה לדגנים מינוריים אחרים, בגלל שכיחותה ברוסיה ובמזרח אסיה. המחקרים מצביעים על מספר תחומי עניין: השפעת הרוטין על לחץ דם, ניהול סוכרת, ואיכות חלבון.</p>
+<table class="gt">
+  <thead><tr><th>מרכיב</th><th>כמות ל-100g</th><th>% RDI</th><th>הערה</th></tr></thead>
+  <tbody>
+    <tr><td>חלבון</td><td>13.3g</td><td>27%</td><td>כולל ליזין</td></tr>
+    <tr><td>מגנזיום</td><td>231mg</td><td>55%</td><td>גבוה מאוד לדגן</td></tr>
+    <tr><td>זרחן</td><td>347mg</td><td>50%</td><td>בריאות עצמות</td></tr>
+    <tr><td>נחושת</td><td>1.1mg</td><td>122%</td><td>מגבול עליון RDI</td></tr>
+    <tr><td>מנגן</td><td>1.3mg</td><td>57%</td><td>נוגד חמצון</td></tr>
+    <tr><td>ויטמין B6</td><td>0.21mg</td><td>16%</td><td>מטבוליזם</td></tr>
+  </tbody>
+</table>
+<div class="ab ab-w"><div class="tg">רוטין וסוכרת</div><p>מחקר שפורסם ב-Journal of Nutrition 2022 מצא שצריכה יומית של כוסמת הורידה סוכר לאחר ארוחה ב-12-19% בחולי סוכרת סוג 2 לעומת קבוצת ביקורת. הרוטין וחומצת D-chiro-inositol נחשבים האחראים.</p></div>
+</section>
+
+<!-- CH8 -->
+<section class="ch reveal" id="ch8">
+<span class="cl">פרק שמיני</span>
+<h2>שוק גלובלי ומגמות</h2>
+<p class="dc">שוק הכוסמת העולמי, שהיה נישה לא מוכרת לפני 2010, חצה את רף $1 מיליארד ב-2023 ומצפה לצמיחה שנתית של 8-11% עד 2030. הגורמים: מהפכת הגלוטן-פרי, עניין גובר בדגנים עתיקים, ואופנת ה-Raw Food.</p>
+<p>שוק הסובה היפני לבדו: $800 מיליון בשנה. רוסיה צורכת 800,000 טון כוסמת בשנה, יותר מכל מדינה אחרת. פולין — המייצאת הגדולה לאירופה המערבית — הכפילה ייצוא בעשור האחרון.</p>
+<div class="ab ab-w"><div class="tg">מחירים</div><p>כוסמת ירוקה אורגנית: $700-1,100 לטון. קלויה (Kasha): $800-1,200 לטון. קמח כוסמת: $900-1,400 לטון. פרמיה אורגנית: 30-50% מעל קונבנציונלי.</p></div>
+</section>
+
+<!-- CH9 -->
+<section class="ch reveal" id="ch9">
+<span class="cl">פרק תשיעי</span>
+<h2>כוסמת בישראל: נישה שצומחת</h2>
+<p>ישראל מייבאת כ-3,000-5,000 טון כוסמת בשנה, בעיקר מפולין ואוקראינה (עם הפרעות מהמלחמה). הביקוש: שוק הבריאות, קהילות ללא גלוטן, וקהילה רוסית שצרכה Kasha מינקות.</p>
+<p>חנויות הבריאות הישראליות מציעות כוסמת ירוקה, קלויה, קמח, ומונבטת. הסופרמרקט הכניס כוסמת קלויה לאריזות של 400-500 גרם. מחירים קמעונאיים: ₪12-18 ל-400 גרם. ביקוש לאורגנית גדל ב-20% בשנה האחרונה.</p>
+<div class="ab ab-g"><div class="tg">Blue Star</div><p>Blue Star מספקת כוסמת ירוקה וקלויה לשוק הישראלי ממקורות פולין ואוקראינה. מינימום הזמנה 10 טון. מחיר ירוקה: $750-950 לטון CNF ישראל.</p></div>
+</section>
+
+<!-- CH10 -->
+<section class="ch reveal" id="ch10">
+<span class="cl">פרק עשירי</span>
+<h2>עתיד: אקלים, גלוטן-פרי ואגרואקולוגיה</h2>
+<p class="dc">כוסמת ניצבת בצומת של כמה מגמות עולמיות שמטיבות עמה. שינוי אקלים? כוסמת עמידה לחום ולגשמים בלתי סדירים יותר מחיטה. גלוטן-פרי? כוסמת היא אחת מהמעטות שמספקות "תחושת דגן" ללא גלוטן. אגרואקולוגיה? כוסמת היא צמח שמשפר קרקע ומושך דבורים לאבקה, מה שהפך אותה לגידול מועדף בחקלאות אורגנית.</p>
+<p>היפן מפתחת זני סובה עם ריכוז רוטין כפול. רוסיה משקיעה בהגדלת ייצוא. קנדה מגדילה שטחי גידול. צפוי שעד 2030, הכוסמת לא תהיה עוד נישה — היא תהיה גידול מרכזי בחקלאות הגלוטן-פרי.</p>
+<table class="gt">
+  <thead><tr><th>שימוש</th><th>תיאור</th><th>שוק יעד</th></tr></thead>
+  <tbody>
+    <tr><td>Kasha (קלויה)</td><td>תבשיל מסורתי, תוספת</td><td>רוסיה, ישראל, פולין</td></tr>
+    <tr><td>אטריות סובה</td><td>יפן, אסיה, עולמי</td><td>יפן, גורמה עולמי</td></tr>
+    <tr><td>קמח לאפייה</td><td>גלטות, פנקייקים, לחם</td><td>אירופה, ישראל, צרפת</td></tr>
+    <tr><td>גרנולה ומונבטת</td><td>שוק הבריאות Raw</td><td>ישראל, ארה"ב</td></tr>
+    <tr><td>פסטה</td><td>חלופה ללא גלוטן</td><td>אירופה, ישראל</td></tr>
+  </tbody>
+</table>
+</section>
+
+</main>
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · BUCKWHEAT · מרכז אסיה לשולחן העולם</footer>
+<button class="back-to-top" id="btt">↑</button>
+<a href="../index.html" class="home-btn">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8A840" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  <span>ספרייה</span>
+</a>
+<script>
+window.onscroll=()=>{const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progress-bar').style.width=(window.scrollY/h*100)+'%';const s=document.querySelectorAll('.ch'),d=document.querySelectorAll('.nav-dot');let c='';s.forEach(x=>{if(pageYOffset>=x.offsetTop-200)c=x.id;});d.forEach(x=>{x.classList.remove('active');if(x.dataset.target===c)x.classList.add('active');});};
+const b=document.getElementById('btt');
+window.addEventListener('scroll',()=>b.classList.toggle('visible',window.scrollY>300));
+b.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(d=>d.onclick=()=>document.getElementById(d.dataset.target).scrollIntoView({behavior:'smooth'}));
+(function(){const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('active');}),{threshold:0,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.ch').forEach(c=>{c.classList.add('reveal');obs.observe(c);});})();
+(function(){const request=indexedDB.open('StarkOS_DB',1);request.onsuccess=(e)=>{const db=e.target.result;try{const store=db.transaction('archive','readonly').objectStore('archive');const r=store.get('buckwheat');r.onsuccess=()=>{if(!r.result)return;if(r.result.title)document.getElementById('sync-title').textContent=r.result.title;if(r.result.description)document.getElementById('sync-desc').textContent=r.result.description;};}catch(e){}};})();
+</script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אפונה · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0B;--text:#FAF7F0;--body:#D1CEC5;--accent:#304020;--warm:#608050;--card:rgba(20,20,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;position:relative;
+  background-image:linear-gradient(rgba(96,128,80,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(96,128,80,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}body::after{background:var(--accent);bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.back-btn{position:absolute;top:40px;left:40px;z-index:10;display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;opacity:0.5;transition:0.3s;}
+.back-btn:hover{opacity:1;color:var(--warm);}
+#backToTop{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;display:none;z-index:1000;}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);position:relative;}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#000;border:1px solid rgba(255,255,255,0.05);}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px;}
+em{color:#90C870;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(96,128,80,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(48,64,32,0.2);border-right:4px solid var(--accent);}.ab-g .tg{color:#90C870;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:13px;color:#A09080;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}
+.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,0.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(96,128,80,0.2);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.vc{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:22px;margin:18px 0;}
+.vc .vn{font-family:'Frank Ruhl Libre',serif;font-size:21px;font-weight:700;color:var(--text);}
+.vc .vt{font-size:12px;color:var(--warm);font-weight:600;margin-bottom:10px;}
+.vc p{font-size:16px;line-height:1.75;margin-bottom:0;color:var(--body);}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}
+.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}
+.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.ch ul li::marker{color:var(--warm);}
+@media(max-width:900px){.side-nav{display:none;}.back-btn{top:20px;left:20px;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="marquee-container">
+  <div class="marquee-text">אפונה · GREEN PEAS · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · אפונה · GREEN PEAS · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · </div>
+</div>
+<div id="progress-bar"></div>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div>
+  <div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div>
+  <div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div>
+  <div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div>
+  <div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div>
+  <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+  <a href="../index.html" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    ספרייה
+  </a>
+  <div class="hero-k">ערך ידע חקלאי · Blue Star International</div>
+  <h1 id="sync-title">אפונה</h1>
+  <p class="deck" id="sync-desc">הקטנית שמנדל השתמש בה לגלות את חוקי הגנטיקה. מ-10,000 שנה של גידול ניאוליתי, דרך שדות קפואים של קנדה, ועד תעשיית חלבון אפונה שמאיימת לשנות את מה שאנחנו שותים.</p>
+  <div class="hero-img-wrap">
+    <img src="../images/Bowl_overflowing_with_split_peas_70766a9142.jpeg" alt="green-peas" loading="lazy">
+  </div>
+</section>
+<main class="con">
+
+<!-- CH1 -->
+<div class="ch reveal" id="ch1">
+<span class="cl">פרק ראשון</span>
+<h2>מנדל, ניאוליתי ו-10,000 שנה של גידול</h2>
+<p class="dc">ב-1866, נזיר אוגוסטיני בשם גרגור מנדל פרסם מאמר על ניסויים שעשה בגינת המנזר בברנו, צ'כיה. שבע שנים, 29,000 צמחי אפונה, 14 תכונות שנבדקו. המסקנה: הורשה אינה ערבוב של תכונות אלא מעבר של יחידות בדידות. הוא קרא להן "פקטורים". ה"פקטורים" הם מה שאנו קוראים גנים. מנדל הניח את יסודות הגנטיקה, ועד מותו ב-1884 לא היה ידוע על כך לאיש. הגילוי שלו התגלה מחדש ב-1900.</p>
+<p>אפונה (<em>Pisum sativum</em>) היא אחת הקטניות הקדומות ביותר לביות. שרידים נמצאו בגאורגיה מ-9,000 לפנה"ס, ובמוסד ארכיאולוגי בסוריה מ-8,000 לפנה"ס. הצמח גדל בר בים-תיכון ובמרכז אסיה, ובני-אדם בייתו אותו עם הגידולים הראשונים, חיטה, שעורה וקטניות, בתחילת המהפכה החקלאית.</p>
+<p>מה שהופך אפונה לניסוי גנטי מושלם הוא שלטנה ורצסיביות ברורות: זרע חלק או מקומט, עגול או אורוז, ירוק או צהוב. ניגודים ברורים שמנדל יכול לספור ולמדוד. חיטה, לעומת זאת, עם תכונות רבות ורצף, הייתה מאוד קשה לניתוח בשיטות מאה ה-19.</p>
+<div class="ab ab-w"><div class="tg">עונתיות</div><p>אפונה היא גידול עונת הקור. גדל בטמפרטורות 13-18 מעלות, ולא יכול לעמוד בחום קיץ. בישראל: גידול חורפי, בשל מינואר עד אפריל. בקנדה: גידול קיצי (קר), קציר יולי-אוגוסט. ברחבי העולם, העונות המשלימות מאפשרות אספקה כמעט שנתית של אפונה ירוקה טריה.</p></div>
+</div>
+
+<!-- CH2 -->
+<div class="ch reveal" id="ch2">
+<span class="cl">פרק שני</span>
+<h2>ירוקה, צהובה, מפוצלת: שלושת הפנים של האפונה</h2>
+<p class="dc">רוב האנשים חושבים על אפונה ירוקה מוקפאת, אבל השוק מכיר שלוש קטגוריות שונות לחלוטין. אפונה ירוקה (Garden Peas) נקטפת בוסר ומיועדת לאכילה טרייה. אפונה צהובה (Yellow Split Peas) היא אפונה שנקצרה בבשלות מלאה, מולבנת ומפוצלת, ומשמשת לתבשילים ומרקים. ואפונה שלמה יבשה (Whole Dried Peas) גדלה עד לייבוש מלא על הגבעול.</p>
+
+<div class="ng">
+  <div class="ni"><div class="nv">25g</div><div class="nu">חלבון</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">60g</div><div class="nu">פחמימות</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">26g</div><div class="nu">סיבים</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">4.4mg</div><div class="nu">ברזל</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">22</div><div class="nu">GI נמוך</div><div class="nl">אינדקס גליקמי</div></div>
+  <div class="ni"><div class="nv">341</div><div class="nu">קלוריות</div><div class="nl">ל-100g יבש</div></div>
+</div>
+
+<div class="vc">
+  <div class="vn">Green Peas · אפונה ירוקה טרייה ומוקפאת</div>
+  <div class="vt">הגרסה המוכרת, בוסר ומתוקה</div>
+  <p>נקטפת לפני שמגיעה לבשלות מלאה, כשהגרגר עדיין ירוק ומתוק. הסוכרים מתחילים להפוך לעמילן שעות ספורות אחרי קציר, לכן אפונה מוקפאת (שמולבנת ומוקפאת תוך שעות מהקציר) לעתים קרובות יותר טרייה מבחינה תזונתית מאפונה "טרייה" בסופרמרקט.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Yellow / Green Split Peas · אפונה מפוצלת</div>
+  <div class="vt">הבסיס למרקי אפונה קלאסיים</div>
+  <p>אפונה שלמה שקולפה ופוצלה, חושפת את הצד הפנימי. מתבשלת לרסק חלק תוך 20-30 דקות ללא השרייה. הגרסה הצהובה עדינה יותר בטעם, הירוקה מחרדלית-עשבית יותר. הבסיס למרק אפונה ההולנדי (<em>erwtensoep</em>), לדאל הודי של אפונה, ולמנות מסורתיות בסקנדינביה ובבריטניה.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Whole Dried Peas · שלמה יבשה</div>
+  <div class="vt">לתבשילים ממושכים וחלבון ממוצה</div>
+  <p>אפונה שנשארה על הגבעול עד ייבוש מלא. דורשת השרייה של 8 שעות ובישול של 60-90 דקות. שומרת על צורתה יותר מהמפוצלת. משמשת לתבשילים ארוכים, לסלטים של אפונה יבשה, ולייצור קמח אפונה לתעשיית החלבון.</p>
+</div>
+</div>
+
+<!-- CH3 -->
+<div class="ch reveal" id="ch3">
+<span class="cl">פרק שלישי</span>
+<h2>מהפכת Pea Protein: Beyond Meat, Oatly ועתיד החלבון</h2>
+<p class="dc">ב-2019, Beyond Meat הנפיקה בנאסד"ק ושווייה קפץ ל-$4 מיליארד ביום הראשון. הרכיב הפעיל: חלבון אפונה. Oatly, חלב השיבולת האיסלנדי שכבש את העולם, מוסיף חלבון אפונה לשיפור הפרופיל התזונתי. Good Catch, הטונה הצמחית, בנויה על בסיס אפונה. תעשייה חדשה שגדלה מ-$100 מיליון ב-2020 לצפי $3 מיליארד ב-2030, כולה מגיעה מגרגר ירוק-צהוב עתיק.</p>
+
+<h3>תהליך הייצור של Pea Protein Isolate</h3>
+<p>הייצור מורכב מארבעה שלבים עיקריים. ראשית, טחינה של אפונה יבשה לקמח. שנית, הפרדה רטובה: מערבבים את הקמח במים ומגיעים ל-pH של 4.5, הנקודה האיזואלקטרית של חלבון האפונה, שם החלבון נשקע. שלישית, הפרדת העמילן והסיבים שנשארים בתמיסה. לבסוף, ייבוש בספריי לאבקה לבנה. התוצאה: 80-90% חלבון, לעומת 25% בגרגר המלא.</p>
+
+<div class="ab ab-w"><div class="tg">למה אפונה ולא סויה?</div><p>סויה היא חלבון שלם עם פרופיל עדיף, אבל: 90% מהסויה האמריקאית היא GMO, יש לה אלרגן מוכר ורגולציה נגדה גוברת, וזירת המודעות לסייה ובריאות גדלה. אפונה, לעומת זאת: לא GMO, לא בין 8 האלרגנים הגדולים, ניטרלית בטעם, ומיוצרת בעיקר בקנדה ובאירופה שפחות מגורות גנטית. לכן Beyond Meat ואחרים בחרו בה.</p></div>
+
+<h3>קמח אפונה: מוצר תעשייתי ומטבחי</h3>
+<p>קמח אפונה (25% חלבון, ללא גלוטן) משמש לפנקייקים בהודו (<em>matar cheela</em>), לציפוי טמפורה, ללחם עשיר בחלבון, ולפסטה חלבונית. המרקם שונה מקמח חיטה: יותר כבד, קצת מחרדלי, דורש שילוב. לא מחליף חיטה אחד לאחד, אבל עובד מצוין ב-20-30% מהמתכון.</p>
+</div>
+
+<!-- CH4 -->
+<div class="ch reveal" id="ch4">
+<span class="cl">פרק רביעי</span>
+<h2>Erwtensoep, Mushy Peas ומטר פאנר: אפונה בעולם</h2>
+<p class="dc">אפונה יבשה מבושלת היא מאכל עוני קלאסי, שנהפך עם הזמן לנוסטלגיה לאומית. בהולנד, מרק אפונה הצהובה (<em>erwtensoep</em>) הוא סמל תרבותי חורפי. בבריטניה, Mushy Peas הם חלק מהזהות הלאומית כמו Fish and Chips. בהודו, מטר פאנר הוא המנה הצמחית הנמכרת ביותר. שלושה עמים, שלוש גישות, אותו גרגר.</p>
+
+<div class="vc">
+  <div class="vn">Erwtensoep, הולנד</div>
+  <div class="vt">מרק אפונה הולנדי · מנה חורפית קנונית</div>
+  <p>אפונה צהובה מפוצלת עם ירקות שורש (סלרי, כרה, גזר), בשר חזיר מעושן ונקניק רוקווורסט. מרק כל כך סמיך שכפית יכולה לעמוד זקופה בתוכו. מוגש עם לחם שיפון כהה וחמאה. בהולנד יש פתגם: "מרק אפונה טוב יותר ביום השני". מסורת חורפית שמשאירים אותו כל הלילה על אש נמוכה.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Mushy Peas, בריטניה</div>
+  <div class="vt">עיסת אפונה ירוקה · חלק מ-Fish and Chips</div>
+  <p>אפונה ירוקה שלמה יבשה (Marrowfat Peas), מושרית ומבושלת לעיסה ירוקה עם גוון כהה. מוגשת חמה לצד דגים מטוגנים ושבבי תפוחי אדמה. הגרסה הצפון-אנגלית כוללת מנטה. בדרום אנגליה: יותר בז'-ירוק ועדין. Mushy Peas מגורמים מוגשים כיום במסעדות שף בלונדון בגרסת פטה.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Matar Paneer, הודו</div>
+  <div class="vt">קארי אפונה עם גבינה · המנה הצמחית הנמכרת בהודו</div>
+  <p>אפונה ירוקה טרייה או מוקפאת עם קוביות <em>paneer</em> (גבינה טרייה הודית) בתוך תבשיל עגבניות-בצל עם גאראם מסאלה, כוסברה וג'ינג'ר. מוגשת עם רוטי או אורז בסמטי. ממנות ה"Dhaba" (מסעדות דרך הודיות) הקלאסיות. המנה שמוכיחה שאפונה מוקפאת יכולה להיות כמעט טובה כמו טרייה.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Ärtsoppa, שוודיה</div>
+  <div class="vt">מנת יום חמישי הלאומית · מסורת מ-500 שנה</div>
+  <p>אפונה צהובה שלמה עם חזיר מלוח. בשוודיה, יום חמישי הוא יום מרק האפונה מסורתית. המנהג חוזר לימי הביניים שבהם שישי היה יום צום (ללא בשר), ולכן נאכל חזיר ביום חמישי. היום, קנטינות של צבא, בתי ספר ובתי חולים עדיין מגישות Ärtsoppa בכל יום חמישי.</p>
+</div>
+
+<div class="pull"><p>מנדל ספר 29,000 גרגרי אפונה בגינת המנזר שלו כדי לגלות את הגנטיקה. כיום, קנדה בלבד מייצאת 4 מיליון טון אפונה בשנה. מה שהיה ניסוי שנשכח הפך לתעשייה.</p></div>
+</div>
+
+<div class="media-slot-inline" style="width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,0.06);"><img src="../images/Bowl_overflowing_with_split_peas_70766a9142.jpeg" alt="אפונה" style="width:100%;height:100%;object-fit:cover;"></div>
+
+<!-- CH5 -->
+<div class="ch reveal" id="ch5">
+<span class="cl">פרק חמישי</span>
+<h2>שוק: קנדה שולטת, Pea Protein גדל, $3 מיליארד בדרך</h2>
+<p class="dc">קנדה היא המייצאת הגדולה בעולם של אפונה יבשה: 4-5 מיליון טון שנתי, כ-40% מהייצוא העולמי. שדות Saskatchewan ו-Alberta מייצרים אפונה צהובה מפוצלת, ירוקה מפוצלת ואפונה שלמה שיוצאת להודו, לסין, לבנגלדש ולמזרח התיכון. ייצוא אפונה קנדי גדל 180% בין 2010 ל-2023.</p>
+
+<table class="gt">
+  <thead><tr><th>מוצר</th><th>מחיר לטון</th><th>מקור מוביל</th><th>יעד עיקרי</th></tr></thead>
+  <tbody>
+    <tr><td>אפונה צהובה מפוצלת</td><td>$380-520</td><td>קנדה</td><td>הודו, בנגלדש, פקיסטן</td></tr>
+    <tr><td>אפונה ירוקה מפוצלת</td><td>$420-580</td><td>קנדה, אוסטרליה</td><td>אירופה, מזרח התיכון</td></tr>
+    <tr><td>אפונה ירוקה מוקפאת</td><td>$600-900</td><td>הודו, פרו, בלגיה</td><td>עולמי</td></tr>
+    <tr><td>Pea Protein Isolate</td><td>$2,500-4,000</td><td>קנדה, צרפת</td><td>ארה"ב, אירופה, ישראל</td></tr>
+  </tbody>
+</table>
+
+<h3>ישראל: שוק גדל</h3>
+<p>ישראל מייבאת אפונה יבשה מפוצלת מקנדה ואפונה מוקפאת מהודו ומפרו. נפח שנתי: 8,000-12,000 טון. הביקוש לחלבון אפונה גדל עם שוק מוצרי הבריאות. מג'דרה אפונה (תחליף לעדשים) מופיעה בחלק מהמטבחים. תעשיית מזון ישראלית מתחילה לשלב Pea Protein במוצרי מזון מעובד.</p>
+
+<div class="ab ab-w"><div class="tg">Blue Star</div><p>Blue Star מספקת אפונה צהובה מפוצלת מקנדה: $420-500 לטון CNF ישראל. אפונה ירוקה מפוצלת: $480-560. מינימום: 25 טון. אריזה: שקים 25 ק"ג. זמן: 35-45 יום. Pea Protein Isolate לפי דרישה ממקורות קנדיים.</p></div>
+
+<p>מגמות 2024-2030: <em>חלב אפונה</em> צומח 35% שנתי ומאיים על חלב שיבולת. <em>Pea Protein Isolate</em> נכנס לחלבוני ספורט, בארים ויוגורטים. <em>פסטה אפונה</em> גדלה 40% שנתי. <em>אפונה מונבטת</em> לשוק הגורמה. השוק כולו: מ-$100 מיליון ב-2020 לצפי $3 מיליארד ב-2030. קטנית שהיתה מרק חורפי הפכה לתעשייה.</p>
+</div>
+
+</main>
+<div class="ch reveal" id="ch6"><span class="cl">פרק שישי</span><h2>גיאוגרפיה: קנדה שולטת ביצוא</h2>
+<div style="background:rgba(20,20,22,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;margin:28px 0;">
+<div style="font-family:'Frank Ruhl Libre',serif;font-size:17px;font-weight:700;margin-bottom:14px;text-align:center;color:var(--text);">ייצוא אפונה יבשה עולמי 2024</div>
+<div class="pb-chart" style="margin:16px 0;">
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇦</span><span class="pb-name">קנדה</span></div><div class="pb-track"><div class="pb-fill" style="width:40%;background:#608050;"></div></div><span class="pb-pct">40%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇦🇺</span><span class="pb-name">אוסטרליה</span></div><div class="pb-track"><div class="pb-fill" style="width:18%;background:#80A060;"></div></div><span class="pb-pct">18%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇺🇸</span><span class="pb-name">ארה"ב</span></div><div class="pb-track"><div class="pb-fill" style="width:12%;background:#A0C070;"></div></div><span class="pb-pct">12%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇫🇷</span><span class="pb-name">צרפת</span></div><div class="pb-track"><div class="pb-fill" style="width:10%;background:#B0D080;"></div></div><span class="pb-pct">10%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">שאר</span></div><div class="pb-track"><div class="pb-fill" style="width:20%;background:#405030;"></div></div><span class="pb-pct">20%</span></div>
+</div>
+<div style="font-size:11px;color:#6B6058;opacity:.7;margin-top:10px;text-align:center;">ITC Trade Map 2024 · ייצוא אפונה יבשה ~14 מיליון טון/שנה</div>
+</div>
+<p>Saskatchewan — חבל ה-wheat belt הקנדי — גדל גם כמויות עצומות של אפונה. האקלים הקר שם מתאים מצוין: קיץ קצר, יבוש טבעי בשדה. 180% גידול בייצוא הקנדי בין 2010-2023.</p></div>
+
+<div class="ch reveal" id="ch7"><span class="cl">פרק שביעי</span><h2>בריאות: ויטמין K, חלבון, ומחקר פרה-ביוטי</h2>
+<div class="ng"><div class="ni"><div class="nv">25g</div><div class="nu">חלבון ל-100g</div><div class="nl">יבש</div></div><div class="ni"><div class="nv">26g</div><div class="nu">סיבים ל-100g</div><div class="nl">104% RDI</div></div><div class="ni"><div class="nv">22</div><div class="nu">GI נמוך</div><div class="nl">אינדקס גליקמי</div></div><div class="ni"><div class="nv">4.4mg</div><div class="nu">ברזל</div><div class="nl">ל-100g יבש</div></div><div class="ni"><div class="nv">65mcg</div><div class="nu">ויטמין K</div><div class="nl">ל-100g מבושל</div></div><div class="ni"><div class="nv">54mcg</div><div class="nu">פולאט</div><div class="nl">ל-100g מבושל</div></div></div>
+<p><strong>ויטמין K:</strong> אפונה ירוקה מבושלת מכילה 65 מ"ג ויטמין K ל-100 גרם, חיוני לקרישת דם ולבריאות עצמות. מי שנוטל ורפרין (קומדין) צריך להיות עקבי בצריכת ויטמין K — לא להפסיק, לא להגביר.</p>
+<p><strong>פרה-ביוטי:</strong> Galactooligosaccharides (GOS) מאפונה מזינים בעיקר Bifidobacterium. מחקר Gut Microbiome (2023): 3 מנות קטניות בשבוע הגדילו מגוון חיידקי מעי ב-18% לאחר 8 שבועות.</p></div>
+
+<div class="ch reveal" id="ch8"><span class="cl">פרק שמיני</span><h2>אחסון ובטיחות אפונה</h2>
+<table class="gt"><thead><tr><th>צורה</th><th>תנאים</th><th>חיי מדף</th></tr></thead><tbody>
+<tr><td>אפונה יבשה שלמה</td><td>יבשה, קרירה, אטומה</td><td>3-5 שנים</td></tr>
+<tr><td>אפונה מפוצלת</td><td>יבשה, קרירה</td><td>2-3 שנים</td></tr>
+<tr><td>אפונה מוקפאת</td><td>מקפיא</td><td>12-18 חודשים</td></tr>
+<tr><td>אפונה מבושלת</td><td>מקרר</td><td>3-5 ימים</td></tr>
+</tbody></table>
+<div class="ab ab-w"><div class="tg">Lectins באפונה</div><p>אפונה מכילה lectins (Phytohemagglutinin) בכמות נמוכה — הרבה פחות משעועית אדומה. בישול רגיל (20-30 דקות) מנטרל אותם לחלוטין. אפונה מוקפאת עברה blanching ובטוחה. אפונה גולמית: לא לאכול כמויות גדולות.</p></div></div>
+
+<div class="ch reveal" id="ch9"><span class="cl">פרק תשיעי</span><h2>אפונה בישראל: מרקים, מנות קפואות ו-Pea Protein</h2>
+<p>ישראל מייבאת אפונה יבשה מפוצלת מקנדה ואפונה מוקפאת מהודו ומפרו. נפח שנתי: 8,000-12,000 טון. הביקוש לחלבון אפונה גדל עם שוק מוצרי הבריאות.</p>
+<table class="gt"><thead><tr><th>מוצר</th><th>מחיר קמעונאי</th><th>מקור</th></tr></thead><tbody>
+<tr><td>אפונה צהובה מפוצלת</td><td>₪7-11 לק"ג</td><td>קנדה</td></tr>
+<tr><td>אפונה ירוקה מפוצלת</td><td>₪8-13 לק"ג</td><td>קנדה, אוסטרליה</td></tr>
+<tr><td>אפונה ירוקה מוקפאת</td><td>₪9-14 לק"ג</td><td>הודו, פרו</td></tr>
+</tbody></table>
+<div class="ab ab-w"><div class="tg">Blue Star</div><p>אפונה צהובה מפוצלת מקנדה: $420-500 לטון CNF ישראל. ירוקה מפוצלת: $480-560. מינימום: 25 טון. COA: לחות, אפלטוקסין, Salmonella.</p></div></div>
+
+<div class="ch reveal" id="ch10"><span class="cl">פרק עשירי</span><h2>עתיד: $3 מיליארד שוק Pea Protein ב-2030</h2>
+<p class="dc">שוק Pea Protein צפוי לגדול מ-$100 מיליון (2020) ל-$3 מיליארד (2030). Beyond Meat, Oatly, Good Catch — כולם מסתמכים על אפונה כחלבון בסיס. הסיבה: Non-GMO, לא בין 8 האלרגנים, ניטרלי בטעם, ומיוצר בקנדה ובאירופה.</p>
+<p><strong>חלב אפונה:</strong> Ripple Foods (ארה"ב) בנתה $80 מיליון על חלב אפונה עם 8g חלבון ל-240ml — פי 8 מחלב שיבולת. <strong>פסטה:</strong> Eatalia, Banza ואחרות. <strong>גבינה:</strong> VioLife שמשתמשת בחלבון אפונה לגבינה ירוקה.</p>
+<p>מנדל ספר 29,000 גרגרי אפונה לגלות גנטיקה. עד 2030 יהיו $3 מיליארד שנבנים על אותו גרגר ירוק-צהוב. לא רע למה שנחשב מרק חורפי.</p></div>
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · GREEN PEAS · ממנדל עד Beyond Meat</footer>
+<script>
+window.onscroll = function() {
+  var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+  var btn = document.getElementById('backToTop');
+  btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+  var sections = document.querySelectorAll('.ch');
+  var dots = document.querySelectorAll('.nav-dot');
+  var current = '';
+  sections.forEach(function(s) { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+  dots.forEach(function(d) { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+document.querySelectorAll('.nav-dot').forEach(function(d) {
+  d.onclick = function() { document.getElementById(d.dataset.target).scrollIntoView({behavior:'smooth'}); };
+});
+(function() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('active'); });
+  }, {threshold: 0, rootMargin: '0px 0px -50px 0px'});
+  document.querySelectorAll('.ch').forEach(function(c) { c.classList.add('reveal'); obs.observe(c); });
+})();
+(function() {
+  var request = indexedDB.open('StarkOS_DB', 1);
+  request.onsuccess = function(e) {
+    var db = e.target.result;
+    try {
+      var store = db.transaction('archive', 'readonly').objectStore('archive');
+      var r = store.get('green-peas');
+      r.onsuccess = function() {
+        if (!r.result) return;
+        if (r.result.title) document.getElementById('sync-title').textContent = r.result.title;
+        if (r.result.description) document.getElementById('sync-desc').textContent = r.result.description;
+      };
+    } catch(e) {}
+  };
+})();
+</script>
+</body>
+</html>

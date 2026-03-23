@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>דוחן · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0B;--text:#FAF7F0;--body:#D1CEC5;--accent:#907A20;--warm:#C8B040;--card:rgba(20,20,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;background-image:linear-gradient(rgba(100,100,100,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(100,100,100,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}body::after{background:var(--accent);bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.05);background:#0A0A0B;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+em{color:#C4B878;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(100,100,50,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(50,80,50,0.2);border-right:4px solid var(--accent);}.ab-g .tg{color:#B0C890;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(20,20,22,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}.ni .nu{font-size:13px;color:#A09080;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;}.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.back-to-top{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;z-index:1000;transition:0.3s;opacity:0;pointer-events:none;}
+.back-to-top.visible{opacity:1;pointer-events:auto;}
+.home-btn{position:fixed;bottom:30px;right:30px;display:flex;align-items:center;gap:8px;background:rgba(20,20,22,0.85);border:1px solid rgba(100,100,50,0.3);border-radius:24px;padding:8px 16px;text-decoration:none;color:var(--warm);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;z-index:1000;}
+@media(max-width:900px){.side-nav{display:none;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="marquee-container"><div class="marquee-text">דוחן · MILLET · BLUE STAR · MILLET · דוחן · MILLET · BLUE STAR · MILLET · דוחן · MILLET · BLUE STAR · MILLET · </div></div>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div>
+  <div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div>
+  <div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div>
+  <div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div>
+  <div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div>
+  <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+    <a href="../index.html" style="position:absolute;top:40px;left:40px;color:var(--text);text-decoration:none;opacity:0.5;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;">← ספרייה</a>
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES</div>
+    <h1 id="sync-title">דוחן</h1>
+    <p class="deck" id="sync-desc">דגן עתיק של אפריקה ואסיה. ללא גלוטן, עמיד בצורת, מזין. אחד מהגידולים הוותיקים.</p>
+    <div class="hero-img-wrap">
+        <img src="../images/Bowl_overflowing_with_wheat_0de27319f6.jpeg" alt="millet" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+</section>
+<main class="con">
+
+<!-- CH1 -->
+<section class="ch reveal" id="ch1">
+<span class="cl">פרק ראשון</span>
+<h2>דגן הייצורת: 10,000 שנה ו-12 מינים</h2>
+<p class="dc">דוחן הוא שם קולקטיבי לקבוצה של 12 מינים שונים של דגנים קטנים-גרגריים. לא מין אחד, אלא משפחה: <em>Pennisetum glaucum</em> (pearl millet) — הנפוץ ביותר, <em>Setaria italica</em> (foxtail millet) — הוותיק מכולם, <em>Panicum miliaceum</em> (proso millet) — הנפוץ באירופה. כולם חולקים תכונה אחת: מוכנות תוך 60-90 יום, פחות מכל דגן מרכזי אחר.</p>
+<p>עדות לגידול דוחן נמצאה בסין מלפני 10,000 שנה. בצפון סין (<em>foxtail millet</em>) ובתת-היבשת ההודית (<em>pearl millet</em>), הדוחן הקדים אפילו את האורז כמזון העיקרי. בקוריאה ממצאים של 10,000 שנה. בתת-הסהרה של אפריקה — הדגן שהחזיק אוכלוסיות ענק בתנאי בצורת שמביסים חיטה ואורז.</p>
+<div class="ab ab-w"><div class="tg">עמידות חריגה</div><p>דוחן גדל בטמפרטורות של עד 46 מעלות, בקרקע חרסיתית ירודה, עם פחות מ-200 מ"מ גשם בשנה. זה הופך אותו לגידול אסטרטגי בעידן שינוי האקלים — באזורים שחיטה ואורז כבר לא יוכלו לגדול.</p></div>
+</section>
+
+<!-- CH2 -->
+<section class="ch reveal" id="ch2">
+<span class="cl">פרק שני</span>
+<h2>תזונה: ללא גלוטן, עשיר בברזל</h2>
+<div class="ng">
+  <div class="ni"><div class="nv">11g</div><div class="nu">חלבון</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">73g</div><div class="nu">פחמימות</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">8.5g</div><div class="nu">סיבים</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">3mg</div><div class="nu">ברזל</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">378</div><div class="nu">קלוריות</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">71</div><div class="nu">GI בינוני</div><div class="nl">אינדקס גליקמי</div></div>
+</div>
+<p>דוחן נטול גלוטן לחלוטין. עשיר במגנזיום (119mg/100g — 28% RDI), בזרחן, ובוויטמיני B. נקודת חולשה: ריכוז גבוה של <em>goitrogens</em> שמפריעים לספיגת יוד — לא מומלץ לצרכנות מאסיבית לאנשים עם בעיות בבלוטת התריס.</p>
+<table class="gt">
+  <thead><tr><th>מינרל</th><th>ל-100g</th><th>% RDI</th></tr></thead>
+  <tbody>
+    <tr><td>מגנזיום</td><td>119mg</td><td>28%</td></tr>
+    <tr><td>זרחן</td><td>285mg</td><td>23%</td></tr>
+    <tr><td>מנגן</td><td>1.6mg</td><td>69%</td></tr>
+    <tr><td>B1 תיאמין</td><td>0.29mg</td><td>24%</td></tr>
+    <tr><td>B3 ניאצין</td><td>4.7mg</td><td>29%</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- CH3 -->
+<section class="ch reveal" id="ch3">
+<span class="cl">פרק שלישי</span>
+<h2>גיאוגרפיה ומדינות מייצרות</h2>
+<p>ייצור הדוחן העולמי: 89 מיליון טון בשנה (FAO 2023). הודו מובילה עם 30% מהייצור, אחריה ניגריה, ניז'ר, ובורקינה פאסו. בסין, foxtail millet גדל באזורי צפון-מזרח.</p>
+<div class="pb-chart">
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇳</span><span class="pb-name">הודו</span></div><div class="pb-track"><div class="pb-fill" style="width:30%;background:var(--warm);"></div></div><span class="pb-pct">30%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇳🇬</span><span class="pb-name">ניגריה</span></div><div class="pb-track"><div class="pb-fill" style="width:22%;background:var(--accent);"></div></div><span class="pb-pct">22%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇳🇪</span><span class="pb-name">ניז'ר</span></div><div class="pb-track"><div class="pb-fill" style="width:12%;background:#888030;"></div></div><span class="pb-pct">12%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇳</span><span class="pb-name">סין</span></div><div class="pb-track"><div class="pb-fill" style="width:10%;background:#607040;"></div></div><span class="pb-pct">10%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אפריקה שאר</span></div><div class="pb-track"><div class="pb-fill" style="width:26%;background:#505040;"></div></div><span class="pb-pct">26%</span></div>
+  <div class="pb-note">FAO 2023 · 89 מיליון טון ייצור שנתי</div>
+</div>
+</section>
+
+<!-- CH4 -->
+<section class="ch reveal" id="ch4">
+<span class="cl">פרק רביעי</span>
+<h2>דוחן בתרבויות: מהודו לניגריה</h2>
+<div class="vc">
+  <div class="vn">Bajri Roti, הודו — גוג'ראט ורג'סתן</div>
+  <div class="vt">לחם פשוט ומזין</div>
+  <p>לחם שטוח מקמח Pearl millet, אפוי על <em>tawa</em> (מחבת שטוחה). רוטב: חמאה (ghee) ובצל. מזון החקלאים של גוג'ראט — קל להכנה, שובע, עמיד לחום. בחורף, מוגש עם בטטות מבושלות ו-jaggery (סוכר קנה גולמי). ארוחת בוקר של מאות מיליוני הודים.</p>
+</div>
+<div class="vc">
+  <div class="vn">Tuwo Gero, ניגריה</div>
+  <div class="vt">עיסה עבה מבושלת</div>
+  <p>קמח דוחן מבושל לעיסה עבה ומוצקה, מוגש עם ציר בשר ועוף (<em>miyan kuka</em>, <em>miyan taushe</em>). הוא מזון הבסיס של צפון ניגריה. מוגש ב"bolus" — כדורים קטנים שמטבלים ברוטב. ה-Tuwo שולט בשוקי Kano, Katsina, Maiduguri. 80 מיליון איש אוכלים אותו לפחות פעם ביום.</p>
+</div>
+<div class="vc">
+  <div class="vn">Хуурсан будаа, מנגוליה</div>
+  <div class="vt">דגנת מוקפצת</div>
+  <p>דוחן מוקפץ עם שומן כבש ומלח. מנה פשוטה שנשמרת שבועות בצרד הקר. נשאית הנסיעות של הנוודים המונגוליים — קלה, קלורית, לא דורשת בישול ממושך. גרסה עם חלב מותסס (<em>airag</em>) היא מנת האירוח הקלאסית באיגאורות.</p>
+</div>
+<div class="pull"><p>דגן שהאכיל אנשים ב-46 מעלות סיביות ובקרנות גשם של 200 מ"מ בשנה. קשה למצוא דגן עם יותר נחישות.</p></div>
+</section>
+
+<!-- CH5 -->
+<div class="media-slot-inline" style="width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,0.06);"><img src="../images/Bowl_overflowing_with_wheat_0de27319f6.jpeg" alt="דוחן" style="width:100%;height:100%;object-fit:cover;"></div>
+
+<section class="ch reveal" id="ch5">
+<span class="cl">פרק חמישי</span>
+<h2>עיבוד: קילוף, טחינה, ניפוח</h2>
+<p class="dc">דוחן מגיע לשוק בשלוש צורות מרכזיות. <em>שלם מקולף</em> — גרגר הדוחן לאחר הסרת הקליפה הקשה. מבושל כמו אורז. <em>קמח</em> — טחון לקמח צהוב עם ריח ייחודי. <em>נפוח</em> — מוכנס לחום גבוה מאוד לשנייה, מתנפח כמו פופקורן. הגרגר הנפוח משמש לדגנות בוקר, ל-granola בריאות, ולחטיפים.</p>
+<ul>
+  <li><strong>קציר:</strong> 60-90 יום מזריעה. שיבולות נקצרות ידנית בתת-סהרה, מכנית בהודו</li>
+  <li><strong>ייבוש:</strong> לחות ל-12-13%</li>
+  <li><strong>קילוף:</strong> הסרת הקליפה (husk) — נעשה במכתש או במיכון</li>
+  <li><strong>ניקיון:</strong> מיון לפי גודל ומשקל</li>
+  <li><strong>טחינה:</strong> לקמח בדרגות שונות — מלא, בינוני, דק</li>
+</ul>
+</section>
+
+<!-- CH6 -->
+<section class="ch reveal" id="ch6">
+<span class="cl">פרק שישי</span>
+<h2>שוק דוחן: גידול בצל אקלים ובריאות</h2>
+<p>שוק הדוחן הגלובלי: $11 מיליארד ב-2023. צמיחה שנתית 4-6%. שני כוחות מנוגדים: בתת-סהרה — בסיס מזון, שוק יציב אבל מחיר נמוך. במערב — superfood וגלוטן-פרי, שוק קטן עם מחירים גבוהים.</p>
+<div class="ab ab-w"><div class="tg">מחירים</div><p>Pearl millet: $250-400 לטון (שוק מסורתי). Foxtail millet אורגני: $600-900. קמח דוחן: $500-800. נפוח: $1,200-1,600 (גרנולה).</p></div>
+</section>
+
+<!-- CH7 -->
+<section class="ch reveal" id="ch7">
+<span class="cl">פרק שביעי</span>
+<h2>דוחן בישראל</h2>
+<p>ישראל מייבאת כ-500-1,000 טון דוחן בשנה, בעיקר לשוק הבריאות, חנויות טבע, וקהילה חרדית ומסורתית שמכירה את הדגן. מוצרים: גרגרים שלמים, קמח (נדיר), דגנת בוקר נפוחה.</p>
+<p>כשרות: כל גרגרי הדוחן נוגעים לעניין כלאיים — יש לבדוק כשרות מתאימה לגידולים שנזרעו בישראל. דוחן מיובא כשר ללא הגבלה.</p>
+<div class="ab ab-g"><div class="tg">Blue Star</div><p>Blue Star מספקת דוחן שלם לשוק הישראלי מהודו ומאוסטרליה. מינימום 10 טון. מחיר: $350-500 לטון CNF ישראל.</p></div>
+</section>
+
+<!-- CH8 -->
+<section class="ch reveal" id="ch8">
+<span class="cl">פרק שמיני</span>
+<h2>בישול: מתנפח, מתמזג, מוקפץ</h2>
+<ul>
+  <li><strong>יחס מים:</strong> 1:2 (כוס דוחן = 2 כוסות מים)</li>
+  <li><strong>זמן בישול:</strong> 15-20 דקות, מכוסה</li>
+  <li><strong>תוצאה:</strong> מרקם קרמי אם מבשלים עם יותר מים, גרגרי אם פחות</li>
+  <li><strong>קלייה מוקדמת:</strong> קלייה יבשה של 2-3 דקות לפני הוספת מים — מחמיא לטעם</li>
+  <li><strong>לנפח בבית:</strong> מחבת ללא שמן, חום גבוה, 20 שניות — גרגרים קופצים</li>
+</ul>
+</section>
+
+<!-- CH9 -->
+<section class="ch reveal" id="ch9">
+<span class="cl">פרק תשיעי</span>
+<h2>זנים וסוגים מסחריים</h2>
+<table class="gt">
+  <thead><tr><th>שם</th><th>מין</th><th>שימוש עיקרי</th><th>מחיר יחסי</th></tr></thead>
+  <tbody>
+    <tr><td>Pearl Millet (Bajri)</td><td>Pennisetum glaucum</td><td>קמח, לחם, Tuwo</td><td>נמוך</td></tr>
+    <tr><td>Foxtail Millet</td><td>Setaria italica</td><td>דגנת בוקר, בישול</td><td>בינוני</td></tr>
+    <tr><td>Proso Millet</td><td>Panicum miliaceum</td><td>אירופה, מאכל ציפורים</td><td>בינוני</td></tr>
+    <tr><td>Finger Millet (Ragi)</td><td>Eleusine coracana</td><td>קמח עשיר בסידן, דרום הודו</td><td>גבוה</td></tr>
+    <tr><td>Kodo Millet</td><td>Paspalum scrobiculatum</td><td>שוק בריאות הודי</td><td>גבוה</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- CH10 -->
+<section class="ch reveal" id="ch10">
+<span class="cl">פרק עשירי</span>
+<h2>עתיד: הדגן של שינוי האקלים</h2>
+<p class="dc">בין כל הדגנים, דוחן הוא האחד שבעלי המדיניות החקלאית מסתכלים עליו בצמא במאה ה-21. הסיבה פשוטה: עמידות חריגה. בטמפרטורות שיהרגו חיטה. בבצורות שיהרסו שדות אורז. דוחן עדיין יצמח.</p>
+<p>האו"ם הכריז 2023 "שנת הדגנים הקטנים הבינלאומית" (International Year of Millets). הודו בנתה קמפיין שיווקי עולמי סביב "Smart Food" — מיתוג דוחן לשוק הבריאות המערבי. קמח Finger millet (Ragi) חודר לשוק הגלוטן-פרי הגלובלי.</p>
+<p>השנים הבאות: ביקוש לדוחן אורגני בשוק המערבי יגדל. מחיר ייעלה. ספקים מהודו ומניגריה ייאלצו להשביח אחידות ותקנות בטיחות לעמוד בדרישות ייצוא אירופיות.</p>
+</section>
+
+</main>
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · MILLET · 10,000 שנה, 12 מינים, עתיד אחד</footer>
+<button class="back-to-top" id="btt">↑</button>
+<a href="../index.html" class="home-btn">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8B040" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  <span>ספרייה</span>
+</a>
+<button class="back-to-top" id="btt">↑</button>
+<a href="../index.html" class="home-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8B040" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>ספרייה</span>
+</a>
+<script>
+window.onscroll=()=>{const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progress-bar').style.width=(window.scrollY/h*100)+'%';const s=document.querySelectorAll('.ch'),d=document.querySelectorAll('.nav-dot');let c='';s.forEach(x=>{if(pageYOffset>=x.offsetTop-200)c=x.id;});d.forEach(x=>{x.classList.remove('active');if(x.dataset.target===c)x.classList.add('active');});};
+const b=document.getElementById('btt');
+window.addEventListener('scroll',()=>b.classList.toggle('visible',window.scrollY>300));
+b.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(d=>d.onclick=()=>document.getElementById(d.dataset.target).scrollIntoView({behavior:'smooth'}));
+(function(){const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('active');}),{threshold:0,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.ch').forEach(c=>{c.classList.add('reveal');obs.observe(c);});})();
+(function(){const request=indexedDB.open('StarkOS_DB',1);request.onsuccess=(e)=>{const db=e.target.result;try{const store=db.transaction('archive','readonly').objectStore('archive');const r=store.get('millet');r.onsuccess=()=>{if(!r.result)return;if(r.result.title)document.getElementById('sync-title').textContent=r.result.title;if(r.result.description)document.getElementById('sync-desc').textContent=r.result.description;};}catch(e){}};})();
+</script>
+</body>
+</html>

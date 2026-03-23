@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פריקה · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0B;--text:#FAF7F0;--body:#D1CEC5;--accent:#506030;--warm:#90A060;--card:rgba(20,20,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;background-image:linear-gradient(rgba(100,100,100,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(100,100,100,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}body::after{background:var(--accent);bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.05);background:#0A0A0B;}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px;}
+em{color:#C4D890;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(144,160,96,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(80,96,48,0.15);border-right:4px solid var(--accent);}.ab-g .tg{color:#B0C890;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(20,20,22,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:13px;color:#A09080;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}
+.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,0.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(144,160,96,0.2);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.vc{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:22px;margin:18px 0;}
+.vc .vn{font-family:'Frank Ruhl Libre',serif;font-size:21px;font-weight:700;color:var(--text);}
+.vc .vt{font-size:12px;color:var(--warm);font-weight:600;margin-bottom:10px;}
+.vc p{font-size:16px;line-height:1.75;margin-bottom:0;color:var(--body);}
+.pb-chart{margin:16px 0 8px;display:flex;flex-direction:column;gap:10px;}
+.pb-row{display:flex;align-items:center;gap:10px;}
+.pb-meta{display:flex;align-items:center;gap:6px;min-width:160px;justify-content:flex-end;}
+.pb-flag{font-size:18px;}.pb-name{font-size:13px;color:#A09080;}
+.pb-track{flex:1;background:rgba(255,255,255,0.08);height:18px;border-radius:9px;overflow:hidden;}
+.pb-fill{height:100%;border-radius:9px;}
+.pb-pct{font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:700;color:var(--text);width:36px;text-align:left;}
+.pb-note{font-size:11px;color:#6B6058;opacity:.7;margin-top:10px;text-align:center;}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}
+.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.ch ul li::marker,.ch ol li::marker{color:var(--warm);}
+.back-to-top{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;z-index:1000;transition:0.3s;opacity:0;pointer-events:none;}
+.back-to-top.visible{opacity:1;pointer-events:auto;}
+.home-btn{position:fixed;bottom:30px;right:30px;display:flex;align-items:center;gap:8px;background:rgba(20,20,22,0.85);border:1px solid rgba(144,160,96,0.3);border-radius:24px;padding:8px 16px;text-decoration:none;color:var(--warm);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;z-index:1000;}
+@media(max-width:900px){.side-nav{display:none;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="marquee-container"><div class="marquee-text">פריקה · FREEKEH · BLUE STAR · FREEKEH · פריקה · FREEKEH · BLUE STAR · FREEKEH · פריקה · FREEKEH · BLUE STAR · FREEKEH · </div></div>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div>
+  <div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div>
+  <div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div>
+  <div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div>
+  <div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div>
+  <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+  <a href="../index.html" style="position:absolute;top:40px;left:40px;color:var(--text);text-decoration:none;opacity:0.5;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;">← ספרייה</a>
+  <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES</div>
+  <h1 id="sync-title">פריקה</h1>
+  <p class="deck" id="sync-desc">חיטה ירוקה שנקלית על אש פתוחה. הטעם המעושן שאף דגן אחר לא מחזיק. מסורת פלסטינית-לבנטית שהגיעה לשולחנות השף.</p>
+  <div class="hero-img-wrap">
+    <img src="../images/Bowl_overflowing_with_wheat_0de27319f6.jpeg" alt="freekeh" loading="lazy">
+  </div>
+</section>
+<main class="con">
+
+<!-- CH1 -->
+<section class="ch reveal" id="ch1">
+<span class="cl">פרק ראשון</span>
+<h2>לגנדת האש: כיצד נולדה פריקה</h2>
+<p class="dc">הלגנדה מספרת שפריקה נולדה במקרה, לפני כ-2,000 שנה, כשכפר נתקף ושדות החיטה נשרפו בטרם הבשלה מלאה. תושבי הכפר, עמד נואשים, שפשפו את הגרגרים השרופים בידיהם וגילו שהם טעימים ומבושמים. <em>freekeh</em> בערבית — "מה ששופשף".</p>
+<p>הלגנדה בצד, פריקה היא תופעה ייחודית לחקלאות הלבנטינית: קצירת חיטת דורום בשלה-חלקית, קלייתה על אש גלויה, ושפשוף ידני להסרת הקש והמוץ. התוצאה: גרגר ירקרק-ירוק עם טעם מעושן-אגוזי שאין לו מקביל. מאחסון בשיטה זו השתמר הדגן חודשים ארוכים — יתרון ענק לחקלאי הלבנט.</p>
+<div class="ab ab-w"><div class="tg">ייחוד הייצור</div><p>פריקה מיוצרת בלעדית מחיטת דורום ירוקה. הקלייה על אש פתוחה מייבשת ומפחימה את הקש אבל משאירה את הגרגר שבתוך האלומה שלם. עשן האש חודר ומותיר חתימה ארומטית שלא ניתנת לחיקוי בייבוש תעשייתי.</p></div>
+</section>
+
+<!-- CH2 -->
+<section class="ch reveal" id="ch2">
+<span class="cl">פרק שני</span>
+<h2>שלמה לעומת גרוסה: שתי פריקות שונות</h2>
+<p class="dc">בשוק קיימות שתי צורות עיקריות של פריקה, שכל אחת מהן מחייבת גישת בישול שונה לחלוטין. פריקה <em>שלמה</em> היא הגרגר כמות שהוא, עם מרקם גרגירי ולעיס שמחייב 40-50 דקות בישול. פריקה <em>גרוסה</em> (cracked) היא גרגרים שנשברו לשניים-שלושה חלקים, מתבשלת ב-20-25 דקות ומתאימה יותר לפרסלה ולמג'דרה.</p>
+<div class="ng">
+  <div class="ni"><div class="nv">12g</div><div class="nu">חלבון</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">45g</div><div class="nu">פחמימות</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">8g</div><div class="nu">סיבים</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">3.6mg</div><div class="nu">ברזל</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">340</div><div class="nu">קלוריות</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">43</div><div class="nu">GI בינוני</div><div class="nl">אינדקס גליקמי</div></div>
+</div>
+<p>פריקה עשירה בלוטאין ו-zeaxanthin, שני קרוטנואידים חיוניים לבריאות העין שנדירים בדגנים. מחקרים מצביעים על קשר בין צריכה קבועה שלהם לבין הפחתת סיכון לניוון מקולרי.</p>
+</section>
+
+<!-- CH3 -->
+<section class="ch reveal" id="ch3">
+<span class="cl">פרק שלישי</span>
+<h2>גיאוגרפיה: מולדת הפריקה</h2>
+<p>פריקה מיוצרת באזור מצומצם יחסית: סוריה, פלסטין, ירדן, לבנון, ישראל (אזור הגולן) ודרום טורקיה. אלג'יריה, תוניסיה ומצרים מייצרות כמויות קטנות. אוסטרליה הפכה בעשור האחרון לאחד הספקים המובילים, כשחוות דגנים גדולות אימצו את הגידול לצרכי ייצוא.</p>
+
+<div class="pb-chart">
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇸🇾</span><span class="pb-name">סוריה (מסורתי)</span></div><div class="pb-track"><div class="pb-fill" style="width:30%;background:var(--warm);"></div></div><span class="pb-pct">30%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇦🇺</span><span class="pb-name">אוסטרליה</span></div><div class="pb-track"><div class="pb-fill" style="width:35%;background:var(--accent);"></div></div><span class="pb-pct">35%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇩🇿</span><span class="pb-name">אלג'יריה / צפ"א</span></div><div class="pb-track"><div class="pb-fill" style="width:20%;background:#708060;"></div></div><span class="pb-pct">20%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">ירדן, לבנון, שאר</span></div><div class="pb-track"><div class="pb-fill" style="width:15%;background:#506040;"></div></div><span class="pb-pct">15%</span></div>
+  <div class="pb-note">אומדן 2023 · ייצור כולל ~120,000 טון בשנה</div>
+</div>
+<div class="ab ab-g"><div class="tg">מלחמת סוריה</div><p>לפני 2011, סוריה הייתה המייצאת המובילה של פריקה. המלחמה הרסה חלק גדול מהתשתיות החקלאיות. אוסטרליה מילאה את החלל ומהווה כיום ספק אמין לשווקים המערביים.</p></div>
+</section>
+
+<!-- CH4 -->
+<section class="ch reveal" id="ch4">
+<span class="cl">פרק רביעי</span>
+<h2>מסורת קולינרית לבנטינית</h2>
+<div class="vc">
+  <div class="vn">פריקה עם עוף — المطبخ اللبناني</div>
+  <div class="vt">מנה לאומית לבנונית</div>
+  <p>עוף מבושל בתבלינים (בהרת, כמון, פלפל אנגלי) עם פריקה שלמה, מוגש עם צנוברים ושקדים קלויים על חמאה. זה שילוב שמופיע בכל חתונה, ב'מנות חג ובמסעדות לבנוניות מעולם ועד בוירות. הארומה של הפריקה עם התבלינים והחמאה הוא אחד מהריחות המזוהים ביותר עם המטבח הלבנוני.</p>
+</div>
+<div class="vc">
+  <div class="vn">מרק פריקה גרוסה</div>
+  <div class="vt">מרק חורפי פלסטיני-סורי</div>
+  <p>פריקה גרוסה עם ציר עצמות, בצל, עגבניות וכמון. מוגש חם עם לחם עגול. בגרסה פלסטינית מוסיפים לימון טרי. הסמיכות של הפריקה בתוך המרק יוצרת מרקם ייחודי שנמצא בין מרק לתבשיל. מנה פשוטה שמדגימה מדוע פריקה שמשה כמזון חורף מסורתי.</p>
+</div>
+<div class="vc">
+  <div class="vn">סלט פריקה קרה עם ירקות</div>
+  <div class="vt">מנת שף מודרנית</div>
+  <p>פריקה מבושלת ומקוררת, עם עגבניות שרי, מלפפון, בצל סגול, עשבי תיבול ורוטב לימון-שמן זית. הגרסה המודרנית החליפה את הפריקה בסלטי קינואה ברחבי אירופה. יש לה יתרון: טעם מעושן שקינואה לא יכולה לספק.</p>
+</div>
+<div class="pull"><p>חיטה שנשרפה לפני שהגיעה לבשלות מלאה — ובדיוק בגלל זה, טעמה עמוק יותר מכל דגן אחר.</p></div>
+</section>
+
+<!-- CH5 -->
+<div class="media-slot-inline" style="width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,0.06);"><img src="../images/Bowl_overflowing_with_wheat_0de27319f6.jpeg" alt="פריקה" style="width:100%;height:100%;object-fit:cover;"></div>
+
+<section class="ch reveal" id="ch5">
+<span class="cl">פרק חמישי</span>
+<h2>תהליך ייצור: מהשדה לשק</h2>
+<p class="dc">ייצור פריקה מסורתי הוא עבודת כפיים אינטנסיבית שמגבילה ייצור תעשייתי. החיטה נקצרת ביד בשלב הירוק — כ-3-4 שבועות לפני הקציר הרגיל. כל שדה נקצר בחלון זמן צר של ימים ספורים. קצירה מוקדמת מדי: גרגרים קטנים מדי. מאוחרת מדי: אובדן הצבע הירוק ואיכות הקלייה.</p>
+<ul>
+  <li><strong>קציר מוקדם:</strong> חיטת דורום בשלה-חלקית, בצבע ירוק-צהבהב, לחות 35-40%</li>
+  <li><strong>ייבוש שדה:</strong> האלומות מונחות לשמש 1-3 ימים</li>
+  <li><strong>קלייה:</strong> האלומות נקלות על אש פתוחה — הקש נשרף, הגרגר מתבשל חלקית</li>
+  <li><strong>דיש ושפשוף:</strong> ידני (מסורתי) או מכני — מפריד גרגר מקש וסובין שרוף</li>
+  <li><strong>ניקיון:</strong> מיון, הסרת גרגרים פגומים, ייבוש לחות ל-10-12%</li>
+  <li><strong>גריסה:</strong> לפריקה גרוסה — שבירה למקטעים של 2-3 מ"מ</li>
+</ul>
+<div class="ab ab-w"><div class="tg">תעשייתי מול מסורתי</div><p>ייצור תעשייתי (אוסטרליה, אלג'יריה) משתמש בקוצרות ובקלייה בתנורים. הטעם המעושן פחות עז. פריקה מסורתית אש-פתוחה (סוריה, לבנון) מוכרת בפרמיום של 40-60% — "artisan freekeh" לשוק הגורמה האירופי.</p></div>
+</section>
+
+<!-- CH6 -->
+<section class="ch reveal" id="ch6">
+<span class="cl">פרק שישי</span>
+<h2>תזונה מעמיקה: סיבים פרוביוטיים ולוטאין</h2>
+<table class="gt">
+  <thead><tr><th>מרכיב</th><th>ל-100g יבש</th><th>השוואה לאורז לבן</th></tr></thead>
+  <tbody>
+    <tr><td>חלבון</td><td>12g</td><td>פי 2.5</td></tr>
+    <tr><td>סיבים תזונתיים</td><td>8g</td><td>פי 4</td></tr>
+    <tr><td>ברזל</td><td>3.6mg</td><td>פי 3</td></tr>
+    <tr><td>אבץ</td><td>3.5mg</td><td>פי 2</td></tr>
+    <tr><td>מגנזיום</td><td>100mg</td><td>פי 3</td></tr>
+    <tr><td>לוטאין + zeaxanthin</td><td>גבוה מאוד</td><td>ייחודי לחיטה ירוקה</td></tr>
+  </tbody>
+</table>
+<p>הלוטאין ב-zeaxanthin הם קרוטנואידים שנמצאים בריכוז גבוה בחיטה ירוקה — ולאחר הקלייה, ריכוזם פוחת. לכן פריקה מסורתית נחשבת לעניין תזונתי ייחודי: היא מספקת קרוטנואידים שרוב אוכלי חיטה לא מקבלים.</p>
+<div class="ab ab-g"><div class="tg">פרוביוטיקה ומעי</div><p>סיבי פריקה מכילים fructooligosaccharides (FOS), סיבים פרה-ביוטיים שמשמשים מצע לחיידקי מעי ידידותיים. מחקרים מוקדמים מצביעים על שיפור בפרופיל חיידקי המעי בצריכה קבועה.</p></div>
+</section>
+
+<!-- CH7 -->
+<section class="ch reveal" id="ch7">
+<span class="cl">פרק שביעי</span>
+<h2>פריקה בישראל: ממטבח ערבי לשולחן השף</h2>
+<p class="dc">בישראל, פריקה הייתה בעשורים האחרונים מוצר שנמצא בשוקי הערבים, במכולות ברהט, בסכנין, בנצרת. הקהל הערבי-ישראלי גידל אותה ואכל אותה כמסורת. ואז, בשנות ה-2010, קרה משהו: שפים ישראלים "גילו" אותה.</p>
+<p>היום פריקה מוגשת בסיכסקין, בנחמה ושמחה, במסעדות הגולן. היא מופיעה בסלטים, כתוספת לדגים, כבסיס לריזוטו-בסגנון ישראלי. מחיר קמעונאי: ₪18-28 ל-500 גרם (גרוסה), ₪24-35 (שלמה). אורגנית: 40-50% יותר.</p>
+<div class="ab ab-w"><div class="tg">גולן</div><p>קיבוצים ומשקים בגולן גידלו פריקה מסורתית לפני שהיא הפכה לאופנה. "פריקה גולנית" מוכרת כמותג מקומי בחנויות טבע. הגידול בגולן: חיטת דורום מקומית, קלייה ידנית חלקית.</p></div>
+</section>
+
+<!-- CH8 -->
+<section class="ch reveal" id="ch8">
+<span class="cl">פרק שמיני</span>
+<h2>שוק עולמי: Superfood חדש</h2>
+<p>שוק פריקה העולמי הגיע ל-$280 מיליון ב-2023, עם צמיחה שנתית של 12-15%. לפני 2010, פריקה כמעט לא הייתה ידועה מחוץ לאזור הלבנט. מה שינה: מאמרים על Superfoods בפרסומים כמו TIME ו-Bon Appétit הצמידו לפריקה את התואר "the next quinoa".</p>
+<table class="gt">
+  <thead><tr><th>פריקה</th><th>מחיר לטון</th><th>מקור מועדף</th></tr></thead>
+  <tbody>
+    <tr><td>שלמה קונבנציונלית</td><td>$800-1,100</td><td>אוסטרליה, אלג'יריה</td></tr>
+    <tr><td>שלמה אורגנית</td><td>$1,300-1,800</td><td>אוסטרליה, ירדן</td></tr>
+    <tr><td>גרוסה קונבנציונלית</td><td>$700-950</td><td>אוסטרליה</td></tr>
+    <tr><td>מסורתית-אש (artisan)</td><td>$1,800-2,500</td><td>סוריה, לבנון</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- CH9 -->
+<section class="ch reveal" id="ch9">
+<span class="cl">פרק תשיעי</span>
+<h2>בישול: כיצד לבשל פריקה נכון</h2>
+<ul>
+  <li><strong>שטיפה:</strong> שטפו היטב לפני בישול — מסיר אבק וסיבי קש שרידי</li>
+  <li><strong>יחס מים לפריקה שלמה:</strong> 1:2.5 (כוס פריקה = 2.5 כוסות מים)</li>
+  <li><strong>יחס מים לפריקה גרוסה:</strong> 1:2</li>
+  <li><strong>זמן בישול שלמה:</strong> 40-50 דקות על אש בינונית</li>
+  <li><strong>זמן בישול גרוסה:</strong> 20-25 דקות</li>
+  <li><strong>ניחוח:</strong> מוסיפים בהרת, כמון, ופלפל אנגלי לבישול המסורתי</li>
+  <li><strong>מנוחה:</strong> 10 דקות מכוסה אחרי הבישול — מסיים ספיגת מים</li>
+</ul>
+<div class="ab ab-w"><div class="tg">טיפ שף</div><p>לפריקה עם טעם מעושן עמוק עוד יותר: טגנו לדקה ב-2 כפות חמאה לפני הוספת המים. הטיגון הקצר מחמם את השמנים ומשחרר ארומות. זה ההבדל בין פריקה ביתית לפריקה של מסעדה.</p></div>
+</section>
+
+<!-- CH10 -->
+<section class="ch reveal" id="ch10">
+<span class="cl">פרק עשירי</span>
+<h2>עתיד: מדגן נישה לדגן עולמי</h2>
+<p class="dc">פריקה עומדת בנקודת מפנה. היא כבר לא מוצר "אקזוטי מהמזרח התיכון" — היא נמצאת ב-Whole Foods, ב-Waitrose, ובסופרמרקטים אירופיים מרכזיים. הביקוש הגלובלי עולה, והאוסטרלים הגדילו שטחי ייצור ב-200% בעשור האחרון.</p>
+<p>הסיכון: מסחור מוגזם שמוחק את ייחודיות הקלייה. פריקה "תעשייתית" שיוצרת בתנור אינה זהה לפריקה על אש פתוחה. כשיש לבחור — מחפשים "wood-fired" או "traditional flame-roasted" על האריזה.</p>
+<p>Blue Star מספקת פריקה גרוסה ושלמה לשוק הישראלי ממקורות אוסטרליה. מינימום הזמנה: 10 טון. מחיר CNF ישראל: $750-1,000 לטון בהתאם לעונה וזמינות.</p>
+</section>
+
+</main>
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · FREEKEH · חיטה ירוקה, עשן, 2000 שנה</footer>
+<button class="back-to-top" id="btt">↑</button>
+<a href="../index.html" class="home-btn">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#90A060" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  <span>ספרייה</span>
+</a>
+<script>
+window.onscroll=()=>{const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progress-bar').style.width=(window.scrollY/h*100)+'%';const s=document.querySelectorAll('.ch'),d=document.querySelectorAll('.nav-dot');let c='';s.forEach(x=>{if(pageYOffset>=x.offsetTop-200)c=x.id;});d.forEach(x=>{x.classList.remove('active');if(x.dataset.target===c)x.classList.add('active');});};
+const b=document.getElementById('btt');
+window.addEventListener('scroll',()=>b.classList.toggle('visible',window.scrollY>300));
+b.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(d=>d.onclick=()=>document.getElementById(d.dataset.target).scrollIntoView({behavior:'smooth'}));
+(function(){const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('active');}),{threshold:0,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.ch').forEach(c=>{c.classList.add('reveal');obs.observe(c);});})();
+(function(){const request=indexedDB.open('StarkOS_DB',1);request.onsuccess=(e)=>{const db=e.target.result;try{const store=db.transaction('archive','readonly').objectStore('archive');const r=store.get('freekeh');r.onsuccess=()=>{if(!r.result)return;if(r.result.title)document.getElementById('sync-title').textContent=r.result.title;if(r.result.description)document.getElementById('sync-desc').textContent=r.result.description;};}catch(e){}};})();
+</script>
+</body>
+</html>

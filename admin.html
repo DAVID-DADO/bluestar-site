@@ -223,6 +223,84 @@ textarea.field-input { resize: vertical; min-height: 80px; }
   border-color: rgba(184,50,50,0.8); color: #E06060;
 }
 
+/* deals tracker */
+.deal-table{width:100%;border-collapse:collapse;margin-top:8px;}
+.deal-table th{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;
+  color:rgba(255,255,255,0.25);text-transform:uppercase;padding:10px 12px;
+  border-bottom:1px solid var(--border);text-align:right;}
+.deal-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);
+  font-size:13px;vertical-align:middle;}
+.deal-table tr:hover td{background:rgba(255,255,255,0.02);}
+.deal-table input,.deal-table select{
+  background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.1);
+  color:var(--text);font-family:'Space Mono',monospace;font-size:11px;
+  padding:4px 2px;outline:none;width:100%;}
+.deal-table input:focus,.deal-table select:focus{border-bottom-color:var(--gold);}
+.deal-table select option{background:#0a0a0b;}
+.stage-badge{display:inline-block;padding:2px 8px;font-family:'Space Mono',monospace;
+  font-size:8px;letter-spacing:1px;text-transform:uppercase;}
+.stage-inquiry{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);}
+.stage-offer{background:rgba(212,168,67,0.15);color:var(--gold);}
+.stage-closed{background:rgba(74,222,128,0.15);color:#4ade80;}
+.stage-shipped{background:rgba(96,165,250,0.15);color:#60a5fa;}
+.stage-cancelled{background:rgba(248,113,113,0.12);color:#f87171;}
+.deals-stats{display:flex;gap:24px;margin-bottom:24px;}
+.deals-stat{background:rgba(255,255,255,0.02);border:1px solid var(--border);
+  padding:16px 20px;flex:1;text-align:center;}
+.deals-stat-val{font-family:'Frank Ruhl Libre',serif;font-size:28px;
+  font-weight:900;color:var(--gold);display:block;}
+.deals-stat-label{font-family:'Space Mono',monospace;font-size:8px;
+  letter-spacing:1px;color:rgba(255,255,255,0.25);text-transform:uppercase;}
+.prices-panel{width:100%;max-width:820px;}
+.prices-panel h2{font-family:'Frank Ruhl Libre',serif;font-size:28px;
+  color:var(--text);margin-bottom:8px;}
+.prices-panel .sub{font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:2px;color:rgba(255,255,255,0.25);margin-bottom:32px;display:block;}
+.price-row{display:grid;grid-template-columns:140px 120px 100px 100px 80px;
+  gap:8px;align-items:center;margin-bottom:6px;}
+.price-row.header{font-family:'Space Mono',monospace;font-size:8px;
+  letter-spacing:1px;color:rgba(255,255,255,0.2);text-transform:uppercase;
+  padding-bottom:8px;border-bottom:1px solid var(--border);}
+.price-row input,.price-row select{
+  background:rgba(255,255,255,0.03);border:1px solid var(--border);
+  color:var(--text);font-family:'Space Mono',monospace;font-size:10px;
+  padding:8px 10px;outline:none;width:100%;}
+.price-row input:focus,.price-row select:focus{border-color:var(--gold);}
+.price-row select option{background:#0a0a0b;}
+.trend-up{color:#4ade80;}.trend-down{color:#f87171;}.trend-flat{color:#888;}
+.prices-updated{font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:1px;color:rgba(255,255,255,0.2);margin-top:20px;}
+  background: none; border: 1px dashed rgba(184,137,74,0.4);
+  color: var(--gold); padding: 10px 20px;
+  font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px;
+  cursor: pointer; transition: all .2s; width: 100%;
+}
+.btn-add-supplier:hover { border-color: var(--gold); background: var(--gold-dim); }
+.supplier-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto;
+  gap: 8px; align-items: center;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  padding: 10px 12px;
+}
+.supplier-row input {
+  background: transparent; border: none; border-bottom: 1px solid var(--border);
+  color: var(--text); font-family: 'Space Mono', monospace; font-size: 10px;
+  padding: 4px 2px; outline: none; width: 100%; letter-spacing: 0.5px;
+}
+.supplier-row input:focus { border-bottom-color: var(--gold); }
+.supplier-row input::placeholder { color: rgba(255,255,255,0.2); }
+.btn-del-supplier {
+  background: none; border: none; color: rgba(184,50,50,0.5);
+  cursor: pointer; font-size: 14px; padding: 2px 6px; transition: color .2s;
+}
+.btn-del-supplier:hover { color: #E06060; }
+.supplier-row-header {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto;
+  gap: 8px; padding: 0 12px 6px;
+  font-family: 'Space Mono', monospace; font-size: 8px;
+  letter-spacing: 1px; color: rgba(255,255,255,0.25); text-transform: uppercase;
+}
+
 /* toast */
 #toast {
   position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
@@ -241,7 +319,21 @@ textarea.field-input { resize: vertical; min-height: 80px; }
 <aside class="sidebar">
   <div class="sidebar-header">
     <span class="sidebar-brand">BLUE STAR</span>
-    <span class="sidebar-sub">ADMIN TERMINAL v4.0 · 40 UNITS</span>
+    <span class="sidebar-sub">ADMIN TERMINAL v4.0 · 65 UNITS</span>
+    <div style="margin-top:12px;display:flex;gap:8px;">
+      <button id="btn-mode-archive" onclick="switchMode('archive')"
+        style="flex:1;background:var(--gold);color:#000;border:none;padding:6px;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;cursor:pointer;">
+        ARCHIVE
+      </button>
+      <button id="btn-mode-prices" onclick="switchMode('prices')"
+        style="flex:1;background:none;border:1px solid var(--border);color:var(--body);padding:6px;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;cursor:pointer;">
+        PRICES
+      </button>
+      <button id="btn-mode-deals" onclick="switchMode('deals')"
+        style="flex:1;background:none;border:1px solid var(--border);color:var(--body);padding:6px;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;cursor:pointer;">
+        DEALS
+      </button>
+    </div>
   </div>
   <div class="sidebar-search">
     <input type="text" id="search-input" placeholder="חיפוש מוצר..." autocomplete="off">
@@ -251,7 +343,7 @@ textarea.field-input { resize: vertical; min-height: 80px; }
     <div class="cat-group" data-cat="nuts">
       <div class="cat-group-header">
         <span>אגוזים</span>
-        <span class="cat-count">9</span>
+        <span class="cat-count">10</span>
         <span class="cat-arrow">▾</span>
       </div>
       <div class="cat-items">
@@ -264,13 +356,14 @@ textarea.field-input { resize: vertical; min-height: 80px; }
         <div class="nav-item" data-id="brazil">אגוז ברזיל <div class="nav-has-media"></div></div>
         <div class="nav-item" data-id="macadamia">מקדמיה <div class="nav-has-media"></div></div>
         <div class="nav-item" data-id="pinenut">צנובר <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="peanut">בוטן <div class="nav-has-media"></div></div>
       </div>
     </div>
 
     <div class="cat-group" data-cat="fruits">
       <div class="cat-group-header">
         <span>פירות יבשים</span>
-        <span class="cat-count">14</span>
+        <span class="cat-count">19</span>
         <span class="cat-arrow">▾</span>
       </div>
       <div class="cat-items">
@@ -288,27 +381,34 @@ textarea.field-input { resize: vertical; min-height: 80px; }
         <div class="nav-item" data-id="mango">מנגו <div class="nav-has-media"></div></div>
         <div class="nav-item" data-id="papaya">פפאיה <div class="nav-has-media"></div></div>
         <div class="nav-item" data-id="pineapple">אננס <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="apple">תפוח <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="goji">גוג'י ברי <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="golden-berry">גולדן ברי <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="sea-buckthorn">אובליפיחה <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="dried-tomato">עגבניות מיובשות <div class="nav-has-media"></div></div>
       </div>
     </div>
 
     <div class="cat-group" data-cat="seeds">
       <div class="cat-group-header">
         <span>זרעים</span>
-        <span class="cat-count">4</span>
+        <span class="cat-count">6</span>
         <span class="cat-arrow">▾</span>
       </div>
       <div class="cat-items">
         <div class="nav-item" data-id="chia">צ'יה <div class="nav-has-media"></div></div>
         <div class="nav-item" data-id="sesame">שומשום <div class="nav-has-media"></div></div>
         <div class="nav-item" data-id="sunflower">חמנייה <div class="nav-has-media"></div></div>
-        <div class="nav-item" data-id="pumpkin">גרעיני דלעת <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="pumpkin-seeds">גרעיני דלעת <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="flaxseed">פשתן <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="nigella">קצח <div class="nav-has-media"></div></div>
       </div>
     </div>
 
     <div class="cat-group" data-cat="spices">
       <div class="cat-group-header">
         <span>תבלינים</span>
-        <span class="cat-count">13</span>
+        <span class="cat-count">20</span>
         <span class="cat-arrow">▾</span>
       </div>
       <div class="cat-items">
@@ -325,6 +425,43 @@ textarea.field-input { resize: vertical; min-height: 80px; }
         <div class="nav-item" data-id="oregano">אורגנו <div class="nav-has-media"></div></div>
         <div class="nav-item" data-id="thyme">תימין <div class="nav-has-media"></div></div>
         <div class="nav-item" data-id="poppy">פרג <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="garlic">שום <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="cardamom">הל <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="fennel">שומר <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="caraway">קימל <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="sumac">סומק <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="fenugreek">חילבה <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="star-anise">אניס כוכב <div class="nav-has-media"></div></div>
+      </div>
+    </div>
+
+    <div class="cat-group" data-cat="legumes">
+      <div class="cat-group-header">
+        <span>קטניות</span>
+        <span class="cat-count">6</span>
+        <span class="cat-arrow">▾</span>
+      </div>
+      <div class="cat-items">
+        <div class="nav-item" data-id="lentils">עדשים <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="chickpea">חומוס <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="beans">שעועית <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="green-peas">אפונה <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="fava-beans">פול <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="soy">סויה <div class="nav-has-media"></div></div>
+      </div>
+    </div>
+
+    <div class="cat-group" data-cat="grains">
+      <div class="cat-group-header">
+        <span>דגנים</span>
+        <span class="cat-count">4</span>
+        <span class="cat-arrow">▾</span>
+      </div>
+      <div class="cat-items">
+        <div class="nav-item" data-id="buckwheat">כוסמת <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="quinoa">קינואה <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="freekeh">פריקה <div class="nav-has-media"></div></div>
+        <div class="nav-item" data-id="millet">דוחן <div class="nav-has-media"></div></div>
       </div>
     </div>
 
@@ -424,9 +561,68 @@ textarea.field-input { resize: vertical; min-height: 80px; }
     </div>
   </div>
 
+  <!-- SUPPLIER SHORTLIST -->
+  <div class="form-card">
+    <label class="field-label" style="margin-bottom:16px;">ספקים (SUPPLIER SHORTLIST · פנימי)</label>
+    <div id="suppliers-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;"></div>
+    <button class="btn-add-supplier" id="btn-add-supplier" type="button">+ הוסף ספק</button>
+  </div>
+
   <div class="action-bar">
     <button class="btn-save" id="btn-save">PUSH TO ARCHIVE</button>
     <button class="btn-clear-all" id="btn-clear">CLEAR UNIT</button>
+  </div>
+
+  <!-- PRICES PANEL -->
+  <div id="prices-panel" style="display:none;width:100%;max-width:820px;padding-bottom:60px;">
+    <div class="editor-header">
+      <div class="editor-eyebrow">LIVE DATA · TICKER</div>
+      <div class="editor-title">מחירים חיים</div>
+    </div>
+    <div class="form-card prices-panel">
+      <span class="sub">עדכן מחירי FOB · יועבר לטיקר ב-home.html אחרי שמירה</span>
+      <div class="price-row header">
+        <span>סחורה</span><span>מחיר $/t</span><span>גרייד</span><span>מקור</span><span>מגמה</span>
+      </div>
+      <div id="prices-rows"></div>
+      <div class="prices-updated" id="prices-updated"></div>
+    </div>
+    <div class="action-bar">
+      <button class="btn-save" id="btn-save-prices">SAVE PRICES</button>
+    </div>
+  </div>
+  <!-- DEALS PANEL -->
+  <div id="deals-panel" style="display:none;width:100%;max-width:900px;padding-bottom:60px;">
+    <div class="editor-header">
+      <div class="editor-eyebrow">CRM · PIPELINE</div>
+      <div class="editor-title">Deal Tracker</div>
+    </div>
+    <div class="deals-stats">
+      <div class="deals-stat"><span class="deals-stat-val" id="ds-total">0</span><span class="deals-stat-label">סה"כ עסקאות</span></div>
+      <div class="deals-stat"><span class="deals-stat-val" id="ds-open">0</span><span class="deals-stat-label">פתוחות</span></div>
+      <div class="deals-stat"><span class="deals-stat-val" id="ds-closed">0</span><span class="deals-stat-label">סגורות</span></div>
+      <div class="deals-stat"><span class="deals-stat-val" id="ds-shipped">0</span><span class="deals-stat-label">נשלחו</span></div>
+    </div>
+    <div class="form-card" style="padding:0;overflow:hidden;">
+      <table class="deal-table" id="deals-table">
+        <thead>
+          <tr>
+            <th>לקוח</th>
+            <th>מוצר</th>
+            <th>כמות</th>
+            <th>שלב</th>
+            <th>תאריך</th>
+            <th>הערות</th>
+            <th style="width:32px;"></th>
+          </tr>
+        </thead>
+        <tbody id="deals-tbody"></tbody>
+      </table>
+    </div>
+    <div class="action-bar" style="padding-top:20px;">
+      <button class="btn-save" id="btn-add-deal">+ הוסף עסקה</button>
+      <button class="btn-save" id="btn-save-deals" style="background:none;border-color:var(--gold);">SAVE DEALS</button>
+    </div>
   </div>
 
 </main>
@@ -459,6 +655,8 @@ function loadUnit(id) {
     document.getElementById('in-desc').value = d.desc || '';
     document.getElementById('in-market').value = d.market || '';
     document.getElementById('in-status').value = d.status || '';
+    // load suppliers
+    renderSuppliers(d.suppliers || []);
     // reset pending
     pendingMedia = { 1: null, 2: null, 3: null, 4: null };
     // load media slots
@@ -531,6 +729,7 @@ document.getElementById('btn-save').addEventListener('click', () => {
       desc: document.getElementById('in-desc').value,
       market: document.getElementById('in-market').value,
       status: document.getElementById('in-status').value,
+      suppliers: getSuppliers(),
       media1: resolveMedia(1, 'media1') || resolveMedia(1, 'media'),
       media2: resolveMedia(2, 'media2'),
       media3: resolveMedia(3, 'media3'),
@@ -611,13 +810,216 @@ function loadAllMediaStatus() {
   };
 }
 
-/* ── TOAST ── */
+/* ── PRICES MODE ── */
+let pricesData = null;
+
+function switchMode(mode) {
+  const archiveEls = [
+    document.querySelector('.editor-header'),
+    ...document.querySelectorAll('.form-card:not(.prices-panel)'),
+    document.querySelector('.action-bar')
+  ];
+  const pricesPanel = document.getElementById('prices-panel');
+  const dealsPanel  = document.getElementById('deals-panel');
+  const sidebarNav  = document.getElementById('sidebar-nav');
+  const btnA = document.getElementById('btn-mode-archive');
+  const btnP = document.getElementById('btn-mode-prices');
+  const btnD = document.getElementById('btn-mode-deals');
+  const allBtns = [btnA, btnP, btnD];
+  const activeStyle   = 'var(--gold)'; const activeFg = '#000';
+  const inactiveStyle = 'none';        const inactiveFg = 'var(--body)';
+
+  // reset all
+  allBtns.forEach(b => { if(b){b.style.background=inactiveStyle;b.style.color=inactiveFg;b.style.border='1px solid var(--border)';} });
+
+  if (mode === 'prices') {
+    archiveEls.forEach(el => el && (el.style.display = 'none'));
+    pricesPanel.style.display = 'block'; dealsPanel.style.display = 'none';
+    sidebarNav.style.opacity = '0.3'; sidebarNav.style.pointerEvents = 'none';
+    btnP.style.background = activeStyle; btnP.style.color = activeFg;
+    loadPricesPanel();
+  } else if (mode === 'deals') {
+    archiveEls.forEach(el => el && (el.style.display = 'none'));
+    pricesPanel.style.display = 'none'; dealsPanel.style.display = 'block';
+    sidebarNav.style.opacity = '0.3'; sidebarNav.style.pointerEvents = 'none';
+    btnD.style.background = activeStyle; btnD.style.color = activeFg;
+    renderDeals();
+  } else {
+    archiveEls.forEach(el => el && (el.style.display = ''));
+    pricesPanel.style.display = 'none'; dealsPanel.style.display = 'none';
+    sidebarNav.style.opacity = '1'; sidebarNav.style.pointerEvents = '';
+    btnA.style.background = activeStyle; btnA.style.color = activeFg;
+  }
+}
+
+function loadPricesPanel() {
+  fetch('prices.json?v=' + Date.now())
+    .then(r => r.json())
+    .then(data => {
+      pricesData = data;
+      const container = document.getElementById('prices-rows');
+      const updEl = document.getElementById('prices-updated');
+      if (updEl) updEl.textContent = 'Last updated: ' + (data.updated || 'unknown');
+      container.innerHTML = '';
+      data.items.forEach((item, i) => {
+        const row = document.createElement('div');
+        row.className = 'price-row';
+        row.innerHTML = `
+          <input type="text" value="${item.name}" data-idx="${i}" data-field="name" placeholder="שם">
+          <input type="number" value="${item.price}" data-idx="${i}" data-field="price" placeholder="0">
+          <input type="text" value="${item.spec}" data-idx="${i}" data-field="spec" placeholder="גרייד">
+          <input type="text" value="${item.origin}" data-idx="${i}" data-field="origin" placeholder="FOB XX">
+          <select data-idx="${i}" data-field="trend">
+            <option value="up" ${item.trend==='up'?'selected':''}>↑ UP</option>
+            <option value="flat" ${item.trend==='flat'?'selected':''}>→ FLAT</option>
+            <option value="down" ${item.trend==='down'?'selected':''}>↓ DOWN</option>
+          </select>`;
+        container.appendChild(row);
+      });
+    })
+    .catch(() => toast('ERROR LOADING prices.json'));
+}
+
+document.getElementById('btn-save-prices').addEventListener('click', () => {
+  if (!pricesData) return;
+  const rows = document.querySelectorAll('#prices-rows .price-row');
+  rows.forEach(row => {
+    const idx = parseInt(row.querySelector('[data-field="name"]').dataset.idx);
+    pricesData.items[idx].name   = row.querySelector('[data-field="name"]').value;
+    pricesData.items[idx].price  = parseInt(row.querySelector('[data-field="price"]').value) || 0;
+    pricesData.items[idx].spec   = row.querySelector('[data-field="spec"]').value;
+    pricesData.items[idx].origin = row.querySelector('[data-field="origin"]').value;
+    pricesData.items[idx].trend  = row.querySelector('[data-field="trend"]').value;
+  });
+  pricesData.updated = new Date().toISOString().slice(0,10);
+  // Download as prices.json
+  const blob = new Blob([JSON.stringify(pricesData, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'prices.json';
+  a.click();
+  toast('prices.json DOWNLOADED · החלף בתיקייה');
+});
+
+/* ── DEALS TRACKER ── */
+const DEALS_KEY = 'bluestar_deals';
+function loadDeals() { return JSON.parse(localStorage.getItem(DEALS_KEY) || '[]'); }
+function saveDeals(d) { localStorage.setItem(DEALS_KEY, JSON.stringify(d)); }
+
+function renderDeals() {
+  const deals = loadDeals();
+  const tbody = document.getElementById('deals-tbody');
+  tbody.innerHTML = '';
+  deals.forEach((d, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input value="${d.client||''}" data-i="${i}" data-f="client" placeholder="שם לקוח"></td>
+      <td><input value="${d.product||''}" data-i="${i}" data-f="product" placeholder="שקד NP 23/25"></td>
+      <td><input value="${d.qty||''}" data-i="${i}" data-f="qty" placeholder="1 FCL"></td>
+      <td><select data-i="${i}" data-f="stage">
+        <option value="inquiry" ${d.stage==='inquiry'?'selected':''}>Inquiry</option>
+        <option value="offer" ${d.stage==='offer'?'selected':''}>Offer</option>
+        <option value="closed" ${d.stage==='closed'?'selected':''}>Closed</option>
+        <option value="shipped" ${d.stage==='shipped'?'selected':''}>Shipped</option>
+        <option value="cancelled" ${d.stage==='cancelled'?'selected':''}>Cancelled</option>
+      </select></td>
+      <td><input type="date" value="${d.date||''}" data-i="${i}" data-f="date"></td>
+      <td><input value="${d.notes||''}" data-i="${i}" data-f="notes" placeholder="הערה"></td>
+      <td><button class="btn-del-supplier" onclick="delDeal(${i})" title="מחק">×</button></td>`;
+    tbody.appendChild(tr);
+  });
+  updateDealStats();
+}
+
+function delDeal(i) {
+  const deals = loadDeals(); deals.splice(i, 1);
+  saveDeals(deals); renderDeals();
+}
+
+function updateDealStats() {
+  const d = loadDeals();
+  document.getElementById('ds-total').textContent   = d.length;
+  document.getElementById('ds-open').textContent    = d.filter(x=>x.stage==='inquiry'||x.stage==='offer').length;
+  document.getElementById('ds-closed').textContent  = d.filter(x=>x.stage==='closed').length;
+  document.getElementById('ds-shipped').textContent = d.filter(x=>x.stage==='shipped').length;
+}
+
+document.getElementById('btn-add-deal').addEventListener('click', () => {
+  const deals = loadDeals();
+  deals.unshift({client:'',product:'',qty:'',stage:'inquiry',date:new Date().toISOString().slice(0,10),notes:''});
+  saveDeals(deals); renderDeals();
+});
+
+document.getElementById('btn-save-deals').addEventListener('click', () => {
+  const rows = document.querySelectorAll('#deals-tbody tr');
+  const deals = Array.from(rows).map(tr => {
+    const obj = {};
+    tr.querySelectorAll('[data-f]').forEach(el => { obj[el.dataset.f] = el.value; });
+    return obj;
+  });
+  saveDeals(deals); renderDeals();
+  toast('DEALS SAVED · ' + deals.length + ' RECORDS');
+});
+
 function toast(msg) {
   const el = document.getElementById('toast');
   el.textContent = msg;
   el.style.display = 'block';
   setTimeout(() => { el.style.display = 'none'; }, 2200);
 }
+
+/* ── SUPPLIERS ── */
+function renderSuppliers(list) {
+  const container = document.getElementById('suppliers-list');
+  container.innerHTML = '';
+  if (list.length > 0) {
+    const header = document.createElement('div');
+    header.className = 'supplier-row-header';
+    header.innerHTML = '<span>שם ספק</span><span>איש קשר</span><span>תנאים</span><span>Lead Time</span><span></span>';
+    container.appendChild(header);
+  }
+  list.forEach((s, i) => addSupplierRow(s, i));
+}
+
+function addSupplierRow(s = {}, idx) {
+  const container = document.getElementById('suppliers-list');
+  const row = document.createElement('div');
+  row.className = 'supplier-row';
+  row.innerHTML = `
+    <input type="text" placeholder="שם ספק" value="${s.name||''}" data-field="name">
+    <input type="text" placeholder="איש קשר / אימייל" value="${s.contact||''}" data-field="contact">
+    <input type="text" placeholder="T/T · L/C · MOQ" value="${s.terms||''}" data-field="terms">
+    <input type="text" placeholder="25d · 4w" value="${s.lead||''}" data-field="lead">
+    <button class="btn-del-supplier" type="button" title="מחק">×</button>
+  `;
+  row.querySelector('.btn-del-supplier').addEventListener('click', () => {
+    row.remove();
+    if (document.querySelectorAll('.supplier-row').length === 0) {
+      document.querySelector('.supplier-row-header')?.remove();
+    }
+  });
+  container.appendChild(row);
+}
+
+function getSuppliers() {
+  return Array.from(document.querySelectorAll('.supplier-row')).map(row => ({
+    name:    row.querySelector('[data-field="name"]').value.trim(),
+    contact: row.querySelector('[data-field="contact"]').value.trim(),
+    terms:   row.querySelector('[data-field="terms"]').value.trim(),
+    lead:    row.querySelector('[data-field="lead"]').value.trim(),
+  })).filter(s => s.name);
+}
+
+document.getElementById('btn-add-supplier').addEventListener('click', () => {
+  const container = document.getElementById('suppliers-list');
+  if (document.querySelectorAll('.supplier-row').length === 0) {
+    const header = document.createElement('div');
+    header.className = 'supplier-row-header';
+    header.innerHTML = '<span>שם ספק</span><span>איש קשר</span><span>תנאים</span><span>Lead Time</span><span></span>';
+    container.appendChild(header);
+  }
+  addSupplierRow();
+});
 </script>
 </body>
 </html>

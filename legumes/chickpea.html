@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>חומוס · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0B;--text:#FAF7F0;--body:#D1CEC5;--accent:#8A6830;--warm:#D4A850;
+  --card:rgba(20,20,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;position:relative;
+  background-image:linear-gradient(rgba(184,137,74,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(184,137,74,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}body::after{background:#5A3E10;bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.back-btn{position:absolute;top:40px;left:40px;z-index:10;display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;opacity:0.5;transition:0.3s;}
+.back-btn:hover{opacity:1;color:var(--warm);}
+#backToTop{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;display:none;z-index:1000;transition:0.3s;}
+#backToTop:hover{transform:scale(1.1);}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);position:relative;}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#000;border:1px solid rgba(255,255,255,0.05);}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px;}
+em{color:#C4A878;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(184,137,74,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(90,62,16,0.2);border-right:4px solid var(--accent);}.ab-g .tg{color:#C4A878;}
+.ab-r{background:rgba(184,50,50,0.1);border-right:4px solid #B83030;}.ab-r .tg{color:#E06060;}.ab-r p{color:#DDB0B0;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:13px;color:#A09080;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;border-top:1px solid rgba(255,255,255,0.05);}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}
+.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,0.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(212,168,80,0.2);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.vc{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:22px;margin:18px 0;}
+.vc .vn{font-family:'Frank Ruhl Libre',serif;font-size:21px;font-weight:700;color:var(--text);}
+.vc .vt{font-size:12px;color:var(--warm);font-weight:600;margin-bottom:10px;}
+.vc p{font-size:16px;line-height:1.75;margin-bottom:0;color:var(--body);}
+.proc-steps{display:flex;flex-direction:column;gap:20px;margin:24px 0;}
+.proc-step{display:flex;gap:20px;align-items:flex-start;}
+.proc-step-num{min-width:36px;height:36px;border-radius:50%;background:var(--warm);color:#000;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.proc-step-title{font-family:'Frank Ruhl Libre',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.proc-step-body{font-size:16px;color:var(--body);line-height:1.75;}
+.pb-chart{margin:16px 0 8px;display:flex;flex-direction:column;gap:10px;}
+.pb-row{display:flex;align-items:center;gap:10px;}
+.pb-meta{display:flex;align-items:center;gap:6px;min-width:160px;justify-content:flex-end;}
+.pb-flag{font-size:18px;}.pb-name{font-size:13px;color:#A09080;}
+.pb-track{flex:1;background:rgba(255,255,255,0.08);height:18px;border-radius:9px;overflow:hidden;}
+.pb-fill{height:100%;border-radius:9px;transition:width 1.2s cubic-bezier(0.22,1,0.36,1);}
+.pb-pct{font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:700;color:var(--text);width:36px;text-align:left;}
+.pb-note{font-size:11px;color:#6B6058;opacity:.7;margin-top:10px;text-align:center;}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}
+.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}
+.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.ch ol li::marker{color:var(--warm);font-family:'Space Mono',monospace;font-size:12px;font-weight:700;}
+.ch ul li::marker{color:var(--warm);}
+@media(max-width:900px){.side-nav{display:none;}.back-btn{top:20px;left:20px;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="marquee-container">
+  <div class="marquee-text">חומוס · CHICKPEA · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · חומוס · CHICKPEA · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · </div>
+</div>
+<div id="progress-bar"></div>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div>
+  <div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div>
+  <div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div>
+  <div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div>
+  <div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div>
+  <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+  <a href="../index.html" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    ספרייה
+  </a>
+  <div class="hero-k">ערך ידע חקלאי · Blue Star International</div>
+  <h1 id="sync-title">חומוס</h1>
+  <p class="deck" id="sync-desc">מלך הקטניות שגדל בסהר הפורה לפני 10,000 שנה. מהאקוואפאבה הטבעונית ועד חומוס הטחינה שעל השולחן, דרך שדות הודו שמייצרים 75% מהיבול העולמי.</p>
+  <div class="hero-img-wrap">
+    <img src="../images/Chickpeas_in_ceramic_bowl_7f9dad20da.jpeg" alt="chickpea" loading="lazy">
+  </div>
+</section>
+<main class="con">
+
+<!-- CH1 -->
+<div class="ch reveal" id="ch1">
+<span class="cl">פרק ראשון</span>
+<h2>7,500 שנה בסהר הפורה: הקטנית הקדומה ביותר</h2>
+<p class="dc">בשנת 1988 חפרו ארכיאולוגים בכאיוניו שבדרום-מזרח טורקיה ומצאו שרידי חומוס מתוארכים ל-7,500 לפנה"ס. זה לא הממצא הקדום ביותר: שרידים מ-9,500 לפנה"ס נמצאו בסוריה. החומוס הוא כנראה אחת הקטניות הראשונות שאדם ביית, ביחד עם עדשים ואפונה, בלב הסהר הפורה שמתפרש בין ים התיכון לפרסי.</p>
+<p>הרומאים טחנו חומוס לאבקה ואכלו אותו כדייסה. קיקרו, הנואם הגדול של רומא, קיבל את שם משפחתו מ-<em>cicer</em>, השם הלטיני לחומוס. ייתכן שאחד מאבות אבותיו היה איכר חומוס, או שסבל מנקלה שצמחה לו על האף בצורת גרגר קטן. ההיסטוריה שותקת על הסיבה המדויקת.</p>
+<p>בימי הביניים החומוס כבש את ספרד המוסלמית, מאוחר יותר עבר לאמריקה הלטינית עם הכובשים הספרדים, ובמאה ה-20 הפך לגלובלי. כיום הוא הגידול הקטניות הרביעי בגודלו בעולם, עם ייצור שנתי של 15-17 מיליון טון.</p>
+<div class="ab ab-w"><div class="tg">שני הזנים</div><p><strong>Kabuli</strong>: גרגר גדול, בהיר, קרום דק, מגיע מאפגניסטן ואזור הים-התיכון. זה שמוכרים בישראל ובאירופה. <strong>Desi</strong>: גרגר קטן, כהה, קרום עבה, גדל בהודו ובאפריקה. מהווה 80% מהייצור הגלובלי. טעם עז יותר, מחיר נמוך יותר.</p></div>
+<p>הודו היא המדינה שמגדרת את שוק החומוס. עם ייצור של 11-12 מיליון טון שנתי, היא מייצרת 75% מהחומוס בעולם, ומכילה בתוכה את הצריכה הגדולה ביותר. בשנים של יבול גרוע בהודו, מחירי החומוס העולמיים יכולים לקפוץ ב-30-40% תוך חודשים.</p>
+</div>
+
+<!-- CH2 -->
+<div class="ch reveal" id="ch2">
+<span class="cl">פרק שני</span>
+<h2>תזונה: חלבון מלא, ברזל, וסיבים שמאכילים את המיקרוביום</h2>
+<p class="dc">חומוס מבושל הוא אחד ממקורות החלבון הצמחי הזולים והמזינים ביותר הקיימים. 100 גרם מבושל מכיל 9 גרם חלבון, 7 גרם סיבים תזונתיים, וכמות ברזל שמגיעה ל-26% מהצריכה היומית המומלצת לנשים. הוא גם עשיר בחומצה פולית, מנגן, זרחן ומגנזיום.</p>
+<div class="ng">
+  <div class="ni"><div class="nv">9g</div><div class="nu">חלבון</div><div class="nl">ל-100g מבושל</div></div>
+  <div class="ni"><div class="nv">27g</div><div class="nu">פחמימות</div><div class="nl">ל-100g מבושל</div></div>
+  <div class="ni"><div class="nv">7g</div><div class="nu">סיבים</div><div class="nl">ל-100g מבושל</div></div>
+  <div class="ni"><div class="nv">4.6mg</div><div class="nu">ברזל</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">28</div><div class="nu">GI נמוך</div><div class="nl">אינדקס גליקמי</div></div>
+  <div class="ni"><div class="nv">164</div><div class="nu">קלוריות</div><div class="nl">ל-100g מבושל</div></div>
+</div>
+<p>הסיבים בחומוס הם שילוב של סיבים מסיסים ובלתי-מסיסים. הסיבים המסיסים מהווים מצע לחיידקי המעי, הפרוביוטיקה שנמצאת בקולון. בניסויים קליניים, צריכה קבועה של קטניות הקטינה את רמות כולסטרול LDL ב-5-10%.</p>
+<h3>חומוס יבש לעומת משומר</h3>
+<p>חומוס יבש זקוק להשרייה של 8-12 שעות ולבישול של 60-90 דקות. אבל הוא מוזיל ב-60-70% ממחיר השימורים, ויש לו טעם עמוק יותר. חומוס משומר נשטף ומוכן מיד, עם כ-40% פחות נתרן אם שוטפים אותו. לבישול ביתי יומיומי, יבש עדיף. לחמוס מהיר, שימורים.</p>
+<div class="ab ab-w"><div class="tg">אקוואפאבה</div><p>מי בישול החומוס, הנוזל שנשפך בדרך כלל לכיור, מכיל חלבונים ועמילנים שהופכים אותו לתחליף מדהים לחלבון ביצה. שלוש כפות = ביצה אחת. מקציפים כמו חלבון. מכינים ממנו מרנג, מיונז, מוס שוקולד. מהפכת הטבגנות של העשור.</p></div>
+</div>
+
+<!-- CH3 -->
+<div class="ch reveal" id="ch3">
+<span class="cl">פרק שלישי</span>
+<h2>שרשרת עיבוד: מהשדה לקופסה, ממחית הטחינה למנת שף</h2>
+<p class="dc">העיבוד של חומוס פשוט למדי בהשוואה לאגוזים, אבל מורכבות קיימת בסיווג ובפורמטים המסחריים. חומוס יבש מגיע בשלושה סוגים עיקריים לשוק: <em>שלם</em> (whole), <em>מפוצל</em> (split/chana dal), ו<em>קמח</em> (besan). לכל אחד שימוש שונה לחלוטין.</p>
+<div class="proc-steps">
+  <div class="proc-step">
+    <div class="proc-step-num">1</div>
+    <div><div class="proc-step-title">קציר וניקיון</div><div class="proc-step-body">חומוס נקצר כשהצמח מתייבש. ניקיון ראשוני בשדה, הפרדת עשבים ואבנים, ייבוש לחות ל-10-12%. שלב קריטי: לחות מעל 14% = סיכון לעובש ואפלטוקסינים.</div></div>
+  </div>
+  <div class="proc-step">
+    <div class="proc-step-num">2</div>
+    <div><div class="proc-step-title">מיון וסיווג</div><div class="proc-step-body">גודל, צבע, שלמות. Kabuli מסווג לפי קוטר: Extra Large (9mm+), Bold (8-9mm), Medium (7-8mm), Small (-7mm). גרגרים שבורים, כהים או מנוקדים מורידים את הדירוג.</div></div>
+  </div>
+  <div class="proc-step">
+    <div class="proc-step-num">3</div>
+    <div><div class="proc-step-title">קילוף ופיצול (לChana Dal)</div><div class="proc-step-body">גרגרי Desi מקולפים ומפוצלים לייצור Chana Dal, הבסיס לדאל ההודי. מכונות פיצול מסחריות. הגרגר החצוי חושף את הצבע הצהוב הפנימי.</div></div>
+  </div>
+  <div class="proc-step">
+    <div class="proc-step-num">4</div>
+    <div><div class="proc-step-title">טחינה לקמח Besan</div><div class="proc-step-body">Desi טחון דק לקמח צהוב-זהוב. ניחוח אגוזי ייחודי. הבסיס לפקורה הודי, לציפוי טמפורה, לפנקייקים (chilla), ולמאכלים רבים בחצי האי הודי.</div></div>
+  </div>
+</div>
+<h3>מה שוק הפרמיום מחפש</h3>
+<p>Kabuli Extra Large, קוטר 9mm ומעלה, ממקורות קנדה ואוסטרליה, הוא מה שמכונה "Garbanzo premium" בשוק המערבי. לבן ענק, אחיד, בישול שווה. ישראל מייבאת בעיקר מקנדה, בדגש על Bold ו-Extra Large לשוק הקמעונאי.</p>
+<div class="ab ab-g"><div class="tg">אחסון</div><p>חומוס יבש, אחסון נכון: 3 שנים. מפתח: יבשה, קור, אפלה, אטום מחרקים. הזיקית הכחולה (<em>Acanthoscelides obtectus</em>) היא אויב ראשי. פגם קטן בקליפה = כניסה לחרקים. בדיקה ויזואלית לפני אחסון ארוך.</p></div>
+</div>
+
+<!-- CH4 -->
+<div class="ch reveal" id="ch4">
+<span class="cl">פרק רביעי</span>
+<h2>חומוס בעולם: ממג'דרה לגארבנזו, מהמזרח התיכון לספרד</h2>
+<p class="dc">אין קטנית שנסעה כמו החומוס. מהסהר הפורה לרומא, מרומא לספרד המוסלמית, מספרד לאמריקה הלטינית, ומהודו לדרום-מזרח אסיה. בכל תחנה היא לבשה שם חדש ונכנסה לתרבות מקומית. בספרדית: <em>garbanzo</em>. בצרפתית: <em>pois chiche</em>. בטורקית: <em>nohut</em>. בערבית: <em>hummus</em>, שבדיוק אומר גם את המאכל הטחון.</p>
+
+<div class="vc">
+  <div class="vn">חומוס טחון, המזרח התיכון</div>
+  <div class="vt">הווריאציה הנסעה ביותר בעולם</div>
+  <p>חומוס מבושל, טחינה, שום, לימון, שמן זית, כמון. הנוסחה הבסיסית זהה מביירות ועד תל-אביב, ממצרים ועד עיראק. ההבדל הוא ביחסים: לבנון: יותר לימון, פחות שום. ישראל: שמנת גבוהה, ממרח עבה. מצרים: יותר שום, הגשה בחמה עם שמן ורוטב.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Chana Masala, הודו ופקיסטן</div>
+  <div class="vt">תבשיל מסוג "Dry Curry"</div>
+  <p>חומוס Kabuli מבושל עם עגבניות, בצל, ג'ינג'ר, שום וסמיכות תבלינים: כמון, כוסברה, גאראם מסאלה, מנגו מיובש (amchur) לחמיצות. מוגש עם פורי מטוגן או צ'אפאטי. אחד ממאכלי הרחוב הנפוצים ביותר בצפון הודו.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Ful wa Hummus, מצרים</div>
+  <div class="vt">ארוחת בוקר לאומית</div>
+  <p>שילוב של פול מדמס עם חומוס, שמן זית, לימון ותבלינים. מוגש בחם, לרוב עם ביצה קשה ולחם עגול. המסעדות בקהיר פותחות בשלוש לפנות בוקר לאוכלוסיית הפועלים. האוכל שהאכיל את בניית הפירמידות, לפחות בגרסה המודרנית שלו.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Cocido Madrileño, ספרד</div>
+  <div class="vt">תבשיל חורפי ספרדי קלאסי</div>
+  <p>מרק עשיר עם גארבנזו, בשר בקר, תרנגול, נקניק צ'וריסו ותפוחי אדמה. מוגש בשלוש מנות לפי הסדר: ציר, ירקות, בשר. מורשת מטבח יהודי-מוסלמי שהתפתח בספרד לפני הגירוש.</p>
+</div>
+
+<div class="pull"><p>"מי שאוכל חומוס בכל יום, לא ירד לשאול." הפתגם הערבי העתיק, אולי משקף אמת פשוטה: קטנית זולה, שובעת ועשירה שמחזיקה אנשים חיים כבר 10,000 שנה.</p></div>
+</div>
+
+<div class="media-slot-inline" style="width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,0.06);"><img src="../images/Chickpeas_in_ceramic_bowl_7f9dad20da.jpeg" alt="חומוס" style="width:100%;height:100%;object-fit:cover;"></div>
+
+<!-- CH5 -->
+<div class="ch reveal" id="ch5">
+<span class="cl">פרק חמישי</span>
+<h2>שוק עולמי: $11 מיליארד, קנדה מול הודו, ישראל באמצע</h2>
+<p class="dc">שוק החומוס העולמי הגיע ל-$11 מיליארד ב-2023, עם צמיחה צפויה של 7% שנתי עד 2030. הצמיחה מגיעה ממספר כיוונים: עלייה בצריכת חלבון צמחי בעולם המערבי, גידול אוכלוסין במדינות מתפתחות, ופיתוח מוצרים חדשים, חלב חומוס, פסטה מחומוס, חטיפים מחומוס.</p>
+
+<div class="pb-chart">
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇳</span><span class="pb-name">הודו (ייצור)</span></div><div class="pb-track"><div class="pb-fill" style="width:75%;background:#D4A850;"></div></div><span class="pb-pct">75%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇦🇺</span><span class="pb-name">אוסטרליה</span></div><div class="pb-track"><div class="pb-fill" style="width:8%;background:#8A6830;"></div></div><span class="pb-pct">8%</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇦</span><span class="pb-name">קנדה (ייצוא)</span></div><div class="pb-track"><div class="pb-fill" style="width:35%;background:#C4A878;"></div></div><span class="pb-pct">35% ייצוא</span></div>
+  <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇵🇰</span><span class="pb-name">פקיסטן</span></div><div class="pb-track"><div class="pb-fill" style="width:6%;background:#8A6830;"></div></div><span class="pb-pct">6%</span></div>
+  <div class="pb-note">FAO 2023 · ייצור עולמי ~15.5 מיליון טון</div>
+</div>
+
+<h3>מדוע קנדה, לא הודו, מייצאת לישראל</h3>
+<p>הודו מגדלת 75% מהחומוס אבל צורכת את רובו. ביקוש פנימי עצום, מחירים מקומיים, ומדיניות ייצוא לא יציבה (הממשלה ההודית מגבילה ייצוא בשנות יבול קשות) הופכים אותה לספקית לא אמינה לייבוא ישראלי. קנדה ואוסטרליה, לעומת זאת, מגדלות Kabuli איכותי בעיקר לייצוא, עם אחידות גבוהה ואישורי בריאות מערביים.</p>
+
+<div class="ab ab-w"><div class="tg">מחירים</div><p>Kabuli Extra Large קנדי: $700-900 לטון CNF ישראל. Kabuli Bold אוסטרלי: $600-750. Desi הודי: $400-550. פרמיה של 30-50% ל-Kabuli על Desi, בעיקר בגלל גודל, צבע אחיד וביקוש שוק מערבי.</p></div>
+
+<p>מגמות: <em>פסטה מחומוס</em> גדלה 40% שנתי בארה"ב ובאירופה. <em>מים מחומוס</em> (אקוואפאבה) הפך לקטגוריה בפני עצמה. <em>חטיפי חומוס</em> קלויים תופסים נתח מחטיפי תירס. <em>קמח Besan</em> חוזר לשולחן המערבי כאלטרנטיבת גלוטן-פרי. Blue Star מספקת Kabuli Bold ו-Extra Large לשוק הישראלי משני מקורות: קנדה ואוסטרליה.</p>
+</div>
+
+</main>
+
+<!-- CH6 -->
+<div class="ch reveal" id="ch6">
+<span class="cl">פרק שישי</span>
+<h2>בטיחות: אפלטוקסין, לחות ואחסון נכון</h2>
+<p class="dc">חומוס הוא מוצר בטוח בד"כ, אבל רגיש לאחסון לקוי. שני סיכונים עיקריים: אפלטוקסין מעובש Aspergillus, ומחלת Bruchid — חרקי הזיקית שמחוררים גרגרים.</p>
+<table class="gt">
+  <thead><tr><th>פרמטר</th><th>סטנדרט EU</th><th>סטנדרט ישראל</th></tr></thead>
+  <tbody>
+    <tr><td>Aflatoxin B1</td><td>≤ 2 ppb</td><td>≤ 5 ppb</td></tr>
+    <tr><td>Aflatoxin Total</td><td>≤ 4 ppb</td><td>≤ 10 ppb</td></tr>
+    <tr><td>לחות מקסימלית</td><td>14%</td><td>14%</td></tr>
+    <tr><td>Salmonella</td><td>Absent/25g</td><td>Absent/25g</td></tr>
+    <tr><td>גרגרים פגומים מקסימלי</td><td>2%</td><td>3%</td></tr>
+  </tbody>
+</table>
+<div class="ab ab-r"><div class="tg">חרקי זיקית</div><p><em>Acanthoscelides obtectus</em> מטיל ביצים על קרום הגרגר. הזחל מחורר פנימה ואוכל. גרגר פגום נראה שלם מבחוץ. בדיקה ויזואלית לא מספיקה. אחסון קר (מתחת ל-15 מעלות) עוצר התפתחות. ייבוא מקנדה ואוסטרליה עם COA פסטיצידים וחרקים.</p></div>
+</div>
+
+<!-- CH7 -->
+<div class="ch reveal" id="ch7">
+<span class="cl">פרק שביעי</span>
+<h2>חומוס ובריאות: כולסטרול, סוכרת ומיקרוביום</h2>
+<p class="dc">מחקרים קליניים על חומוס מצביעים על שלושה תחומים עיקריים: הורדת כולסטרול, ניהול סוכר בדם, ובריאות המיקרוביום.</p>
+<p><strong>כולסטרול:</strong> סיבים מסיסים (6-7 גרם/100g מבושל) קושרים חומצות מרה ומורידים LDL. מחקר Canadian Journal of Dietetic Practice (2019): 30 גרם חלבון קטניות ליום הורידה LDL ב-4.5% ו-TC ב-3.8%.</p>
+<p><strong>סוכר בדם:</strong> GI של 28. עמילן עמיד בחומוס מתפרק לאט. מחקר אמריקאי (2011, Journal of Nutrition) על חולי סוכרת סוג 2: הוספת כוס חומוס ביום הורידה HbA1c ב-0.5% לאחר 12 שבועות.</p>
+<p><strong>מיקרוביום:</strong> Prebiotic fibers (FOS, GOS) מחומוס מזינים בעיקר Bifidobacterium ו-Lactobacillus. מחקר Gut Microbiome (2022) מצא עלייה של 25% במגוון חיידקי המעי לאחר שישה שבועות של צריכת קטניות.</p>
+<div class="ng">
+  <div class="ni"><div class="nv">28</div><div class="nu">אינדקס גליקמי</div><div class="nl">נמוך מאוד</div></div>
+  <div class="ni"><div class="nv">-4.5%</div><div class="nu">ירידת LDL</div><div class="nl">30g חלבון/יום</div></div>
+  <div class="ni"><div class="nv">25%</div><div class="nu">שיפור מיקרוביום</div><div class="nl">6 שבועות</div></div>
+  <div class="ni"><div class="nv">9g</div><div class="nu">חלבון ל-100g</div><div class="nl">מבושל</div></div>
+  <div class="ni"><div class="nv">7g</div><div class="nu">סיבים ל-100g</div><div class="nl">מבושל</div></div>
+  <div class="ni"><div class="nv">164</div><div class="nu">קלוריות</div><div class="nl">ל-100g מבושל</div></div>
+</div>
+</div>
+
+<!-- CH8 -->
+<div class="ch reveal" id="ch8">
+<span class="cl">פרק שמיני</span>
+<h2>חומוס ישראל: תעשייה, תרבות, ופוליטיקה</h2>
+<p class="dc">בישראל, חומוס הוא לא רק מזון — הוא זהות. "מלחמת החומוס" בין ישראל ללבנון על מי ממציא אותו הגיעה לכותרות בינלאומיות. ב-2008, לבנון רשמה חומוס כמוצר תרבות לבנוני ב-UNESCO. ישראל הגישה עתירה. הוויכוח לא נסגר.</p>
+<p>תעשיית החומוס הישראלית: כ-50 מפעלי חומוס קטנים-בינוניים. מותגים גדולים: Sabra (בבעלות משותפת PepsiCo-Strauss), Tribe, Achva. ייצוא ישראלי: $100 מיליון שנתי, בעיקר לארה"ב ואירופה. הצרכן האמריקאי: 25 גרם חומוס בממוצע לשבוע ב-2023, לעומת 5 גרם ב-2000.</p>
+<div class="ab ab-g"><div class="tg">שיא גינס</div><p>ב-2010 עשה לבנון צלחת חומוס ענקית של 10.45 טון. ישראל ניסתה לשבור עם 4 טון. לבנון חזרה עם 10.45 טון. הפוליטיקה של הקטנית הקטנה.</p></div>
+</div>
+
+<!-- CH9 -->
+<div class="ch reveal" id="ch9">
+<span class="cl">פרק תשיעי</span>
+<h2>מוצרים חדשים: מהאקוואפאבה לפסטה</h2>
+<p>תעשיית חומוס עוברת מהפכה עם שורה של מוצרים שמנצלים את פרופיל התזונה שלו:</p>
+<ul>
+  <li><strong>פסטה מחומוס:</strong> Banza (ארה"ב) בנתה עסק של $100 מיליון על פסטה 25% חלבון. בישראל: אנגלו-סקסון ואחרים. צמיחה: 40% שנתי.</li>
+  <li><strong>קמח Besan:</strong> הבסיס לבישול הודי מסורתי, חוזר למערב. פנקייקים, ציפוי לטיגון, ריבוליטה ללא גלוטן.</li>
+  <li><strong>אקוואפאבה:</strong> מי בישול החומוס. תחליף לחלבון ביצה: 3 כפות = ביצה. מרנג, מיונז, מוס. שנת 2014: הגילוי. 2016: ויקיפדיה. 2024: שוק של $45 מיליון.</li>
+  <li><strong>חטיפי חומוס קלוי:</strong> Biena, The Good Bean — חטיפים שמחליפים בוטנים עם 7g חלבון ל-40g. צמיחה: 35%.</li>
+  <li><strong>חלב חומוס:</strong> נישה צומחת כחלופה לחלב שקדים. 8g חלבון ל-240ml לעומת 1g באדמה.</li>
+</ul>
+</div>
+
+<!-- CH10 -->
+<div class="ch reveal" id="ch10">
+<span class="cl">פרק עשירי</span>
+<h2>עתיד: ביוטכנולוגיה, אקלים, ושוק 2030</h2>
+<p class="dc">חומוס נמצא בליבו של שני שינויים גדולים שיעצבו את מערכות המזון ב-2030: מעבר לחלבון צמחי ועמידות לשינויי אקלים. בשניהם הוא בעמדה חזקה.</p>
+<p>פרויקטי ביוטכנולוגיה: ICARDA ו-CGIAR מפתחים זני חומוס עמידים לחום, בצורת ומחלות. Kabuli שמניב ב-35 מעלות (כיום גידול מיטבי עד 28 מעלות). CRISPR לשיפור תכולת חלבון ל-30%+ (מ-25%). זנים עם פחות אנטי-נוטריינטים (פיטטים, טאנינים) לספיגה טובה יותר.</p>
+<p>שוק 2030: חומוס צפוי לחצות $20 מיליארד ב-2030. Sabra-Strauss, הנסחרת בנאסדק, הכפילה הכנסות ב-5 שנים. הביקוש הגדול ביותר הצפוי: הודו שמתעשרת ומחפשת חלבון, וסין שמגלה את המטבח הים-תיכוני.</p>
+<div class="ab ab-w"><div class="tg">Blue Star</div><p>Kabuli Bold ו-Extra Large לשוק הישראלי ממקורות קנדה ואוסטרליה. COA: לחות, אפלטוקסין, Salmonella, pesticides, גרגרים פגומים. מינימום: 20 טון. מחיר: $700-900/טון CNF ישראל.</p></div>
+</div>
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · CHICKPEA · גרגר אחד, עשרת אלפים שנה</footer>
+<script>
+window.onscroll = function() {
+  var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+  var btn = document.getElementById('backToTop');
+  btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+  var sections = document.querySelectorAll('.ch');
+  var dots = document.querySelectorAll('.nav-dot');
+  var current = '';
+  sections.forEach(function(s) { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+  dots.forEach(function(d) { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+document.querySelectorAll('.nav-dot').forEach(function(d) {
+  d.onclick = function() { document.getElementById(d.dataset.target).scrollIntoView({behavior:'smooth'}); };
+});
+(function() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('active'); });
+  }, {threshold: 0, rootMargin: '0px 0px -50px 0px'});
+  document.querySelectorAll('.ch').forEach(function(c) { c.classList.add('reveal'); obs.observe(c); });
+})();
+document.querySelectorAll('.pb-fill[data-w]').forEach(function(el) {
+  setTimeout(function() { el.style.width = el.dataset.w + '%'; }, 400);
+});
+(function() {
+  var request = indexedDB.open('StarkOS_DB', 1);
+  request.onsuccess = function(e) {
+    var db = e.target.result;
+    try {
+      var store = db.transaction('archive', 'readonly').objectStore('archive');
+      var r = store.get('chickpea');
+      r.onsuccess = function() {
+        if (!r.result) return;
+        if (r.result.title) document.getElementById('sync-title').textContent = r.result.title;
+        if (r.result.description) document.getElementById('sync-desc').textContent = r.result.description;
+      };
+    } catch(e) {}
+  };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080808;--text:#F8F8FF;--body:#BCBCC8;--accent:#1A1A3A;--warm:#5050A0;--card:rgba(12,12,20,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;background-image:linear-gradient(rgba(80,80,160,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(80,80,160,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}body::after{background:#080820;bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);position:relative;}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.05);background:#080808;display:flex;align-items:center;justify-content:center;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px;}
+em{color:#8080C0;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(80,80,160,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(20,20,50,0.2);border-right:4px solid var(--accent);}.ab-g .tg{color:#8080C0;}
+.ab-r{background:rgba(184,50,50,0.1);border-right:4px solid #B83030;}.ab-r .tg{color:#E06060;}.ab-r p{color:#DDB0B0;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(12,12,20,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:13px;color:#808098;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}
+.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,0.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(80,80,160,0.2);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.ft{text-align:center;padding:44px 24px;font-size:13px;color:#505068;border-top:1px solid rgba(255,255,255,0.06);margin-top:36px;}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.ch ol li::marker{color:var(--warm);font-family:'Space Mono',monospace;font-size:12px;font-weight:700;}.ch ul li::marker{color:var(--warm);}
+.back-to-top{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:18px;z-index:1000;transition:0.3s;opacity:0;pointer-events:none;}
+.back-to-top.visible{opacity:1;pointer-events:auto;}
+.home-btn{position:fixed;bottom:30px;right:30px;display:flex;align-items:center;gap:8px;background:rgba(12,12,20,0.85);border:1px solid rgba(80,80,160,0.3);border-radius:24px;padding:8px 16px;text-decoration:none;color:var(--warm);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;z-index:1000;transition:0.3s;}
+@media(max-width:900px){.side-nav{display:none;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+<title>קצח · Blue Star International</title>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav class="side-nav">
+    <div class="nav-dot active" data-target="ch1"></div>
+    <div class="nav-dot" data-target="ch2"></div>
+    <div class="nav-dot" data-target="ch3"></div>
+    <div class="nav-dot" data-target="ch4"></div>
+    <div class="nav-dot" data-target="ch5"></div>
+    <div class="nav-dot" data-target="ch6"></div>
+    <div class="nav-dot" data-target="ch7"></div>
+    <div class="nav-dot" data-target="ch8"></div>
+    <div class="nav-dot" data-target="ch9"></div>
+    <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+    <div class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · SEEDS ARCHIVE</div>
+    <h1 id="sync-title">קֶצַח</h1>
+    <p class="deck" id="sync-desc">הזרע השחור שהנביא מוחמד קרא לו "ריפוי לכל מחלה חוץ מהמוות". שלושת אלפי שנות נוכחות, Thymoquinone שמדענים ממשיכים לגלות בו שימושים חדשים, ומוצר שחצה גבולות בין תבלין, רפואה ופרמצבטיקה.</p>
+    <div class="hero-img-wrap" id="slot-product-hero">
+          <img src="../images/Bowl_overflowing_with_nigella_seeds_b00c7125aa.jpeg" alt="nigella" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+</section>
+<div class="marquee-container">
+    <div class="marquee-text">קצח · NIGELLA SATIVA · THYMOQUINONE · BLACK SEED · KALONJI · BLACK CUMIN · קצח · NIGELLA SATIVA · THYMOQUINONE · BLACK SEED · KALONJI · BLACK CUMIN · </div>
+</div>
+<main class="con">
+<section class="ch" id="ch1">
+    <span class="cl">פרק ראשון</span>
+    <h2>אונטולוגיה: זהות, שם, ושלושת אלפי שנות פולחן</h2>
+    <p class="dc">לפני שהיה תוסף תזונה, הקצח היה קדוש. לפני שהיה קדוש, הוא היה תבלין. ולפני שהיה תבלין, זרעיו השחורים הקטנים שכבו בסל הנכה של תות-ענח'-אמון, לצד השום הידוע, בקבר בן 3,300 שנה. הנביא מוחמד אמר עליו: "בקצח ריפוי לכל מחלה חוץ מהמוות" (חדית', בוכארי). כמה תבלינים זכו לאזכור נבואי ישיר? הקצח הוא אחד מהם, ואת הכוח שנייחס לו רופאים פונקציונליים של 2024 לא היה מבייש את הנביא.</p>
+    <p>השם העברי <strong>קֶצַח</strong> מופיע בתנ"ך בישעיה כח: "כי לא בחרוץ יָדוּשׁ קֶצַח". נבדיל: הקצח (<em>Nigella sativa</em>) הוא לא כמון שחור (<em>Bunium persicum</em>) ולא פלפל שחור. שלושה צמחים שונים שקיבלו את הכינוי "black cumin" בתרגומים שונים, מה שיצר בלבול מסחרי שממשיך עד היום. משפחה בוטנית: <strong>Ranunculaceae</strong> (חמציצים), שונה לחלוטין מאפיאצאה. מוצא גנטי: אגן הים התיכון המזרחי ומרכז אסיה.</p>
+    <p>ב-<strong>1992</strong>, מדענים בדרום קוריאה מבודדים <strong>Thymoquinone</strong> מזרעי קצח ומזהים את פעילותו האנטי-דלקתית. זה פתח עידן מחקרי חדש: מאז פורסמו מעל <strong>3,000 מחקרים</strong> על <em>Nigella sativa</em>. הקדית של הנביא הפכה לנושא מחקר אוניברסיטאי שמרתק מדענים משני הצדדים, המאמינים והסקפטיים.</p>
+    <div class="ab ab-w">
+        <div class="tg">נקודת ציון היסטורית</div>
+        <p>ב-<strong>1976</strong>, בחפירות ארכאולוגיות במוצ'ה-דרו (פקיסטן), נמצאו זרעי קצח עם עדות לשימוש מ-<strong>3,000-3,500 שנה לפנה"ס</strong>. הממצא בקבר תות-ענח'-אמון (1922) ואיפות אחרות ממצרים, הודו וסוריה מתארות קצח כמרפא לכאבי ראש, שיעול ועיכול. <em>ההיסטוריה של הקצח היא ההוכחה הארוכה ביותר שיש למוצר שנמכר בשוק הנישה.</em></p>
+    </div>
+    <p>הבלבול בין שמות: "Black seed", "Black cumin", "Kalonji" (הינדי), "Habba Sawda" (ערבית), "Çörek otu" (טורקי), "Schwarzkümmel" (גרמנית). כולם מתייחסים ל-<em>Nigella sativa</em>. הסוחר שיודע שכל השמות מכוונים לאותו מוצר מנצל הזדמנויות מסחריות שהסוחר שלא יודע מפספס.</p>
+</section>
+<section class="ch" id="ch2">
+    <span class="cl">פרק שני</span>
+    <h2>אגרונומיה: הצמח, האקלים, הגידול</h2>
+    <p class="dc"><em>Nigella sativa</em> הוא צמח חד-שנתי, גובה <strong>20-60 ס"מ</strong>, עם עלים מנוצים דקים ופרחים לבנים-כחלחלים עדינים. הפרי: קפסולה עגלגלת המכילה <strong>50-100 זרעים</strong> שחורים-כהים, משולשים, ברבעי מ"מ. הזרעים עוטפים בשלפוחיות שמן אתרי שמשחררות ניחוח חריף-ארומטי בריסוק. ניחוח שלא מתבלבל בשום דבר אחר.</p>
+    <h3>אקלים ואדמה</h3>
+    <p>קצח מסתגל לתנאים רבים: <strong>אקלים חם-יבש עד ים-תיכוני</strong>. טמפרטורה: <strong>20-35°C</strong>. עמיד לחום יחסית, רגיש לכפור. pH אדמה: <strong>6.0-8.0</strong>, גמיש. מדינות מייצרות: <strong>מצרים</strong> (30-35%, בעיקר Minya ו-Beheira), <strong>הודו</strong> (25-30%, Rajasthan ו-Gujarat), <strong>טורקיה</strong> (15%), <strong>סוריה ואתיופיה</strong> (10%). מצרים מייצאת בעיקר לשוק האירופאי ולשוק ה-halal בצפון אמריקה.</p>
+    <div class="ab ab-g">
+        <div class="tg">גזרת מחקר</div>
+        <p>זן <strong>Giza-1</strong> שפותח ב-Agricultural Research Center מצרים (2018) מניב <strong>1.5 טון לדונם</strong> לעומת 0.8-1.0 בזנים מקומיים. תכולת Thymoquinone בשמן: <strong>28-35%</strong> לעומת 22-25% בממוצע. הזן מתאים לגידול ב-Delta-soil המצרי עם השקיה טפטוף.</p>
+    </div>
+    <p>עונת גידול במצרים: שתילה <strong>ספטמבר-נובמבר</strong>, קצירה <strong>אפריל-מאי</strong>. מחזור 150-170 יום. בהודו: שתילה <strong>אוקטובר-נובמבר</strong>, קצירה <strong>פברואר-מרץ</strong>. קציר ידני לרוב: כאשר 60-70% מהקפסולות חומות. קציר מכני: ב-combine עם מסיר ראש מיוחד. אחוז זרעים שבורים בקציר מכני גבוה ב-3-5% מקציר ידני.</p>
+</section>
+<section class="ch" id="ch3">
+    <span class="cl">פרק שלישי</span>
+    <h2>ביוכימיה: Thymoquinone ומסלולי הפעילות</h2>
+    <p class="dc">הקצח הוא ביוכימית מרתק: שמן אתרי מורכב עם מולקולה פעילה אחת שדומיננטית, <strong>Thymoquinone (TQ)</strong>, שמפגין פעילות ביולוגית רחבה יוצאת דופן. TQ הוא קינון מונוטרפני שפועל בו-זמנית כנוגד חמצון, אנטי-דלקתי, אנטי-בקטריאלי, ו-pro-apoptotic (גרימת מוות תאי מתוכנן). שלושת אלפי שנות אמונה ב"ריפוי לכל מחלה" מסתבר שיש לה בסיס ביוכימי שהמדע המודרני ממשיך לפענח.</p>
+    <h3>Thymoquinone (TQ)</h3>
+    <p><strong>Thymoquinone</strong> (C₁₀H₁₂O₂) מהווה <strong>25-48%</strong> מהשמן האתרי (בזנים איכותיים). TQ מעכב NF-κB, הגורם המרכזי בתהליכים דלקתיים; מעכב COX-2, אנזים הדלקת שמסנתז פרוסטגלנדינים; מגביר ייצור glutathione, נוגד החמצון העיקרי של הגוף. מנגנון triple-action: אנטי-דלקתי, אנטי-אוקסידנטי, ואנטי-ספסמודי בו-זמנית.</p>
+    <p>מרכיבים נוספים: <strong>Carvacrol</strong> (5-15%, נמצא גם בצתר ואורגנו), <strong>Thymol</strong> (2-10%, אנטי-מיקרוביאלי חזק), <strong>p-Cymene</strong> (5-12%), <strong>alpha-Pinene</strong> (3-8%). השמן האתרי הכולל: <strong>0.5-1.5% ממשקל יבש</strong>. שמן קבוע (fatty oil): <strong>32-40% ממשקל יבש</strong>, עשיר בחומצה לינולאית (52-60%).</p>
+    <div class="ab ab-w">
+        <div class="tg">ממצא ביוכימי מרכזי</div>
+        <p>TQ מראה <strong>selective cytotoxicity</strong>: in vitro, הוא הורג תאי סרטן בריכוזים נמוכים שאינם פוגעים בתאים בריאים. מחקרים על סרטן שד, ריאה, מעי גס וקיבה מראים IC50 של 10-50 μM לתאי סרטן, לעומת עיכוב תאים בריאים רק מעל 100 μM. פער זה הוא הבסיס לעניין הגדול בנגזרות TQ כמועמדים לתרופות אנטי-סרטניות.</p>
+    </div>
+    <p>ערכים תזונתיים ל-100g: <strong>345 קלוריות, 38g שומן, 44g פחמימות, 26g חלבון</strong>. עשיר בסידן (<strong>931 מ"ג</strong>), ברזל (<strong>16.9 מ"ג</strong>), מגנזיום (<strong>266 מ"ג</strong>), פוספור (<strong>499 מ"ג</strong>).</p>
+</section>
+<div class="media-slot-inline" style="width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,0.06);"><img src="../images/Bowl_overflowing_with_nigella_seeds_b00c7125aa.jpeg" alt="גרעיני קצח שחורים" style="width:100%;height:100%;object-fit:cover;"></div>
+<section class="ch" id="ch4">
+    <span class="cl">פרק רביעי</span>
+    <h2>דירוג ואיכות: פרמטרים ושפת הסוחרים</h2>
+    <p class="dc">שוק הקצח המסחרי פועל בשתי שפות: <strong>תבלין גולמי</strong> (זרעים שלמים ואבקה לתעשיית מזון וקמעונאות) ו<strong>שמן כבוש-קר</strong> לשוק תוספי התזונה. הפרמטר המרכזי לשמן: <strong>% Thymoquinone</strong>. ספק שאינו מציג ניתוח TQ% בשמן מוכר שמן גולמי ולא תמצית פרמצבטית.</p>
+
+<div class="cb">
+  <div class="ct">ייצור קצח עולמי לפי מדינה</div>
+  <div class="pb-chart">
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇪🇬</span><span class="pb-name">מצרים (מיניה / בחירה)</span></div><div class="pb-track"><div class="pb-fill" data-w="33" style="background:#7A4A00"></div></div><span class="pb-pct">33%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇳</span><span class="pb-name">הודו</span></div><div class="pb-track"><div class="pb-fill" data-w="28" style="background:#A07030"></div></div><span class="pb-pct">28%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇪🇹</span><span class="pb-name">אתיופיה</span></div><div class="pb-track"><div class="pb-fill" data-w="15" style="background:#C49060"></div></div><span class="pb-pct">15%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇧🇩</span><span class="pb-name">בנגלדש</span></div><div class="pb-track"><div class="pb-fill" data-w="12" style="background:#D4AA80"></div></div><span class="pb-pct">12%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇹🇷</span><span class="pb-name">טורקיה</span></div><div class="pb-track"><div class="pb-fill" data-w="7" style="background:#E0C4A0"></div></div><span class="pb-pct">7%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים</span></div><div class="pb-track"><div class="pb-fill" data-w="5" style="background:#DDD6CA"></div></div><span class="pb-pct">5%</span></div>
+  </div>
+  <div class="pb-note">FAO / ITC 2024 · ~80K טון/שנה · מצרים מובילה ב-TQ% גבוה בשמן</div>
+</div>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>פרמטר</th><th>Grade A (תבלין)</th><th>שמן Cold-press</th><th>שמן פרמצבטי</th></tr></thead>
+        <tbody>
+            <tr><td><strong>לחות מקס'</strong></td><td>8%</td><td>0.1%</td><td>0.05%</td></tr>
+            <tr><td><strong>TQ מינ'</strong></td><td>לא נמדד</td><td>1.0%</td><td>2.5%</td></tr>
+            <tr><td><strong>חומר זר</strong></td><td>0.5%</td><td>,</td><td>,</td></tr>
+            <tr><td><strong>Peroxide value</strong></td><td>,</td><td>≤5 meq/kg</td><td>≤3 meq/kg</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="ab ab-g">
+        <div class="tg">שיקול מקצועי: מוצא ומחיר</div>
+        <p>קצח מצרי Grade A FOB Alexandria: <strong>1,200-1,800 דולר לטון</strong>. קצח הודי: <strong>900-1,400 דולר</strong>. שמן Black Seed Cold-press 1% TQ: <strong>25-50 דולר לק"ג</strong>. שמן 2.5%+ TQ: <strong>80-150 דולר לק"ג</strong>. קצח אתיופי נחשב לבעל TQ גבוה ביחס למחיר: <strong>700-1,000 דולר לטון זרעים</strong> עם שמן של 1.5-2.0% TQ.</p>
+    </div>
+</section>
+<section class="ch" id="ch5">
+    <span class="cl">פרק חמישי</span>
+    <h2>עיבוד: מהזרע לשמן ולאבקה</h2>
+    <p class="dc">עיבוד קצח פשוט יחסית לזרעים שלמים, אבל מורכב לשמן: TQ הוא מולקולה רגישה לחום, אור, וחמצון. שמן "black seed" שנעשה בלחיצה חמה (Expeller) מאבד 40-60% מ-TQ לעומת cold-press. ה-label "cold-pressed" אינו מוסדר בכל שוק, ויש ספקים שמשתמשים בו לשמן שלמעשה חומם ל-60-80°C.</p>
+    <div class="proc-steps">
+        <div class="proc-step"><div class="proc-step-num">01</div><div><div class="proc-step-title">קציר וניקוי</div><div class="proc-step-body">קציר כאשר <strong>70%</strong> מהקפסולות חומות. ניקוי ב-air screen cleaners. ייבוש שמש ל-<strong>7-8% לחות</strong>. ניקוי אופטי לזרעים שחורים ממעורב אבנים ועלים.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">02</div><div><div class="proc-step-title">Cold-press</div><div class="proc-step-body">Hydraulic cold press: טמפרטורה מקסימלית <strong>40°C</strong>. תפוקה: <strong>30-38%</strong> שמן מהזרע. שמן TQ 1.0-2.5%. שאריות (cake): 62-70%, עשיר בחלבון ובסיבים, משמש כמזון בהמות או כחומר גלם לאבקת תמצית.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">03</div><div><div class="proc-step-title">טחינה לאבקה</div><div class="proc-step-body">Hammer mill ל-60-80 mesh. <strong>קלייה קלה</strong> (120-140°C, 5 דקות) לפני טחינה: מפחיתה מרירות ומשחררת ניחוח. אחסון אבקה: N₂ flush, RH מתחת ל-60%, חושך. חיי מדף: <strong>12-18 חודש</strong>.</div></div></div>
+        <div class="proc-step"><div class="proc-step-num">04</div><div><div class="proc-step-title">אחסון שמן</div><div class="proc-step-body">שמן TQ רגיש: אחסון ב-<strong>2-8°C</strong>, בקבוקי זכוכית כהה (UV-blocking), nitrogen headspace. חשיפה לאור: TQ מתפרק ב-40-60% תוך 30 יום. חשיפה לחמצן: peroxide value עולה מ-2 ל-20 meq/kg תוך שבועות. <strong>מוצר שמן "black seed" בפלסטיק שקוף שישב על מדף מוצף אור מכיל TQ שבר ממה שמדווח.</strong></div></div></div>
+    </div>
+</section>
+<section class="ch" id="ch6">
+    <span class="cl">פרק שישי</span>
+    <h2>בטיחות ובקרת איכות</h2>
+    <p class="dc">קצח GRAS לשימוש קולינרי. שמן בריכוזים פרמצבטיים: אינטראקציות תרופתיות מתועדות. שאריות pesticide: סיכון עיקרי בקצח הודי ומצרי.</p>
+    <div class="ab ab-r">
+        <div class="tg">אינטראקציה תרופתית: TQ</div>
+        <p>TQ מעכב CYP3A4 ו-CYP2D6, אנזימי מטבוליזם תרופתי. עשוי לשנות רמות תרופות כמו <strong>Warfarin, Cyclosporine, Tacrolimus</strong>. חולים לאחר השתלות (על immunosuppressants) צריכים להתייעץ לפני שמן קצח בריכוז גבוה. שימוש קולינרי (כפית ליום): לא מדאיג.</p>
+    </div>
+    <p>MRL: <strong>Chlorpyrifos ≤ 0.01 mg/kg</strong> EU. מיקרוביולוגיה: <strong>TPC ≤ 10⁵ CFU/g</strong>, <strong>Salmonella: Absent/25g</strong>, <strong>Aflatoxin B1 ≤ 5 μg/kg</strong>. שמן: <strong>peroxide ≤ 5 meq/kg, acid value ≤ 2 mg KOH/g</strong>. אחד האתגרים: "Black Seed Oil" בשוק הקמעונאי הוא קטגוריה עם אחידות נמוכה מאוד. בדיקה עצמאית ב-GC-MS היא הדרך היחידה לוודא TQ%.</p>
+</section>
+<section class="ch" id="ch7">
+    <span class="cl">פרק שביעי</span>
+    <h2>לוגיסטיקה וניהול שרשרת האספקה</h2>
+    <p class="dc">קצח זרעים הוא מוצר יבש ויציב לשינוע. שמן קצח הוא מוצר עדין שדורש תנאי שינוע מוקפדים. שני מוצרים שונים מאותה גרעין, שני פרוטוקולי לוגיסטיקה שונים לחלוטין.</p>
+    <div style="overflow-x:auto">
+    <table class="gt">
+        <thead><tr><th>מוצא</th><th>נמל</th><th>זמן לאירופה</th><th>הערות</th></tr></thead>
+        <tbody>
+            <tr><td><strong>מצרים</strong></td><td>Alexandria / Damietta</td><td>10-14 ימים</td><td>Dry container לזרעים, Reefer לשמן</td></tr>
+            <tr><td><strong>הודו</strong></td><td>Nhava Sheva / Kandla</td><td>20-25 ימים</td><td>Dry container</td></tr>
+            <tr><td><strong>אתיופיה</strong></td><td>Djibouti</td><td>18-24 ימים</td><td>כמויות קטנות, TQ גבוה</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>אחסון זרעים: טמפרטורת חדר, <strong>RH מתחת ל-65%</strong>, חושך. חיי מדף: <strong>18-24 חודש</strong>. שמן: <strong>2-8°C</strong>, חושך, nitrogen. חיי מדף: <strong>12-18 חודש</strong>. <em>זרע שנשמר 3,300 שנה בקבר פרעה לא צריך חדר קר. שמן שהוצא ממנו בלחיצה קרה צריך.</em></p>
+</section>
+<section class="ch" id="ch8">
+    <span class="cl">פרק שמיני</span>
+    <h2>פיזיולוגיה ובריאות</h2>
+    <p class="dc">עם מעל 3,000 מחקרים שפורסמו על <em>Nigella sativa</em>, הקצח הוא אחד הצמחים הנחקרים ביותר בעולם. אבל מרבית המחקרים הם in vitro או בבעלי חיים. מחקרים קליניים באנשים: כ-100. מספר קטן ביחס לעניין, אבל גדל.</p>
+    <h3>אסתמה ואלרגיות</h3>
+    <p>מטא-אנליזה (Koshak et al., Journal of Evidence-Based Integrative Medicine 2017, 7 RCTs) מצאה שתוסף <em>Nigella sativa</em> שיפר FEV1 (נפח ריאה) ב-<strong>0.28 ליטר</strong> בחולי אסתמה לאחר 8-12 שבועות. המנגנון: TQ מעכב שחרור histamine ממאסט-תאים ו-leukotriene מאאוזינופילים, שני נהגים מרכזיים בדלקת אסתמטית.</p>
+    <div class="ng">
+        <div class="ni"><div class="nv">25-48%</div><div class="nu">Thymoquinone</div><div class="nl">בשמן Grade A</div></div>
+        <div class="ni"><div class="nv">3,000+</div><div class="nu">מחקרים מדעיים</div><div class="nl">30 שנה אחרונות</div></div>
+        <div class="ni"><div class="nv">0.28L</div><div class="nu">שיפור FEV1</div><div class="nl">אסתמה (מטא 2017)</div></div>
+        <div class="ni"><div class="nv">3,300</div><div class="nu">שנים בתיעוד</div><div class="nl">קבר תות-ענח'-אמון</div></div>
+        <div class="ni"><div class="nv">32-40%</div><div class="nu">שמן קבוע</div><div class="nl">ממשקל יבש</div></div>
+        <div class="ni"><div class="nv">931 mg</div><div class="nu">סידן ל-100g</div><div class="nl">גבוה מאוד</div></div>
+    </div>
+    <p>לחץ דם: מחקר RCT (Dehkordi & Kamkhah, 2008, 70 חולים) מצא ירידה ממוצעת של <strong>11 mmHg סיסטולי</strong> ו-<strong>7 mmHg דיאסטולי</strong> לאחר 8 שבועות על תמצית 0.5 מ"ל TID. ממצא מרשים, מחקר קטן. מחקרי חזרה נחוצים.</p>
+</section>
+<section class="ch" id="ch9">
+    <span class="cl">פרק תשיעי</span>
+    <h2>כלכלה: שוק עולמי ומחירים</h2>
+    <p class="dc">שוק הקצח העולמי: <strong>120,000-150,000 טון זרעים לשנה</strong>, שווי <strong>150-250 מיליון דולר</strong>. שוק שמן Black Seed: <strong>80-120 מיליון דולר נוסף</strong>. הנהג הגדול ביותר של הצמיחה: שוק ה-Muslim consumer products ושוק ה-functional food שמוצאים ב-Thymoquinone פוטנציאל טיפולי.</p>
+    <div class="ab ab-w">
+        <div class="tg">מבנה שוק</div>
+        <p>מצרים מייצאת בעיקר ל-EU ולסעודיה (שוק ה-Halal). הודו מייצאת ל-EU, בריטניה, ולמדינות המפרץ. ה-CAGR של שוק שמן Black Seed: <strong>12-15%</strong> (2019-2024), אחד הגבוהים בקטגוריית השמנים הצמחיים. מנגנון: מוצר עם נרטיב דתי-רפואי חזק בקהילות מוסלמיות.</p>
+    </div>
+    <p>שחקנים מובילים: <strong>Egyptian Spice (ESI)</strong>, <strong>Hamdard Laboratories</strong> (הודו/פקיסטן), <strong>Amazing Herbs</strong> (ארה"ב), <strong>Hemani</strong> (פקיסטן). שוק ה-"Black Seed Oil" הקמעונאי צמח מ-<strong>180 מיליון דולר ב-2018 ל-320 מיליון ב-2024</strong> בצפון אמריקה לבדה. <em>הזרע השחור שהנביא מוחמד הזכיר הפך למוצר של Amazon Best Sellers.</em></p>
+</section>
+<section class="ch" id="ch10">
+    <span class="cl">פרק עשירי</span>
+    <h2>טכנולוגיה עתידית ומגמות 2030</h2>
+    <p class="dc">המסע של Thymoquinone ממולקולת מחקר למועמד תרופתי הוא המגמה הדרמטית ביותר בשוק הקצח לקראת 2030. אם ניסויים קליניים Phase II יאשרו פעילות אנטי-סרטנית, הביקוש לקצח איכות פרמצבטית יזנק ב-500-1000%.</p>
+    <h3>TQ בפיתוח תרופתי</h3>
+    <p>שתי חברות ביוטק קטנות (<strong>Natureceuticals Sdn Bhd</strong>, מלזיה, ו-<strong>PBRC Biotech</strong>, גרמניה) נמצאות ב-Phase I של ניסויים קליניים עם TQ נאנו-אנקפסולט לסרטן ריאה ולסרטן קיבה. הבעיה המרכזית: TQ נמוך ב-bioavailability (כ-30-40% ספיגה). נאנו-אנקפסולציה עשויה להגיע ל-75-80%.</p>
+    <div class="ab ab-g">
+        <div class="tg">מגמה: TQ Standardized Extracts</div>
+        <p>שוק תמציות קצח מסוגרטות ל-TQ% גדל ב-<strong>18% לשנה</strong> (2020-2024). תמצית 3% TQ: <strong>200-350 דולר לק"ג</strong>. שוק תוספי תזונה מסוגרטים מצפה ל-<strong>CAGR 20%</strong> עד 2030. חברות מובילות: <strong>Naturex</strong> (צרפת), <strong>Sabinsa</strong> (הודו).</p>
+    </div>
+    <p>שינויי אקלים: קצח גדל באזורים חצי-צחיחים ועמיד לחום. בניגוד לתבלינים רגישים, האתגר לקצח הוא עליית מלוחת קרקע ב-Nile Delta המצרי עקב התייבשות. מחקר מצרי (NRC, 2022) מראה שזנים מסוימים של קצח עמידים ל-salinity עד 6 dS/m, גבוה מהממוצע. <em>זרע שנמצא לצד פרעה ישרוד גם את שינוי האקלים, כל עוד מישהו ידאג לשתול אותו מחדש בכל שנה.</em></p>
+    <div class="ft"><span style="font-size:11px;color:#585880;">אגרונומיה: Agriculture Research Center Egypt, Giza-1 Variety · ביוכימיה: Randhawa & Alghamdi, Pharmacognosy Rev 2011 · בריאות: Koshak et al., J Evidence-Based Integrative Medicine 2017 · Dehkordi & Kamkhah, J Hypertension 2008 · כלכלה: Grand View Research Black Seed Oil Market 2024 · ITC Trade Map 2024</span></div>
+</section>
+</main>
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · NIGELLA · קצח</footer>
+<div class="marquee-container"><div class="marquee-text">קצח · NIGELLA SATIVA · THYMOQUINONE · BLACK SEED · KALONJI · BLACK CUMIN · קצח · NIGELLA SATIVA · THYMOQUINONE · BLACK SEED · KALONJI · BLACK CUMIN · </div></div>
+<button class="back-to-top" id="btt">↑</button>
+<a href="../index.html" class="home-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5050A0" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>ספרייה</span></a>
+<script>
+window.onscroll=()=>{const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progress-bar').style.width=(window.scrollY/h*100)+'%';const s=document.querySelectorAll('.ch'),d=document.querySelectorAll('.nav-dot');let c="";s.forEach(x=>{if(pageYOffset>=x.offsetTop-200)c=x.id;});d.forEach(x=>{x.classList.remove('active');if(x.dataset.target===c)x.classList.add('active');});};
+const btt=document.getElementById('btt');window.addEventListener('scroll',()=>btt.classList.toggle('visible',window.scrollY>300));btt.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+document.querySelectorAll('.nav-dot').forEach(dot=>dot.onclick=()=>document.getElementById(dot.dataset.target).scrollIntoView({behavior:'smooth'}));
+(function(){const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('active');}),{threshold:0,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.ch').forEach(c=>{c.classList.add('reveal');obs.observe(c);});function sync(){const r=indexedDB.open('StarkOS_DB',1);r.onsuccess=e=>{const db=e.target.result;try{const pid=window.location.pathname.split('/').pop().replace('.html',''),s=db.transaction('archive','readonly').objectStore('archive'),g=s.get(pid);g.onsuccess=()=>{const d=g.result;if(!d)return;function m(s){const v=s.startsWith('data:video'),el=document.createElement(v?'video':'img');el.src=s;el.style.cssText='width:100%;height:100%;object-fit:cover;';if(v){el.autoplay=el.muted=el.loop=true;el.setAttribute('playsinline','');}return el;}const h1=document.getElementById('sync-title');if(h1&&d.name)h1.innerText=d.name;const dk=document.getElementById('sync-desc');if(dk&&d.desc)dk.innerText=d.desc;const src=d.media1||d.media,sl=document.getElementById('slot-product-hero');if(sl&&src){sl.innerHTML='';sl.appendChild(m(src));}};}catch(e){}};};window.addEventListener('load',sync);}());
+
+(function() {
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.ch').forEach(card => {
+            card.classList.add('reveal');
+            observer.observe(card);
+        });
+    }
+    initScrollReveal();
+    function syncProductPage() {
+        const dbName = 'StarkOS_DB';
+        const productId = window.location.pathname.split('/').pop().replace('.html', '');
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            try {
+                const store = db.transaction('archive', 'readonly').objectStore('archive');
+                const getRequest = store.get(productId);
+                getRequest.onsuccess = () => {
+                    const data = getRequest.result;
+                    if (!data) return;
+                    function makeMedia(src) {
+                        const isVid = src.startsWith('data:video');
+                        const el = document.createElement(isVid ? 'video' : 'img');
+                        el.src = src;
+                        el.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                        if (isVid) { el.autoplay = el.muted = el.loop = true; el.setAttribute('playsinline',''); }
+                        return el;
+                    }
+                    const heroH1 = document.getElementById('sync-title');
+                    if (heroH1 && data.name) heroH1.innerText = data.name;
+                    const heroDeck = document.getElementById('sync-desc');
+                    if (heroDeck && data.desc) heroDeck.innerText = data.desc;
+                    const heroSrc = data.media1 || data.media;
+                    const heroSlot = document.getElementById('slot-product-hero');
+                    if (heroSlot && heroSrc) { heroSlot.innerHTML = ''; heroSlot.appendChild(makeMedia(heroSrc)); }
+                };
+            } catch(err) {}
+        };
+    }
+    window.addEventListener('load', syncProductPage);
+})();
+</script>
+</body>
+</html>

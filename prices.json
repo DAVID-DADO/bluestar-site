@@ -1,0 +1,15 @@
+{
+  "updated": "2026-03-23",
+  "items": [
+    { "name": "ALMOND",       "spec": "NP 23/25",        "origin": "FOB CAL", "price": 3840, "trend": "up" },
+    { "name": "CASHEW",       "spec": "WW320",            "origin": "FOB VNM", "price": 2190, "trend": "down" },
+    { "name": "WALNUT",       "spec": "EXTRA LIGHT",      "origin": "FOB CHL", "price": 3200, "trend": "flat" },
+    { "name": "PECAN",        "spec": "MAMMOTH",          "origin": "FOB USA", "price": 5600, "trend": "up" },
+    { "name": "PISTACHIO",    "spec": "21/25",            "origin": "FOB USA", "price": 7200, "trend": "up" },
+    { "name": "BLACK PEPPER", "spec": "ASTA 580",         "origin": "FOB VNM", "price": 3100, "trend": "down" },
+    { "name": "SESAME",       "spec": "99% PURITY",       "origin": "FOB ETH", "price": 1800, "trend": "flat" },
+    { "name": "PRUNE",        "spec": "D'AGEN 40/50",     "origin": "FOB USA", "price": 2800, "trend": "flat" },
+    { "name": "TURMERIC",     "spec": "3% CURCUMIN",      "origin": "FOB IND", "price": 1450, "trend": "up" },
+    { "name": "CHIA",         "spec": "CONVENTIONAL",     "origin": "FOB PRY", "price": 2400, "trend": "flat" }
+  ]
+}

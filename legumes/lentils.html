@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>עדשים · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0B;--text:#FAF7F0;--body:#D1CEC5;--accent:#803020;--warm:#C05030;
+  --card:rgba(20,20,22,0.4);--radius:20px;--shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden;position:relative;
+  background-image:linear-gradient(rgba(192,80,48,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(192,80,48,0.03) 1px,transparent 1px);background-size:30px 30px;}
+body::before,body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);z-index:-2;opacity:0.15;pointer-events:none;}
+body::before{background:var(--warm);top:-100px;left:-100px;}body::after{background:var(--accent);bottom:20%;right:-150px;}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--warm);width:0;z-index:1000;}
+.back-btn{position:absolute;top:40px;left:40px;z-index:10;display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;opacity:0.5;transition:0.3s;}
+.back-btn:hover{opacity:1;color:var(--warm);}
+#backToTop{position:fixed;bottom:30px;left:30px;width:40px;height:40px;background:var(--warm);color:#000;border:none;border-radius:50%;cursor:pointer;font-size:18px;display:none;z-index:1000;transition:0.3s;}
+.side-nav{position:fixed;top:50%;right:30px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px;}
+.nav-dot{width:10px;height:10px;border:1px solid var(--warm);border-radius:50%;opacity:0.3;cursor:pointer;transition:0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--warm);}
+.hero{padding:100px 40px 160px;text-align:center;color:var(--text);position:relative;}
+.hero-k{font-size:11px;font-weight:700;letter-spacing:5px;color:var(--warm);margin-bottom:20px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:90px;font-weight:900;line-height:0.8;margin-bottom:25px;letter-spacing:-2px;}
+.hero .deck{font-size:20px;opacity:0.8;max-width:650px;margin:0 auto 40px;font-weight:300;}
+.hero-img-wrap{max-width:900px;margin:0 auto -220px;height:500px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#000;border:1px solid rgba(255,255,255,0.05);}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.con{max-width:800px;margin:280px auto 100px;padding:0 24px;position:relative;z-index:5;}
+.ch{background:var(--card);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);padding:50px;border-radius:var(--radius);margin-bottom:40px;border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--warm);font-size:14px;opacity:0.4;}
+.ch::before{top:15px;left:15px;}.ch::after{bottom:15px;right:15px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:38px;margin-bottom:25px;color:var(--text);border-right:5px solid var(--warm);padding-right:20px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 14px;padding-right:14px;border-right:3px solid var(--warm);}
+.ch p{margin-bottom:18px;color:var(--body);}
+.cl{font-size:10px;font-weight:700;color:var(--warm);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Space Mono',monospace;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--warm);line-height:1;float:right;margin-left:8px;}
+em{color:#E8A890;font-style:italic;}strong{color:var(--text);}
+.ab{padding:20px 24px;margin:28px 0;border-radius:0 8px 8px 0;}
+.ab .tg{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:16px;line-height:1.75;}
+.ab-w{background:rgba(192,80,48,0.08);border-right:4px solid var(--warm);}.ab-w .tg{color:var(--warm);}
+.ab-g{background:rgba(128,48,32,0.2);border-right:4px solid var(--accent);}.ab-g .tg{color:#E8A890;}
+.ab-r{background:rgba(184,50,50,0.1);border-right:4px solid #B83030;}.ab-r .tg{color:#E06060;}.ab-r p{color:#DDB0B0;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.ni{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:13px;color:#A09080;margin-top:2px;}.ni .nl{font-size:11px;color:var(--warm);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:25px 0;font-size:15px;}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:14px;text-align:right;font-size:12px;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.gt td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--body);}
+.gt tr:nth-child(even){background:rgba(255,255,255,0.02);}
+.pull{margin:40px 0;padding:45px;background:rgba(0,0,0,0.4);border-radius:var(--radius);text-align:center;border:1px solid rgba(192,80,48,0.2);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.vc{background:rgba(30,28,25,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:22px;margin:18px 0;}
+.vc .vn{font-family:'Frank Ruhl Libre',serif;font-size:21px;font-weight:700;color:var(--text);}
+.vc .vt{font-size:12px;color:var(--warm);font-weight:600;margin-bottom:10px;}
+.vc p{font-size:16px;line-height:1.75;margin-bottom:0;color:var(--body);}
+.vc .vs{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+.vc .vsi{background:rgba(255,255,255,0.04);padding:6px 12px;border-radius:5px;font-size:12px;color:#A09080;}
+.vc .vsi strong{color:var(--text);}
+.reveal{opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.2,1,0.2,1);}
+.reveal.active{opacity:1;transform:translateY(0);}
+.marquee-container{position:fixed;bottom:-3vh;left:0;width:100vw;overflow:hidden;z-index:-1;pointer-events:none;}
+.marquee-text{font-family:'Playfair Display',serif;font-size:15vw;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);animation:scrollText 40s linear infinite;}
+@keyframes scrollText{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:rgba(0,0,0,0.8);color:var(--text);padding:60px 20px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;opacity:0.6;border-top:1px solid rgba(255,255,255,0.05);}
+.ch ol,.ch ul{padding-right:24px;margin:16px 0 18px;}
+.ch li{margin-bottom:10px;color:var(--body);line-height:1.8;}
+.ch ol li::marker{color:var(--warm);font-family:'Space Mono',monospace;font-size:12px;font-weight:700;}
+.ch ul li::marker{color:var(--warm);}
+@media(max-width:900px){.side-nav{display:none;}.back-btn{top:20px;left:20px;}.hero h1{font-size:55px;}.hero-img-wrap{height:300px;margin-bottom:-100px;}.con{margin-top:150px;}.ng{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="marquee-container">
+  <div class="marquee-text">עדשים · LENTILS · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · עדשים · LENTILS · BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · </div>
+</div>
+<div id="progress-bar"></div>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div>
+  <div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div>
+  <div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div>
+  <div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div>
+  <div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div>
+  <div class="nav-dot" data-target="ch10"></div>
+</nav>
+<section class="hero">
+  <a href="../index.html" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    ספרייה
+  </a>
+  <div class="hero-k">ערך ידע חקלאי · Blue Star International</div>
+  <h1 id="sync-title">עדשים</h1>
+  <p class="deck" id="sync-desc">הקטנית שלא דורשת השרייה. מנזיד עשו שעלה בכורה ועד Beluga השחורה שנמכרת כקוויאר הצומח. 8,000 שנה, ארבעה צבעים, ושוק של $8 מיליארד.</p>
+  <div class="hero-img-wrap">
+    <img src="../images/Bowl_overflowing_with_black_lentils_1172ddadc1.jpeg" alt="lentils" loading="lazy">
+  </div>
+</section>
+<main class="con">
+
+<!-- CH1 -->
+<div class="ch reveal" id="ch1">
+<span class="cl">פרק ראשון</span>
+<h2>8,000 שנה ונזיד עשו: הקטנית שקנתה בכורה</h2>
+<p class="dc">בשנת 2003 חפרו ארכיאולוגים בכפר עין-גזאל שבירדן ומצאו שרידי עדשים מתוארכים ל-8,000 לפנה"ס. בכאיוניו שבטורקיה נמצאו עדשים מ-8,500 לפנה"ס. זה הופך את העדשה לאחת הקטניות הראשונות שתורבתו, ביחד עם חומוס ואפונה, עוד לפני שאדם ידע לכתוב. הסהר הפורה, פס היבשה שמתקשר ממצרים דרך ישראל ועד פרס, הוא הבית הראשון שלה.</p>
+<p>המקרא מספר על עשו שמכר את בכורתו ליעקב תמורת נזיד עדשים. הסיפור מקבל משמעות חדשה כשמבינים שעדשים אדומות, המבושלות לרסק עבה ואדום-כהה, היו כנראה מאכל יומיומי בזול. הבכורה, מושג משפטי-דתי עם ערך עצום, נמכרה ב"מנת עובד". כלכלת העדשה הייתה כה נפוצה שנזיד פשוט נחשב למינימום ויטאלי.</p>
+<p>ברומא עדשים היו מזון צבאי. לגיונות רומאים נשאו עדשים יבשות כמצרך שמח להכנה מהירה. רצועות הכבישים הרומאיים, <em>Via Appia</em> ואחיותיה, העבירו לא רק חיילים אלא גם שקי עדשים ממצרים לרומא. מצרים הרומאית הייתה ספקית העדשים הגדולה של האימפריה.</p>
+<div class="ab ab-w"><div class="tg">הייחוד שמשנה הכל</div><p>עדשים הן הקטנית היחידה שלא דורשת השרייה לפני בישול. הסיבה: קליפה דקה יחסית וגרגר קטן שמאפשר חדירת מים מהירה. 20-30 דקות בישול לעדשים אדומות. 30-40 דקות לירוקות ושחורות. לחומוס ושעועית: 60-120 דקות אחרי השרייה. עדשים הן הפתרון המהיר לחלבון צמחי.</p></div>
+</div>
+
+<!-- CH2 -->
+<div class="ch reveal" id="ch2">
+<span class="cl">פרק שני</span>
+<h2>ארבעה צבעים, ארבע אישיות: המדריך לזנים</h2>
+<p class="dc">העדשה לא גדלה בזן אחד. יש ארבעה צבעים עיקריים בשוק, וכל אחד התפתח לשימוש שונה לחלוטין. אדומה מפוצלת לדאל ומרקים, ירוקה לסלטים ותבשילים ששומרים על צורה, שחורה לפרמיום, ופרנשית לבישול שף. ההבדל ביניהן הוא בגיאוגרפיה, בגנטיקה ובמה שאנשים רצו לבשל.</p>
+
+<div class="ng">
+  <div class="ni"><div class="nv">26g</div><div class="nu">חלבון</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">60g</div><div class="nu">פחמימות</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">16g</div><div class="nu">סיבים</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">7.5mg</div><div class="nu">ברזל</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">21</div><div class="nu">GI נמוך</div><div class="nl">אינדקס גליקמי</div></div>
+  <div class="ni"><div class="nv">353</div><div class="nu">קלוריות</div><div class="nl">ל-100g יבש</div></div>
+</div>
+
+<div class="vc">
+  <div class="vn">עדשים אדומות מפוצלות</div>
+  <div class="vt">Red Split · Masoor Dal · הנפוצות ביותר בעולם</div>
+  <p>עדשה ירוקה-חומה שקולפה ופוצלה, חושפת את הצד הפנימי הכתום-אדום. מתבשלת לרסק עבה תוך 20 דקות. הבסיס לדאל ההודי הקלאסי ולמרקי עדשים ערביים. קנדה היא המייצאת הגדולה בעולם, עם שדות וואסקצ'ואן שמייצרים את רוב הייצוא לאסיה ולמזרח התיכון.</p>
+  <div class="vs">
+    <div class="vsi">זמן בישול: <strong>20-25 דקות</strong></div>
+    <div class="vsi">קוטר: <strong>3-5 מ"מ</strong></div>
+    <div class="vsi"><strong>הכי זול · הכי נפוץ</strong></div>
+  </div>
+</div>
+
+<div class="vc">
+  <div class="vn">עדשים ירוקות / חומות שלמות</div>
+  <div class="vt">Green / Brown Lentils · שומרות על צורה בבישול</div>
+  <p>הגרגר השלם, עם קליפה. מתבשל ל-30-40 דקות, שומר על מרקם ולא נהיה רסק. מושלם לסלטים, תבשילים, ומג'דרה שרוצים בה גרגרים שלמים. הזן הקלאסי שמגיע מצרפת, ספרד, אוסטרליה וקנדה. אחיד יותר מהאדומה המפוצלת מבחינת מרקם ויזואלי.</p>
+  <div class="vs">
+    <div class="vsi">זמן בישול: <strong>30-40 דקות</strong></div>
+    <div class="vsi"><strong>ממרח · מרק · סלט</strong></div>
+  </div>
+</div>
+
+<div class="vc">
+  <div class="vn">Beluga · עדשים שחורות</div>
+  <div class="vt">הפרמיום של עולם העדשים</div>
+  <p>נקראות Beluga כי הן נראות כמו קוויאר. גרגר קטן, שחור-מבריק, מרקם פירמה שנשמר לאחר בישול. טעם אגוזי-עמוק. שימוש: בישול שף, סלטים חגיגיים, ציפוי לצלחות גורמה. מחיר גבוה ב-50-80% מהחומות. מגיע בעיקר מקנדה וצ'ילה.</p>
+  <div class="vs">
+    <div class="vsi">זמן בישול: <strong>20-25 דקות</strong></div>
+    <div class="vsi"><strong>פרמיום · גורמה · שף</strong></div>
+  </div>
+</div>
+
+<div class="vc">
+  <div class="vn">Puy · Le Puy en Velay, צרפת</div>
+  <div class="vt">D.O.P · הגנת מקור · הנחשבת ביותר באירופה</div>
+  <p>עדשה כחלחלה-ירוקה מאזור הר געש כבוי בדרום-מרכז צרפת. הקרקע הוולקנית הייחודית נותנת לה טעם פיפרי-עפרורי שלא מושג בשום מקום אחר. צ'פ מישלן זכייה שלוש כוכבים ישלמו מחיר פרמיום ב-3-4 פעמים מהחומה הרגילה. שמורה בחוק האירופי לאזור הגידול בלבד.</p>
+  <div class="vs">
+    <div class="vsi"><strong>D.O.P</strong></div>
+    <div class="vsi">פרמיום: <strong>פי 3-4</strong></div>
+    <div class="vsi"><strong>מישלן · גורמה</strong></div>
+  </div>
+</div>
+</div>
+
+<!-- CH3 -->
+<div class="ch reveal" id="ch3">
+<span class="cl">פרק שלישי</span>
+<h2>בישול ועיבוד: הקטנית שמוחלת על טעויות</h2>
+<p class="dc">עדשים הן הקטנית הסלחנית ביותר. שכחת להשרות? לא נורא. יש לך 20 דקות? מספיק לאדומות. השאר הן חצי שעה. לא כמו חומוס שדורש תכנון מראש, ולא כמו שעועית שמעניש כל קיצור דרך. הפשטות הזאת הפכה אותן למזון של צבאות, של מנזרים, של כפרים שלא הכירו מקרר.</p>
+
+<h3>זמני בישול לפי זן</h3>
+<div class="gt" style="font-size:15px;">
+  <thead><tr><th>זן</th><th>זמן בישול</th><th>תוצאה</th><th>שימוש אידיאלי</th></tr></thead>
+  <tbody>
+    <tr><td>אדומות מפוצלות</td><td>15-20 דקות</td><td>נהיות רסק</td><td>דאל, מרקים, ממרחים</td></tr>
+    <tr><td>ירוקות / חומות שלמות</td><td>30-40 דקות</td><td>שומרות צורה</td><td>מג'דרה, סלטים, תבשילים</td></tr>
+    <tr><td>Beluga שחורות</td><td>20-25 דקות</td><td>פירמה, מבריקות</td><td>שף, סלטים חגיגיים</td></tr>
+    <tr><td>Puy צרפתיות</td><td>25-30 דקות</td><td>פירמה עם עומק</td><td>מסעדות, תבשילי חורף</td></tr>
+  </tbody>
+</div>
+
+<h3>עיבוד תעשייתי</h3>
+<p>בשוק המסחרי, העדשות עוברות מיון לפי קוטר (2-9 מ"מ), צבע, ושלמות. קליפה וסדקים מורידים את הדירוג. עדשים אדומות מפוצלות עוברות תהליך נוסף: קילוף הקליפה הירוקה-חומה וחיתוך לחצי, חושף את הצד האדום-כתום הפנימי. קמח עדשים מיוצר בטחינה דקה ומשמש לפסטה, לחם ומוצרי גלוטן-פרי.</p>
+
+<div class="ab ab-w"><div class="tg">אחסון</div><p>עדשים יבשות: 2-3 שנים בתנאים נכונים. יבשה, קור, אפלה, אטום. חיסרון אחד: לאחר שנה ארוכה אחסון, זמן הבישול עולה משמעותית. עדשים ישנות לוקח 20 דקות יותר. עדשות שבושלו קפואות: 6 חודשים ללא שינוי טעם.</p></div>
+</div>
+
+<!-- CH4 -->
+<div class="ch reveal" id="ch4">
+<span class="cl">פרק רביעי</span>
+<h2>דאל, מג'דרה, מרק אדום: עדשים בתרבויות</h2>
+<p class="dc">אין מאכל שמגיע ממספר כה רב של מטבחים כמו עדשים. הודו, מזרח התיכון, אתיופיה, צרפת, ספרד. כל אחד פיתח מסורת עצמאית, לרוב ללא קשר לאחרת. זה לא במקרה: עדשים הן זולות, מהירות, ושובעות. הם המכנה המשותף הכלכלי של כמעט כל ציביליזציה שהסתמכה על גידולי קרקע.</p>
+
+<div class="vc">
+  <div class="vn">Masoor Dal, הודו ובנגלדש</div>
+  <div class="vt">תבשיל עדשים אדומות עם תבלינים</div>
+  <p>עדשים אדומות מפוצלות עם כורכום, ג'ינג'ר, שום, בצל מטוגן ועגבניות. מסיימים עם <em>tadka</em>: שמן גהי חם עם כמון, פלפל אדום וגרעיני חרדל מטוגנים, שנשפך מעל. מוגש עם אורז בסמטי. מאכל היום-יום של מאה מיליוני משפחות בתת-יבשת ההודית.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">מג'דרה, המזרח התיכון</div>
+  <div class="vt">עדשים ואורז עם בצל מטוגן</div>
+  <p>אחד המאכלים העתיקים של הלבנט. עדשים ירוקות שלמות מבושלות עם אורז, מתובלות בכמון, ומוגשות עם בצל מטוגן עמוק עד לקרמליזציה. בסוריה ולבנון מגישים עם לבנה. בירדן עם שמנת חמוצה. בפלסטין עם עגבניות. פשוט, מזין, וסמל מטבח פלסטיני-לבנטי.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Misir Wot, אתיופיה</div>
+  <div class="vt">תבשיל עדשים אדומות חריף</div>
+  <p>עדשים אדומות עם <em>berbere</em>, תערובת תבלינים אתיופית חריפה עם פלפל, כמון, כוסברה, קינמון וג'ינג'ר. מוגש על <em>injera</em>, לחם החמוץ הספוגי העשוי מקמח טף. אחד ממאכלי הצום הנפוצים בכנסייה האורתודוקסית האתיופית, שבה יש מאה ימי צום בשנה ללא בשר.</p>
+</div>
+
+<div class="vc">
+  <div class="vn">Lentilles du Puy, צרפת</div>
+  <div class="vt">תבשיל חורפי פרנסואה</div>
+  <p>Puy עם נקניקיות בלנד ירקות שורש, ברנדי, ועלי לוריה. הגרסה הקלאסית מהאוברן. גרסת שף מוסיפה ויניגרט חמוץ-מתוק ומגישה עם דג מעושן. המנה שהוכיחה שעדשים יכולות להיות יוקרתיות.</p>
+</div>
+
+<div class="pull"><p>"Lentils, the meat of the poor" - פתגם ימי-ביניימי. אבל בתפריטי מישלן של 2024, Puy lentils עם כבד ברווז מופיעות ב-120 יורו למנה. הבדל של 800 שנה.</p></div>
+</div>
+
+<div class="media-slot-inline" style="width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;margin:40px 0;border:1px solid rgba(255,255,255,0.06);"><img src="../images/Bowl_overflowing_with_black_lentils_1172ddadc1.jpeg" alt="עדשים" style="width:100%;height:100%;object-fit:cover;"></div>
+
+<!-- CH5 -->
+<div class="ch reveal" id="ch5">
+<span class="cl">פרק חמישי</span>
+<h2>שוק $8 מיליארד: קנדה שולטת, הודו צורכת, ישראל קונה</h2>
+<p class="dc">שוק העדשים העולמי הגיע ל-$8 מיליארד ב-2023. קנדה, עם שדות ואסקצ'ואן האינסופיים, היא המייצאת הגדולה בעולם, כ-35% מהייצוא הגלובלי. הודו מגדלת יותר, אך צורכת כמעט הכל בפנים. קנדה גידלה תעשיית עדשים בתכנון: מחקר זנים, תשתיות ייבוש, נמל ונקובר כשער לאסיה.</p>
+
+<table class="gt">
+  <thead><tr><th>זן</th><th>מחיר ממוצע לטון</th><th>מקור עיקרי</th><th>שוק יעד</th></tr></thead>
+  <tbody>
+    <tr><td>אדומות מפוצלות</td><td>$500-700</td><td>קנדה, טורקיה, אוסטרליה</td><td>הודו, בנגלדש, מצרים</td></tr>
+    <tr><td>ירוקות / חומות שלמות</td><td>$600-900</td><td>קנדה, אוסטרליה, ארה"ב</td><td>אירופה, ישראל, מזה"ת</td></tr>
+    <tr><td>Beluga שחורות</td><td>$1,200-1,800</td><td>קנדה, צ'ילה</td><td>אירופה, ארה"ב, יפן</td></tr>
+    <tr><td>Puy D.O.P</td><td>$3,500-5,000</td><td>צרפת בלבד</td><td>מסעדות יוקרה, EU</td></tr>
+  </tbody>
+</table>
+
+<h3>ישראל: שוק קטן, צרכן מגוון</h3>
+<p>ישראל מייבאת עדשים בעיקר מקנדה ומאוסטרליה, עם נפח שנתי של 15,000-20,000 טון. הביקוש הישראלי: עדשות ירוקות לשוק הקמעונאי, אדומות לתעשיית המזון (מרקים, ממרחים), ו-Beluga לשוק הגורמה. המגמה: גידול בצריכת עדשים כחלק ממהפכת החלבון הצמחי. מג'דרה, שהיתה מאכל ימי שישי קלאסי, חוזרת לשולחנות עם ורסיות שף.</p>
+
+<div class="ab ab-w"><div class="tg">Blue Star</div><p>Blue Star מספקת עדשות ירוקות ואדומות מקנדה לשוק הישראלי. אדומות מפוצלות: $550-650 לטון CNF ישראל. ירוקות שלמות: $650-800. מינימום הזמנה: 25 טון (חצי קונטיינר). ספקים: יצרנים מחבל Saskatchewan, קנדה.</p></div>
+
+<p>מגמות שוק: <em>פסטה מעדשים</em> גדלה 35% שנתי באירופה. <em>קמח עדשים</em> לאפייה ללא גלוטן בביקוש גובר. <em>חטיפי עדשים</em> קלויים מתחרים עם חטיפי עדשניות. עדשים שחורות ו-Puy בחדירה לשוק הביתי הפרמיום. השוק הצומח ביותר: מוצרי עדשים מוכנים לאכילה, מג'דרה קפואה, מרקי עדשים אספטיים.</p>
+</div>
+
+</main>
+<div class="ch reveal" id="ch6"><span class="cl">פרק שישי</span><h2>גיאוגרפיה: קנדה, הודו וטורקיה</h2>
+<div style="background:rgba(20,20,22,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;margin:28px 0;">
+<div style="font-family:'Frank Ruhl Libre',serif;font-size:17px;font-weight:700;margin-bottom:14px;text-align:center;color:var(--text);">ייצור עדשים עולמי לפי מדינה 2024</div>
+<div class="pb-chart" style="margin:16px 0;">
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇮🇳</span><span class="pb-name">הודו</span></div><div class="pb-track"><div class="pb-fill" style="width:26%;background:#C05030;"></div></div><span class="pb-pct">26%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇨🇦</span><span class="pb-name">קנדה</span></div><div class="pb-track"><div class="pb-fill" style="width:25%;background:#E07050;"></div></div><span class="pb-pct">25%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇹🇷</span><span class="pb-name">טורקיה</span></div><div class="pb-track"><div class="pb-fill" style="width:14%;background:#D09080;"></div></div><span class="pb-pct">14%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇦🇺</span><span class="pb-name">אוסטרליה</span></div><div class="pb-track"><div class="pb-fill" style="width:11%;background:#E0A898;"></div></div><span class="pb-pct">11%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇺🇸</span><span class="pb-name">ארה"ב</span></div><div class="pb-track"><div class="pb-fill" style="width:8%;background:#ECC0B8;"></div></div><span class="pb-pct">8%</span></div>
+<div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">שאר</span></div><div class="pb-track"><div class="pb-fill" style="width:16%;background:#505050;"></div></div><span class="pb-pct">16%</span></div>
+</div>
+<div style="font-size:11px;color:#6B6058;opacity:.7;margin-top:10px;text-align:center;">FAO 2024 · ~18 מיליון טון/שנה</div>
+</div>
+<p>קנדה מגדלת בעיקר לייצוא: Saskatchewan ו-Alberta — שדות גדולים, מנגנוני ייבוש ואחסון מתקדמים. הודו מגדלת יותר, אבל צורכת כמעט הכל. טורקיה: ספקית גדולה לאירופה ולמזרח התיכון.</p></div>
+
+<div class="ch reveal" id="ch7"><span class="cl">פרק שביעי</span><h2>בטיחות, אחסון ובקרת איכות</h2>
+<p>עדשים בטוחות יחסית. שני סיכונים עיקריים: אפלטוקסין ולחות.</p>
+<table class="gt"><thead><tr><th>פרמטר</th><th>סטנדרט EU</th><th>סטנדרט ישראל</th></tr></thead><tbody>
+<tr><td>Aflatoxin B1</td><td>≤ 2 ppb</td><td>≤ 5 ppb</td></tr>
+<tr><td>לחות מקסימלית</td><td>14%</td><td>14%</td></tr>
+<tr><td>Salmonella</td><td>Absent/25g</td><td>Absent/25g</td></tr>
+<tr><td>חרקים</td><td>Absent</td><td>Absent</td></tr>
+</tbody></table>
+<p>אחסון: 2-3 שנים בתנאים נכונים. יבשה, קור, אטום. עדשות ישנות: זמן בישול ארוך יותר. עדשות שבישלו: מקרר 3-5 ימים, מקפיא 6 חודשים.</p>
+<div class="ab ab-w"><div class="tg">זיהוי עדשות ישנות</div><p>אם עדשות אדומות לוקחות 35 דקות לבישול במקום 20 — הן ישנות. פתרון: כוס מים רותחים ל-10 דקות לפני הבישול הרגיל. לא כדאי לאחסן מעבר לשנתיים.</p></div></div>
+
+<div class="ch reveal" id="ch8"><span class="cl">פרק שמיני</span><h2>עדשים ובריאות: עדויות קליניות</h2>
+<div class="ng"><div class="ni"><div class="nv">21</div><div class="nu">GI נמוך</div><div class="nl">נמוך מאוד</div></div><div class="ni"><div class="nv">-5%</div><div class="nu">ירידת LDL</div><div class="nl">צריכה קבועה</div></div><div class="ni"><div class="nv">26g</div><div class="nu">חלבון ל-100g</div><div class="nl">גבוה לקטנית</div></div><div class="ni"><div class="nv">16g</div><div class="nu">סיבים ל-100g</div><div class="nl">64% מהיומי</div></div><div class="ni"><div class="nv">7.5mg</div><div class="nu">ברזל</div><div class="nl">42% RDI</div></div><div class="ni"><div class="nv">358mcg</div><div class="nu">חומצה פולית</div><div class="nl">90% RDI</div></div></div>
+<p><strong>סוכרת:</strong> GI של 21-29 — נמוך מאוד. מחקר Canadian Medical Association Journal (2012) על 121 חולי סוכרת סוג 2: הוספת כוס קטניות ליום הורידה HbA1c ב-0.5% ו-LDL ב-5% לאחר 3 חודשים. עדשות אדומות מפוצלות היו הגרסה היעילה ביותר.</p>
+<p><strong>ברזל:</strong> 7.5 מ"ג ל-100 גרם, אבל Iron non-heme — ספיגה נמוכה. פתרון: לאכול עם ויטמין C (עגבנייה, לימון) שמכפיל ספיגה. מחקר Oxford (2018): צריכת קטניות 4 פעמים בשבוע הורידה סיכון לאנמיה בנשים ב-11%.</p></div>
+
+<div class="ch reveal" id="ch9"><span class="cl">פרק תשיעי</span><h2>עדשים בישראל: מג'דרה ותעשיית מרקים</h2>
+<p class="dc">ישראל מייבאת 15,000-20,000 טון עדשים שנתי. מג'דרה, שהייתה מאכל יום-שישי מסורתי, חוזרת לתפריטים. תעשיית מרקים ישראלית משתמשת בעדשות אדומות למרקים קפואים ואספטיים.</p>
+<table class="gt"><thead><tr><th>מוצר</th><th>מחיר קמעונאי ישראל</th><th>מקור</th></tr></thead><tbody>
+<tr><td>עדשות אדומות מפוצלות</td><td>₪9-14 לק"ג</td><td>קנדה, טורקיה</td></tr>
+<tr><td>עדשות ירוקות שלמות</td><td>₪10-16 לק"ג</td><td>קנדה, אוסטרליה</td></tr>
+<tr><td>Beluga שחורות</td><td>₪22-35 לק"ג</td><td>קנדה, צ'ילה</td></tr>
+</tbody></table></div>
+
+<div class="ch reveal" id="ch10"><span class="cl">פרק עשירי</span><h2>עתיד: פסטה, קמח ו-Beluga Premium</h2>
+<p class="dc">שוק העדשים ב-2030: $12 מיליארד. הצמיחה מגיעה משלושה כיוונים: מוצרי עדשים מעובדים (פסטה, קמח, חלבון isolate), שוק Beluga premium, ועלייה בצריכת קטניות כחלק ממהפכת החלבון הצמחי.</p>
+<p><strong>פסטה מעדשים:</strong> Barilla ו-De Cecco הוציאו גרסאות עדשים. 25% חלבון, ללא גלוטן. צמיחה 35% שנתי. <strong>קמח עדשים:</strong> Beluga flour בעל טעם עמוק, משמש בלחם ארטיזן. <strong>Beluga ב-Whole Foods:</strong> $12-18 לחצי קילו, שוק פרמיום צומח. Blue Star מספקת עדשות ירוקות ואדומות מקנדה. מינימום 25 טון. CNF ישראל.</p>
+<div class="pull"><p>מנזיד שנמכר בכורה לפני 4,000 שנה. היום מוכר ב-Whole Foods ב-$18 לחצי קילו. ה-Beluga עשתה את הדרך ממטבח עניים לתפריט מישלן.</p></div></div>
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">BLUE STAR INTERNATIONAL · GLOBAL COMMODITY ARCHIVE · LENTILS · מנזיד עשו ועד Beluga</footer>
+<script>
+window.onscroll = function() {
+  var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+  var btn = document.getElementById('backToTop');
+  btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+  var sections = document.querySelectorAll('.ch');
+  var dots = document.querySelectorAll('.nav-dot');
+  var current = '';
+  sections.forEach(function(s) { if (pageYOffset >= s.offsetTop - 200) current = s.id; });
+  dots.forEach(function(d) { d.classList.remove('active'); if (d.dataset.target === current) d.classList.add('active'); });
+};
+document.querySelectorAll('.nav-dot').forEach(function(d) {
+  d.onclick = function() { document.getElementById(d.dataset.target).scrollIntoView({behavior:'smooth'}); };
+});
+(function() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('active'); });
+  }, {threshold: 0, rootMargin: '0px 0px -50px 0px'});
+  document.querySelectorAll('.ch').forEach(function(c) { c.classList.add('reveal'); obs.observe(c); });
+})();
+(function() {
+  var request = indexedDB.open('StarkOS_DB', 1);
+  request.onsuccess = function(e) {
+    var db = e.target.result;
+    try {
+      var store = db.transaction('archive', 'readonly').objectStore('archive');
+      var r = store.get('lentils');
+      r.onsuccess = function() {
+        if (!r.result) return;
+        if (r.result.title) document.getElementById('sync-title').textContent = r.result.title;
+        if (r.result.description) document.getElementById('sync-desc').textContent = r.result.description;
+      };
+    } catch(e) {}
+  };
+})();
+</script>
+</body>
+</html>

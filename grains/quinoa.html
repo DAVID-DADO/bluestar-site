@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>קינואה · Blue Star International</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;700;900&family=Space+Mono:wght@400;700&family=Noto+Sans+Hebrew:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#d4a843;--gold-dim:rgba(212,168,67,0.08);--border:rgba(212,168,67,0.12);
+  --bg:#080808;--text:#fff;--body:rgba(255,255,255,0.55);--card:rgba(255,255,255,0.03);--warm:#d4a843;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--body);font-family:'Noto Sans Hebrew',sans-serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity:0.028;mix-blend-mode:overlay;}
+#progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--gold);width:0;z-index:10000;}
+.side-nav{position:fixed;top:50%;right:24px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:10px;}
+.nav-dot{width:8px;height:8px;border:1px solid var(--gold);opacity:0.25;cursor:pointer;transition:all 0.3s;}
+.nav-dot.active{opacity:1;transform:scale(1.4);background:var(--gold);}
+.hero{min-height:78vh;display:flex;flex-direction:column;justify-content:flex-end;padding:140px 48px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+.hero-bg{position:absolute;inset:0;background:url('../images/Bowl_overflowing_with_quinoa_8f3c809090.jpeg') no-repeat center/cover;filter:grayscale(0.7) brightness(0.28);}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,0.6) 50%,rgba(8,8,8,0.2) 100%);}
+.hero-content{position:relative;z-index:1;}
+.hero-k{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:0.3em;color:var(--gold);margin-bottom:16px;text-transform:uppercase;display:block;}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:clamp(52px,7.5vw,100px);font-weight:900;line-height:0.9;margin-bottom:20px;letter-spacing:-2px;color:var(--text);}
+.hero .deck{font-size:1.05rem;max-width:580px;font-weight:300;color:var(--body);}
+.con{max-width:800px;margin:0 auto;padding:80px 24px 100px;position:relative;z-index:5;}
+.ch{background:var(--card);border:1px solid var(--border);padding:50px;margin-bottom:28px;position:relative;overflow:hidden;}
+.ch::before,.ch::after{content:'+';position:absolute;font-family:'Space Mono',monospace;color:var(--gold);font-size:12px;opacity:0.25;}
+.ch::before{top:14px;left:14px;}.ch::after{bottom:14px;right:14px;}
+.ch h2{font-family:'Frank Ruhl Libre',serif;font-size:36px;margin-bottom:24px;color:var(--text);border-right:4px solid var(--gold);padding-right:18px;line-height:1.1;}
+.ch h3{font-family:'Frank Ruhl Libre',serif;font-size:21px;font-weight:700;color:var(--text);margin:32px 0 12px;padding-right:12px;border-right:3px solid var(--gold);}
+.ch p{margin-bottom:16px;color:var(--body);}
+.cl{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:var(--gold);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:10px;display:block;}
+.dc::first-letter{font-family:'Frank Ruhl Libre',serif;font-size:2.8em;font-weight:900;color:var(--gold);line-height:1;float:right;margin-left:8px;}
+em{color:rgba(212,168,67,0.85);font-style:italic;}strong{color:var(--text);}
+.ab{padding:18px 22px;margin:24px 0;}
+.ab .tg{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:6px;}
+.ab p{margin:0;font-size:15px;line-height:1.75;}
+.ab-w{background:rgba(212,168,67,0.06);border-right:4px solid var(--gold);}.ab-w .tg{color:var(--gold);}
+.ab-g{background:rgba(50,80,40,0.15);border-right:4px solid #5a8a4a;}.ab-g .tg{color:#8aba78;}
+.ab-r{background:rgba(180,50,50,0.1);border-right:4px solid #b83030;}.ab-r .tg{color:#e06060;}.ab-r p{color:#ddb0b0;}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0;}
+.ni{background:rgba(255,255,255,0.03);border:1px solid var(--border);padding:14px;text-align:center;}
+.ni .nv{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:700;color:var(--text);}
+.ni .nu{font-size:12px;color:rgba(255,255,255,0.35);margin-top:2px;}
+.ni .nl{font-size:10px;color:var(--gold);margin-top:3px;font-weight:600;}
+.gt{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px;}
+.gt th{background:rgba(0,0,0,0.5);color:var(--text);padding:12px 14px;text-align:right;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--border);}
+.gt td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--body);}
+.gt tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+.cb{background:rgba(255,255,255,0.02);border:1px solid var(--border);padding:24px;margin:24px 0;}
+.cb .ct{font-family:'Frank Ruhl Libre',serif;font-size:16px;font-weight:700;margin-bottom:16px;text-align:center;color:var(--text);}
+.pb-chart{display:flex;flex-direction:column;gap:10px;}
+.pb-row{display:flex;align-items:center;gap:10px;}
+.pb-meta{display:flex;align-items:center;gap:6px;min-width:160px;justify-content:flex-end;}
+.pb-flag{font-size:16px;}.pb-name{font-size:12px;color:rgba(255,255,255,0.35);}
+.pb-track{flex:1;background:rgba(255,255,255,0.06);height:16px;overflow:hidden;}
+.pb-fill{height:100%;width:0;transition:width 1.2s cubic-bezier(0.22,1,0.36,1);}
+.pb-pct{font-family:'Frank Ruhl Libre',serif;font-size:13px;font-weight:700;color:var(--text);width:34px;text-align:left;}
+.pb-note{font-size:10px;color:rgba(255,255,255,0.2);margin-top:8px;text-align:center;}
+.pull{margin:36px 0;padding:40px;background:rgba(0,0,0,0.35);text-align:center;border:1px solid rgba(212,168,67,0.15);}
+.pull p{font-family:'Frank Ruhl Libre',serif;font-size:20px;font-weight:500;color:var(--body);line-height:1.55;margin:0;font-style:italic;}
+.vc{background:rgba(255,255,255,0.02);border:1px solid var(--border);padding:20px;margin:16px 0;}
+.vc .vn{font-family:'Frank Ruhl Libre',serif;font-size:20px;font-weight:700;color:var(--text);}
+.vc .vt{font-family:'Space Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:8px;}
+.vc p{font-size:15px;line-height:1.75;margin:0;color:var(--body);}
+.vc .vs{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+.vc .vsi{background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:5px 10px;font-size:11px;color:rgba(255,255,255,0.35);}
+.vc .vsi strong{color:var(--text);}
+.media-slot-inline{width:100%;aspect-ratio:16/9;overflow:hidden;margin:36px 0;border:1px solid var(--border);}
+.media-slot-inline img,.media-slot-inline video{width:100%;height:100%;object-fit:cover;filter:brightness(0.88);}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.active{opacity:1;transform:translateY(0);}
+/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{background:#000;border-top:1px solid var(--border);padding:40px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.inner-ft a,.inner-ft-links a{font-family:'Space Mono',monospace;color:var(--gold);text-decoration:none;}
+.inner-ft-links{display:flex;gap:24px;}
+.inner-ft-links a{font-size:9px;letter-spacing:0.1em;color:rgba(255,255,255,0.22);text-transform:uppercase;transition:color 0.2s;}
+.inner-ft-links a:hover{color:var(--gold);}
+.inner-ft .inner-ft-logo{font-size:13px;letter-spacing:0.2em;font-weight:700;}
+.inner-ft-copy{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:0.12em;color:rgba(255,255,255,0.14);text-transform:uppercase;}
+#btt{position:fixed;bottom:28px;left:28px;width:38px;height:38px;background:var(--gold);color:#000;border:none;cursor:pointer;font-size:16px;z-index:1000;transition:opacity 0.3s;opacity:0;pointer-events:none;}
+#btt.visible{opacity:1;pointer-events:auto;}
+.home-btn{position:fixed;bottom:28px;right:28px;display:flex;align-items:center;gap:8px;background:rgba(8,8,8,0.88);border:1px solid var(--border);padding:8px 16px;text-decoration:none;color:var(--gold);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.15em;z-index:1000;}
+nav{position:fixed;top:0;left:0;right:0;z-index:1001;display:flex;align-items:center;justify-content:space-between;direction:ltr;padding:20px 48px;background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:padding 0.3s;}
+nav.slim{padding-top:13px;padding-bottom:13px;}
+.nav-logo{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:0.2em;color:var(--gold);text-decoration:none;font-weight:700;}
+.nav-links{display:flex;gap:32px;list-style:none;direction:rtl;}
+.nav-links a{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--body);text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-cta{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#000;background:var(--gold);text-decoration:none;text-transform:uppercase;padding:9px 20px;direction:rtl;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.hamburger span{width:20px;height:1px;background:var(--gold);display:block;transition:all 0.3s;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
+.mobile-menu{position:fixed;inset:0;background:rgba(8,8,8,0.98);backdrop-filter:blur(20px);z-index:2000;display:none;flex-direction:column;align-items:center;justify-content:center;gap:32px;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:'Frank Ruhl Libre',serif;font-size:32px;font-weight:900;color:var(--text);text-decoration:none;}
+.mobile-menu a:hover{color:var(--gold);}
+.mob-cta{font-family:'Space Mono',monospace!important;font-size:11px!important;background:var(--gold);color:#000!important;padding:12px 28px;text-transform:uppercase;}
+.ch ol,.ch ul{padding-right:22px;margin:14px 0 16px;}
+.ch li{margin-bottom:9px;color:var(--body);line-height:1.8;}
+.ch ol li::marker,.ch ul li::marker{color:var(--gold);font-family:'Space Mono',monospace;font-size:11px;font-weight:700;}
+@media(max-width:900px){.side-nav{display:none;}.hero h1{font-size:clamp(40px,9vw,60px);}.hero{padding:110px 24px 60px;}.con{padding:60px 24px 80px;}.ch{padding:36px 24px;}.ng{grid-template-columns:repeat(2,1fr);}nav{padding:16px 24px;}.nav-links{display:none;}.hamburger{display:flex;}/* WHATSAPP CTA */
+.wa-cta-block{background:rgba(37,211,102,0.04);border-top:1px solid rgba(37,211,102,0.15);
+  border-bottom:1px solid rgba(37,211,102,0.15);padding:48px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.wa-cta-text h3{font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:var(--text);margin-bottom:8px;}
+.wa-cta-text p{font-size:0.92rem;color:var(--body);max-width:420px;}
+.wa-cta-btn{display:inline-flex;align-items:center;gap:12px;
+  background:#25D366;color:#000;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;padding:16px 32px;white-space:nowrap;transition:opacity 0.2s;flex-shrink:0;}
+.wa-cta-btn:hover{opacity:0.88;}
+.wa-cta-btn svg{flex-shrink:0;}
+.inner-ft{flex-direction:column;align-items:flex-start;padding:32px 24px;}}
+</style>
+</head>
+<body>
+<div class="mobile-menu" id="mm">
+  <a href="../home.html">ראשי</a><a href="../about.html">אודות</a>
+  <a href="../services.html">שירותים</a><a href="../index.html">סחורות</a>
+  <a href="../contact.html" class="mob-cta">צור קשר</a>
+</div>
+<div id="progress-bar"></div>
+<nav id="mainNav">
+  <a href="../home.html" class="nav-logo">BLUE STAR ✦</a>
+  <ul class="nav-links">
+    <li><a href="../about.html">אודות</a></li>
+    <li><a href="../services.html">שירותים</a></li>
+    <li><a href="../index.html" class="active">סחורות</a></li>
+    <li><a href="../market-reports.html">דוחות שוק</a></li>
+    <li><a href="../contact.html">צור קשר</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="../contact.html" class="nav-cta">דברו איתנו</a>
+    <div class="hamburger" id="hb"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<nav class="side-nav">
+  <div class="nav-dot active" data-target="ch1"></div><div class="nav-dot" data-target="ch2"></div>
+  <div class="nav-dot" data-target="ch3"></div><div class="nav-dot" data-target="ch4"></div>
+  <div class="nav-dot" data-target="ch5"></div><div class="nav-dot" data-target="ch6"></div>
+  <div class="nav-dot" data-target="ch7"></div><div class="nav-dot" data-target="ch8"></div>
+  <div class="nav-dot" data-target="ch9"></div><div class="nav-dot" data-target="ch10"></div>
+</nav>
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grad"></div>
+  <a href="../index.html" style="position:absolute;top:32px;right:48px;z-index:2;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--body);text-decoration:none;">← ספרייה</a>
+  <div class="hero-content">
+    <span class="hero-k">BLUE STAR INTERNATIONAL · MASTER SERIES · GRAINS ARCHIVE</span>
+    <h1 id="sync-title">קינואה</h1>
+    <p class="deck" id="sync-desc">אם כל הגרגרים. 7,000 שנות גידול אנדי, חלבון שלם מ-9 חומצות אמינו, וצמח שהאינקה חיו עליו בגבהים שחיטה לא שורדת.</p>
+  </div>
+</header>
+<main class="con">
+
+<!-- CH1 -->
+<section class="ch reveal" id="ch1">
+<span class="cl">פרק ראשון</span>
+<h2>7,000 שנה לפני ה-Whole Foods Market</h2>
+<p class="dc">בשנת 2013 הכריזה האו"ם על "השנה הבינלאומית של הקינואה". בשנת 5000 לפני הספירה, חקלאים ב-Altiplano הבוליביאני כבר גידלו אותה. ה-7,000 שנה שבין שני התאריכים האלה הם ההיסטוריה של צמח שחי בשקט בגובה 3,000-4,000 מטר, הזין תרבויות שלמות, ורק בסוף המאה ה-20 "התגלה" מחדש על ידי עולם שחיפש חלבון צמחי.</p>
+<p>השם "קינואה" מגיע מה-Quechua, שפת האינקאים: <em>kinwa</em> או <em>kinuwa</em>. האינקאים קראו לה <em>chisiya mama</em> — "אם כל הגרגרים". כשהספרדים הגיעו לאנדים במאה ה-16, הם ראו את הקינואה כמזון נחות של הילידים ועודדו המרה לגידולי חיטה "אירופאיים". הם לא ידעו שהם דוחקים צד אחד ממפתחות ההישרדות של הציוויליזציה האנדית.</p>
+<p>כרטיס הביקור הבוטני: <em>Chenopodium quinoa</em>, ממשפחת האמרנטיות (Amaranthaceae). קרובת משפחה של תרד, שיינה (quinoa לבנה), ובטא (סלק). הגרגרים הם בעצם פרי זעיר — אחיד, עגול, בקוטר 1.5-2 מ"מ. לכל גרגר עטיפה חיצונית (pericarp) שמכילה סאפונינים, ולפה שמחייבת שטיפה לפני אכילה.</p>
+<div class="ab ab-w"><div class="tg">מה שהספרדים החמיצו</div><p>בגבהים שבהם האינקאים חיו, 3,000-4,500 מטר מעל פני הים, חיטה וכוסמת לא שורדות. קינואה עמידה לכפור לילי, ליובש, ולקרינה UV גבוהה. היא הגידול היחיד שאפשר לחקלאות בתנאים כאלה. ובטחון מזון בהיסטוריה האנדית עמד על כרגלי הקינואה.</p></div>
+</section>
+
+<!-- CH2 -->
+<section class="ch reveal" id="ch2">
+<span class="cl">פרק שני</span>
+<h2>חלבון שלם: המה שהופך אותה לייחודית</h2>
+<p class="dc">מרבית מקורות החלבון מן הצומח חסרים חומצת אמינו אחת לפחות. חיטה: חסרה ליזין. אורז: חסר תריאונין. תירס: חסרה ליזין ותריפטופן. קינואה: מכילה את כל תשעת חומצות האמינו החיוניות, כולל ליזין, מתיונין ותריפטופן, ברמות שמתקרבות לפרופיל חלבון ביצה. זה לא שכיח בעולם הצומח.</p>
+<div class="ng">
+  <div class="ni"><div class="nv">14g</div><div class="nu">חלבון ל-100g</div><div class="nl">9 חומצות אמינו</div></div>
+  <div class="ni"><div class="nv">368</div><div class="nu">קלוריות</div><div class="nl">ל-100g יבש</div></div>
+  <div class="ni"><div class="nv">64g</div><div class="nu">פחמימות</div><div class="nl">ל-100g</div></div>
+  <div class="ni"><div class="nv">6g</div><div class="nu">שומן</div><div class="nl">רובו בלתי רווי</div></div>
+  <div class="ni"><div class="nv">7g</div><div class="nu">סיבים</div><div class="nl">ל-100g</div></div>
+  <div class="ni"><div class="nv">53</div><div class="nu">אינדקס גליקמי</div><div class="nl">נמוך-בינוני</div></div>
+</div>
+<p>מנגן: <strong>58%</strong> מהצריכה היומית ל-100 גרם. זרחן: <strong>40%</strong>. מגנזיום: <strong>49%</strong>. קינואה היא מקור מגנזיום מעולה לתזונה צמחית. ברזל: <strong>25%</strong> — אבל חשוב לשים לב שהוא iron non-heme שנספג פחות טוב. שילוב עם ויטמין C (לימון על הסלט) מגביר ספיגה משמעותית.</p>
+<h3>ליזין: חומצת האמינו שחסרה בדגנים</h3>
+<p>ליזין חיוני לבניית קולגן, ספיגת סידן, ולתפקוד מערכת החיסון. מרבית הדגנים מכילים כמות זניחה. קינואה מכילה כ-<strong>766 מ"ג ליזין ל-100 גרם</strong> — כמעט כמו חלב פרה. זה הופך אותה לתוספת חיונית לתפריט צמחוני שנשען בעיקר על דגנים.</p>
+</section>
+
+<!-- CH3 -->
+<section class="ch reveal" id="ch3">
+<span class="cl">פרק שלישי</span>
+<h2>גאוגרפיה: בוליביה, פרו, ואפקט הסופרפוד</h2>
+<p class="dc">99% מהקינואה בעולם גדלים בשלוש מדינות: בוליביה, פרו ואקוודור. ה-Altiplano הבוליביאני — רמת המישורים בין 3,600-4,000 מטר הסמוכה לאגם טיטיקאקה — היא לב הגידול. אוויר דק, קרינה UV גבוהה, קרה בלילה, חם ביום. בתנאים שרוב הצמחים לא שורדים, קינואה משגשגת.</p>
+
+<div class="cb">
+  <div class="ct">ייצור קינואה עולמי לפי מדינה 2024</div>
+  <div class="pb-chart">
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇧🇴</span><span class="pb-name">בוליביה</span></div><div class="pb-track"><div class="pb-fill" data-w="42" style="background:#5A6A4A;"></div></div><span class="pb-pct">42%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇵🇪</span><span class="pb-name">פרו</span></div><div class="pb-track"><div class="pb-fill" data-w="38" style="background:#8A9A60;"></div></div><span class="pb-pct">38%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇪🇨</span><span class="pb-name">אקוודור</span></div><div class="pb-track"><div class="pb-fill" data-w="10" style="background:#A0B078;"></div></div><span class="pb-pct">10%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🇺🇸</span><span class="pb-name">ארה"ב / קנדה</span></div><div class="pb-track"><div class="pb-fill" data-w="6" style="background:#C0C890;"></div></div><span class="pb-pct">6%</span></div>
+    <div class="pb-row"><div class="pb-meta"><span class="pb-flag">🌍</span><span class="pb-name">אחרים (ספרד, ישראל)</span></div><div class="pb-track"><div class="pb-fill" data-w="4" style="background:#DDD6CA;"></div></div><span class="pb-pct">4%</span></div>
+  </div>
+  <div class="pb-note">FAO 2024 · ייצור עולמי ~200,000 טון/שנה</div>
+</div>
+
+<div class="pull"><p>כשהביקוש המערבי פיצץ ב-2012-2015, מחיר הקינואה בשוק הבוליביאני הכפיל עצמו תוך שלוש שנים. חקלאים עשירו. אבל מחיר הקינואה עלה כל כך שחקלאים בוליביאנים רבים הפסיקו לאכול אותה — והתחילו לאכול אטריות מיובאות מחיטה. הייצוא לשמר בריאות למערב הוציא גידול מזון בסיסי מהמטבח הבוליביאני.</p></div>
+</section>
+
+<!-- CH4 -->
+<section class="ch reveal" id="ch4">
+<span class="cl">פרק רביעי</span>
+<h2>הזנים: לבנה, אדומה, שחורה — וההבדלים האמיתיים</h2>
+<p class="dc">שלושה צבעים עיקריים בשוק. ההבדל ביניהם אינו רק אסתטי. צבע שונה = הרכב פיטוכימי שונה = טעם ומרקם שונים.</p>
+
+<div class="vc">
+  <div class="vn">קינואה לבנה (Ivory/Yellow)</div>
+  <div class="vt">הנפוצה ביותר, 90% מהשוק</div>
+  <p>טעם עדין ומעט אגוזי. מרקם רך ומפריד לאחר בישול. גרגרים קטנים יחסית. מתאימה לכל שימוש: סלטים, תוספת חמה, דגנת בוקר. טעמה הנייטרלי מאפשר לה לספוג ארומות מהסביבה.</p>
+  <div class="vs"><div class="vsi">זמן בישול: <strong>15 דק'</strong></div><div class="vsi">מרקם: <strong>רך</strong></div><div class="vsi"><strong>לכל שימוש</strong></div></div>
+</div>
+
+<div class="vc">
+  <div class="vn">קינואה אדומה (Red)</div>
+  <div class="vt">יותר צבע, יותר מרקם</div>
+  <p>מכילה אנתוציאנינים שנותנים את הצבע האדום-חום. טעם חזק ואגוזי יותר. שומרת על צורתה טוב יותר לאחר בישול, מה שמתאים לסלטים שצריכים מרקם. מכילה מעט יותר נוגדי חמצון מהלבנה.</p>
+  <div class="vs"><div class="vsi">זמן בישול: <strong>18-20 דק'</strong></div><div class="vsi">מרקם: <strong>פריך</strong></div><div class="vsi"><strong>סלטים</strong></div></div>
+</div>
+
+<div class="vc">
+  <div class="vn">קינואה שחורה (Black)</div>
+  <div class="vt">הנדירה, הגוורמה</div>
+  <p>ריכוז גבוה של אנתוציאנינים. טעם אדמתי-מורכב. מרקם קשיח יותר, שומר על צורה גם בחום. נדירה יחסית בשוק. משמשת בעיקר כאלמנט ויזואלי בפלייטינג מסעדות פרמיום.</p>
+  <div class="vs"><div class="vsi">זמן בישול: <strong>20-25 דק'</strong></div><div class="vsi">מרקם: <strong>קשיח</strong></div><div class="vsi"><strong>מסעדות, פרמיום</strong></div></div>
+</div>
+
+<table class="gt">
+  <thead><tr><th>פרמטר מסחרי</th><th>קינואה לבנה</th><th>קינואה אדומה</th><th>קינואה שחורה</th></tr></thead>
+  <tbody>
+    <tr><td>מחיר FOB</td><td>$1,200-1,800/טון</td><td>$1,500-2,200/טון</td><td>$2,000-3,000/טון</td></tr>
+    <tr><td>לחות מקס'</td><td>13.5%</td><td>13.5%</td><td>13.5%</td></tr>
+    <tr><td>סאפונינים (שטיפה)</td><td>נדרשת</td><td>נדרשת</td><td>נדרשת</td></tr>
+    <tr><td>אורגני פרמיה</td><td>+30-50%</td><td>+35-55%</td><td>+40-60%</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- CH5 -->
+<div class="media-slot-inline"><img src="../images/Bowl_overflowing_with_quinoa_8f3c809090.jpeg" alt="קינואה" style="width:100%;height:100%;object-fit:cover;"></div>
+
+<section class="ch reveal" id="ch5">
+<span class="cl">פרק חמישי</span>
+<h2>סאפונינים: הבעיה שאף אחד לא אומר לך עליה</h2>
+<p class="dc">קינואה מגיעה מכוסה בשכבת סאפונינים — תרכובות ביו-כימיות מרות, שהצמח פיתח כהגנה טבעית מפני חרקים ועופות. סאפונינים הם לא רעילים לבני אדם, אבל הם מרים מאוד, ואם לא שוטפים לפני בישול — הקינואה תהיה מרה וסבונית.</p>
+<ul>
+  <li><strong>קינואה "prewashed":</strong> עברה שטיפה תעשייתית. עדיין מומלץ שטיפה קלה.</li>
+  <li><strong>קינואה לא-prewashed:</strong> חייב לשטוף 2-3 דקות תחת מים זורמים עד שהמים שקופים.</li>
+  <li><strong>טסטינג:</strong> לפני בישול, ללעוס גרגר גולמי. מרירות = עוד שטיפה.</li>
+  <li><strong>אורגנית:</strong> לרוב פחות מעובדת ומחייבת שטיפה יותר קפדנית.</li>
+</ul>
+<div class="ab ab-g"><div class="tg">יתרון סאפונינים</div><p>מה שמריר לנו, שימושי לתעשייה. סאפונינים מקינואה נחקרים לשימוש כחומרי ניקוי טבעיים, בתרופות, ובחומרי הדברה ביולוגיים. תעשיית ה-saponin extraction צמחה ב-18% לשנה.</p></div>
+</section>
+
+<!-- CH6 -->
+<section class="ch reveal" id="ch6">
+<span class="cl">פרק שישי</span>
+<h2>שימושים: מסלט בוקר עד תחתית פיצה</h2>
+<p class="dc">הגמישות של קינואה היא אחת מסיבות הצלחתה. שלא כמו אורז שתמיד נשאר אורז, קינואה יודעת להיות סלט, דגנת בוקר, קציצה, קמח, ורוטב. כל שימוש שונה מחייב גישה שונה לבישול.</p>
+
+<h3>יחס בישול ושיטות</h3>
+<p><strong>בישול בסיר:</strong> 1 כוס קינואה שטופה + 2 כוסות מים. רתיחה, הנמכה לחום נמוך 15 דקות, מנוחה מכוסה 5 דקות. מפריד עם מזלג. גרגרים שלמים עם "זנב" לבן (נבט שהופרד).</p>
+<p><strong>קלייה לפני בישול:</strong> 3-5 דקות במחבת יבשה עד ריח אגוזי. מעצים טעם, מנקז עודפי לחות.</p>
+<p><strong>קינואה מנופחת (Puffed Quinoa):</strong> חממו מחבת שטוחה ל-220°C. הכניסו כף קינואה יבשה. תוך שניות מנופחת כמו פופקורן. מוסיפה קריספ לסלטים, חטיפים, ושוקולד.</p>
+
+<table class="gt">
+  <thead><tr><th>שימוש</th><th>שיטה</th><th>הערה</th></tr></thead>
+  <tbody>
+    <tr><td>סלט קינואה</td><td>בישול רגיל, קירור</td><td>ירקות, לימון, עשבי תיבול</td></tr>
+    <tr><td>דגנת בוקר</td><td>בישול בחלב/חלב שקדים</td><td>עם פירות ודבש</td></tr>
+    <tr><td>קציצות</td><td>בישול + ביצה + קמח</td><td>קשה יותר לאחיזה, צריך מייצב</td></tr>
+    <tr><td>קמח קינואה</td><td>טחינה של גרגר יבש</td><td>טעם חזק, עד 30% מהקמח הכולל</td></tr>
+    <tr><td>Puffed</td><td>חימום יבש בחום גבוה</td><td>גרנולה, שוקולד, קישוט</td></tr>
+    <tr><td>נבטים</td><td>השריה 12 שעות + ניקוז</td><td>עשיר יותר בוויטמין C</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- CH7 -->
+<section class="ch reveal" id="ch7">
+<span class="cl">פרק שביעי</span>
+<h2>תזונה ובריאות: מה המחקר אומר</h2>
+<p class="dc">קינואה נחקרה יחסית ביסודיות בגלל הגידול המהיר בפופולריות שלה. שלושה תחומים מובילים: ניהול סוכר בדם, בריאות לב, ותזונת ספורטאים.</p>
+<table class="gt">
+  <thead><tr><th>רכיב</th><th>כמות ל-100g מבושל</th><th>% RDI</th></tr></thead>
+  <tbody>
+    <tr><td>חלבון</td><td>4.4g</td><td>9%</td></tr>
+    <tr><td>מגנזיום</td><td>64mg</td><td>15%</td></tr>
+    <tr><td>מנגן</td><td>0.6mg</td><td>28%</td></tr>
+    <tr><td>זרחן</td><td>152mg</td><td>22%</td></tr>
+    <tr><td>סיבים</td><td>2.8g</td><td>11%</td></tr>
+    <tr><td>ברזל</td><td>1.5mg</td><td>8%</td></tr>
+  </tbody>
+</table>
+<p><em>הערה: ערכים של קינואה מבושלה (יחס 1:2). קינואה יבשה מכילה ערכים גבוהים פי ~3.</em></p>
+<div class="ab ab-w"><div class="tg">מחקר: סוכרת</div><p>מחקר שפורסם ב-Nutrients 2020 מצא שצריכה של קינואה במקום אורז לבן הורידה את תגובת הגלוקוז לאחר ארוחה ב-<strong>18%</strong> ורמות אינסולין ב-<strong>13%</strong> אצל חולי סוכרת סוג 2. הסיבים הגבוהים ואינדקס הגליקמי הנמוך יחסית הם הסיבה.</p></div>
+</section>
+
+</main>
+
+
+<!-- WHATSAPP CTA -->
+<div class="wa-cta-block" id="wa-cta-block">
+  <div class="wa-cta-text">
+    <h3>מעוניינים ב<span id="wa-product-name">מוצר זה</span>?</h3>
+    <p>שלחו הודעה ישירות ל-Blue Star עם פרטי הסחורה, ונחזור תוך שעה בשעות עסקים.</p>
+  </div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+  <a href="#" id="wa-cta-btn" class="wa-cta-btn" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    שלח הודעה ב-WhatsApp
+  </a>
+</div>
+<footer class="inner-ft">
+  <a href="../home.html" class="inner-ft-logo">BLUE STAR ✦</a>
+  <div class="inner-ft-links">
+    <a href="../about.html">אודות</a>
+    <a href="../index.html">סחורות</a>
+    <a href="../market-reports.html">דוחות שוק</a>
+    <a href="../contact.html">צור קשר</a>
+  </div>
+  <span class="inner-ft-copy">© 2026 BLUE STAR INTERNATIONAL · BLUESTAR.CO.IL</span>
+</footer>
+
+<button id="btt" aria-label="Back to top">↑</button>
+<a href="../index.html" class="home-btn">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  ספרייה
+</a>
+
+<script>
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+  document.getElementById('progress-bar').style.width = (pct*100)+'%';
+  nav.classList.toggle('slim', window.scrollY > 50);
+  const sections = document.querySelectorAll('.ch');
+  const dots = document.querySelectorAll('.nav-dot');
+  let cur = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 200) cur = s.id; });
+  dots.forEach(d => d.classList.toggle('active', d.dataset.target === cur));
+});
+const hb = document.getElementById('hb'), mm = document.getElementById('mm');
+hb.addEventListener('click', () => { hb.classList.toggle('open'); mm.classList.toggle('open'); document.body.style.overflow = mm.classList.contains('open')?'hidden':''; });
+mm.addEventListener('click', e => { if(e.target.tagName==='A'){hb.classList.remove('open');mm.classList.remove('open');document.body.style.overflow='';} });
+document.querySelectorAll('.nav-dot').forEach(d => d.addEventListener('click', () => document.getElementById(d.dataset.target)?.scrollIntoView({behavior:'smooth'})));
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 300));
+btt.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+const revealObs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); }), {threshold:0,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.ch').forEach(el => { el.classList.add('reveal'); revealObs.observe(el); });
+const barObs = new IntersectionObserver(entries => { entries.forEach(e => { if(!e.isIntersecting)return; e.target.querySelectorAll('.pb-fill').forEach(b => b.style.width = b.dataset.w+'%'); barObs.unobserve(e.target); }); },{threshold:0.3});
+document.querySelectorAll('.pb-chart').forEach(el => barObs.observe(el));
+</script>
+</body>
+</html>
